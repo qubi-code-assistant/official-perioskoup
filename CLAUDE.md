@@ -213,3 +213,101 @@ Perioskoup must NEVER be positioned as a medical device. Use SAFE language only.
 ✕ "personalized clinical guidance" → USE "supportive reminders and encouragement"
 ✕ "adherence dashboard" → USE "visibility into engagement patterns"
 ✕ "extending your care" → USE "extending your connection with patients"
+
+## Source Assets (from existing landing page)
+The previous landing page is at `~/Projects/perioskoup-landing-vercel/`. Copy these assets:
+
+### Images to copy to public/
+```bash
+cp ~/Projects/perioskoup-landing-vercel/public/logo-brand.svg public/
+cp ~/Projects/perioskoup-landing-vercel/public/logo-white.svg public/
+cp ~/Projects/perioskoup-landing-vercel/public/app-logo.webp public/
+cp ~/Projects/perioskoup-landing-vercel/public/app-logomark.webp public/
+cp ~/Projects/perioskoup-landing-vercel/public/app_image.webp public/app-screens/
+cp ~/Projects/perioskoup-landing-vercel/public/app_image-mobile.webp public/app-screens/
+cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony.webp public/
+cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony-mobile.webp public/
+cp ~/Projects/perioskoup-landing-vercel/public/apple-touch-icon.png public/
+cp ~/Projects/perioskoup-landing-vercel/public/favicon.ico public/
+cp ~/Projects/perioskoup-landing-vercel/public/favicon-16.png public/
+cp ~/Projects/perioskoup-landing-vercel/public/favicon-32.png public/
+```
+
+### Exact Color Scale (Tailwind v4 @theme)
+```css
+/* Lime scale */
+--color-lime-50: #f5f9ea;   --color-lime-100: #f3fcde;
+--color-lime-200: #eeffcc;  --color-lime-300: #e0ffab;
+--color-lime-400: #c0e57a;  --color-lime-500: #8ad33d;
+--color-lime-600: #6faa29;  --color-lime-700: #5a8c20;
+--color-lime-800: #466d18;  --color-lime-900: #345210;
+
+/* Navy scale */
+--color-navy-50: #e8eef4;   --color-navy-100: #c5d4e3;
+--color-navy-200: #9db5ce;  --color-navy-300: #7596b8;
+--color-navy-400: #5580a6;  --color-navy-500: #3578aa;
+--color-navy-600: #2f5f84;  --color-navy-700: #234966;
+--color-navy-800: #1d3449;  --color-navy-900: #12222d;
+--color-navy-950: #0a171e;
+
+/* Named aliases */
+--color-mint: #8ad33d;
+--color-darkgreen: #6faa29;
+--color-nebula: #0a171e;
+--color-pale: #c5d4e3;
+```
+
+### Motion Design Tokens
+```css
+--duration-instant: 100ms;  --duration-fast: 200ms;
+--duration-medium: 400ms;   --duration-slow: 600ms;
+--duration-slower: 800ms;
+
+--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+--ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
+--stagger-fast: 50ms;  --stagger-medium: 100ms;  --stagger-slow: 150ms;
+```
+
+### Pricing Tiers (BLURRED — replicate exactly)
+Three tiers behind `blur-[6px] select-none pointer-events-none`:
+1. **Starter** — €49/month — Up to 50 patients, Basic AI guidance, Email support
+2. **Professional** (Most Popular, featured) — €99/month — Up to 200 patients, Advanced AI insights, Priority support, Custom branding
+3. **Enterprise** — Custom pricing — Unlimited patients, API access, multi-location
+
+Overlay: "We're in Beta" card with "Join our founding clinics and get lifetime early-adopter pricing" + CTA button
+
+### Award Section
+- Image: `award_ceremony.webp` (mobile: `award_ceremony-mobile.webp`)
+- Alt: "Perioskoup AI Dental Companion Team Receiving 3rd Prize at EFP Digital Innovation Award 2025 at EuroPerio11 Vienna"
+- Quote after award: Acknowledgment to Prof. Sculean and organizing team
+
+### Team/Founders
+- **Dr. Anca Laura Constantin** — Co-Founder, Periodontist, EFP Award Winner
+- **Eduard Ciugulea** — Co-Founder, Tech Lead
+- No headshot images available yet — use initials/placeholder circles
+
+### Existing Pages to Reference
+The old site has these pages with content to port/improve:
+- `index.html` — Main landing (hero, comparison, features, award, pricing, FAQ)
+- `about.html` — About page
+- `features.html` — Features detail
+- `contact.html` — Contact form
+- `blog/` — Blog directory
+- `signup.html` — Waitlist signup
+- `calculator.html` — ROI calculator for dentists
+- `privacy.html` + `terms.html` — Legal pages
+- `periochamp.html` — Gamification page
+
+### FAQ Content (from existing site schema)
+Port these FAQs with updated SaMD-safe language:
+1. What is an AI dental companion?
+2. Is Perioskoup GDPR compliant?
+3. How does Perioskoup help dentists?
+4. What does Perioskoup cost?
+5. Can it be used for periodontal patients?
+6. How does it improve patient engagement?
+7. What languages are supported?
+8. How do I get started?
