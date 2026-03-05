@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Titanium Pro - Authority &amp; Proof</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&amp;family=Gabarito:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C0E57A",
+                        "background-dark": "#0A171E",
+                        "surface": "#1D3449",
+                        "text-main": "#F5F9EA",
+                        "muted": "#8C9C8C",
+                    },
+                    fontFamily: {
+                        "display": ["Dongle", "sans-serif"],
+                        "body": ["Gabarito", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "lg": "32px",
+                        "sm": "12px",
+                    },
+                    spacing: {
+                        "section": "160px",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Utilities for "Apple Maximalist" feel */
+        .text-giant {
+            font-size: clamp(6rem, 15vw, 10rem); 
+            line-height: 0.8;
+            letter-spacing: -0.04em;
+        }
+        
+        /* Smooth gradients for image overlays if needed */
+        .scrim-b {
+            background: linear-gradient(to top, #0A171E 0%, transparent 100%);
+        }
+
+        /* Avatar styling */
+        .avatar-glow {
+            box-shadow: 0 0 60px -20px rgba(192, 229, 122, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-text-main font-body antialiased overflow-x-hidden">
+<!-- Section 4: Authority & Proof -->
+<section class="relative w-full min-h-[80vh] flex flex-col items-center justify-center py-section px-6 md:px-12 overflow-hidden">
+<!-- Ambient Background Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center max-w-4xl mx-auto space-y-16">
+<!-- Award Hero: EFP Logo -->
+<div class="flex flex-col items-center gap-4 opacity-60 hover:opacity-100 transition-opacity duration-500 group cursor-default">
+<!-- Abstract Representation of EFP Logo (European Federation of Periodontology) -->
+<!-- Using a geometric shape with text as a placeholder for the logo SVG -->
+<div class="h-20 w-20 border border-muted/30 rounded-full flex items-center justify-center mb-2 group-hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-4xl text-muted group-hover:text-primary transition-colors">verified_user</span>
+</div>
+<h3 class="font-body font-medium text-sm tracking-[0.2em] text-muted uppercase text-center">
+                    Recognized by the<br/>European Federation of Periodontology
+                </h3>
+</div>
+<!-- Central Statistic Stack -->
+<div class="flex flex-col items-center text-center">
+<!-- Label -->
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-surface bg-surface/30 backdrop-blur-sm mb-4">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-body font-medium text-xs tracking-widest uppercase text-muted">Founding Waitlist</span>
+</div>
+<!-- Massive Stat -->
+<h2 class="font-display font-bold text-giant text-primary drop-shadow-2xl">
+                    30 Clinics
+                </h2>
+<p class="font-body text-xl text-muted max-w-md mt-4 leading-relaxed">
+                    Already transforming patient compliance across Europe's top periodontal practices.
+                </p>
+</div>
+<!-- Divider Line -->
+<div class="w-px h-24 bg-gradient-to-b from-transparent via-surface to-transparent"></div>
+<!-- Clinician Profile -->
+<div class="flex flex-col md:flex-row items-center gap-8 bg-surface/40 border border-white/5 rounded-lg p-8 md:pr-12 backdrop-blur-md hover:bg-surface/60 transition-colors duration-300">
+<!-- Avatar -->
+<div class="relative">
+<div class="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/20 avatar-glow grayscale">
+<img alt="Dr. Anca Constantin, smiling female doctor in white coat" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLatTuyXj27w-Xet_Rz1bCRZaR5eVIUo273wiNoxZvGB9VxKNpH4AwzBsxG2QuJ_D7Djkz3U4Ocudr9o5hY8G_UNpi84LT1nf993jOokwS2lkWM6osHsLI780pz2qDrDKJ1V4JgS27dDyKnIJLlLZb-z93VrHCP2tRJvJQC6ag1xQgK43fX-zVIGLfRvoQQ5tVEruwGvhob0H0Z3KGgMyuRDEmArA_5hJN051mRqvCtwEVEzP9vuZHWiGagggdbw35ojTFebMFmMdD"/>
+</div>
+<!-- Small Badge on Avatar -->
+<div class="absolute -bottom-1 -right-1 bg-background-dark rounded-full p-1 border border-surface">
+<span class="material-symbols-outlined text-primary text-sm bg-surface rounded-full p-1">local_hospital</span>
+</div>
+</div>
+<!-- Text Info -->
+<div class="flex flex-col text-center md:text-left">
+<h4 class="font-display text-4xl leading-none text-text-main mb-1">Dr. Anca Constantin</h4>
+<p class="font-body font-medium text-primary text-sm uppercase tracking-wider mb-2">DMD, PhD in Periodontology</p>
+<p class="font-body text-muted text-sm max-w-xs">
+                        "We built Perioskoup to bridge the gap between clinical precision and patient psychology."
+                    </p>
+</div>
+</div>
+<!-- Trust Row (Subtle) -->
+<div class="flex flex-wrap justify-center gap-8 md:gap-16 pt-8 border-t border-white/5 w-full max-w-2xl">
+<!-- Trust Item 1 -->
+<div class="flex items-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-muted text-xl group-hover:text-primary">security</span>
+<span class="font-body text-xs text-muted tracking-wide">HIPAA Compliant</span>
+</div>
+<!-- Trust Item 2 -->
+<div class="flex items-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-muted text-xl group-hover:text-primary">cloud_done</span>
+<span class="font-body text-xs text-muted tracking-wide">SOC2 Certified</span>
+</div>
+<!-- Trust Item 3 -->
+<div class="flex items-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-muted text-xl group-hover:text-primary">encrypted</span>
+<span class="font-body text-xs text-muted tracking-wide">End-to-End Encrypted</span>
+</div>
+</div>
+</div>
+</section>
+</body></html>

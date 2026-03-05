@@ -26,15 +26,15 @@ export default function ContactPage() {
       />
 
       {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-16 px-6 md:px-12 lg:px-20">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-lime-400 text-sm uppercase tracking-widest mb-4">
             Get in Touch
           </p>
-          <h1 className="font-heading text-[clamp(3rem,6vw,5rem)] leading-tight text-lime-50">
+          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
             Contact Us
           </h1>
-          <p className="mt-4 text-navy-300 text-lg max-w-xl mx-auto">
+          <p className="mt-4 text-navy-400 text-lg max-w-xl mx-auto">
             Have a question about Perioskoup? Want to learn more about joining
             our early adopter programme? We&rsquo;d love to hear from you.
           </p>
@@ -42,8 +42,8 @@ export default function ContactPage() {
       </section>
 
       {/* Form + Info */}
-      <section className="pb-24 md:pb-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
+      <section className="pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Form */}
           <div className="lg:col-span-3">
             <ContactForm />
@@ -51,7 +51,7 @@ export default function ContactPage() {
 
           {/* Contact info */}
           <div className="lg:col-span-2 space-y-8">
-            <div className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8">
+            <div className="bg-navy-800 border border-white/5 rounded-[2rem] p-8">
               <h2 className="font-heading text-[clamp(1.8rem,3vw,2.5rem)] text-lime-50 mb-6 leading-tight">
                 Other Ways to Reach Us
               </h2>

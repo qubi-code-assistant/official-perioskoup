@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Titanium Pro - Bento Features</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&amp;family=Gabarito:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C0E57A", // Lime Green
+                        "background-dark": "#0A171E", // Deep Navy
+                        "surface": "#1D3449", // Slate Blue
+                        "text-main": "#F5F9EA", // Off-White
+                        "text-muted": "#8C9C8C", // Sage Grey
+                        "deep-shadow": "#050C10",
+                    },
+                    fontFamily: {
+                        "display": ["Dongle", "sans-serif"],
+                        "body": ["Gabarito", "sans-serif"],
+                        "ui": ["Inter", "sans-serif"], // Fallback
+                    },
+                    borderRadius: {
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
+                        "3xl": "2rem", // 32px
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "128": "32rem",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for chat area */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .glass-panel {
+            background: rgba(29, 52, 73, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(140, 156, 140, 0.1);
+        }
+
+        /* Subtle animated gradient for active states */
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-text-main font-body selection:bg-primary selection:text-background-dark overflow-x-hidden">
+<main class="min-h-screen w-full flex flex-col items-center justify-center py-20 px-4 sm:px-8">
+<div class="max-w-[1200px] w-full flex flex-col gap-12">
+<!-- Section Header -->
+<header class="mb-4">
+<h2 class="font-display text-[120px] leading-[0.8] tracking-tight text-text-main">
+                    Precision Features
+                </h2>
+<p class="text-text-muted text-xl max-w-2xl mt-4 font-body">
+                    A modular ecosystem designed for the modern periodontist. Experience the synergy of AI analysis and patient behavior modification.
+                </p>
+</header>
+<!-- Bento Grid Layout -->
+<!-- 
+               Desktop: 3 columns
+               Tablet: 2 columns
+               Mobile: 1 column
+            -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[minmax(320px,auto)]">
+<!-- Card 1: AI Companion (Large, 2x2 on desktop) -->
+<div class="group relative col-span-1 md:col-span-2 row-span-2 bg-surface rounded-3xl overflow-hidden border border-text-muted/10 shadow-2xl shadow-deep-shadow flex flex-col transition-transform duration-500 hover:scale-[1.01]">
+<!-- Decorative Background Glow -->
+<div class="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Card Header -->
+<div class="absolute bottom-0 left-0 p-8 z-20 w-full bg-gradient-to-t from-surface via-surface/90 to-transparent pt-20">
+<h3 class="text-3xl font-bold text-text-main mb-1">AI Companion</h3>
+<p class="text-text-muted font-medium">Analyze. Predict. Prevent.</p>
+</div>
+<!-- Content: Chat Interface -->
+<div class="relative flex-1 p-8 pb-32 flex flex-col justify-end">
+<div class="flex flex-col gap-4 w-full max-w-md mx-auto">
+<!-- AI Message 1 -->
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/30">
+<span class="material-symbols-outlined text-primary text-sm">smart_toy</span>
+</div>
+<div class="bg-surface border border-text-muted/20 rounded-2xl rounded-tl-none p-4 shadow-lg max-w-[85%]">
+<p class="text-sm text-text-muted leading-relaxed">
+                                        Based on yesterday's scan, I've detected a <span class="text-primary font-bold">12% reduction</span> in pocket depth for Patient #402. Inflammation markers are trending down.
+                                    </p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex items-start gap-3 flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-text-muted/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-text-main text-sm">person</span>
+</div>
+<div class="bg-primary text-background-dark rounded-2xl rounded-tr-none p-4 shadow-lg max-w-[85%]">
+<p class="text-sm font-bold leading-relaxed">
+                                        Generate a comparison chart for their next visit.
+                                    </p>
+</div>
+</div>
+<!-- AI Message 2 (Typing/Loading) -->
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/30">
+<span class="material-symbols-outlined text-primary text-sm">smart_toy</span>
+</div>
+<div class="bg-surface border border-text-muted/20 rounded-2xl rounded-tl-none px-4 py-3 shadow-lg flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce"></span>
+<span class="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 0.15s"></span>
+<span class="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
+</div>
+</div>
+<!-- Input Simulation -->
+<div class="mt-4 relative">
+<div class="w-full bg-background-dark/50 border border-text-muted/20 rounded-full h-12 flex items-center px-4 justify-between backdrop-blur-sm">
+<span class="text-text-muted/50 text-sm">Ask Perioskoup...</span>
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-background-dark text-sm">arrow_upward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Habit Tracking (Tall, 1x2) -->
+<div class="group relative col-span-1 row-span-2 bg-surface rounded-3xl overflow-hidden border border-text-muted/10 shadow-2xl shadow-deep-shadow flex flex-col">
+<!-- Decorative Background -->
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
+<!-- Content: Vertical Progress Bars -->
+<div class="flex-1 p-8 flex flex-col justify-center items-center gap-8 relative z-10">
+<div class="flex items-end gap-6 h-64 w-full justify-center px-4">
+<!-- Bar 1 -->
+<div class="flex flex-col items-center gap-3 w-12 group/bar">
+<div class="relative w-full bg-background-dark/50 rounded-full h-48 overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full bg-text-muted/30 h-[45%] rounded-full transition-all duration-1000 group-hover/bar:h-[50%]"></div>
+</div>
+<span class="text-xs font-bold text-text-muted uppercase tracking-wider">Floss</span>
+</div>
+<!-- Bar 2 (Hero) -->
+<div class="flex flex-col items-center gap-3 w-12 group/bar">
+<div class="relative w-full bg-background-dark/50 rounded-full h-64 overflow-hidden shadow-[0_0_15px_rgba(192,229,122,0.15)]">
+<div class="absolute bottom-0 left-0 w-full bg-primary h-[82%] rounded-full transition-all duration-1000 group-hover/bar:h-[88%]"></div>
+</div>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Brush</span>
+</div>
+<!-- Bar 3 -->
+<div class="flex flex-col items-center gap-3 w-12 group/bar">
+<div class="relative w-full bg-background-dark/50 rounded-full h-48 overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full bg-text-muted/30 h-[60%] rounded-full transition-all duration-1000 group-hover/bar:h-[65%]"></div>
+</div>
+<span class="text-xs font-bold text-text-muted uppercase tracking-wider">Rinse</span>
+</div>
+</div>
+</div>
+<!-- Card Header -->
+<div class="p-8 pt-0 z-20 relative bg-gradient-to-t from-surface via-surface/90 to-transparent">
+<h3 class="text-3xl font-bold text-text-main mb-1">Habit Tracking</h3>
+<p class="text-text-muted font-medium">Gamified Compliance.</p>
+</div>
+</div>
+<!-- Card 3: Dentist Dashboard (Wide, 2x1) -->
+<div class="group relative col-span-1 md:col-span-2 bg-surface rounded-3xl overflow-hidden border border-text-muted/10 shadow-2xl shadow-deep-shadow flex flex-col">
+<!-- Content: Abstract Waveform -->
+<div class="absolute inset-0 flex items-center justify-center opacity-80 scale-110 group-hover:scale-105 transition-transform duration-700">
+<svg class="w-full h-full object-cover" fill="none" viewbox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="fadeGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#C0E57A" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#C0E57A" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 100 C 50 100, 50 40, 100 40 C 150 40, 150 110, 200 110 C 250 110, 250 20, 300 20 C 350 20, 350 90, 400 90 C 450 90, 450 60, 500 60 L 500 150 L 0 150 Z" fill="url(#fadeGradient)"></path>
+<path d="M0 100 C 50 100, 50 40, 100 40 C 150 40, 150 110, 200 110 C 250 110, 250 20, 300 20 C 350 20, 350 90, 400 90 C 450 90, 450 60, 500 60" fill="none" stroke="#C0E57A" stroke-linecap="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle class="animate-pulse" cx="100" cy="40" fill="#C0E57A" r="4"></circle>
+<circle class="animate-pulse" cx="300" cy="20" fill="#C0E57A" r="4"></circle>
+</svg>
+</div>
+<!-- Floating Stat Label -->
+<div class="absolute top-6 right-6 bg-background-dark/80 backdrop-blur-md border border-text-muted/20 px-3 py-1.5 rounded-lg flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-xs font-mono text-primary font-bold">LIVE DATA</span>
+</div>
+<!-- Card Header -->
+<div class="mt-auto p-8 relative z-20">
+<h3 class="text-3xl font-bold text-text-main mb-1">Dentist Dashboard</h3>
+<p class="text-text-muted font-medium">Clinical Oversight.</p>
+</div>
+</div>
+<!-- Card 4: Smart Reminders (Small, 1x1) -->
+<div class="group relative col-span-1 bg-surface rounded-3xl overflow-hidden border border-text-muted/10 shadow-2xl shadow-deep-shadow flex flex-col justify-between">
+<!-- Content: Notification Icon -->
+<div class="flex-1 flex items-center justify-center relative">
+<!-- Ripple Effect -->
+<div class="absolute w-32 h-32 bg-primary/5 rounded-full animate-ping opacity-20"></div>
+<div class="relative">
+<span class="material-symbols-outlined text-[80px] text-text-muted group-hover:text-text-main transition-colors duration-300">notifications</span>
+<!-- Badge -->
+<div class="absolute top-0 right-1 bg-primary text-background-dark font-bold text-lg w-8 h-8 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(192,229,122,0.6)] border-2 border-surface transform group-hover:scale-110 transition-transform duration-300">
+                                2
+                            </div>
+</div>
+</div>
+<!-- Card Header -->
+<div class="p-8 pt-0 z-20">
+<h3 class="text-3xl font-bold text-text-main mb-1">Smart Reminders</h3>
+<p class="text-text-muted font-medium">Timely nudges.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple animation trigger for progress bars on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.group\\/bar');
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.classList.add('opacity-100');
+                }, index * 200);
+            });
+        });
+    </script>
+</body></html>

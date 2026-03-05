@@ -47,7 +47,7 @@ export default function Navigation() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-navy-950/90 backdrop-blur-md border-b border-navy-700/50'
+          ? 'bg-navy-950/80 backdrop-blur-md border-b border-navy-800'
           : 'bg-transparent'
       }`}
     >
@@ -68,14 +68,14 @@ export default function Navigation() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-lime-50/80 hover:text-lime-50 transition-colors text-sm tracking-wide"
+              className="text-navy-300 hover:text-lime-50 transition-colors text-sm font-medium tracking-wide"
             >
               {link.label}
             </Link>
           ))}
           <Link
             href="/waitlist"
-            className="bg-lime-400 text-navy-950 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-lime-300 transition-colors"
+            className="bg-lime-400 text-navy-950 px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-lime-300 transition-all duration-200 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.2)]"
           >
             Join Waitlist
           </Link>
@@ -120,7 +120,7 @@ export default function Navigation() {
               href={link.href}
               onClick={() => setIsOpen(false)}
               tabIndex={isOpen ? 0 : -1}
-              className="text-lime-50 text-2xl font-heading tracking-wide"
+              className="text-lime-50 text-2xl font-heading tracking-wide hover:text-lime-400 transition-colors"
             >
               {link.label}
             </Link>
@@ -129,7 +129,7 @@ export default function Navigation() {
             href="/waitlist"
             onClick={() => setIsOpen(false)}
             tabIndex={isOpen ? 0 : -1}
-            className="mt-4 bg-lime-400 text-navy-950 px-8 py-3 rounded-full text-lg font-semibold"
+            className="mt-4 bg-lime-400 text-navy-950 px-8 py-3 rounded-full text-lg font-semibold hover:bg-lime-300 transition-colors"
           >
             Join Waitlist
           </Link>

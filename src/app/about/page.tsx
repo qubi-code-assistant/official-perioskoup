@@ -73,9 +73,12 @@ export default function AboutPage() {
       />
 
       {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-24 md:pb-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
+      <section className="pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto text-center">
+          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
+            Our Mission
+          </p>
+          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
             Our Story
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-navy-300 leading-relaxed">
@@ -87,16 +90,19 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-navy-900/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] leading-tight text-lime-50 text-center">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
+          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold text-center mb-4">
+            The People
+          </p>
+          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50 text-center">
             Meet the Team
           </h2>
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             {team.map((member) => (
               <div
                 key={member.name}
-                className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8 flex flex-col"
+                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8 flex flex-col"
               >
                 <Image
                   src={member.photo}
@@ -108,7 +114,7 @@ export default function AboutPage() {
                 <h3 className="font-heading text-[clamp(1.5rem,3vw,2rem)] leading-tight text-lime-50 mt-6">
                   {member.name}
                 </h3>
-                <p className="text-lime-400 text-sm mt-1">{member.role}</p>
+                <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mt-2">{member.role}</p>
                 <p className="text-navy-300 text-sm leading-relaxed mt-4 flex-1">
                   {member.bio}
                 </p>
@@ -136,16 +142,19 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] leading-tight text-lime-50 text-center">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
+          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold text-center mb-4">
+            What We Stand For
+          </p>
+          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50 text-center">
             Our Values
           </h2>
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value) => (
               <div
                 key={value.title}
-                className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8"
+                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8"
               >
                 <h3 className="font-heading text-[clamp(1.5rem,3vw,2rem)] leading-tight text-lime-400">
                   {value.title}
@@ -160,9 +169,14 @@ export default function AboutPage() {
       </section>
 
       {/* Award */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-navy-900/30">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] leading-tight text-lime-50">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20 relative overflow-hidden">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto text-center relative">
+          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+            Recognition
+          </p>
+          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
             EFP Digital Innovation Award 2025
           </h2>
           <p className="mt-6 max-w-3xl mx-auto text-lg text-navy-300 leading-relaxed">

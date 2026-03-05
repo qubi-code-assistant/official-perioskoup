@@ -66,7 +66,7 @@ export default function ContactForm() {
             type="text"
             {...register('name', { required: 'Name is required' })}
             aria-describedby={errors.name ? 'contact-name-error' : undefined}
-            className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+            className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
             placeholder="Dr. Jane Smith"
           />
           {errors.name && (
@@ -88,7 +88,7 @@ export default function ContactForm() {
               },
             })}
             aria-describedby={errors.email ? 'contact-email-error' : undefined}
-            className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+            className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
             placeholder="jane@dentalclinic.com"
           />
           {errors.email && (
@@ -106,7 +106,7 @@ export default function ContactForm() {
           type="text"
           {...register('subject', { required: 'Subject is required' })}
           aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
-          className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+          className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
           placeholder="Question about Perioskoup"
         />
         {errors.subject && (
@@ -123,7 +123,7 @@ export default function ContactForm() {
           rows={5}
           {...register('message', { required: 'Message is required' })}
           aria-describedby={errors.message ? 'contact-message-error' : undefined}
-          className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors resize-none"
+          className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors resize-none"
           placeholder="Tell us how we can help..."
         />
         {errors.message && (

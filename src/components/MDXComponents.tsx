@@ -25,14 +25,14 @@ export const mdxComponents: MDXComponents = {
         alt={alt ?? ''}
         width={800}
         height={450}
-        className="rounded-xl my-8"
+        className="rounded-2xl my-8"
         {...props}
       />
     )
   },
   blockquote: ({ children, ...props }) => (
     <blockquote
-      className="border-l-4 border-lime-400 pl-6 my-8 italic text-navy-200"
+      className="border-l-4 border-lime-400 pl-6 my-8 italic text-navy-300"
       {...props}
     >
       {children}
@@ -46,12 +46,12 @@ export const mdxComponents: MDXComponents = {
     </div>
   ),
   th: ({ children, ...props }) => (
-    <th className="text-left px-4 py-3 border-b border-navy-700 text-lime-400 text-xs uppercase tracking-wider" {...props}>
+    <th className="text-left px-4 py-3 border-b border-navy-800 text-lime-400 text-xs uppercase tracking-wider" {...props}>
       {children}
     </th>
   ),
   td: ({ children, ...props }) => (
-    <td className="px-4 py-3 border-b border-navy-800 text-navy-200" {...props}>
+    <td className="px-4 py-3 border-b border-navy-800/50 text-navy-300" {...props}>
       {children}
     </td>
   ),

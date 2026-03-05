@@ -131,11 +131,11 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
       />
 
-      <article className="pt-32 pb-24 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto">
+      <article className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
           {/* Breadcrumb */}
           <nav className="mb-8 text-sm" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-navy-300">
+            <ol className="flex items-center gap-2 text-navy-400">
               <li>
                 <Link href="/" className="hover:text-lime-400 transition-colors">
                   Home
@@ -148,7 +148,7 @@ export default async function BlogPostPage({ params }: Props) {
                 </Link>
               </li>
               <li>/</li>
-              <li className="text-navy-300 truncate max-w-[200px]">
+              <li className="text-navy-400 truncate max-w-[200px]">
                 {frontmatter.title}
               </li>
             </ol>
@@ -207,13 +207,13 @@ export default async function BlogPostPage({ params }: Props) {
               </header>
 
               {/* Article Body */}
-              <div className="prose prose-invert prose-lime max-w-none prose-headings:font-heading prose-headings:text-lime-50 prose-h2:text-[clamp(2rem,3.5vw,3rem)] prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-[clamp(1.5rem,2.5vw,2.2rem)] prose-h3:mt-8 prose-h3:mb-4 prose-p:text-navy-200 prose-p:leading-relaxed prose-li:text-navy-200 prose-strong:text-lime-50 prose-a:text-lime-400 prose-a:no-underline hover:prose-a:text-lime-300 prose-blockquote:border-lime-400 prose-blockquote:text-navy-200">
+              <div className="prose prose-invert prose-lime max-w-none prose-headings:font-heading prose-headings:text-lime-50 prose-h2:text-[clamp(2rem,3.5vw,3rem)] prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-[clamp(1.5rem,2.5vw,2.2rem)] prose-h3:mt-8 prose-h3:mb-4 prose-p:text-navy-300 prose-p:leading-relaxed prose-li:text-navy-300 prose-strong:text-lime-50 prose-a:text-lime-400 prose-a:no-underline hover:prose-a:text-lime-300 prose-blockquote:border-lime-400 prose-blockquote:text-navy-300">
                 {content}
               </div>
 
               {/* FAQ Section */}
               {frontmatter.faqs?.length > 0 && (
-                <section className="mt-16 pt-12 border-t border-navy-700/50">
+                <section className="mt-16 pt-12 border-t border-white/5">
                   <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] text-lime-50 mb-8">
                     Frequently Asked Questions
                   </h2>
@@ -233,8 +233,8 @@ export default async function BlogPostPage({ params }: Props) {
               )}
 
               {/* Author Card */}
-              <section className="mt-16 pt-12 border-t border-navy-700/50">
-                <div className="flex items-start gap-6 bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8">
+              <section className="mt-16 pt-12 border-t border-white/5">
+                <div className="flex items-start gap-6 bg-navy-800 border border-white/5 rounded-[2rem] p-8">
                   <Image
                     src={frontmatter.authorImage}
                     alt={frontmatter.author}
@@ -330,7 +330,7 @@ export default async function BlogPostPage({ params }: Props) {
                 )}
 
                 {/* CTA */}
-                <div className="bg-navy-800/60 border border-navy-700/50 rounded-2xl p-6">
+                <div className="bg-navy-800 border border-white/5 rounded-[2rem] p-8">
                   <p className="text-lime-50 text-sm mb-2">
                     Ready to transform your practice?
                   </p>

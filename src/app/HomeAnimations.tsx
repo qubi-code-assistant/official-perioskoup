@@ -6,7 +6,7 @@ export default function HomeAnimations({ children }: { children: React.ReactNode
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    let ctx: any
+    let ctx: ReturnType<typeof import('gsap')['default']['context']> | undefined
 
     async function init() {
       const { default: gsap } = await import('gsap')
@@ -144,6 +144,22 @@ export default function HomeAnimations({ children }: { children: React.ReactNode
               },
             }
           )
+
+          /* Titanium cards: subtle scale on scroll reveal */
+          document.querySelectorAll<HTMLElement>('.titanium-card').forEach((card) => {
+            gsap.fromTo(
+              card,
+              { opacity: 0, y: 30, scale: 0.98 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.7,
+                ease: 'power2.out',
+                scrollTrigger: { trigger: card, start: 'top 90%', once: true },
+              }
+            )
+          })
         })
       }, containerRef)
     }

@@ -45,7 +45,7 @@ export default function WaitlistForm() {
             />
           </svg>
         </div>
-        <h3 className="font-heading text-[2.5rem] text-lime-50 mb-2">
+        <h3 className="font-heading text-[clamp(3rem,6vw,4rem)] text-lime-400 mb-2">
           You&rsquo;re on the list!
         </h3>
         <p className="text-navy-300">
@@ -67,7 +67,7 @@ export default function WaitlistForm() {
             type="text"
             {...register('name', { required: 'Name is required' })}
             aria-describedby={errors.name ? 'wl-name-error' : undefined}
-            className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+            className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
             placeholder="Dr. Jane Smith"
           />
           {errors.name && (
@@ -89,7 +89,7 @@ export default function WaitlistForm() {
               },
             })}
             aria-describedby={errors.email ? 'wl-email-error' : undefined}
-            className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+            className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
             placeholder="jane@dentalclinic.com"
           />
           {errors.email && (
@@ -108,7 +108,7 @@ export default function WaitlistForm() {
             type="text"
             {...register('clinic', { required: 'Clinic name is required' })}
             aria-describedby={errors.clinic ? 'wl-clinic-error' : undefined}
-            className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+            className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
             placeholder="Smile Dental Care"
           />
           {errors.clinic && (
@@ -126,7 +126,7 @@ export default function WaitlistForm() {
             type="text"
             {...register('country', { required: 'Country is required' })}
             aria-describedby={errors.country ? 'wl-country-error' : undefined}
-            className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
+            className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 placeholder:text-navy-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors"
             placeholder="Romania"
           />
           {errors.country && (
@@ -146,7 +146,7 @@ export default function WaitlistForm() {
           {...register('role', { required: 'Please select your role' })}
           defaultValue=""
           aria-describedby={errors.role ? 'wl-role-error' : undefined}
-          className="w-full bg-navy-800/60 border border-navy-700 rounded-xl px-4 py-3 text-lime-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors appearance-none"
+          className="w-full bg-[#050c10] border border-navy-700 rounded-xl px-4 py-3 text-lime-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus:border-lime-400 transition-colors appearance-none"
         >
           <option value="" disabled className="text-navy-500">
             Select your role

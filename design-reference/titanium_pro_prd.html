@@ -1,0 +1,213 @@
+# Titanium Pro
+
+## Product Overview
+
+**The Pitch:** Perioskoup is the first AI-driven dental companion that bridges the communication gap between clinician and patient. It transforms complex periodontal data into actionable, visual patient habits.
+
+**For:** Forward-thinking dental practices and periodontists who want to increase treatment acceptance and patient compliance through premium technology.
+
+**Device:** desktop
+
+**Design Direction:** **Apple Maximalist.** Massive scale, immersive cropping, and "Bento grid" layouts. It exudes quiet luxury and "old money tech"—precision engineering meets high-end healthcare.
+
+**Inspired by:** Apple iPhone Pro Landing Pages, Linear.app, Raycast.
+
+---
+
+## Screens
+
+Since this is a single-page scrolling experience, "Screens" represent viewport sections.
+
+- **[Section 1] Hero:** Immersive brand introduction with massive scale phone visual.
+- **[Section 2] Comparison:** "A Week in Two Practices" narrative split-screen.
+- **[Section 3] Bento Features:** Functional breakdown using modular grid layout.
+- **[Section 4] Authority & Proof:** Trust signals, award badges, and clinician credentials.
+- **[Section 5] Workflow:** 3-step process visualization with connecting line elements.
+- **[Section 6] Knowledge Hub:** Blog preview cards.
+- **[Section 7] Footer/Waitlist:** Final conversion point with embedded form.
+
+---
+
+## Key Flows
+
+**[Flow name]:** **The "Ah-Ha" Scroll**
+
+1. User lands on **[Hero]** -> Sees enormous "Your Partner in Perio" headline and massive phone crop. Feels immediate premium weight.
+2. User scrolls to **[Comparison]** -> Reads "Old Way vs. Perioskoup Way." Recognizes the pain of current workflows.
+3. User scrolls to **[Bento Features]** -> Explores individual capabilities (AI, Tracking, Dashboard). Understanding deepens.
+4. User clicks sticky **"Join Waitlist"** -> Smooth scrolls to **[Footer]**.
+5. **[Result]** User submits email. Success state triggers subtle lime green glow.
+
+---
+
+<details>
+<summary>Design System</summary>
+
+## Color Palette
+
+- **Primary:** `#C0E57A` - Lime Green (CTAs, key highlights, active states)
+- **Background:** `#0A171E` - Deep Navy (Global page background)
+- **Surface:** `#1D3449` - Slate Blue (Cards, bento modules, inputs)
+- **Text:** `#F5F9EA` - Off-White (Headings, primary body)
+- **Muted:** `#8C9C8C` - Sage Grey (Secondary text, borders, inactive icons)
+- **Dark:** `#050C10` - Deepest shadows, footer background
+
+## Typography
+
+- **Headings (Display):** *Dongle*, Bold, 120px-180px. Tight tracking (-0.04em). Used for graphic impact, almost as image elements.
+- **Headings (Section):** *Gabarito*, Bold, 48px-64px.
+- **Body:** *Gabarito*, Regular, 18px (160% line height). High legibility.
+- **Labels/UI:** *Gabarito*, Medium, 14px (All caps, wide tracking +0.05em).
+
+**Style notes:** 
+- **Glassmorphism is out; Solid surfacing is in.** Cards are opaque #1D3449.
+- **Corner Radius:** Aggressive smoothing. `32px` for large containers, `16px` for inner elements.
+- **Shadows:** Deep, diffused ambient occlusion. No hard drop shadows.
+
+## Design Tokens
+
+```css
+:root {
+  --color-primary: #C0E57A;
+  --color-background: #0A171E;
+  --color-surface: #1D3449;
+  --color-text: #F5F9EA;
+  --color-muted: #8C9C8C;
+  --font-display: 'Dongle', sans-serif;
+  --font-body: 'Gabarito', sans-serif;
+  --radius-lg: 32px;
+  --radius-sm: 12px;
+  --spacing-section: 160px;
+}
+```
+
+</details>
+
+---
+
+<details>
+<summary>Screen Specifications</summary>
+
+### [Section 1] Hero
+
+**Purpose:** Establish "Titanium" authority immediately.
+
+**Layout:** 
+- Left-aligned text content (40% width).
+- Right-aligned image (60% width) that bleeds off the right and bottom edges.
+
+**Key Elements:**
+- **Headline:** "Precision Perio." (*Dongle*, 160px, #F5F9EA). Stacked.
+- **Subhead:** Quote by Dr. Anca Constantin. "The missing link between chairside data and patient habits." (*Gabarito*, 20px, #8C9C8C).
+- **CTA Button:** Solid `#C0E57A` pill. Black text "Join the Waitlist". Arrow icon on hover.
+- **Visual:** iPhone 15 Pro Titanium mockup. Displays the Perioskoup "Daily Score" screen. **Scale:** 120% of viewport height. Top 20% is cut off, bottom 20% is cut off. We see the middle interaction zone.
+- **Badge:** "EFP Innovation Award 2025". Pill shape, transparent border `#8C9C8C`, small star icon.
+
+**Interactions:**
+- **Scroll:** Phone uses Parallax (moves slower than text).
+- **Hover CTA:** Button scales 1.05x, lime becomes brighter `#D4F595`.
+
+---
+
+### [Section 2] Comparison ("A Week in Two Practices")
+
+**Purpose:** Agitate the problem and present the solution side-by-side.
+
+**Layout:** Two-column split. Left column = "The Standard" (Muted). Right column = "With Perioskoup" (Bright).
+
+**Key Elements:**
+- **Section Title:** "A Tale of Two Clinics" (*Dongle*, 96px).
+- **Scenario Rows (4x):**
+  - **Left (Problem):** "Monday: Patient forgets floss instructions." Text #8C9C8C. Icon: `X` (red/muted).
+  - **Right (Solution):** "Monday: Patient receives AI nudge based on pocket depth." Text #F5F9EA. Icon: Check (Lime).
+- **Connector:** Vertical line running down the center. Fades from `#8C9C8C` to `#C0E57A`.
+
+---
+
+### [Section 3] Bento Features
+
+**Purpose:** Show capability breadth in a scannable, modular format.
+
+**Layout:** CSS Grid. 3 columns, 2 rows. Gap: 24px.
+
+**Key Elements:**
+- **Card 1 (Large, 2x2):** **AI Companion.**
+  - **Visual:** Chat interface mockup showing natural language query ("Show me inflammation trends for patient #402").
+  - **Text:** Bottom left. "Analyze. Predict. Prevent."
+- **Card 2 (Tall, 1x2):** **Habit Tracking.**
+  - **Visual:** Vertical progress bars animating up.
+  - **Text:** "Gamified Compliance."
+- **Card 3 (Wide, 2x1):** **Dentist Dashboard.**
+  - **Visual:** Abstract data visualization (waveforms) in Lime Green.
+  - **Text:** "Clinical Oversight."
+- **Card 4 (Small, 1x1):** **Smart Reminders.**
+  - **Visual:** Bell icon with notification badge "2".
+
+**Styling:** All cards `#1D3449` background. `32px` radius. Subtle inner border 1px `#2C465E`.
+
+---
+
+### [Section 4] Authority & Proof
+
+**Purpose:** Validate the product with credentials.
+
+**Layout:** Centered stack.
+
+**Key Elements:**
+- **Award Hero:** Large EFP Logo (European Federation of Periodontology) in monochrome `#F5F9EA`.
+- **Stat:** "30 Clinics" (*Dongle*, 120px, Lime) / "Founding Waitlist" (*Gabarito*, 24px).
+- **Profile:** Circular avatar of Dr. Anca Constantin (grayscale).
+- **Credentials:** "DMD, PhD in Periodontology. Creator of Perioskoup."
+
+---
+
+### [Section 5] Workflow (How it Works)
+
+**Purpose:** Demystify the onboarding process.
+
+**Layout:** Horizontal flow. 3 Steps connected by a spline (curved line).
+
+**Key Elements:**
+- **Step 1:** "Scan." Icon: Intraoral scanner. Text: "Import periodontal chart."
+- **Step 2:** "Analyze." Icon: Brain/Sparkle. Text: "AI identifies risk zones."
+- **Step 3:** "Engage." Icon: Smartphone. Text: "Patient receives custom plan."
+- **The Line:** An animated SVG path (`#C0E57A`) that draws itself from left to right as the user scrolls.
+
+---
+
+### [Section 7] Footer / Waitlist
+
+**Purpose:** Final capture.
+
+**Layout:** Simple, centered container. 
+
+**Key Elements:**
+- **Heading:** "Titanium access closing soon." (*Dongle*, 80px).
+- **Input Field:** Large height (64px). Background `#050C10`. Border `#2C465E`. Text `#F5F9EA`. Placeholder "doctor@clinic.com".
+- **Submit Button:** "Request Access" inside the input field (right aligned). Lime background.
+- **Legal:** "© 2025 Perioskoup. Designed in Europe." (*Gabarito*, 12px, #8C9C8C).
+
+**States:**
+- **Success:** Input fades out, replaced by "Welcome to the future." in Lime text.
+
+</details>
+
+---
+
+<details>
+<summary>Build Guide</summary>
+
+**Stack:** HTML + Tailwind CSS v3
+
+**Build Order:**
+1. **[Section 1] Hero:** Sets the typography scale (Dongle) and the primary visual language (Phone crop). Essential for establishing the "Titanium" vibe.
+2. **[Section 3] Bento Grid:** Complex CSS Grid implementation. Defines the card styling used elsewhere.
+3. **[Section 5] Workflow:** Requires SVG animation logic.
+4. **Rest of page:** Standard layout blocks inheriting established styles.
+
+**Tailwind Config Notes:**
+- Extend `fontFamily` with 'Dongle' and 'Gabarito'.
+- Add custom colors `navy`, `surface`, `lime`.
+- Create utility for `text-giant` (120px+).
+
+</details>

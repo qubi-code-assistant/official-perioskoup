@@ -104,3 +104,60 @@ body {
     opacity: 0;
   }
 }
+
+/* ── Titanium Pro: Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a171e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1d3449;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #234966;
+}
+
+/* ── Titanium Pro: Surface card styling ── */
+.titanium-card {
+  background-color: #1d3449;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 2rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.titanium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Ambient glow utility ── */
+.glow-lime {
+  box-shadow: 0 0 40px -10px rgba(192, 229, 122, 0.2);
+}
+
+/* ── SVG line draw animation ── */
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line 3s ease-out forwards;
+}
+
+/* ── Bounce dots for chat loading ── */
+@keyframes bounce-dot {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+}
+
+.animate-bounce-dot {
+  animation: bounce-dot 1.2s ease-in-out infinite;
+}

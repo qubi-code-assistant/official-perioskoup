@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Titanium Pro - Comparison</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&amp;family=Dongle:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C0E57A", // Lime Green
+                        "primary-hover": "#D4F595",
+                        "background-light": "#f7f8f6",
+                        "background-dark": "#0A171E", // Deep Navy
+                        "surface": "#1D3449", // Slate Blue
+                        "text-main": "#F5F9EA", // Off-White
+                        "text-muted": "#8C9C8C", // Sage Grey
+                        "shadow-dark": "#050C10",
+                    },
+                    fontFamily: {
+                        "display": ["Dongle", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem", // 32px
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Utilities for this design */
+        .text-giant {
+            font-size: clamp(4rem, 8vw, 6rem);
+            line-height: 0.8;
+        }
+        
+        .timeline-glow {
+            box-shadow: 0 0 20px 2px rgba(192, 229, 122, 0.3);
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A171E; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1D3449; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-text-main font-body selection:bg-primary selection:text-background-dark overflow-x-hidden">
+<!-- Top Navigation (Reused from example with theme updates) -->
+<div class="relative flex h-auto w-full flex-col">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#1D3449] bg-background-dark/80 backdrop-blur-md px-6 md:px-10 py-4">
+<div class="flex items-center gap-4 text-text-main">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-[24px]">dentistry</span>
+</div>
+<h2 class="text-text-main text-xl font-bold leading-tight tracking-[-0.015em] font-display text-[28px] mt-1">Titanium Pro</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-text-muted hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Features</a>
+<a class="text-text-muted hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Waitlist</a>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-primary hover:bg-primary-hover transition-colors text-background-dark text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Join Waitlist</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="layout-container flex grow flex-col items-center w-full">
+<!-- SECTION: Comparison -->
+<section class="w-full max-w-[1200px] px-6 py-20 md:py-32 relative">
+<!-- Section Header -->
+<div class="flex flex-col items-center justify-center text-center mb-24 relative z-10">
+<span class="text-primary font-bold uppercase tracking-[0.2em] text-xs mb-4">The new standard</span>
+<h2 class="font-display font-bold text-text-main text-giant tracking-tight">
+                        A Tale of Two Clinics
+                    </h2>
+<p class="text-text-muted text-lg md:text-xl max-w-2xl mt-4 font-light">
+                        Discover how AI-driven insights transform the daily chaos of periodontal care into a streamlined, patient-centric workflow.
+                    </p>
+</div>
+<!-- Comparison Grid -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24 w-full">
+<!-- Central Timeline Line (Desktop Only) -->
+<div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] -ml-[1px] bg-gradient-to-b from-text-muted/20 via-primary/50 to-primary timeline-glow z-0"></div>
+<!-- Column Headers -->
+<div class="hidden md:block text-center pb-8 border-b border-white/5">
+<h3 class="font-display text-4xl text-text-muted opacity-60">The Standard</h3>
+</div>
+<div class="hidden md:block text-center pb-8 border-b border-white/5">
+<h3 class="font-display text-4xl text-text-main text-shadow-sm">With Perioskoup</h3>
+</div>
+<!-- Row 1: Monday -->
+<div class="relative flex flex-col items-end md:pr-12 group">
+<!-- Mobile Header (Only visible on small screens) -->
+<div class="md:hidden w-full text-left mb-2 text-text-muted text-sm uppercase tracking-wider font-bold">The Standard</div>
+<div class="bg-surface/40 border border-white/5 p-8 rounded-2xl w-full max-w-lg transition-all duration-300 hover:bg-surface/60">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-red-500/10 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-red-400 text-[20px]">close</span>
+</div>
+<div>
+<h4 class="text-text-muted font-bold text-lg mb-2">Monday Morning Chaos</h4>
+<p class="text-text-muted/70 leading-relaxed">
+                                        Patient forgets floss instructions given last week. Hygienist spends 15 minutes re-explaining basics, putting the schedule behind.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col items-start md:pl-12 group">
+<!-- Mobile Header (Only visible on small screens) -->
+<div class="md:hidden w-full text-left mb-2 mt-6 text-primary text-sm uppercase tracking-wider font-bold">With Perioskoup</div>
+<div class="bg-surface border border-primary/20 p-8 rounded-2xl w-full max-w-lg shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-primary flex items-center justify-center mt-1 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-background-dark text-[20px] font-bold">check</span>
+</div>
+<div>
+<h4 class="text-text-main font-bold text-lg mb-2">Monday Morning Clarity</h4>
+<p class="text-text-main/90 leading-relaxed">
+                                        Patient receives AI nudge based on pocket depth on Sunday. Arrives prepped with questions about their inflammation trends.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Tuesday -->
+<div class="relative flex flex-col items-end md:pr-12 group">
+<div class="md:hidden w-full text-left mb-2 mt-8 text-text-muted text-sm uppercase tracking-wider font-bold">The Standard</div>
+<div class="bg-surface/40 border border-white/5 p-8 rounded-2xl w-full max-w-lg transition-all duration-300 hover:bg-surface/60">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-red-500/10 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-red-400 text-[20px]">close</span>
+</div>
+<div>
+<h4 class="text-text-muted font-bold text-lg mb-2">Charting Fatigue</h4>
+<p class="text-text-muted/70 leading-relaxed">
+                                        Manual charting errors slow down intake. Assistant struggles to hear measurements over suction noise.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col items-start md:pl-12 group">
+<div class="md:hidden w-full text-left mb-2 mt-6 text-primary text-sm uppercase tracking-wider font-bold">With Perioskoup</div>
+<div class="bg-surface border border-primary/20 p-8 rounded-2xl w-full max-w-lg shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-primary flex items-center justify-center mt-1 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-background-dark text-[20px] font-bold">check</span>
+</div>
+<div>
+<h4 class="text-text-main font-bold text-lg mb-2">Voice-Activated Flow</h4>
+<p class="text-text-main/90 leading-relaxed">
+                                        "3-2-3." Voice-activated charting auto-syncs to the visual dashboard instantly. Zero friction, zero errors.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 3: Wednesday -->
+<div class="relative flex flex-col items-end md:pr-12 group">
+<div class="md:hidden w-full text-left mb-2 mt-8 text-text-muted text-sm uppercase tracking-wider font-bold">The Standard</div>
+<div class="bg-surface/40 border border-white/5 p-8 rounded-2xl w-full max-w-lg transition-all duration-300 hover:bg-surface/60">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-red-500/10 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-red-400 text-[20px]">close</span>
+</div>
+<div>
+<h4 class="text-text-muted font-bold text-lg mb-2">Treatment Stalls</h4>
+<p class="text-text-muted/70 leading-relaxed">
+                                        Treatment acceptance stalls at 40%. Patients don't "feel" the urgency of 5mm pockets because they can't see the risk.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col items-start md:pl-12 group">
+<div class="md:hidden w-full text-left mb-2 mt-6 text-primary text-sm uppercase tracking-wider font-bold">With Perioskoup</div>
+<div class="bg-surface border border-primary/20 p-8 rounded-2xl w-full max-w-lg shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-primary flex items-center justify-center mt-1 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-background-dark text-[20px] font-bold">check</span>
+</div>
+<div>
+<h4 class="text-text-main font-bold text-lg mb-2">Visual Conversion</h4>
+<p class="text-text-main/90 leading-relaxed">
+                                        3D Heatmaps boost acceptance to 85%. Patients see the "red zones" on their own phone and ask: "How do we fix this?"
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 4: Friday -->
+<div class="relative flex flex-col items-end md:pr-12 group">
+<div class="md:hidden w-full text-left mb-2 mt-8 text-text-muted text-sm uppercase tracking-wider font-bold">The Standard</div>
+<div class="bg-surface/40 border border-white/5 p-8 rounded-2xl w-full max-w-lg transition-all duration-300 hover:bg-surface/60">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-red-500/10 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-red-400 text-[20px]">close</span>
+</div>
+<div>
+<h4 class="text-text-muted font-bold text-lg mb-2">Clinician Burnout</h4>
+<p class="text-text-muted/70 leading-relaxed">
+                                        Exhaustion from repetitive explanations. The team feels like they are selling dentistry rather than treating health.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex flex-col items-start md:pl-12 group">
+<div class="md:hidden w-full text-left mb-2 mt-6 text-primary text-sm uppercase tracking-wider font-bold">With Perioskoup</div>
+<div class="bg-surface border border-primary/20 p-8 rounded-2xl w-full max-w-lg shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
+<div class="flex items-start gap-4">
+<div class="shrink-0 size-10 rounded-full bg-primary flex items-center justify-center mt-1 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-background-dark text-[20px] font-bold">check</span>
+</div>
+<div>
+<h4 class="text-text-main font-bold text-lg mb-2">Automated Education</h4>
+<p class="text-text-main/90 leading-relaxed">
+                                        Automated education handles the basics before the patient sits down. The team focuses on complex care and relationships.
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Closing Statement -->
+<div class="mt-24 flex flex-col items-center justify-center text-center">
+<p class="text-text-muted uppercase tracking-widest text-sm mb-6">Ready to upgrade?</p>
+<button class="group flex cursor-pointer items-center justify-center gap-3 rounded-2xl h-14 px-8 bg-surface border border-primary/30 hover:border-primary hover:bg-surface/80 transition-all duration-300 text-text-main text-lg font-bold leading-normal">
+<span>See the Dashboard</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</section>
+</main>
+</div>
+</body></html>

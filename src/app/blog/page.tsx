@@ -49,12 +49,12 @@ export default async function BlogPage({
         }}
       />
 
-      <section className="pt-32 pb-16 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="font-heading text-[clamp(3rem,6vw,5rem)] leading-tight text-lime-50">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
+          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
             Blog
           </h1>
-          <p className="mt-4 text-navy-300 text-lg max-w-2xl">
+          <p className="mt-4 text-navy-400 text-lg max-w-2xl">
             Insights on patient engagement, AI in dentistry, and building healthier
             habits between visits.
           </p>
@@ -63,13 +63,13 @@ export default async function BlogPage({
 
       {/* Category Filters */}
       <section className="px-6 md:px-12 lg:px-20 pb-12">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-3">
+        <div className="max-w-[1200px] mx-auto flex flex-wrap gap-3">
           <Link
             href="/blog"
-            className={`px-5 py-2 rounded-full text-sm transition-colors ${
+            className={`px-5 py-2 rounded-xl text-sm transition-colors ${
               !activeCategory
                 ? 'bg-lime-400 text-navy-950'
-                : 'bg-navy-800/60 text-navy-300 hover:text-lime-50 border border-navy-700/50'
+                : 'bg-navy-800 text-navy-300 hover:text-lime-50 border border-white/5'
             }`}
           >
             All
@@ -78,10 +78,10 @@ export default async function BlogPage({
             <Link
               key={cat}
               href={`/blog?category=${cat}`}
-              className={`px-5 py-2 rounded-full text-sm transition-colors ${
+              className={`px-5 py-2 rounded-xl text-sm transition-colors ${
                 activeCategory === cat
                   ? 'bg-lime-400 text-navy-950'
-                  : 'bg-navy-800/60 text-navy-300 hover:text-lime-50 border border-navy-700/50'
+                  : 'bg-navy-800 text-navy-300 hover:text-lime-50 border border-white/5'
               }`}
             >
               {cat}
@@ -91,10 +91,10 @@ export default async function BlogPage({
       </section>
 
       {/* Post Grid */}
-      <section className="px-6 md:px-12 lg:px-20 pb-24">
-        <div className="max-w-7xl mx-auto">
+      <section className="px-6 md:px-12 lg:px-20 pb-24 md:pb-40">
+        <div className="max-w-[1200px] mx-auto">
           {paginatedPosts.length === 0 ? (
-            <p className="text-navy-300 text-center py-16">
+            <p className="text-navy-400 text-center py-16">
               No posts found in this category yet.
             </p>
           ) : (
@@ -103,7 +103,7 @@ export default async function BlogPage({
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group block bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8 hover:border-lime-400/30 transition-colors"
+                  className="group block bg-navy-800 border border-white/5 rounded-[2rem] p-8 hover:border-lime-400/30 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-lime-400 text-xs uppercase tracking-widest">
@@ -117,7 +117,7 @@ export default async function BlogPage({
                   <h2 className="font-heading text-[clamp(1.5rem,2.5vw,2rem)] text-lime-50 mb-3 leading-tight group-hover:text-lime-400 transition-colors">
                     {post.frontmatter.title}
                   </h2>
-                  <p className="text-navy-300 text-sm leading-relaxed mb-6 line-clamp-3">
+                  <p className="text-navy-400 text-sm leading-relaxed mb-6 line-clamp-3">
                     {post.frontmatter.description}
                   </p>
                   <div className="flex items-center gap-3">
@@ -159,10 +159,10 @@ export default async function BlogPage({
                     <Link
                       key={page}
                       href={href}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm transition-colors ${
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm transition-colors ${
                         page === currentPage
                           ? 'bg-lime-400 text-navy-950'
-                          : 'bg-navy-800/60 text-navy-300 hover:text-lime-50 border border-navy-700/50'
+                          : 'bg-navy-800 text-navy-300 hover:text-lime-50 border border-white/5'
                       }`}
                     >
                       {page}

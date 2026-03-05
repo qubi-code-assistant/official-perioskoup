@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Titanium Pro - Access</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&amp;family=Gabarito:wght@400;500;600;700;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#C0E57A", // Lime Green
+              "primary-hover": "#D4F595",
+              "background-light": "#f7f8f6", // Kept from original token but unused here
+              "background-dark": "#0A171E", // Deep Navy
+              "background-deepest": "#050C10", // Deepest Shadow
+              "surface": "#1D3449", // Slate Blue
+              "surface-border": "#2C465E",
+              "text-main": "#F5F9EA", // Off-White
+              "text-muted": "#8C9C8C", // Sage Grey
+            },
+            fontFamily: {
+              "display": ["Dongle", "sans-serif"],
+              "body": ["Gabarito", "sans-serif"],
+            },
+            borderRadius: {
+              "lg": "1rem", 
+              "xl": "1.5rem", 
+              "2xl": "2rem",
+              "full": "9999px"
+            },
+            spacing: {
+              "18": "4.5rem",
+              "30": "7.5rem",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      /* Custom scrollbar to match the dark aesthetic */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050C10; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1D3449; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2C465E; 
+      }
+      
+      .input-autofill-fix:-webkit-autofill,
+      .input-autofill-fix:-webkit-autofill:hover, 
+      .input-autofill-fix:-webkit-autofill:focus, 
+      .input-autofill-fix:-webkit-autofill:active{
+          -webkit-box-shadow: 0 0 0 30px #050C10 inset !important;
+          -webkit-text-fill-color: #F5F9EA !important;
+          transition: background-color 5000s ease-in-out 0s;
+      }
+    </style>
+</head>
+<body class="bg-background-dark text-text-main font-body antialiased selection:bg-primary selection:text-background-deepest">
+<!-- Section: Footer / Waitlist -->
+<section class="relative flex min-h-[80vh] w-full flex-col items-center justify-center bg-background-deepest overflow-hidden py-24 px-6 md:px-12">
+<!-- Abstract Background Gradient Glow -->
+<div aria-hidden="true" class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="relative w-full max-w-[960px] flex flex-col items-center z-10">
+<!-- Heading Group -->
+<div class="text-center mb-12 space-y-2">
+<span class="inline-block text-primary text-sm md:text-base font-bold tracking-[0.05em] uppercase mb-4 opacity-80">
+                    Membership
+                </span>
+<h2 class="text-text-main font-display font-bold text-[64px] leading-[0.8] tracking-tight md:text-[100px] lg:text-[120px] mb-2 drop-shadow-2xl">
+                    Titanium access closing soon
+                </h2>
+<p class="text-text-muted text-lg md:text-xl font-normal max-w-lg mx-auto leading-relaxed">
+                    Join the inner circle. Be the first to experience the future of periodontal care intelligence.
+                </p>
+</div>
+<!-- Waitlist Form Container -->
+<div class="w-full max-w-[580px] relative group/form">
+<!-- Success State (Initially Hidden, for demo purposes shown with toggle logic concept) -->
+<div class="hidden absolute inset-0 flex items-center justify-center bg-background-deepest z-20 transition-all duration-500" id="success-message">
+<h3 class="text-primary font-display text-[56px] leading-none animate-pulse">Welcome to the future.</h3>
+</div>
+<!-- Active Form State -->
+<form class="relative transition-opacity duration-500" id="active-form" onsubmit="event.preventDefault(); document.getElementById('success-message').classList.remove('hidden'); document.getElementById('active-form').classList.add('opacity-0');">
+<label class="relative flex items-center w-full h-[72px] rounded-full bg-[#050C10] border border-surface-border transition-all duration-300 focus-within:border-primary/50 focus-within:shadow-[0_0_20px_rgba(192,229,122,0.1)] group-hover/form:border-surface-border/80">
+<!-- Icon -->
+<div class="pl-6 pr-3 text-text-muted flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-[24px]">mail</span>
+</div>
+<!-- Input -->
+<input class="input-autofill-fix w-full h-full bg-transparent border-none text-text-main placeholder:text-text-muted/60 text-lg md:text-xl font-normal focus:ring-0 focus:outline-none py-2 pr-[180px]" placeholder="doctor@clinic.com" required="" type="email"/>
+<!-- Embedded Button -->
+<div class="absolute right-2 top-2 bottom-2">
+<button class="h-full px-8 rounded-full bg-primary hover:bg-primary-hover text-background-deepest font-bold text-base tracking-wide transition-all duration-200 transform active:scale-95 flex items-center gap-2 group/btn" type="submit">
+<span>Request Access</span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</label>
+<!-- Helper text -->
+<div class="mt-4 flex items-center justify-center gap-2 text-text-muted text-sm font-medium opacity-60">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Encrypted. No spam. Unsubscribe anytime.</span>
+</div>
+</form>
+</div>
+<!-- Social Proof / Footer Links -->
+<div class="mt-32 w-full border-t border-surface/30 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-text-muted/60">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-text-main">dentistry</span>
+</div>
+<span class="text-xs font-bold tracking-wider uppercase text-text-main">Perioskoup</span>
+</div>
+<div class="text-xs font-medium tracking-wide">
+                    © 2025 Perioskoup. Designed in Europe.
+                </div>
+<div class="flex gap-6">
+<a class="text-xs hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="text-xs hover:text-primary transition-colors" href="#">Terms</a>
+<a class="text-xs hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</div>
+</div>
+</section>
+</body></html>

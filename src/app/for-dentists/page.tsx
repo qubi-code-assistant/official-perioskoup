@@ -76,11 +76,13 @@ export default function ForDentists() {
 
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-[80vh] flex items-center pt-32 pb-24 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto w-full text-center">
-          <p className="text-lime-400 text-sm md:text-base tracking-widest uppercase mb-6">
+        {/* Ambient glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto w-full text-center relative">
+          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
             For Dental Practices
           </p>
-          <h1 className="font-heading text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] text-lime-50 mb-6 max-w-4xl mx-auto">
+          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[1.1] text-lime-50 mb-6 max-w-4xl mx-auto">
             How Much Time Are You Losing?
           </h1>
           <p className="text-navy-300 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10">
@@ -89,7 +91,7 @@ export default function ForDentists() {
           </p>
           <Link
             href="/waitlist"
-            className="inline-block bg-lime-400 text-navy-950 px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-lime-300 transition-colors"
+            className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
           >
             Join the Waitlist
           </Link>
@@ -97,13 +99,13 @@ export default function ForDentists() {
       </section>
 
       {/* ═══════════════════ ROI STATS ═══════════════════ */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-navy-900/30">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
-            <p className="text-lime-400 text-sm uppercase tracking-widest mb-4">
+            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
               The Impact
             </p>
-            <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
+            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
               Results That Speak for Themselves
             </h2>
           </div>
@@ -112,12 +114,12 @@ export default function ForDentists() {
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8 text-center"
+                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8 text-center"
               >
-                <p className="font-heading text-[clamp(3rem,6vw,4.5rem)] text-lime-400 leading-none mb-2">
+                <p className="font-heading text-[clamp(4rem,8vw,6rem)] text-lime-400 leading-none mb-2">
                   {stat.value}
                 </p>
-                <p className="text-navy-300 text-sm leading-relaxed">{stat.label}</p>
+                <p className="text-navy-400 text-sm leading-relaxed">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -125,13 +127,13 @@ export default function ForDentists() {
       </section>
 
       {/* ═══════════════════ BENEFITS ═══════════════════ */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
-            <p className="text-lime-400 text-sm uppercase tracking-widest mb-4">
+            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
               Why Perioskoup
             </p>
-            <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
+            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
               Built for Modern Dental Practices
             </h2>
           </div>
@@ -140,12 +142,12 @@ export default function ForDentists() {
             {BENEFITS.map((benefit) => (
               <div
                 key={benefit.title}
-                className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8"
+                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8"
               >
-                <div className="w-14 h-14 rounded-xl bg-lime-400/10 text-lime-400 flex items-center justify-center mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-lime-400/10 text-lime-400 flex items-center justify-center mb-6">
                   {benefit.icon}
                 </div>
-                <h3 className="font-heading text-[clamp(1.8rem,3vw,2.5rem)] text-lime-50 mb-3 leading-tight">
+                <h3 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-tight">
                   {benefit.title}
                 </h3>
                 <p className="text-navy-300 leading-relaxed">{benefit.description}</p>
@@ -156,8 +158,8 @@ export default function ForDentists() {
       </section>
 
       {/* ═══════════════════ SOCIAL PROOF STRIP ═══════════════════ */}
-      <section className="py-16 md:py-20 px-6 md:px-12 lg:px-20 bg-navy-900/30">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 md:py-20 px-6 md:px-12 lg:px-20 bg-navy-800">
+        <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
             <div className="flex items-center gap-3">
               <svg
@@ -179,7 +181,7 @@ export default function ForDentists() {
               </p>
             </div>
 
-            <div className="w-px h-8 bg-navy-700 hidden md:block" />
+            <div className="w-px h-8 bg-navy-700/50 hidden md:block" />
 
             <div className="flex items-center gap-3">
               <svg
@@ -205,9 +207,11 @@ export default function ForDentists() {
       </section>
 
       {/* ═══════════════════ FINAL CTA ═══════════════════ */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50 mb-6">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20 relative">
+        {/* Ambient glow */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto text-center relative">
+          <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50 mb-6">
             Ready to Transform Your Practice?
           </h2>
           <p className="text-navy-300 text-lg leading-relaxed mb-10">
@@ -215,7 +219,7 @@ export default function ForDentists() {
           </p>
           <Link
             href="/waitlist"
-            className="inline-block bg-lime-400 text-navy-950 px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-lime-300 transition-colors"
+            className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
           >
             Join the Waitlist
           </Link>

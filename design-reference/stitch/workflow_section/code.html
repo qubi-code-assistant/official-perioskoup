@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Titanium Pro - Workflow</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&amp;family=Gabarito:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C0E57A",
+                        "navy": "#0A171E",
+                        "surface": "#1D3449",
+                        "text-main": "#F5F9EA",
+                        "muted": "#8C9C8C",
+                        "dark": "#050C10",
+                    },
+                    fontFamily: {
+                        "display": ["Dongle", "sans-serif"],
+                        "body": ["Gabarito", "sans-serif"],
+                        "ui": ["Gabarito", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "lg": "32px",
+                        "md": "16px",
+                        "sm": "12px",
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles for specificity that Tailwind might miss */
+        body {
+            font-family: 'Gabarito', sans-serif;
+            background-color: #0A171E;
+        }
+        
+        .font-display {
+            font-family: 'Dongle', sans-serif;
+            line-height: 0.8;
+        }
+
+        /* Connecting Line Animation Simulation */
+        .connecting-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 3s ease-out forwards;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 40px -10px rgba(192, 229, 122, 0.3);
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A171E; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1D3449; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-navy text-text-main min-h-screen flex flex-col antialiased selection:bg-primary selection:text-navy overflow-x-hidden">
+<!-- Navbar for Context -->
+<nav class="w-full px-6 py-6 absolute top-0 z-50">
+<div class="max-w-[1400px] mx-auto flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">dentistry</span>
+<span class="text-xl font-bold tracking-tight">Perioskoup</span>
+</div>
+<button class="bg-surface/50 backdrop-blur-md border border-surface text-text-main px-5 py-2 rounded-full text-sm font-medium hover:bg-surface transition-colors">
+                Menu
+            </button>
+</div>
+</nav>
+<!-- Main Workflow Section -->
+<section class="relative min-h-screen flex items-center justify-center py-20 px-4 overflow-hidden">
+<!-- Ambient Background Glows -->
+<div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-surface/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="relative w-full max-w-[1400px] mx-auto flex flex-col items-center z-10">
+<!-- Section Header -->
+<div class="text-center mb-24 md:mb-32">
+<span class="inline-block py-1 px-3 rounded-full border border-muted/30 text-muted text-xs font-bold uppercase tracking-wider mb-4">
+                    Seamless Integration
+                </span>
+<h2 class="font-display text-[80px] md:text-[140px] font-bold text-text-main leading-none">
+                    From Chair <span class="text-primary">to Chat.</span>
+</h2>
+<p class="mt-6 text-muted text-lg md:text-xl max-w-lg mx-auto leading-relaxed">
+                    The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
+                </p>
+</div>
+<!-- Workflow Container -->
+<div class="relative w-full grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
+<!-- Connecting Line SVG (Desktop) -->
+<div class="hidden md:block absolute top-[100px] left-0 w-full h-[200px] pointer-events-none z-0">
+<svg fill="none" height="100%" preserveaspectratio="none" viewbox="0 0 1200 200" width="100%" xmlns="http://www.w3.org/2000/svg">
+<!-- Background Trace Line -->
+<path d="M0 100 C 200 100, 300 40, 600 100 C 900 160, 1000 100, 1200 100" fill="none" stroke="#1D3449" stroke-width="4"></path>
+<!-- Animated Foreground Line -->
+<path class="connecting-line" d="M0 100 C 200 100, 300 40, 600 100 C 900 160, 1000 100, 1200 100" fill="none" stroke="#C0E57A" stroke-linecap="round" stroke-width="4" style="filter: drop-shadow(0px 0px 8px rgba(192, 229, 122, 0.6));"></path>
+</svg>
+</div>
+<!-- Connecting Line SVG (Mobile - Vertical) -->
+<div class="md:hidden absolute top-0 left-[50%] -translate-x-1/2 w-[40px] h-full pointer-events-none z-0">
+<div class="h-full w-[2px] bg-gradient-to-b from-transparent via-surface to-transparent absolute left-1/2 -translate-x-1/2"></div>
+<div class="h-1/2 w-[2px] bg-gradient-to-b from-primary/0 via-primary to-primary/0 absolute left-1/2 -translate-x-1/2 top-0 animate-pulse"></div>
+</div>
+<!-- Step 1: Scan -->
+<div class="group relative flex flex-col items-center text-center z-10">
+<div class="relative mb-8">
+<div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-surface border border-white/5 flex items-center justify-center glow-effect group-hover:scale-105 transition-transform duration-500">
+<!-- Decorative Inner Rings -->
+<div class="absolute inset-0 rounded-full border border-white/5 scale-90"></div>
+<div class="absolute inset-0 rounded-full border border-white/5 scale-75"></div>
+<span class="material-symbols-outlined text-primary text-[64px] md:text-[80px]">
+                                 qr_code_scanner
+                             </span>
+</div>
+<div class="absolute -top-2 -right-2 bg-primary text-navy font-bold font-ui text-sm px-3 py-1 rounded-full">
+                            01
+                        </div>
+</div>
+<h3 class="font-display text-5xl md:text-6xl text-text-main mb-2">Scan</h3>
+<p class="font-body text-muted text-lg max-w-[280px]">
+                        Sync intraoral data instantly from your existing scanner.
+                    </p>
+</div>
+<!-- Step 2: Analyze -->
+<div class="group relative flex flex-col items-center text-center z-10 md:mt-20"> <!-- Offset for wave effect -->
+<div class="relative mb-8">
+<div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-surface border border-white/5 flex items-center justify-center glow-effect group-hover:scale-105 transition-transform duration-500">
+<!-- Decorative Inner Rings -->
+<div class="absolute inset-0 rounded-full border border-white/5 scale-90"></div>
+<div class="absolute inset-0 rounded-full border border-white/5 scale-75"></div>
+<span class="material-symbols-outlined text-primary text-[64px] md:text-[80px]">
+                                auto_awesome
+                            </span>
+</div>
+<div class="absolute -top-2 -right-2 bg-surface border border-muted/50 text-text-main font-bold font-ui text-sm px-3 py-1 rounded-full">
+                            02
+                        </div>
+</div>
+<h3 class="font-display text-5xl md:text-6xl text-text-main mb-2">Analyze</h3>
+<p class="font-body text-muted text-lg max-w-[280px]">
+                        AI maps risk zones &amp; translates perio charts into habits.
+                    </p>
+</div>
+<!-- Step 3: Engage -->
+<div class="group relative flex flex-col items-center text-center z-10">
+<div class="relative mb-8">
+<div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-surface border border-white/5 flex items-center justify-center glow-effect group-hover:scale-105 transition-transform duration-500">
+<!-- Decorative Inner Rings -->
+<div class="absolute inset-0 rounded-full border border-white/5 scale-90"></div>
+<div class="absolute inset-0 rounded-full border border-white/5 scale-75"></div>
+<span class="material-symbols-outlined text-primary text-[64px] md:text-[80px]">
+                                phonelink_ring
+                            </span>
+</div>
+<div class="absolute -top-2 -right-2 bg-surface border border-muted/50 text-text-main font-bold font-ui text-sm px-3 py-1 rounded-full">
+                            03
+                        </div>
+</div>
+<h3 class="font-display text-5xl md:text-6xl text-text-main mb-2">Engage</h3>
+<p class="font-body text-muted text-lg max-w-[280px]">
+                        Patients receive actionable nudges on their device.
+                    </p>
+</div>
+</div>
+<!-- Bottom CTA -->
+<div class="mt-24 md:mt-32">
+<button class="group flex items-center gap-3 bg-transparent border border-muted/30 hover:border-primary text-text-main px-8 py-4 rounded-full transition-all duration-300 hover:bg-surface/50">
+<span class="font-ui font-medium text-lg tracking-wide">Explore Integration</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">
+                        arrow_forward
+                    </span>
+</button>
+</div>
+</div>
+</section>
+</body></html>

@@ -109,12 +109,14 @@ export default function FeaturesPage() {
       ))}
 
       {/* ═══════════════════ HERO ═══════════════════ */}
-      <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lime-400 text-sm uppercase tracking-widest mb-4">
+      <section className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
+        {/* Ambient glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto text-center relative">
+          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
             Platform Overview
           </p>
-          <h1 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
+          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
             Features Built for Dental Teams
           </h1>
           <p className="mt-6 text-navy-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -129,18 +131,16 @@ export default function FeaturesPage() {
       {FEATURES.map((feature, index) => (
         <section
           key={feature.label}
-          className={`py-24 md:py-32 px-6 md:px-12 lg:px-20 ${
-            index % 2 === 0 ? 'bg-navy-900/30' : ''
-          }`}
+          className="py-24 md:py-40 px-6 md:px-12 lg:px-20"
         >
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1200px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Text side */}
               <div className={index % 2 !== 0 ? 'lg:order-2' : ''}>
-                <p className="text-lime-400 text-sm uppercase tracking-widest mb-4">
+                <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
                   {feature.label}
                 </p>
-                <h2 className="font-heading text-[clamp(1.8rem,3vw,2.5rem)] text-lime-50 leading-tight mb-6">
+                <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 leading-tight mb-6">
                   {feature.title}
                 </h2>
                 <ul className="space-y-4">
@@ -155,8 +155,10 @@ export default function FeaturesPage() {
 
               {/* Visual side */}
               <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
-                <div className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8 flex items-center justify-center aspect-[4/3]">
-                  <div className="w-20 h-20 rounded-2xl bg-lime-400/10 text-lime-400 flex items-center justify-center">
+                <div className="bg-navy-800 border border-white/5 rounded-[2rem] p-8 flex items-center justify-center aspect-[4/3] relative overflow-hidden">
+                  {/* Ambient glow inside card */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-lime-400/5 via-transparent to-transparent pointer-events-none" />
+                  <div className="w-14 h-14 rounded-2xl bg-lime-400/10 text-lime-400 flex items-center justify-center relative">
                     {feature.icon}
                   </div>
                 </div>
@@ -167,18 +169,20 @@ export default function FeaturesPage() {
       ))}
 
       {/* ═══════════════════ CTA BANNER ═══════════════════ */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50 mb-6">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20 relative">
+        {/* Ambient glow */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto text-center relative">
+          <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50 mb-6">
             Ready to See It in Action?
           </h2>
-          <p className="text-navy-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-navy-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
             Join 30+ clinics already on the waitlist. Get early access and lifetime
             early-adopter pricing when we launch.
           </p>
           <Link
             href="/waitlist"
-            className="inline-block bg-lime-400 text-navy-950 px-8 py-3.5 rounded-full text-lg font-semibold hover:bg-lime-300 transition-colors"
+            className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
           >
             Join the Waitlist
           </Link>
@@ -186,21 +190,24 @@ export default function FeaturesPage() {
       </section>
 
       {/* ═══════════════════ FAQ ═══════════════════ */}
-      <section className="py-24 md:py-32 px-6 md:px-12 lg:px-20 bg-navy-900/30">
-        <div className="max-w-3xl mx-auto">
+      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
+            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+              FAQ
+            </p>
+            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
               Frequently Asked Questions
             </h2>
           </div>
 
-          <div className="space-y-6">
+          <div className="max-w-3xl mx-auto space-y-6">
             {FAQS.map((faq) => (
               <div
                 key={faq.question}
-                className="bg-navy-800/40 border border-navy-700/50 rounded-2xl p-8"
+                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8"
               >
-                <h3 className="font-heading text-[clamp(1.5rem,2.5vw,2rem)] text-lime-50 mb-3 leading-tight">
+                <h3 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-tight">
                   {faq.question}
                 </h3>
                 <p className="text-navy-300 leading-relaxed">{faq.answer}</p>

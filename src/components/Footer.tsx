@@ -51,7 +51,7 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-navy-700/50 bg-navy-950">
+    <footer className="border-t border-navy-800/50 bg-[#050c10]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
@@ -63,7 +63,7 @@ export default function Footer() {
               height={32}
               className="mb-4"
             />
-            <p className="text-navy-300 text-sm leading-relaxed max-w-xs">
+            <p className="text-navy-400 text-sm leading-relaxed max-w-xs">
               AI dental companion building stronger connections between dentists
               and patients, one habit at a time.
             </p>
@@ -72,7 +72,7 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([group, links]) => (
             <div key={group}>
-              <p className="text-lime-50 text-sm mb-4 tracking-wide uppercase">
+              <p className="text-lime-50 text-xs font-semibold mb-4 tracking-[0.1em] uppercase">
                 {group}
               </p>
               <ul className="space-y-3">
@@ -80,7 +80,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-navy-300 hover:text-lime-400 transition-colors text-sm"
+                      className="text-navy-400 hover:text-lime-400 transition-colors text-sm"
                     >
                       {link.label}
                     </Link>
@@ -92,9 +92,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-navy-700/50">
-          <p className="text-navy-300 text-sm">
-            &copy; {new Date().getFullYear()} Perioskoup. All rights reserved.
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-navy-800/50">
+          <p className="text-navy-500 text-xs tracking-wide">
+            &copy; {new Date().getFullYear()} Perioskoup. Designed in Europe.
           </p>
           <div className="flex items-center gap-4">
             {SOCIAL_LINKS.map((social) => (
@@ -104,7 +104,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="text-navy-300 hover:text-lime-400 transition-colors"
+                className="text-navy-500 hover:text-lime-400 transition-colors"
               >
                 {social.icon}
               </a>
