@@ -1,333 +1,162 @@
 # CLAUDE.md — official-perioskoup
 
-## Project Overview
-**Perioskoup Official Website** — Apple-quality presentation site for an AI dental companion app.
-Dentist-focused B2B SaaS. Pre-revenue, 30-clinic waitlist, March 2026 launch.
+Apple-quality website for Perioskoup, an AI dental companion. Dentist-focused B2B SaaS.
+Pre-revenue, 30-clinic waitlist, March 2026 launch. Primary market: Romania (English content covers UK/EU).
 
-## Tech Stack
-- **Framework**: Next.js 14 (App Router, SSG/ISR for marketing pages)
-- **Styling**: Tailwind CSS v4 + custom design tokens
-- **Animations**: GSAP + ScrollTrigger, Motion.dev (Framer Motion)
-- **Fonts**: Dongle-Bold (headings, NO fontWeight ever), Gabarito (body) via next/font
-- **Deployment**: Vercel
-- **CMS/Blog**: MDX or Contentlayer for blog posts (SEO-optimised)
-- **Forms**: React Hook Form + server action or API route for waitlist
-
-## Design System (LOCKED — never override)
-```
-Background:    #0A171E (deep navy)
-Surface:       #1D3449 (card backgrounds)
-Accent/CTA:    #C0E57A (lime green — all CTAs, highlights)
-Text Primary:  #F5F9EA (off-white)
-Text Secondary:#8C9C8C (muted green-grey)
-Border:        #234966 (subtle blue)
-Primary:       #3578AA (link blue)
-```
-- Heading sizes 30–40% larger than normal
-- Apple-level whitespace: generous padding, breathing room
-- Dark theme throughout — premium dental tech feel
-- Quiet luxury: no flashy gradients, no cluttered layouts
-
-## Brand Voice
-- Clinical authority meets modern tech
-- Dr. Anca Constantin is the named expert — every clinical claim attributed to her
-- EFP Award quote MUST appear prominently: "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient adherence to treatment, which leads to poor outcomes."
-- Trust signals: EFP logo, Dr. Anca's credentials, real app screenshots
-- No marketing fluff in llms.txt — factual only
-
-## Site Architecture (Pages)
-
-### Core Pages
-1. **/** — Homepage (hero with Dr. Anca quote + app screenshot, value props, social proof, waitlist CTA)
-2. **/features** — Detailed feature breakdown (patient app, dentist dashboard, AI companion)
-3. **/for-dentists** — B2B landing page (ROI calculator, practice benefits, case studies)
-4. **/pricing** — Tiered pricing (Starter €39/mo, Growth €89/mo, Pro €199/mo) — BLURRED in beta
-5. **/about** — Team page (Dr. Anca, Eduard, company story)
-6. **/blog** — MDX blog with categories (Clinical, Product, Industry)
-7. **/blog/[slug]** — Individual blog posts with FAQ schema, author attribution
-8. **/contact** — Contact form + clinic onboarding inquiry
-9. **/waitlist** — Dedicated waitlist signup page
-10. **/privacy** — Privacy policy
-11. **/terms** — Terms of service
-
-### SEO/GEO Pages
-12. **/llms.txt** — AI crawler factual overview (see appendix in SEO strategy)
-13. **/robots.txt** — Allow all AI crawlers
-14. **/sitemap.xml** — Auto-generated
-
-### Future (post-launch)
-- **/case-studies/[slug]** — Individual clinic success stories
-- **/resources** — Downloadable guides, whitepapers
-- **/ro** — Romanian language variant (hreflang)
-
-## SEO Requirements (from Master Strategy)
-- **Category creation**: Own "AI dental companion" in search — zero competition now
-- **Schema types** (implement in order):
-  1. MedicalOrganization (homepage)
-  2. Physician (Dr. Anca — sameAs EFP, ORCID, Google Scholar)
-  3. SoftwareApplication (features page)
-  4. FAQPage (every content page)
-  5. Article + MedicalWebPage (blog posts)
-  6. BreadcrumbList (all pages)
-- **Core Web Vitals**: Must pass all three thresholds
-- **hreflang**: en-GB (primary), en (default), ro (future)
-- **IndexNow**: Submit on every deploy
-- **Open Graph + Twitter cards**: Every page
-- **Structured data testing**: Validate with Google Rich Results Test
-
-## GEO (Generative Engine Optimisation)
-- Deploy `/llms.txt` at launch
-- Allow all AI crawlers in robots.txt (GPTBot, ClaudeBot, PerplexityBot, Google-Extended)
-- FAQ schema on every content page
-- "Answer capsules" after every H2 (brief, factual summary paragraph)
-- Dr. Anca's EFP quote prominent on site (AI engines cite named experts)
-- Minimum 3 citable statistics per blog post with named sources
-
-## Content Strategy
-- **Pillar pages**: "AI in Dentistry", "Patient Compliance", "Periodontal Home Care"
-- **Blog cadence**: 2 posts/week minimum at launch
-- **Every blog post must have**: Author (Dr. Anca for clinical), FAQ schema, 3+ internal links, 3+ statistics with sources, answer capsule after each H2
-- **Primary market**: Romania (English content covers UK/EU automatically)
-
-## Homepage Structure (Apple-inspired)
-1. **Hero**: Dr. Anca's quote + app screenshot floating + waitlist CTA
-2. **Problem/Solution**: "A Week in Two Practices" (with/without Perioskoup comparison)
-3. **Features showcase**: 3-4 key features with scroll-triggered animations
-4. **Social proof**: EFP Award badge, 30-clinic waitlist counter, testimonial
-5. **How it works**: 3-step flow with animated illustrations
-6. **For Dentists CTA**: ROI-focused section linking to /for-dentists
-7. **Blog preview**: Latest 3 posts
-8. **Final CTA**: Waitlist form with "Free for early adopters"
-
-## Animation Guidelines
-- GSAP ScrollTrigger for scroll-based reveals
-- Motion.dev for component-level transitions
-- Respect `prefers-reduced-motion` — disable all animations
-- No autoplay video on mobile (performance)
-- Parallax depth on hero only — subtle, not distracting
-- Page transitions: smooth fade/slide between routes
-
-## Mobile Responsiveness
-- Mobile-first design
-- Hamburger nav on mobile
-- Touch-friendly CTAs (min 44px tap targets)
-- No horizontal scroll ever
-- Images: next/image with responsive srcset
-- Lazy load below-fold content
-
-## Waitlist Form
-- Fields: Name, Email, Clinic Name (optional), Country, Role (Dentist/Clinic Manager/Other)
-- Store in: Vercel Postgres or external (Brevo for email marketing)
-- Confirmation: Thank you page + confirmation email via Brevo
-- Double opt-in for GDPR compliance
-
-## Key Files
-- `src/constants/colors.ts` — All color tokens
-- `src/constants/typography.ts` — Font config
-- `src/constants/spacing.ts` — Spacing scale
-- `src/lib/schema.ts` — All JSON-LD schema generators
-- `src/content/blog/` — MDX blog posts
-- `public/app-screens/` — Real app screenshots
-- `public/logo-brand.svg` — Perioskoup logo
+## Stack
+Next.js 14 App Router · Tailwind CSS v4 · GSAP + ScrollTrigger · Motion.dev · MDX blog · Vercel
 
 ## Commands
-```bash
-npm run dev        # Local development (localhost:3000)
-npm run build      # Production build
-npm run lint       # ESLint
-npm run start      # Start production server
+```
+npm run dev          # localhost:3000
+npm run build        # production
+npm run test         # e2e + visual regression
+npm run test:e2e     # playwright e2e
+npm run test:visual  # playwright visual regression
 ```
 
-## Environment Variables
+## Design System — LOCKED
 ```
-NEXT_PUBLIC_SITE_URL=https://perioskoup.com
-BREVO_API_KEY=           # For waitlist email
-INDEXNOW_KEY=            # For search engine notification
+Background:  #0A171E    Surface:    #1D3449    Accent/CTA: #C0E57A
+Text:        #F5F9EA    Secondary:  #8C9C8C    Border:     #234966
+Primary:     #3578AA
 ```
 
-## DO NOT
-- Override the design system colors
-- Use fontWeight on Dongle-Bold headings
-- Create a Google Business Profile (no UK office — violates guidelines)
-- Unblur pricing until launch
-- Use `en-EU` as hreflang (not valid)
-- Put marketing fluff in llms.txt
-- Autoplay video on mobile
-- Use lorem ipsum anywhere — all copy must be real
+### Full Tailwind @theme scales
+```css
+--color-lime-50:#f5f9ea --color-lime-100:#f3fcde --color-lime-200:#eeffcc
+--color-lime-300:#e0ffab --color-lime-400:#c0e57a --color-lime-500:#8ad33d
+--color-lime-600:#6faa29 --color-lime-700:#5a8c20 --color-lime-800:#466d18 --color-lime-900:#345210
 
-## Content Matrix (from Niche Ownership Roadmap)
-Source: https://periosroad-n7mrkl3e.manus.space/
+--color-navy-50:#e8eef4 --color-navy-100:#c5d4e3 --color-navy-200:#9db5ce
+--color-navy-300:#7596b8 --color-navy-400:#5580a6 --color-navy-500:#3578aa
+--color-navy-600:#2f5f84 --color-navy-700:#234966 --color-navy-800:#1d3449
+--color-navy-900:#12222d --color-navy-950:#0a171e
+```
 
-### 5 Content Pillars
-1. **P1: Periodontal Reality** — Great clinical work + absent home support = poor outcomes
-2. **P2: Patient Behavior & Communication** — Understanding the patient journey
-3. **P3: Care Beyond the Chair** — Between-visit engagement solutions
-4. **P4: AI as a Tool** — Technology supporting dental care
-5. **P5: Clinician Journey & Reflection** — The dentist's perspective
+### Motion tokens
+```css
+--duration-fast:200ms --duration-medium:400ms --duration-slow:600ms
+--ease-out:cubic-bezier(0.16,1,0.3,1) --ease-spring:cubic-bezier(0.34,1.56,0.64,1)
+--stagger-fast:50ms --stagger-medium:100ms
+```
 
-### Content Inventory
-- 50 Hooks (10 per pillar) — mix of Contrarian, Question, Pain, Statistic, Mistake, Story
-- 25 Meets (5 per pillar) — Problem-Agitate-Solve, Story with Lesson, Framework/List, Myth-Bust, Before-After
-- 10 CTAs (2 per pillar) — Soft + Direct variants
-- Each outputs to: 🎬 Instagram/TikTok + 💼 LinkedIn
-- Recombination: 125+ video scripts, 125+ LinkedIn posts, 25 carousels, 25 blog foundations
+### Fonts
+- Headings: `Dongle-Bold` via next/font — **NEVER use fontWeight on Dongle**
+- Body: `Gabarito` via next/font — display: swap
+- Heading sizes 30-40% larger than normal
 
-### Key SEO Keywords (from roadmap)
-- "AI dental companion app" — KD 5, near-zero competition
-- "between-visit patient engagement dentistry" — KD 2, unoccupied
-- "dental habit tracking app" — KD 10
-- "dental patient engagement software" — KD 10
-- "improve dental patient adherence" — KD 20
-- "periodontal maintenance at home" — KD 30
-- "gum disease self care" — KD 40
-- "AI in periodontology" — KD 25
-- "periodontal patient engagement tools" — KD 8
+## Pages
+| Route | Purpose |
+|-------|---------|
+| `/` | Homepage — hero + Dr. Anca quote + comparison + features + social proof + waitlist CTA |
+| `/features` | Patient App, Dentist Dashboard, AI Companion detail |
+| `/for-dentists` | B2B landing — ROI stats, benefits, waitlist |
+| `/pricing` | 3 tiers BLURRED behind "We're in Beta" overlay |
+| `/about` | Team + story + values + EFP award |
+| `/blog` | MDX blog grid with category filters |
+| `/blog/[slug]` | Individual post with FAQ schema + author |
+| `/contact` | Contact form |
+| `/waitlist` | Dedicated signup form |
+| `/privacy` `/terms` | Legal pages |
+| `/llms.txt` | Factual AI crawler overview — NO marketing fluff |
+| `/feed.xml` | RSS feed |
 
-### Competitive Landscape
-- Dentally — Cloud PMS (no between-visit)
-- Hello Pearl — Diagnostic Imaging AI (no engagement)
-- CareStack — Practice Management (no patient companion)
-- PerioPredict — Clinical Staging (minimal overlap)
-- **Perioskoup — Between-Visit AI Companion (CATEGORY CREATOR)**
+## Pricing (BLURRED — replicate exactly behind blur-[6px])
+1. **Starter** €49/mo — 50 patients, Basic AI guidance, Email support
+2. **Professional** €99/mo (Most Popular) — 200 patients, Advanced AI insights, Priority support, Custom branding
+3. **Enterprise** Custom — Unlimited patients, API access, multi-location
+Overlay: "We're in Beta" + "Join our founding clinics for lifetime early-adopter pricing" + CTA
 
-### Timeline Targets
-- Weeks 1-4: Foundation — first 20-30 pieces, domain indexed
-- Months 2-3: Compounding — blog reinforces social, EFP backlink amplifies DR
-- Months 4-6: Expansion — guest posts on dental publications, DR 25-30
-- Months 6-12: Dominance — DR 35-45, AI citation ownership
+## Team (photos in public/team/)
+- **Dr. Anca Laura Constantin** — Periodontist & CEO · `team-anca.webp` · linkedin.com/in/anca-constantin-99800633b/
+- **Eduard Ciugulea** — CGO & Technical Co-Founder · `team-eduard.webp` · linkedin.com/in/eduard-ciugulea/
+- **Petrica Nancu** — CTO & Head of AI · `team-petrica.webp` · linkedin.com/in/petrica-nancu-b16468241/
 
-## SaMD Compliance (CRITICAL — follow strictly)
-Perioskoup must NEVER be positioned as a medical device. Use SAFE language only.
+## Brand Quote (MUST appear on homepage hero)
+> "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient adherence to treatment, which leads to poor outcomes."
+> — Dr. Anca Constantin, Co-Founder & Periodontist | EFP Digital Innovation Award Winner 2025
 
-### Safe Positioning
-✅ Habit tracking · ✅ Between-visit engagement · ✅ Communication companion
-✅ Educational content · ✅ Motivation & reminders · ✅ Routine tracking
+## Values
+Clinician-First · Privacy-First (GDPR from day one) · Outcome-Focused
 
-### Forbidden Language (triggers SaMD classification)
-✕ "diagnose", "detect", "treat", "cure", "manage [disease]"
-✕ "monitor inflammation", "track bleeding points"
-✕ "clinical management", "therapy", "therapeutic"
-✕ "dental patient compliance software" → USE "dental patient engagement platform"
-✕ "track gum health" → USE "build healthy gum habits"
-✕ "manage your gum disease" → USE "support your daily oral care routine"
-✕ "personalized clinical guidance" → USE "supportive reminders and encouragement"
-✕ "adherence dashboard" → USE "visibility into engagement patterns"
-✕ "extending your care" → USE "extending your connection with patients"
+## Social
+LinkedIn: /company/perioskoup · Instagram: /perioskoup · X: /perioskoup
 
-## Source Assets (from existing landing page)
-The previous landing page is at `~/Projects/perioskoup-landing-vercel/`. Copy these assets:
-
-### Images to copy to public/
+## Assets (copy from existing repo)
 ```bash
 cp ~/Projects/perioskoup-landing-vercel/public/logo-brand.svg public/
 cp ~/Projects/perioskoup-landing-vercel/public/logo-white.svg public/
-cp ~/Projects/perioskoup-landing-vercel/public/app-logo.webp public/
-cp ~/Projects/perioskoup-landing-vercel/public/app-logomark.webp public/
 cp ~/Projects/perioskoup-landing-vercel/public/app_image.webp public/app-screens/
 cp ~/Projects/perioskoup-landing-vercel/public/app_image-mobile.webp public/app-screens/
 cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony.webp public/
 cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony-mobile.webp public/
-cp ~/Projects/perioskoup-landing-vercel/public/apple-touch-icon.png public/
 cp ~/Projects/perioskoup-landing-vercel/public/favicon.ico public/
-cp ~/Projects/perioskoup-landing-vercel/public/favicon-16.png public/
-cp ~/Projects/perioskoup-landing-vercel/public/favicon-32.png public/
+cp ~/Projects/perioskoup-landing-vercel/public/apple-touch-icon.png public/
 ```
 
-### Exact Color Scale (Tailwind v4 @theme)
-```css
-/* Lime scale */
---color-lime-50: #f5f9ea;   --color-lime-100: #f3fcde;
---color-lime-200: #eeffcc;  --color-lime-300: #e0ffab;
---color-lime-400: #c0e57a;  --color-lime-500: #8ad33d;
---color-lime-600: #6faa29;  --color-lime-700: #5a8c20;
---color-lime-800: #466d18;  --color-lime-900: #345210;
+## SEO
+- Schema (in order): MedicalOrganization, Physician, SoftwareApplication, FAQPage, Article, BreadcrumbList
+- hreflang: en-GB primary, en default
+- robots.txt: allow GPTBot, ClaudeBot, PerplexityBot, Google-Extended
+- /llms.txt: factual markdown for AI crawlers
+- Every page: unique title + description, OG + Twitter cards, canonical URL
+- Every blog post: 3+ stats with sources, FAQ schema, answer capsules after H2s, 3+ internal links
+- Core Web Vitals: LCP<2.5s, FID<100ms, CLS<0.1
+- First load JS < 200KB
 
-/* Navy scale */
---color-navy-50: #e8eef4;   --color-navy-100: #c5d4e3;
---color-navy-200: #9db5ce;  --color-navy-300: #7596b8;
---color-navy-400: #5580a6;  --color-navy-500: #3578aa;
---color-navy-600: #2f5f84;  --color-navy-700: #234966;
---color-navy-800: #1d3449;  --color-navy-900: #12222d;
---color-navy-950: #0a171e;
+## Target Keywords
+| Keyword | KD |
+|---------|-----|
+| AI dental companion app | 5 |
+| between-visit patient engagement dentistry | 2 |
+| dental habit tracking app | 10 |
+| dental patient engagement software | 10 |
+| periodontal maintenance at home | 30 |
+| periodontal patient engagement tools | 8 |
 
-/* Named aliases */
---color-mint: #8ad33d;
---color-darkgreen: #6faa29;
---color-nebula: #0a171e;
---color-pale: #c5d4e3;
-```
+## SaMD Compliance — CRITICAL
+Perioskoup is wellness/engagement, NOT a medical device. Use SAFE language only.
 
-### Motion Design Tokens
-```css
---duration-instant: 100ms;  --duration-fast: 200ms;
---duration-medium: 400ms;   --duration-slow: 600ms;
---duration-slower: 800ms;
+✅ SAFE: habit tracking, engagement, educational content, reminders, routine tracking, connection
+✕ BANNED: diagnose, detect, treat, cure, manage [disease], monitor inflammation, track bleeding, compliance, adherence, clinical guidance, therapeutic
 
---ease-out: cubic-bezier(0.16, 1, 0.3, 1);
---ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
---ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
---ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+| ✕ Never say | ✓ Say instead |
+|-------------|---------------|
+| dental patient compliance software | dental patient engagement platform |
+| track gum health | build healthy gum habits |
+| manage your gum disease | support your daily oral care routine |
+| monitor inflammation | stay consistent with your routine |
+| adherence dashboard | visibility into engagement patterns |
+| extending your care | extending your connection with patients |
 
---stagger-fast: 50ms;  --stagger-medium: 100ms;  --stagger-slow: 150ms;
-```
+## Homepage Structure (Apple scroll storytelling)
+1. Hero — Dr. Anca quote + floating app screenshot + parallax + waitlist CTA
+2. Problem/Solution — "A Week in Two Practices" with/without comparison cards
+3. Features — 4 features with scroll-triggered reveals
+4. Social Proof — EFP Award + 30-clinic counter + credentials
+5. How It Works — 3 animated steps
+6. Blog Preview — 3 latest posts
+7. Final CTA — Waitlist form
 
-### Pricing Tiers (BLURRED — replicate exactly)
-Three tiers behind `blur-[6px] select-none pointer-events-none`:
-1. **Starter** — €49/month — Up to 50 patients, Basic AI guidance, Email support
-2. **Professional** (Most Popular, featured) — €99/month — Up to 200 patients, Advanced AI insights, Priority support, Custom branding
-3. **Enterprise** — Custom pricing — Unlimited patients, API access, multi-location
+## Animation Rules
+- GSAP ScrollTrigger for scroll reveals
+- Motion.dev for component transitions
+- `prefers-reduced-motion` → disable ALL animations
+- No autoplay video on mobile
+- Parallax on hero only — subtle
 
-Overlay: "We're in Beta" card with "Join our founding clinics and get lifetime early-adopter pricing" + CTA button
+## Waitlist Form
+Fields: Name, Email, Clinic (optional), Country, Role (Dentist/Clinic Manager/Other)
+Double opt-in for GDPR.
 
-### Award Section
-- Image: `award_ceremony.webp` (mobile: `award_ceremony-mobile.webp`)
-- Alt: "Perioskoup AI Dental Companion Team Receiving 3rd Prize at EFP Digital Innovation Award 2025 at EuroPerio11 Vienna"
-- Quote after award: Acknowledgment to Prof. Sculean and organizing team
-
-### Team/Founders
-- **Dr. Anca Laura Constantin** — Co-Founder, Periodontist, EFP Award Winner
-- **Eduard Ciugulea** — Co-Founder, Tech Lead
-- No headshot images available yet — use initials/placeholder circles
-
-### Existing Pages to Reference
-The old site has these pages with content to port/improve:
-- `index.html` — Main landing (hero, comparison, features, award, pricing, FAQ)
-- `about.html` — About page
-- `features.html` — Features detail
-- `contact.html` — Contact form
-- `blog/` — Blog directory
-- `signup.html` — Waitlist signup
-- `calculator.html` — ROI calculator for dentists
-- `privacy.html` + `terms.html` — Legal pages
-- `periochamp.html` — Gamification page
-
-### FAQ Content (from existing site schema)
-Port these FAQs with updated SaMD-safe language:
-1. What is an AI dental companion?
-2. Is Perioskoup GDPR compliant?
-3. How does Perioskoup help dentists?
-4. What does Perioskoup cost?
-5. Can it be used for periodontal patients?
-6. How does it improve patient engagement?
-7. What languages are supported?
-8. How do I get started?
-
-### Team Photos (already in public/team/)
-- `public/team/team-anca.webp` — Dr. Anca Laura Constantin (Periodontist & CEO)
-- `public/team/team-eduard.webp` — Eduard Ciugulea (CGO & Technical Co-Founder)
-- `public/team/team-petrica.webp` — Petrica Nancu (CTO & Head of AI)
-
-### Team Bios
-- **Dr. Anca Laura Constantin** — Periodontist & CEO. Practicing periodontist with a passion for patient education. Frustrated by the cycle of repeat hygiene coaching, Anca envisioned an AI companion that could extend care beyond the chair. LinkedIn: linkedin.com/in/anca-constantin-99800633b/
-- **Eduard Ciugulea** — CGO & Technical Co-Founder. Full-stack developer with 5+ years building web applications. Eduard brings the technical expertise to turn clinical insights into a powerful, user-friendly platform. LinkedIn: linkedin.com/in/eduard-ciugulea/
-- **Petrica Nancu** — CTO & Head of AI. AI specialist with 5+ years of experience building intelligent systems. Petrica powers the conversational AI that makes Perioskoup's patient guidance feel natural and effective. LinkedIn: linkedin.com/in/petrica-nancu-b16468241/
-
-### Company Values (from About page)
-- **Clinician-First** — Built by clinicians who understand real practice challenges
-- **Privacy-First** — GDPR compliant from day one, data encrypted, never sold
-- **Outcome-Focused** — Measured by patient outcomes, fewer relapses, healthier gums
-
-### Social Links
-- LinkedIn: linkedin.com/company/perioskoup
-- Instagram: instagram.com/perioskoup
-- X/Twitter: x.com/perioskoup
+## DO NOT
+- Override design system colors
+- Use fontWeight on Dongle
+- Create Google Business Profile (no UK office)
+- Show pricing clearly (keep blurred)
+- Use `en-EU` as hreflang
+- Put marketing fluff in llms.txt
+- Autoplay video on mobile
+- Use lorem ipsum — all copy must be real
+- Use "compliance", "diagnose", "treat" in user-facing copy
