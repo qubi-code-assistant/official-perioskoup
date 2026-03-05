@@ -25,77 +25,55 @@ export default function WaitlistPage() {
         }}
       />
 
-      <section className="pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto">
+      <section className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20 overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto relative">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
+            <div data-gsap="fade-up" className="text-center mb-12">
+              <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-4">
                 Early Access
-              </p>
-              <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
+              </span>
+              <h1 className="font-heading text-[clamp(4rem,10vw,7rem)] leading-[0.8] text-lime-50">
                 Join the Waitlist
               </h1>
-              <p className="mt-4 text-navy-300 text-lg max-w-xl mx-auto">
+              <p className="mt-6 text-navy-300 text-lg max-w-xl mx-auto">
                 Be among the first dental practices to use Perioskoup. Early
                 adopters get lifetime founding-member pricing.
               </p>
             </div>
 
             {/* Trust signals */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mb-12">
-              <div className="flex items-center gap-2 text-navy-400 text-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  className="w-5 h-5 text-lime-400"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                30+ clinics already joined
-              </div>
-              <div className="flex items-center gap-2 text-navy-400 text-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  className="w-5 h-5 text-lime-400"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                No credit card required
-              </div>
-              <div className="flex items-center gap-2 text-navy-400 text-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  className="w-5 h-5 text-lime-400"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                EFP Award Winner 2025
-              </div>
+            <div data-gsap="fade-up" className="flex flex-wrap items-center justify-center gap-6 mb-12">
+              {[
+                '30+ clinics already joined',
+                'No credit card required',
+                'EFP Award Winner 2025',
+              ].map((text) => (
+                <div key={text} className="flex items-center gap-2 text-navy-400 text-sm">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    className="w-5 h-5 text-lime-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                  {text}
+                </div>
+              ))}
             </div>
 
-            <WaitlistForm />
+            <div data-gsap="fade-up">
+              <WaitlistForm />
+            </div>
 
-            <p className="text-navy-400 text-xs text-center mt-6">
+            <p className="text-navy-500 text-xs text-center mt-6">
               No spam, ever. Read our{' '}
               <a
                 href="/privacy"

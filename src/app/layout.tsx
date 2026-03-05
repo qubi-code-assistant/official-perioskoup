@@ -4,6 +4,7 @@ import { createMetadata } from '@/lib/metadata'
 import { medicalOrganizationSchema, physicianSchema, softwareApplicationSchema } from '@/lib/schema'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import './globals.css'
 
 export const metadata: Metadata = createMetadata({
@@ -41,7 +42,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <Navigation />
-        <main id="main">{children}</main>
+        <ScrollReveal>
+          <main id="main">{children}</main>
+        </ScrollReveal>
         <Footer />
       </body>
     </html>

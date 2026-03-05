@@ -38,16 +38,31 @@ const values = [
     title: 'Clinician-First',
     description:
       'Every feature starts with a real clinical need. We build tools that respect the dentist\u2019s time and expertise.',
+    icon: (
+      <svg className="w-8 h-8 text-lime-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+      </svg>
+    ),
   },
   {
     title: 'Privacy-First',
     description:
       'GDPR-ready from day one. Patient data is encrypted, protected, and never sold. Trust is non-negotiable.',
+    icon: (
+      <svg className="w-8 h-8 text-lime-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+      </svg>
+    ),
   },
   {
     title: 'Outcome-Focused',
     description:
       'We measure success by healthier habits and stronger connections \u2014 not vanity metrics.',
+    icon: (
+      <svg className="w-8 h-8 text-lime-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+      </svg>
+    ),
   },
 ]
 
@@ -73,15 +88,18 @@ export default function AboutPage() {
       />
 
       {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto text-center">
+      <section className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20 overflow-hidden">
+        {/* Ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div data-gsap="fade-up" className="relative z-10 max-w-[1200px] mx-auto text-center">
           <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
             Our Mission
           </p>
-          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
+          <h1 className="font-heading text-[clamp(4rem,10vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
             Our Story
           </h1>
-          <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-navy-300 leading-relaxed">
+          <p className="mt-8 max-w-3xl mx-auto text-lg md:text-xl text-navy-300 leading-relaxed">
             Perioskoup was born in a dental clinic — from the real frustrations
             of a periodontist who saw too many patients struggle between visits.
             We&apos;re building the bridge between the chair and daily life.
@@ -90,28 +108,36 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto">
-          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold text-center mb-4">
-            The People
-          </p>
-          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50 text-center">
-            Meet the Team
-          </h2>
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden">
+        {/* Ambient glow */}
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-[1200px] mx-auto">
+          <div data-gsap="fade-up" className="text-center mb-16">
+            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+              The People
+            </p>
+            <h2 className="font-heading text-[clamp(3rem,8vw,6rem)] leading-[0.85] tracking-tight text-lime-50">
+              Meet the Team
+            </h2>
+          </div>
+          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {team.map((member) => (
               <div
                 key={member.name}
-                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8 flex flex-col"
+                data-gsap="stagger-item"
+                className="titanium-card p-8 flex flex-col"
               >
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  width={400}
-                  height={533}
-                  className="rounded-2xl object-cover w-full aspect-[3/4]"
-                />
-                <h3 className="font-heading text-[clamp(1.5rem,3vw,2rem)] leading-tight text-lime-50 mt-6">
+                <div className="overflow-hidden rounded-2xl">
+                  <Image
+                    src={member.photo}
+                    alt={`${member.name}, ${member.role} at Perioskoup`}
+                    width={400}
+                    height={533}
+                    className="rounded-2xl object-cover w-full aspect-[3/4] grayscale hover:grayscale-0 transition-all duration-500"
+                  />
+                </div>
+                <h3 className="font-heading text-[clamp(1.5rem,3vw,2.25rem)] leading-[0.85] text-lime-50 mt-6">
                   {member.name}
                 </h3>
                 <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mt-2">{member.role}</p>
@@ -142,21 +168,30 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto">
-          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold text-center mb-4">
-            What We Stand For
-          </p>
-          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50 text-center">
-            Our Values
-          </h2>
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-[1200px] mx-auto">
+          <div data-gsap="fade-up" className="text-center mb-16">
+            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+              What We Stand For
+            </p>
+            <h2 className="font-heading text-[clamp(3rem,8vw,6rem)] leading-[0.85] tracking-tight text-lime-50">
+              Our Values
+            </h2>
+          </div>
+          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value) => (
               <div
                 key={value.title}
-                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8"
+                data-gsap="stagger-item"
+                className="titanium-card p-8"
               >
-                <h3 className="font-heading text-[clamp(1.5rem,3vw,2rem)] leading-tight text-lime-400">
+                <div className="mb-5">
+                  {value.icon}
+                </div>
+                <h3 className="font-heading text-[clamp(1.5rem,3vw,2.25rem)] leading-[0.85] text-lime-400">
                   {value.title}
                 </h3>
                 <p className="text-navy-300 text-sm leading-relaxed mt-4">
@@ -169,17 +204,23 @@ export default function AboutPage() {
       </section>
 
       {/* Award */}
-      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20 relative overflow-hidden">
-        {/* Ambient glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="max-w-[1200px] mx-auto text-center relative">
-          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
-            Recognition
-          </p>
-          <h2 className="font-heading text-[clamp(2.5rem,5vw,4rem)] leading-tight text-lime-50">
-            EFP Digital Innovation Award 2025
+      <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden">
+        {/* Ambient glow — larger for impact */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-lime-400/8 rounded-full blur-[80px] pointer-events-none" />
+
+        <div data-gsap="fade-up" className="relative z-10 max-w-[1200px] mx-auto text-center">
+          <div className="inline-block py-1.5 px-4 rounded-full border border-lime-400/20 bg-lime-400/5 mb-8">
+            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold">
+              Recognition
+            </p>
+          </div>
+          <h2 className="font-heading text-[clamp(3.5rem,10vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
+            EFP Digital Innovation
+            <br />
+            <span className="text-lime-400">Award 2025</span>
           </h2>
-          <p className="mt-6 max-w-3xl mx-auto text-lg text-navy-300 leading-relaxed">
+          <p className="mt-8 max-w-3xl mx-auto text-lg md:text-xl text-navy-300 leading-relaxed">
             Perioskoup was recognised by the European Federation of
             Periodontology with the Digital Innovation Award 2025 for its
             approach to strengthening the connection between dental

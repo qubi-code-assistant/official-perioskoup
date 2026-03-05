@@ -2,6 +2,10 @@
 
 import { useRef, useEffect } from 'react'
 
+/**
+ * Homepage-specific animations: hero entrance, parallax, clinic counter, step line.
+ * Generic scroll reveals (fade-up, stagger, titanium-card) are handled by ScrollReveal in layout.
+ */
 export default function HomeAnimations({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -41,66 +45,6 @@ export default function HomeAnimations({ children }: { children: React.ReactNode
               end: 'bottom top',
               scrub: 1.5,
             },
-          })
-
-          /* Scroll reveals */
-          document.querySelectorAll<HTMLElement>('[data-gsap="fade-up"]').forEach((el) => {
-            gsap.fromTo(
-              el,
-              { opacity: 0, y: 40 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-              }
-            )
-          })
-
-          /* Stagger groups */
-          document.querySelectorAll<HTMLElement>('[data-gsap-stagger]').forEach((group) => {
-            const items = group.querySelectorAll('[data-gsap="stagger-item"]')
-            gsap.fromTo(
-              items,
-              { opacity: 0, y: 30 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: group, start: 'top 85%', once: true },
-              }
-            )
-          })
-
-          /* Stat counters */
-          document.querySelectorAll<HTMLElement>('[data-count-to]').forEach((el) => {
-            const endValue = parseFloat(el.getAttribute('data-count-to') || '0')
-            const suffix = el.getAttribute('data-count-suffix') || ''
-            el.textContent = `0${suffix}`
-            const counter = { val: 0 }
-            gsap.fromTo(
-              el,
-              { opacity: 0, y: 20 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-              }
-            )
-            gsap.to(counter, {
-              val: endValue,
-              duration: 2,
-              ease: 'power1.out',
-              scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-              onUpdate: () => {
-                el.textContent = `${Math.round(counter.val)}${suffix}`
-              },
-            })
           })
 
           /* 30-clinic counter */
@@ -144,22 +88,6 @@ export default function HomeAnimations({ children }: { children: React.ReactNode
               },
             }
           )
-
-          /* Titanium cards: subtle scale on scroll reveal */
-          document.querySelectorAll<HTMLElement>('.titanium-card').forEach((card) => {
-            gsap.fromTo(
-              card,
-              { opacity: 0, y: 30, scale: 0.98 },
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.7,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: card, start: 'top 90%', once: true },
-              }
-            )
-          })
         })
       }, containerRef)
     }

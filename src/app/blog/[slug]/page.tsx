@@ -50,13 +50,13 @@ function ShareButtons({ title, slug }: { title: string; slug: string }) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-navy-300 text-sm">Share:</span>
+      <span className="text-navy-400 text-sm">Share:</span>
       <a
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Share on LinkedIn"
-        className="text-navy-300 hover:text-lime-400 transition-colors"
+        className="text-navy-400 hover:text-lime-400 transition-colors"
       >
         <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -67,7 +67,7 @@ function ShareButtons({ title, slug }: { title: string; slug: string }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Share on X"
-        className="text-navy-300 hover:text-lime-400 transition-colors"
+        className="text-navy-400 hover:text-lime-400 transition-colors"
       >
         <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -76,7 +76,7 @@ function ShareButtons({ title, slug }: { title: string; slug: string }) {
       <a
         href={`mailto:?subject=${encodedTitle}&body=${encodedUrl}`}
         aria-label="Share via email"
-        className="text-navy-300 hover:text-lime-400 transition-colors"
+        className="text-navy-400 hover:text-lime-400 transition-colors"
       >
         <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
@@ -131,8 +131,9 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
       />
 
-      <article className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto">
+      <article className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto relative">
           {/* Breadcrumb */}
           <nav className="mb-8 text-sm" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2 text-navy-400">
@@ -141,14 +142,14 @@ export default async function BlogPostPage({ params }: Props) {
                   Home
                 </Link>
               </li>
-              <li>/</li>
+              <li aria-hidden="true">/</li>
               <li>
                 <Link href="/blog" className="hover:text-lime-400 transition-colors">
                   Blog
                 </Link>
               </li>
-              <li>/</li>
-              <li className="text-navy-400 truncate max-w-[200px]">
+              <li aria-hidden="true">/</li>
+              <li className="text-navy-500 truncate max-w-[200px]">
                 {frontmatter.title}
               </li>
             </ol>
@@ -158,19 +159,19 @@ export default async function BlogPostPage({ params }: Props) {
             {/* Main Content */}
             <div>
               {/* Header */}
-              <header className="mb-12">
+              <header data-gsap="fade-up" className="mb-12">
                 <div className="flex items-center gap-3 mb-6">
                   <Link
                     href={`/blog?category=${frontmatter.category}`}
-                    className="text-lime-400 text-xs uppercase tracking-widest hover:text-lime-300 transition-colors"
+                    className="text-lime-400 text-xs uppercase tracking-[0.15em] font-semibold hover:text-lime-300 transition-colors"
                   >
                     {frontmatter.category}
                   </Link>
                   <span aria-hidden="true" className="text-navy-600 text-xs">&middot;</span>
-                  <span className="text-navy-300 text-xs">{post.readingTime}</span>
+                  <span className="text-navy-400 text-xs">{post.readingTime}</span>
                 </div>
 
-                <h1 className="font-heading text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] text-lime-50 mb-8">
+                <h1 className="font-heading text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.85] text-lime-50 mb-8">
                   {frontmatter.title}
                 </h1>
 
@@ -192,7 +193,7 @@ export default async function BlogPostPage({ params }: Props) {
                       >
                         {frontmatter.author}
                       </a>
-                      <p className="text-navy-300 text-xs">
+                      <p className="text-navy-400 text-xs">
                         {frontmatter.authorRole} &middot;{' '}
                         {new Date(frontmatter.date).toLocaleDateString('en-GB', {
                           day: 'numeric',
@@ -214,12 +215,12 @@ export default async function BlogPostPage({ params }: Props) {
               {/* FAQ Section */}
               {frontmatter.faqs?.length > 0 && (
                 <section className="mt-16 pt-12 border-t border-white/5">
-                  <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] text-lime-50 mb-8">
+                  <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] text-lime-50 mb-8 leading-[0.85]">
                     Frequently Asked Questions
                   </h2>
-                  <div className="space-y-8">
+                  <div className="space-y-6">
                     {frontmatter.faqs.map((faq, i) => (
-                      <div key={i}>
+                      <div key={i} className="titanium-card p-8">
                         <h3 className="text-lime-50 text-lg mb-3">
                           {faq.question}
                         </h3>
@@ -234,7 +235,7 @@ export default async function BlogPostPage({ params }: Props) {
 
               {/* Author Card */}
               <section className="mt-16 pt-12 border-t border-white/5">
-                <div className="flex items-start gap-6 bg-navy-800 border border-white/5 rounded-[2rem] p-8">
+                <div className="titanium-card flex flex-col sm:flex-row items-start gap-6 p-8">
                   <Image
                     src={frontmatter.authorImage}
                     alt={frontmatter.author}
@@ -246,7 +247,7 @@ export default async function BlogPostPage({ params }: Props) {
                     <p className="text-lime-50 text-lg mb-1">
                       {frontmatter.author}
                     </p>
-                    <p className="text-navy-300 text-sm mb-3">
+                    <p className="text-lime-400 text-xs uppercase tracking-[0.1em] font-semibold mb-3">
                       {frontmatter.authorRole} at Perioskoup
                     </p>
                     <p className="text-navy-300 text-sm leading-relaxed mb-4">
@@ -284,7 +285,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {/* Table of Contents */}
                 {headings.length > 0 && (
                   <div>
-                    <p className="text-lime-400 text-xs uppercase tracking-widest mb-4">
+                    <p className="text-lime-400 text-xs uppercase tracking-[0.15em] font-semibold mb-4">
                       On this page
                     </p>
                     <nav aria-label="Table of contents">
@@ -293,7 +294,7 @@ export default async function BlogPostPage({ params }: Props) {
                           <li key={h.id}>
                             <a
                               href={`#${h.id}`}
-                              className="text-navy-300 text-sm hover:text-lime-400 transition-colors block leading-snug"
+                              className="text-navy-400 text-sm hover:text-lime-400 transition-colors block leading-snug"
                             >
                               {h.text}
                             </a>
@@ -307,7 +308,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {/* Related Posts */}
                 {related.length > 0 && (
                   <div>
-                    <p className="text-lime-400 text-xs uppercase tracking-widest mb-4">
+                    <p className="text-lime-400 text-xs uppercase tracking-[0.15em] font-semibold mb-4">
                       Related Posts
                     </p>
                     <div className="space-y-4">
@@ -320,7 +321,7 @@ export default async function BlogPostPage({ params }: Props) {
                           <p className="text-lime-50 text-sm group-hover:text-lime-400 transition-colors leading-snug mb-1">
                             {r.frontmatter.title}
                           </p>
-                          <p className="text-navy-300 text-xs">
+                          <p className="text-navy-400 text-xs">
                             {r.readingTime}
                           </p>
                         </Link>
@@ -330,16 +331,16 @@ export default async function BlogPostPage({ params }: Props) {
                 )}
 
                 {/* CTA */}
-                <div className="bg-navy-800 border border-white/5 rounded-[2rem] p-8">
+                <div className="titanium-card p-8">
                   <p className="text-lime-50 text-sm mb-2">
                     Ready to transform your practice?
                   </p>
-                  <p className="text-navy-300 text-xs mb-4 leading-relaxed">
+                  <p className="text-navy-400 text-xs mb-4 leading-relaxed">
                     Join 30+ clinics on the waitlist for early access.
                   </p>
                   <Link
                     href="/waitlist"
-                    className="block text-center bg-lime-400 text-navy-950 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-lime-300 transition-colors"
+                    className="block text-center bg-lime-400 text-navy-950 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-lime-300 transition-colors shadow-[0_0_20px_rgba(192,229,122,0.2)]"
                   >
                     Join Waitlist
                   </Link>

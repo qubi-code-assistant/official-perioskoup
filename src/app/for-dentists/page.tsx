@@ -22,7 +22,7 @@ const BENEFITS = [
     description:
       'Stay connected with patients between visits through personalized daily routines and educational content. No extra staff time required.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8" aria-hidden="true">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -36,7 +36,7 @@ const BENEFITS = [
     description:
       'See which patients are engaged and who might need extra support — all from a simple dashboard. No calls, no follow-ups.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8" aria-hidden="true">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -50,7 +50,7 @@ const BENEFITS = [
     description:
       'Offer something no other practice in your area does: an AI-powered companion that makes oral care personal and engaging.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8" aria-hidden="true">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -75,51 +75,65 @@ export default function ForDentists() {
       />
 
       {/* ═══════════════════ HERO ═══════════════════ */}
-      <section className="relative min-h-[80vh] flex items-center pt-32 pb-24 px-6 md:px-12 lg:px-20">
+      <section className="relative min-h-[80vh] flex items-center pt-32 md:pt-40 pb-24 px-6 md:px-12 lg:px-20">
         {/* Ambient glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto w-full text-center relative">
-          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
+          <p
+            data-gsap="fade-up"
+            className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6"
+          >
             For Dental Practices
           </p>
-          <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[1.1] text-lime-50 mb-6 max-w-4xl mx-auto">
+          <h1
+            data-gsap="fade-up"
+            className="font-heading text-[clamp(4rem,10vw,8rem)] leading-[0.8] text-lime-50 mb-8 max-w-5xl mx-auto"
+          >
             How Much Time Are You Losing?
           </h1>
-          <p className="text-navy-300 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10">
+          <p
+            data-gsap="fade-up"
+            className="text-navy-300 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10"
+          >
             The average dental practice spends 15+ minutes per patient re-educating on oral care
             routines. Perioskoup keeps patients engaged between visits, so they arrive prepared.
           </p>
-          <Link
-            href="/waitlist"
-            className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
-          >
-            Join the Waitlist
-          </Link>
+          <div data-gsap="fade-up">
+            <Link
+              href="/waitlist"
+              className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
+            >
+              Join the Waitlist
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ═══════════════════ ROI STATS ═══════════════════ */}
-      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-16">
+      <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto relative">
+          <div data-gsap="fade-up" className="text-center mb-16">
             <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
               The Impact
             </p>
-            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
+            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.85] text-lime-50">
               Results That Speak for Themselves
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div data-gsap-stagger className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8 text-center"
+                data-gsap="stagger-item"
+                className="titanium-card p-8 text-center"
               >
-                <p className="font-heading text-[clamp(4rem,8vw,6rem)] text-lime-400 leading-none mb-2">
+                <p className="font-heading text-[clamp(5rem,10vw,7rem)] text-lime-400 leading-none mb-2">
                   {stat.value}
                 </p>
-                <p className="text-navy-400 text-sm leading-relaxed">{stat.label}</p>
+                <p className="text-navy-300 text-sm leading-relaxed">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -127,27 +141,30 @@ export default function ForDentists() {
       </section>
 
       {/* ═══════════════════ BENEFITS ═══════════════════ */}
-      <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-16">
+      <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto relative">
+          <div data-gsap="fade-up" className="text-center mb-16">
             <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
               Why Perioskoup
             </p>
-            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50">
+            <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.85] text-lime-50">
               Built for Modern Dental Practices
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {BENEFITS.map((benefit) => (
               <div
                 key={benefit.title}
-                className="bg-navy-800 border border-white/5 rounded-[2rem] p-8"
+                data-gsap="stagger-item"
+                className="titanium-card p-8"
               >
                 <div className="w-14 h-14 rounded-2xl bg-lime-400/10 text-lime-400 flex items-center justify-center mb-6">
                   {benefit.icon}
                 </div>
-                <h3 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-tight">
+                <h3 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                   {benefit.title}
                 </h3>
                 <p className="text-navy-300 leading-relaxed">{benefit.description}</p>
@@ -158,9 +175,11 @@ export default function ForDentists() {
       </section>
 
       {/* ═══════════════════ SOCIAL PROOF STRIP ═══════════════════ */}
-      <section className="py-16 md:py-20 px-6 md:px-12 lg:px-20 bg-navy-800">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+      <section className="relative py-16 md:py-20 px-6 md:px-12 lg:px-20 bg-navy-800/50">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto relative">
+          <div data-gsap="fade-up" className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
             <div className="flex items-center gap-3">
               <svg
                 viewBox="0 0 24 24"
@@ -168,6 +187,7 @@ export default function ForDentists() {
                 stroke="currentColor"
                 strokeWidth={1.5}
                 className="w-6 h-6 text-lime-400"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -190,6 +210,7 @@ export default function ForDentists() {
                 stroke="currentColor"
                 strokeWidth={1.5}
                 className="w-6 h-6 text-lime-400"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -209,20 +230,25 @@ export default function ForDentists() {
       {/* ═══════════════════ FINAL CTA ═══════════════════ */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20 relative">
         {/* Ambient glow */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto text-center relative">
-          <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-tight text-lime-50 mb-6">
+          <h2
+            data-gsap="fade-up"
+            className="font-heading text-[clamp(4rem,10vw,8rem)] leading-[0.8] text-lime-50 mb-6"
+          >
             Ready to Transform Your Practice?
           </h2>
-          <p className="text-navy-300 text-lg leading-relaxed mb-10">
+          <p data-gsap="fade-up" className="text-navy-300 text-lg leading-relaxed mb-10">
             Join 30+ clinics already on the waitlist. Free for early adopters.
           </p>
-          <Link
-            href="/waitlist"
-            className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
-          >
-            Join the Waitlist
-          </Link>
+          <div data-gsap="fade-up">
+            <Link
+              href="/waitlist"
+              className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
+            >
+              Join the Waitlist
+            </Link>
+          </div>
         </div>
       </section>
     </>
