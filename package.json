@@ -6,17 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "npx playwright test",
+    "test:e2e": "npx playwright test tests/e2e/",
+    "test:visual": "npx playwright test tests/visual/",
+    "test:update-snapshots": "npx playwright test tests/visual/ --update-snapshots"
   },
   "dependencies": {
-    "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
-    "framer-motion": "^12.35.0",
     "gray-matter": "^4.0.3",
     "gsap": "^3.14.2",
     "next": "16.1.6",
     "next-mdx-remote": "^6.0.0",
-    "next-sitemap": "^4.2.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.2",
