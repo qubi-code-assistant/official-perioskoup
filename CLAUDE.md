@@ -311,3 +311,23 @@ Port these FAQs with updated SaMD-safe language:
 6. How does it improve patient engagement?
 7. What languages are supported?
 8. How do I get started?
+
+### Team Photos (already in public/team/)
+- `public/team/team-anca.webp` — Dr. Anca Laura Constantin (Periodontist & CEO)
+- `public/team/team-eduard.webp` — Eduard Ciugulea (CGO & Technical Co-Founder)
+- `public/team/team-petrica.webp` — Petrica Nancu (CTO & Head of AI)
+
+### Team Bios
+- **Dr. Anca Laura Constantin** — Periodontist & CEO. Practicing periodontist with a passion for patient education. Frustrated by the cycle of repeat hygiene coaching, Anca envisioned an AI companion that could extend care beyond the chair. LinkedIn: linkedin.com/in/anca-constantin-99800633b/
+- **Eduard Ciugulea** — CGO & Technical Co-Founder. Full-stack developer with 5+ years building web applications. Eduard brings the technical expertise to turn clinical insights into a powerful, user-friendly platform. LinkedIn: linkedin.com/in/eduard-ciugulea/
+- **Petrica Nancu** — CTO & Head of AI. AI specialist with 5+ years of experience building intelligent systems. Petrica powers the conversational AI that makes Perioskoup's patient guidance feel natural and effective. LinkedIn: linkedin.com/in/petrica-nancu-b16468241/
+
+### Company Values (from About page)
+- **Clinician-First** — Built by clinicians who understand real practice challenges
+- **Privacy-First** — GDPR compliant from day one, data encrypted, never sold
+- **Outcome-Focused** — Measured by patient outcomes, fewer relapses, healthier gums
+
+### Social Links
+- LinkedIn: linkedin.com/company/perioskoup
+- Instagram: instagram.com/perioskoup
+- X/Twitter: x.com/perioskoup
