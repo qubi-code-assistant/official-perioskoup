@@ -1,7 +1,8 @@
 #!/bin/bash
 # ============================================================
 # Perioskoup Official Website — Agent Launch Script
-# Run agents sequentially. Each one handles a phase.
+# 8-phase pipeline. Each agent handles one phase.
+# Skills referenced per phase for agent context.
 # ============================================================
 
 set -e
@@ -13,245 +14,325 @@ echo "================================================"
 echo ""
 
 # ─────────────────────────────────────────────────
-# PHASE 1: Project Scaffolding
-# Skills: react-best-practices, frontend-design
+# PHASE 1: Project Scaffolding (automatic)
 # ─────────────────────────────────────────────────
 echo "📦 Phase 1: Scaffold Next.js 14 project..."
-read -p "Press Enter to launch Phase 1 agent..."
+read -p "Press Enter to launch Phase 1..."
 
 npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm --no-git
 
-# Install dependencies
 npm install gsap @gsap/react framer-motion
 npm install next-mdx-remote gray-matter reading-time
 npm install react-hook-form @hookform/resolvers zod
 npm install next-sitemap
-npm install -D @tailwindcss/typography
+npm install sharp
+npm install -D @tailwindcss/typography playwright @playwright/test
+
+npx playwright install chromium
 
 echo "✅ Phase 1 complete — project scaffolded"
 echo ""
 
 # ─────────────────────────────────────────────────
 # PHASE 2: Design System + Layout
-# Skills: frontend-design, awwwards-design, Animations
-# Agent: Set up design tokens, global layout, nav, footer
+# Skills: frontend-design, awwwards-design, tailwind-v4-shadcn, nextjs-expert
 # ─────────────────────────────────────────────────
 echo "🎨 Phase 2: Design system + global layout..."
-echo "Launch a coding agent with this prompt:"
+echo "Launch a coding agent in ~/Projects/official-perioskoup with this prompt:"
 echo ""
 cat << 'PROMPT2'
-Read CLAUDE.md first. Then:
+Read CLAUDE.md first. Skills to use: frontend-design, awwwards-design, tailwind-v4-shadcn, nextjs-expert.
 
 1. Create design tokens in src/constants/colors.ts, typography.ts, spacing.ts matching the locked design system
-2. Configure Tailwind with custom colors, fonts (Dongle-Bold headings, Gabarito body via next/font)
+2. Configure Tailwind with custom colors, fonts (Dongle-Bold headings via next/font — NEVER use fontWeight on Dongle, Gabarito body)
 3. Create global layout (src/app/layout.tsx) with:
    - Dark theme (#0A171E background)
-   - Responsive nav with logo, links (Features, For Dentists, Pricing, Blog, About), waitlist CTA button
-   - Mobile hamburger menu
-   - Footer with links, social, legal pages
+   - Responsive nav: logo, links (Features, For Dentists, Pricing, Blog, About), lime CTA button "Join Waitlist"
+   - Mobile hamburger menu with smooth animation
+   - Footer with links, social icons, legal pages
+   - Skip-to-content link for accessibility
 4. Create src/lib/schema.ts with JSON-LD generators for: MedicalOrganization, Physician, SoftwareApplication, FAQPage, Article, BreadcrumbList
 5. Set up metadata defaults in layout.tsx (Open Graph, Twitter cards, favicon)
-6. Add /llms.txt route (app/llms.txt/route.ts) returning factual markdown
-7. Add robots.txt allowing all AI crawlers
-8. Configure next-sitemap
+6. Add /llms.txt route (app/llms.txt/route.ts) — factual markdown, NO marketing fluff
+7. Add robots.txt allowing all AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended)
+8. Configure next-sitemap in next-sitemap.config.js
 
-Apple-level whitespace. Premium feel. No clutter.
+Reference: apple.com/iphone and apple.com/apple-intelligence for whitespace and typography scale.
+Apple-level whitespace. Premium feel. No clutter. Dark luxury.
 PROMPT2
 echo ""
 read -p "Press Enter when Phase 2 agent is done..."
 
 # ─────────────────────────────────────────────────
 # PHASE 3: Homepage
-# Skills: awwwards-design, Animations, motion, auto-animate
-# Agent: Build the homepage with all sections
+# Skills: awwwards-design, Animations, motion, auto-animate, frontend-design
 # ─────────────────────────────────────────────────
 echo "🏠 Phase 3: Homepage..."
 echo "Launch a coding agent with this prompt:"
 echo ""
 cat << 'PROMPT3'
-Read CLAUDE.md first. Then build the homepage (src/app/page.tsx):
+Read CLAUDE.md first. Skills to use: awwwards-design, Animations, motion, auto-animate, frontend-design.
 
-1. Hero section:
-   - Dr. Anca's quote in elegant typography
-   - App screenshot floating with subtle parallax (use placeholder image for now at public/app-screens/patient-home.png)
-   - "Join the Waitlist" CTA button (#C0E57A)
+Build the homepage (src/app/page.tsx) — Apple-quality, scroll-driven storytelling:
+
+1. HERO — Full viewport
+   - Dr. Anca's EFP quote in elegant large typography (Dongle-Bold, NO fontWeight)
+   - App screenshot floating with subtle GSAP parallax (placeholder at public/app-screens/patient-home.png)
+   - "Join the Waitlist" CTA button (#C0E57A lime)
    - "Free for early adopters · No credit card" subtext
-   - GSAP ScrollTrigger for reveal animations
+   - Subtle gradient overlay, not busy
 
-2. Problem/Solution section:
-   - "A Week in Two Practices" — side-by-side comparison cards
-   - Without Perioskoup vs With Perioskoup scenarios
-   - Stats: 15 min saved, 40% fewer no-shows, 92% compliance, 3x adherence
-   - Scroll-triggered card reveals
+2. PROBLEM/SOLUTION — "A Week in Two Practices"
+   - Side-by-side comparison: Without vs With Perioskoup
+   - 4 scenario cards that reveal on scroll (GSAP ScrollTrigger)
+   - Stats: 15 min saved, 40% fewer no-shows, 92% engagement rate, 3x better habits
+   - Use "engagement" not "compliance" (SaMD rules — see CLAUDE.md)
 
-3. Features showcase:
-   - 3-4 key features with icons/illustrations
-   - Each feature animates in on scroll
+3. FEATURES — 3-4 key features
    - AI Companion, Habit Tracking, Dentist Dashboard, Smart Reminders
+   - Each animates in on scroll with staggered reveal
+   - Icon + heading + description + subtle screenshot
 
-4. Social proof:
+4. SOCIAL PROOF
    - EFP Digital Innovation Award 2025 badge
-   - "30 clinics on the waitlist" counter
-   - Dr. Anca Constantin credentials
+   - "30 clinics on the waitlist" animated counter
+   - Dr. Anca Constantin credentials card
 
-5. How it works:
-   - 3 steps: Dentist Onboards → Patient Downloads → AI Guides Daily
-   - Animated step transitions
+5. HOW IT WORKS — 3 steps
+   - Dentist Onboards → Patient Downloads → AI Supports Daily
+   - Connected by animated line/path on scroll
 
-6. Blog preview:
-   - Latest 3 posts grid (placeholder cards for now)
+6. BLOG PREVIEW — Latest 3 posts grid (placeholder cards)
 
-7. Final CTA:
-   - Waitlist form embed
-   - "Free for early adopters"
+7. FINAL CTA — Waitlist form
+   - Name, Email, Clinic (optional), Country, Role dropdown
+   - "Free for early adopters" · trust badges
 
-Use GSAP ScrollTrigger for scroll animations. Respect prefers-reduced-motion.
-Apple-level polish. Generous whitespace. Premium dark theme.
+All GSAP animations must respect prefers-reduced-motion (disable completely).
+Reference: apple.com/iphone scroll storytelling. Generous whitespace between every section.
 PROMPT3
 echo ""
 read -p "Press Enter when Phase 3 agent is done..."
 
 # ─────────────────────────────────────────────────
 # PHASE 4: Inner Pages
-# Skills: frontend-design, react-best-practices
-# Agent: Features, For Dentists, Pricing, About, Contact
+# Skills: frontend-design, nextjs-expert, schema-markup-generator, react-best-practices
 # ─────────────────────────────────────────────────
 echo "📄 Phase 4: Inner pages..."
 echo "Launch a coding agent with this prompt:"
 echo ""
 cat << 'PROMPT4'
-Read CLAUDE.md first. Then build these pages:
+Read CLAUDE.md first. Skills: frontend-design, nextjs-expert, schema-markup-generator, react-best-practices.
 
-1. /features (src/app/features/page.tsx)
-   - Detailed feature breakdown: Patient App, Dentist Dashboard, AI Companion
-   - Each feature gets a section with screenshot placeholder, description, benefits
-   - FAQ schema at bottom with 5-6 common questions
-   - Answer capsules after each H2
+Build these pages (same dark theme, Apple whitespace):
 
-2. /for-dentists (src/app/for-dentists/page.tsx)
-   - B2B focused: ROI calculator concept, practice benefits
+1. /features — Patient App, Dentist Dashboard, AI Companion detailed sections
+   - Each with screenshot placeholder, description, bullet benefits
+   - FAQPage schema (5-6 questions), answer capsules after each H2
+   - SoftwareApplication schema
+
+2. /for-dentists — B2B landing page
    - "How much time are you losing?" hook
-   - Stats from SEO strategy (15 min/patient, 40% no-show reduction)
-   - Waitlist CTA
-   - FAQ schema
+   - ROI stats (15 min/patient saved, 40% no-show reduction)
+   - 3 benefit cards with scroll animation
+   - Waitlist CTA, FAQ schema
 
-3. /pricing (src/app/pricing/page.tsx)
-   - Three tiers: Starter €39/mo, Growth €89/mo, Pro €199/mo
-   - BLURRED with "We're in Beta" overlay — do not show real prices clearly
+3. /pricing — Three tiers: Starter €39, Growth €89, Pro €199
+   - BLURRED with "We're in Beta" glass overlay
    - "Join waitlist for early-adopter pricing" CTA
-   - Feature comparison table (blurred)
+   - Feature comparison table (also blurred)
 
-4. /about (src/app/about/page.tsx)
-   - Dr. Anca Constantin — Periodontist, EFP Award Winner, co-founder
-   - Eduard Ciugulea — Tech, co-founder
-   - Company story: born from real clinical challenges
-   - Physician schema for Dr. Anca
+4. /about — Team page
+   - Dr. Anca Constantin: Periodontist, EFP Award Winner, co-founder (Physician schema)
+   - Eduard Ciugulea: Tech lead, co-founder
+   - Company story section
 
-5. /contact (src/app/contact/page.tsx)
-   - Contact form (name, email, clinic, message)
-   - Clinic onboarding inquiry option
+5. /contact — Form (name, email, clinic, message) + clinic onboarding inquiry
 
-6. /waitlist (src/app/waitlist/page.tsx)
-   - Dedicated waitlist page with form
-   - Fields: Name, Email, Clinic Name (optional), Country, Role
-   - Thank you state after submission
+6. /waitlist — Dedicated signup (Name, Email, Clinic, Country, Role)
 
-7. /privacy and /terms — placeholder legal pages
+7. /privacy + /terms — Placeholder legal pages with proper layout
 
-All pages: BreadcrumbList schema, Open Graph meta, consistent design system.
+All pages: BreadcrumbList schema, unique Open Graph meta, consistent nav/footer.
 PROMPT4
 echo ""
 read -p "Press Enter when Phase 4 agent is done..."
 
 # ─────────────────────────────────────────────────
 # PHASE 5: Blog System
-# Skills: react-best-practices
-# Agent: MDX blog with SEO
+# Skills: nextjs-expert, seo, react-best-practices
 # ─────────────────────────────────────────────────
 echo "📝 Phase 5: Blog system..."
 echo "Launch a coding agent with this prompt:"
 echo ""
 cat << 'PROMPT5'
-Read CLAUDE.md first. Then set up the blog:
+Read CLAUDE.md first. Skills: nextjs-expert, seo, react-best-practices.
 
-1. MDX blog system using next-mdx-remote + gray-matter
-   - Blog posts in src/content/blog/*.mdx
-   - Frontmatter: title, description, author, date, category, tags, image
-   - Reading time calculation
+1. MDX blog system (next-mdx-remote + gray-matter)
+   - Posts in src/content/blog/*.mdx
+   - Frontmatter: title, description, author, date, category, tags, image, faq[]
+   - Reading time calc, table of contents generation
 
-2. /blog page (src/app/blog/page.tsx)
-   - Grid of blog post cards with image, title, excerpt, date, category
-   - Category filter (Clinical, Product, Industry)
-   - Pagination
+2. /blog — Grid of cards (image, title, excerpt, date, category badge)
+   - Category filter tabs (Clinical, Product, Industry)
+   - Pagination (6 per page)
 
-3. /blog/[slug] page (src/app/blog/[slug]/page.tsx)
-   - Full blog post with MDX rendering
-   - Author card (Dr. Anca for clinical, Eduard for product)
-   - Table of contents
-   - FAQ schema
-   - Article schema with author
-   - Related posts at bottom
-   - Social share buttons
+3. /blog/[slug] — Full MDX post
+   - Author card (Dr. Anca for Clinical, Eduard for Product)
+   - Auto-generated table of contents
+   - FAQ schema from frontmatter
+   - Article + MedicalWebPage schema
+   - Related posts, social share buttons
+   - Answer capsule component (brief factual summary after H2s)
 
-4. Create 3 seed blog posts:
-   a. "Why AI is the Future of Dental Patient Compliance" (Clinical, by Dr. Anca)
-   b. "How Perioskoup Reduces No-Shows by 40%" (Product, by Eduard)
-   c. "The Hidden Cost of Poor Patient Adherence in Periodontal Care" (Clinical, by Dr. Anca)
+4. Create 3 seed posts (800-1200 words each):
+   a. "Why AI is Changing Dental Patient Engagement" (Clinical, Dr. Anca)
+   b. "How Perioskoup Helps Reduce No-Shows by 40%" (Product, Eduard)
+   c. "The Hidden Cost of Poor Patient Habits in Periodontal Care" (Clinical, Dr. Anca)
+   IMPORTANT: Use SAFE language only — see SaMD section in CLAUDE.md. Never "compliance", use "engagement".
 
-   Each post: 800-1200 words, 3+ statistics with sources, FAQ section, answer capsules after H2s.
+5. RSS feed at /feed.xml (app/feed.xml/route.ts)
 
-5. RSS feed at /feed.xml
+Each post: 3+ statistics with named sources, FAQ section, 3+ internal links, answer capsules.
 PROMPT5
 echo ""
 read -p "Press Enter when Phase 5 agent is done..."
 
 # ─────────────────────────────────────────────────
-# PHASE 6: SEO Polish + Deploy
-# Skills: vercel, frontend-design
-# Agent: Final SEO, performance, deploy
+# PHASE 6: SEO + Performance Polish
+# Skills: seo, frontend-performance, schema-markup-generator, nextjs-expert
 # ─────────────────────────────────────────────────
-echo "🚀 Phase 6: SEO polish + deploy..."
+echo "🔍 Phase 6: SEO + Performance polish..."
 echo "Launch a coding agent with this prompt:"
 echo ""
 cat << 'PROMPT6'
-Read CLAUDE.md first. Final polish:
+Read CLAUDE.md first. Skills: seo, frontend-performance, schema-markup-generator, nextjs-expert.
 
-1. SEO audit:
-   - Verify all pages have unique title + description
-   - Check all schema renders correctly (use JSON-LD script tags)
-   - Verify robots.txt allows AI crawlers
-   - Verify sitemap.xml generates correctly
-   - Check Open Graph images for all pages
+SEO Audit:
+1. Every page has unique <title> and <meta description>
+2. All JSON-LD schema validates (test with console output)
+3. Open Graph + Twitter cards on every page (og:image for each)
+4. robots.txt allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended
+5. sitemap.xml generates correctly via next-sitemap
+6. /llms.txt returns factual markdown
+7. Canonical URLs on every page
+8. hreflang tags: en-GB primary, en default
 
-2. Performance:
-   - next/image for all images with responsive srcset
-   - Lazy load below-fold components
-   - Font display swap
-   - Check no render-blocking resources
-   - Bundle analysis — keep JS under 200KB first load
+Performance:
+1. All images use next/image with responsive srcset + priority on hero
+2. Lazy load all below-fold components and images
+3. Font display: swap on both Dongle-Bold and Gabarito
+4. No render-blocking resources
+5. GSAP — tree-shake unused plugins, load ScrollTrigger dynamically
+6. Bundle analysis: first load JS < 200KB
+7. Use next/dynamic for heavy components
 
-3. Accessibility:
-   - prefers-reduced-motion disables all GSAP/motion animations
-   - All images have alt text
-   - Semantic HTML throughout
-   - Skip to content link
-   - ARIA labels on interactive elements
-   - Color contrast passes WCAG AA
+Core Web Vitals targets:
+- LCP < 2.5s, FID < 100ms, CLS < 0.1
 
-4. Mobile audit:
-   - Test all pages at 375px, 390px, 428px widths
-   - No horizontal overflow
-   - Touch targets min 44px
-   - Hamburger menu works correctly
-
-5. Commit everything and push to GitHub:
-   git add -A && git commit -m "feat: Perioskoup official website — full build" && git push -u origin main
+Commit: git add -A && git commit -m "perf: SEO audit + performance optimization"
 PROMPT6
 echo ""
 read -p "Press Enter when Phase 6 agent is done..."
 
+# ─────────────────────────────────────────────────
+# PHASE 7: Accessibility + Visual Testing
+# Skills: accessibility, wcag-21-aa-web-ui-audit, e2e-testing-patterns, screenshot
+# ─────────────────────────────────────────────────
+echo "♿ Phase 7: Accessibility + Visual Testing..."
+echo "Launch a coding agent with this prompt:"
 echo ""
-echo "🏛️ All phases complete!"
-echo "Next: Connect Vercel to github.com/qubi-code-assistant/official-perioskoup"
-echo "Then: Point perioskoup.com DNS to Vercel"
+cat << 'PROMPT7'
+Read CLAUDE.md first. Skills: accessibility, wcag-21-aa-web-ui-audit, e2e-testing-patterns, screenshot.
+
+ACCESSIBILITY AUDIT (WCAG 2.1 AA):
+1. All images have meaningful alt text
+2. Semantic HTML throughout (header, main, nav, section, article, footer)
+3. Skip-to-content link works
+4. ARIA labels on all interactive elements (hamburger menu, form inputs, buttons)
+5. Color contrast passes AA on all text (#F5F9EA on #0A171E, #C0E57A on #0A171E)
+6. Focus indicators visible on all interactive elements
+7. Keyboard navigation works for entire site (tab order logical)
+8. prefers-reduced-motion disables ALL GSAP and Motion animations
+9. Form error states are accessible (aria-invalid, aria-describedby)
+10. No autoplaying media
+
+VISUAL TESTING — Create Playwright visual regression tests:
+1. Create tests/visual/ directory
+2. Screenshot tests for every page at 3 breakpoints:
+   - Mobile (375px), Tablet (768px), Desktop (1440px)
+3. Test pages: /, /features, /for-dentists, /pricing, /about, /blog, /contact, /waitlist
+4. Test states:
+   - Default page load
+   - Nav hamburger open (mobile)
+   - Waitlist form: empty, filled, submitted
+   - Pricing cards hover state
+   - Scroll animations triggered (scroll to 50%, 100%)
+5. Create test script in package.json: "test:visual": "playwright test tests/visual/"
+
+E2E FUNCTIONAL TESTS (Playwright):
+1. Create tests/e2e/ directory
+2. Test navigation: all nav links work, mobile hamburger opens/closes
+3. Test waitlist form: submit with valid data, validation errors on empty
+4. Test blog: navigate to /blog, click a post, verify content loads
+5. Test responsive: no horizontal overflow at 375px on any page
+6. Test accessibility: run axe-core on every page
+7. Install @axe-core/playwright: npm install -D @axe-core/playwright
+8. Create test script: "test:e2e": "playwright test tests/e2e/"
+9. Create "test": "npm run test:e2e && npm run test:visual" combined script
+
+Run all tests and fix any failures before committing.
+Commit: git add -A && git commit -m "test: accessibility audit + visual regression + e2e tests"
+PROMPT7
+echo ""
+read -p "Press Enter when Phase 7 agent is done..."
+
+# ─────────────────────────────────────────────────
+# PHASE 8: Final Review + Deploy
+# Skills: vercel, screenshot
+# ─────────────────────────────────────────────────
+echo "🚀 Phase 8: Final review + deploy..."
+echo "Launch a coding agent with this prompt:"
+echo ""
+cat << 'PROMPT8'
+Read CLAUDE.md first. Skills: vercel, screenshot.
+
+FINAL REVIEW:
+1. Run: npm run build — must complete with zero errors
+2. Run: npm run test — all visual + e2e tests must pass
+3. Run: npx next-sitemap — verify sitemap.xml and robots.txt generate
+4. Check every page loads in dev mode — no console errors
+5. Verify no lorem ipsum or placeholder text remains (except screenshots)
+6. Verify SaMD compliance: grep for "compliance", "diagnose", "treat", "monitor inflammation" — must return zero results in user-facing code
+7. Verify all internal links work (no 404s)
+
+SCREENSHOTS FOR REVIEW:
+Take full-page screenshots of every page at desktop (1440px):
+- Save to screenshots/ directory
+- /, /features, /for-dentists, /pricing, /about, /blog, /contact, /waitlist
+
+DEPLOY:
+1. Push to GitHub:
+   git add -A && git commit -m "feat: Perioskoup official website — production ready" && git push origin main
+2. Print instructions for Eduard to connect Vercel:
+   - Import repo github.com/qubi-code-assistant/official-perioskoup in Vercel
+   - Framework: Next.js (auto-detected)
+   - Add env vars: NEXT_PUBLIC_SITE_URL=https://perioskoup.com
+   - Deploy
+
+Done! Eduard reviews screenshots, then connects Vercel.
+PROMPT8
+echo ""
+read -p "Press Enter when Phase 8 agent is done..."
+
+echo ""
+echo "🏛️ All 8 phases complete!"
+echo ""
+echo "Next steps:"
+echo "1. Review screenshots/ folder for visual quality"
+echo "2. Connect Vercel to github.com/qubi-code-assistant/official-perioskoup"
+echo "3. Add custom domain: perioskoup.com"
+echo "4. Set env vars in Vercel dashboard"
+echo "5. Submit sitemap to Google Search Console"
+echo "6. Submit to Bing Webmaster Tools"
 
