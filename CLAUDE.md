@@ -83,18 +83,6 @@ Clinician-First · Privacy-First (GDPR from day one) · Outcome-Focused
 ## Social
 LinkedIn: /company/perioskoup · Instagram: /perioskoup · X: /perioskoup
 
-## Assets (copy from existing repo)
-```bash
-cp ~/Projects/perioskoup-landing-vercel/public/logo-brand.svg public/
-cp ~/Projects/perioskoup-landing-vercel/public/logo-white.svg public/
-cp ~/Projects/perioskoup-landing-vercel/public/app_image.webp public/app-screens/
-cp ~/Projects/perioskoup-landing-vercel/public/app_image-mobile.webp public/app-screens/
-cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony.webp public/
-cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony-mobile.webp public/
-cp ~/Projects/perioskoup-landing-vercel/public/favicon.ico public/
-cp ~/Projects/perioskoup-landing-vercel/public/apple-touch-icon.png public/
-```
-
 ## SEO
 - Schema (in order): MedicalOrganization, Physician, SoftwareApplication, FAQPage, Article, BreadcrumbList
 - hreflang: en-GB primary, en default
@@ -103,7 +91,6 @@ cp ~/Projects/perioskoup-landing-vercel/public/apple-touch-icon.png public/
 - Every page: unique title + description, OG + Twitter cards, canonical URL
 - Every blog post: 3+ stats with sources, FAQ schema, answer capsules after H2s, 3+ internal links
 - Core Web Vitals: LCP<2.5s, FID<100ms, CLS<0.1
-- First load JS < 200KB
 
 ## Target Keywords
 | Keyword | KD |
@@ -139,21 +126,9 @@ Perioskoup is wellness/engagement, NOT a medical device. Use SAFE language only.
 6. Blog Preview — 3 latest posts
 7. Final CTA — Waitlist form
 
-## Animation Rules
-- GSAP ScrollTrigger for scroll reveals
-- Motion.dev for component transitions
-- `prefers-reduced-motion` → disable ALL animations
-- No autoplay video on mobile
-- Parallax on hero only — subtle
-
-## Waitlist Form
-Fields: Name, Email, Clinic (optional), Country, Role (Dentist/Clinic Manager/Other)
-Double opt-in for GDPR.
-
 ## DO NOT
 - Override design system colors
 - Use fontWeight on Dongle
-- Create Google Business Profile (no UK office)
 - Show pricing clearly (keep blurred)
 - Use `en-EU` as hreflang
 - Put marketing fluff in llms.txt
