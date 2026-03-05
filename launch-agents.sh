@@ -1,35 +1,16 @@
 #!/bin/bash
-# ============================================================
-# Perioskoup Official Website — Phase 1: Auto Scaffold
-# Then prints agent prompts for phases 2-8
-# ============================================================
-
 set -e
-PROJECT_DIR=~/Projects/official-perioskoup
-cd "$PROJECT_DIR"
+cd ~/Projects/official-perioskoup
 
-echo "🏛️ Perioskoup Official Website — Phase 1: Scaffolding"
-echo "======================================================"
-echo ""
+echo "🏛️ Phase 1: Scaffolding..."
+npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm --no-git --yes 2>&1 | tail -5
 
-# Phase 1: Auto scaffold
-echo "📦 Installing Next.js 14..."
-npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm --no-git --yes 2>&1 || true
-
-echo ""
-echo "📦 Installing dependencies..."
-npm install gsap @gsap/react framer-motion 2>&1 | tail -3
-npm install next-mdx-remote gray-matter reading-time 2>&1 | tail -3
-npm install react-hook-form @hookform/resolvers zod 2>&1 | tail -3
-npm install next-sitemap sharp 2>&1 | tail -3
+echo "📦 Dependencies..."
+npm install gsap @gsap/react framer-motion next-mdx-remote gray-matter reading-time react-hook-form @hookform/resolvers zod next-sitemap sharp 2>&1 | tail -3
 npm install -D @tailwindcss/typography playwright @playwright/test @axe-core/playwright 2>&1 | tail -3
-
-echo ""
-echo "📦 Installing Playwright browsers..."
 npx playwright install chromium 2>&1 | tail -3
 
-echo ""
-echo "📦 Copying assets from existing landing page..."
+echo "📦 Copying assets..."
 mkdir -p public/app-screens
 cp ~/Projects/perioskoup-landing-vercel/public/logo-brand.svg public/ 2>/dev/null || true
 cp ~/Projects/perioskoup-landing-vercel/public/logo-white.svg public/ 2>/dev/null || true
@@ -40,39 +21,56 @@ cp ~/Projects/perioskoup-landing-vercel/public/award_ceremony-mobile.webp public
 cp ~/Projects/perioskoup-landing-vercel/public/favicon.ico public/ 2>/dev/null || true
 cp ~/Projects/perioskoup-landing-vercel/public/apple-touch-icon.png public/ 2>/dev/null || true
 
+echo "✅ Phase 1 done. Launching agents..."
+
+# Phase 2-5: Design + Homepage + Pages + Blog
+claude -p "Read CLAUDE.md first. Then do ALL of the following in one go:
+
+PHASE 2 — DESIGN SYSTEM:
+1. Create src/constants/colors.ts, typography.ts, spacing.ts with the exact design tokens from CLAUDE.md
+2. Configure Tailwind with the full lime+navy @theme scales, Dongle-Bold + Gabarito via next/font (NEVER fontWeight on Dongle)
+3. Build global layout (src/app/layout.tsx): dark theme #0A171E, responsive nav (Features, For Dentists, Pricing, Blog, About + lime Join Waitlist CTA), mobile hamburger, footer with social links, skip-to-content
+4. Create src/lib/schema.ts: JSON-LD generators for MedicalOrganization, Physician, SoftwareApplication, FAQPage, Article, BreadcrumbList
+5. Add /llms.txt route (factual markdown, no fluff), robots.txt (allow all AI crawlers), next-sitemap config
+6. Set metadata defaults: OG + Twitter cards, favicons
+
+PHASE 3 — HOMEPAGE (src/app/page.tsx):
+Apple-quality scroll storytelling. 7 sections:
+1. Hero: Dr. Anca quote (from CLAUDE.md) + app screenshot with GSAP parallax + waitlist CTA (#C0E57A) + 'Free for early adopters'
+2. Problem/Solution: 'A Week in Two Practices' — without/with comparison cards, scroll reveals. Stats: 15min saved, 40% fewer no-shows, 92% engagement, 3x better habits
+3. Features: 4 features (AI Companion, Habit Tracking, Dentist Dashboard, Smart Reminders) with staggered scroll animation
+4. Social Proof: EFP Award badge (award_ceremony.webp), 30-clinic counter, Dr. Anca credentials
+5. How It Works: 3 animated steps (Onboard → Download → AI Supports)
+6. Blog Preview: 3 placeholder cards
+7. Final CTA: waitlist form (Name, Email, Clinic, Country, Role)
+All animations respect prefers-reduced-motion.
+
+PHASE 4 — INNER PAGES:
+Build /features (SoftwareApplication + FAQPage schema), /for-dentists (ROI stats + waitlist), /pricing (3 blurred tiers from CLAUDE.md behind blur-[6px] overlay), /about (team photos from public/team/ + bios + Physician schema for Dr. Anca), /contact (form), /waitlist (dedicated signup), /privacy + /terms (placeholder legal). All pages: BreadcrumbList schema, unique OG meta.
+
+PHASE 5 — BLOG:
+MDX blog: next-mdx-remote + gray-matter. Posts in src/content/blog/*.mdx. /blog page with category filters (Clinical, Product, Industry) + pagination. /blog/[slug] with author card, TOC, FAQ+Article schema, related posts. Create 3 seed posts (800-1200 words, SaMD-safe language per CLAUDE.md, 3+ stats with sources, FAQ section). RSS at /feed.xml.
+
+Use SaMD-safe language throughout — NEVER use compliance/diagnose/treat/monitor. Check CLAUDE.md for the full banned words table.
+Generous Apple-level whitespace on every page. Dark luxury theme." --allowedTools "Edit,Write,Bash,Read" --dangerouslySkipPermissions
+
+# Phase 6-8: SEO + Testing + Deploy
+claude -p "Read CLAUDE.md. Then do ALL of the following:
+
+PHASE 6 — SEO + PERFORMANCE:
+Audit every page: unique title+description, all JSON-LD validates, OG+Twitter cards, canonical URLs, hreflang en-GB. Verify robots.txt, sitemap.xml, /llms.txt. Performance: next/image everywhere with priority on hero, lazy load below-fold, font display swap, dynamic import GSAP ScrollTrigger, bundle JS<200KB. CWV targets: LCP<2.5s, FID<100ms, CLS<0.1.
+
+PHASE 7 — ACCESSIBILITY + TESTING:
+WCAG 2.1 AA: semantic HTML, skip-to-content, ARIA labels, color contrast AA, focus indicators, keyboard nav, prefers-reduced-motion disables all animations, accessible form errors.
+Create Playwright tests:
+- tests/visual/: screenshot every page at 375px, 768px, 1440px
+- tests/e2e/: nav links, mobile hamburger, waitlist form submit+validation, blog navigation, no horizontal overflow at 375px, axe-core on every page
+- package.json scripts: test:visual, test:e2e, test (combined)
+Run tests and fix failures.
+
+PHASE 8 — FINAL:
+npm run build must pass. Grep src/ for banned SaMD words (compliance, diagnose, treat, monitor inflammation) — must return zero. Take full-page screenshots of every page at 1440px into screenshots/ dir. git add -A && git commit -m 'feat: Perioskoup official website' && git push origin main." --allowedTools "Edit,Write,Bash,Read" --dangerouslySkipPermissions
+
 echo ""
-echo "✅ Phase 1 complete!"
-echo ""
-echo "======================================================"
-echo "Now launch agents for phases 2-8."
-echo "Each phase = one coding agent in ~/Projects/official-perioskoup"
-echo "======================================================"
-echo ""
-echo "PHASE 2 — Design System + Layout"
-echo "Skills: frontend-design, awwwards-design, tailwind-v4-shadcn, nextjs-expert"
-echo "Prompt: Read CLAUDE.md. Set up design tokens, Tailwind config with exact color scales, Dongle-Bold + Gabarito fonts, global layout with dark theme nav/footer, mobile hamburger, JSON-LD schema generators, /llms.txt route, robots.txt, next-sitemap config. Apple-level whitespace. Reference apple.com/iphone."
-echo ""
-echo "PHASE 3 — Homepage"
-echo "Skills: awwwards-design, Animations, motion, auto-animate, frontend-design"
-echo "Prompt: Read CLAUDE.md. Build homepage with 7 sections: hero (Dr. Anca quote + app screenshot + parallax + waitlist CTA), problem/solution comparison, 4 features with scroll reveals, social proof (EFP award + 30-clinic counter), 3-step how-it-works, blog preview, final waitlist CTA. GSAP ScrollTrigger. Respect prefers-reduced-motion."
-echo ""
-echo "PHASE 4 — Inner Pages"
-echo "Skills: frontend-design, nextjs-expert, schema-markup-generator, react-best-practices"
-echo "Prompt: Read CLAUDE.md. Build /features, /for-dentists, /pricing (blurred tiers), /about (team photos + bios), /contact, /waitlist, /privacy, /terms. All with BreadcrumbList schema, unique OG meta."
-echo ""
-echo "PHASE 5 — Blog System"
-echo "Skills: nextjs-expert, seo, react-best-practices"
-echo "Prompt: Read CLAUDE.md. MDX blog with next-mdx-remote, /blog grid with category filters, /blog/[slug] with FAQ+Article schema, 3 seed posts (SaMD-safe language), RSS feed at /feed.xml."
-echo ""
-echo "PHASE 6 — SEO + Performance"
-echo "Skills: seo, frontend-performance, schema-markup-generator, nextjs-expert"
-echo "Prompt: Read CLAUDE.md. SEO audit all pages, verify schema, OG images, sitemap, canonical URLs, hreflang. Performance: next/image everywhere, lazy load, font swap, dynamic imports, JS<200KB, CWV targets."
-echo ""
-echo "PHASE 7 — Accessibility + Testing"
-echo "Skills: accessibility, wcag-21-aa-web-ui-audit, e2e-testing-patterns, screenshot"
-echo "Prompt: Read CLAUDE.md. WCAG 2.1 AA audit, Playwright visual regression (3 breakpoints x 8 pages), E2E tests (nav, forms, blog, responsive, axe-core). Fix all failures."
-echo ""
-echo "PHASE 8 — Final Review + Deploy"
-echo "Skills: vercel, screenshot"
-echo "Prompt: Read CLAUDE.md. npm run build (zero errors), npm run test (all pass), SaMD grep (zero hits), screenshots of every page at 1440px to screenshots/, push to GitHub, print Vercel deploy instructions."
+echo "🏛️ Done! Next: import github.com/qubi-code-assistant/official-perioskoup in Vercel"
 
