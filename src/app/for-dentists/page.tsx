@@ -87,7 +87,7 @@ export default function ForDentists() {
           </p>
           <h1
             data-gsap="fade-up"
-            className="font-heading text-[clamp(4rem,10vw,8rem)] leading-[0.8] text-lime-50 mb-8 max-w-5xl mx-auto"
+            className="font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.8] text-lime-50 mb-8 max-w-5xl mx-auto"
           >
             How Much Time Are You Losing?
           </h1>
@@ -130,7 +130,7 @@ export default function ForDentists() {
                 data-gsap="stagger-item"
                 className="titanium-card p-8 text-center"
               >
-                <p className="font-heading text-[clamp(5rem,10vw,7rem)] text-lime-400 leading-none mb-2">
+                <p className="font-heading text-[clamp(2.5rem,8vw,7rem)] text-lime-400 leading-none mb-2">
                   {stat.value}
                 </p>
                 <p className="text-navy-300 text-sm leading-relaxed">{stat.label}</p>
@@ -234,7 +234,7 @@ export default function ForDentists() {
         <div className="max-w-[1200px] mx-auto text-center relative">
           <h2
             data-gsap="fade-up"
-            className="font-heading text-[clamp(4rem,10vw,8rem)] leading-[0.8] text-lime-50 mb-6"
+            className="font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.8] text-lime-50 mb-6"
           >
             Ready to Transform Your Practice?
           </h2>

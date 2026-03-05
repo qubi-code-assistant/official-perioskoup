@@ -59,6 +59,23 @@ export default function ScrollReveal({ children }: { children: React.ReactNode }
             )
           })
 
+          /* Orphan stagger-items (not inside a [data-gsap-stagger] parent) */
+          document.querySelectorAll<HTMLElement>('[data-gsap="stagger-item"]').forEach((el) => {
+            if (!el.closest('[data-gsap-stagger]')) {
+              gsap.fromTo(
+                el,
+                { opacity: 0, y: 30 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.6,
+                  ease: 'power2.out',
+                  scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+                }
+              )
+            }
+          })
+
           /* Stat counters */
           document.querySelectorAll<HTMLElement>('[data-count-to]').forEach((el) => {
             const endValue = parseFloat(el.getAttribute('data-count-to') || '0')

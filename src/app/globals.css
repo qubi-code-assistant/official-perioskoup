@@ -105,6 +105,23 @@ body {
   }
 }
 
+/* Fallback: if GSAP hasn't revealed after 3s, show content */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes gsap-fallback {
+    to { opacity: 1; }
+  }
+  [data-gsap] {
+    animation: gsap-fallback 0s 3s forwards;
+  }
+}
+
+/* For reduced-motion users, never hide */
+@media (prefers-reduced-motion: reduce) {
+  [data-gsap] {
+    opacity: 1 !important;
+  }
+}
+
 /* ── Titanium Pro: Custom scrollbar ── */
 ::-webkit-scrollbar {
   width: 8px;
@@ -124,9 +141,15 @@ body {
 .titanium-card {
   background-color: #1d3449;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 2rem;
+  border-radius: 1.5rem;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  .titanium-card {
+    border-radius: 2rem;
+  }
 }
 
 .titanium-card:hover {

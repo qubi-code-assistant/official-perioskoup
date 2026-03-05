@@ -145,7 +145,7 @@ export default function Home() {
             </div>
 
             {/* Headline — Dongle at massive scale */}
-            <h1 data-gsap="hero-text" className="font-heading text-[clamp(5rem,12vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-50 mb-6">
+            <h1 data-gsap="hero-text" className="font-heading text-[clamp(3.5rem,10vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-50 mb-6">
               Precision<br />
               <span className="text-lime-400/90">Perio.</span>
             </h1>
@@ -175,7 +175,7 @@ export default function Home() {
 
           {/* Right: Massive phone mockup */}
           <div data-gsap="hero-phone" className="lg:col-span-7 relative flex justify-center lg:justify-end">
-            <div className="relative w-[320px] md:w-[400px] lg:w-[480px] -rotate-[6deg] lg:translate-x-12">
+            <div className="relative w-[240px] sm:w-[320px] md:w-[400px] lg:w-[480px] -rotate-[6deg] lg:translate-x-12">
               {/* Phone bezel */}
               <div className="bg-[#1a1a1a] rounded-[3rem] p-2 shadow-[0_20px_60px_rgba(0,0,0,0.5)] ring-1 ring-white/10">
                 <div className="rounded-[2.5rem] overflow-hidden">
@@ -208,7 +208,7 @@ export default function Home() {
           {/* Section header */}
           <div data-gsap="fade-up" className="text-center mb-20 md:mb-28">
             <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4 block">The new standard</span>
-            <h2 className="font-heading text-[clamp(3rem,8vw,6rem)] leading-[0.85] tracking-tight text-lime-50">
+            <h2 className="font-heading text-[clamp(2.5rem,7vw,6rem)] leading-[0.85] tracking-tight text-lime-50">
               A Tale of Two Clinics
             </h2>
             <p className="text-navy-300 text-lg md:text-xl max-w-2xl mx-auto mt-4">
@@ -217,7 +217,7 @@ export default function Home() {
           </div>
 
           {/* Comparison grid */}
-          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 md:gap-y-20">
+          <div data-gsap-stagger className="relative grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 md:gap-y-20">
             {/* Central timeline (desktop) */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] -ml-[1px] bg-gradient-to-b from-navy-700/30 via-lime-400/40 to-lime-400 glow-lime z-0" />
 
@@ -291,7 +291,7 @@ export default function Home() {
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
           <header data-gsap="fade-up" className="mb-12">
-            <h2 className="font-heading text-[clamp(4rem,10vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
+            <h2 className="font-heading text-[clamp(3rem,8vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
               Precision Features
             </h2>
             <p className="text-navy-300 text-xl max-w-2xl mt-4">
@@ -300,9 +300,9 @@ export default function Home() {
           </header>
 
           {/* Bento grid */}
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[minmax(320px,auto)]">
+          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)] md:auto-rows-[minmax(320px,auto)]">
             {/* Card 1: AI Companion (2x2) */}
-            <div data-gsap="stagger-item" className="titanium-card col-span-1 md:col-span-2 row-span-2 overflow-hidden relative flex flex-col">
+            <div data-gsap="stagger-item" className="titanium-card col-span-1 md:col-span-2 md:row-span-2 overflow-hidden relative flex flex-col min-h-[400px] md:min-h-0">
               <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
               <div className="absolute bottom-0 left-0 p-8 z-20 w-full bg-gradient-to-t from-navy-800 via-navy-800/90 to-transparent pt-20">
                 <h3 className="font-heading text-[2.5rem] leading-none text-lime-50 mb-1">AI Companion</h3>
@@ -363,7 +363,7 @@ export default function Home() {
             </div>
 
             {/* Card 2: Habit Tracking (1x2) */}
-            <div data-gsap="stagger-item" className="titanium-card col-span-1 row-span-2 overflow-hidden flex flex-col">
+            <div data-gsap="stagger-item" className="titanium-card col-span-1 md:row-span-2 overflow-hidden flex flex-col min-h-[360px] md:min-h-0">
               <div className="flex-1 p-8 flex flex-col justify-center items-center gap-8">
                 <div className="flex items-end gap-6 h-64 w-full justify-center px-4">
                   <div className="flex flex-col items-center gap-3 w-12">
@@ -469,11 +469,11 @@ export default function Home() {
             <h2
               data-clinic-counter
               data-gsap
-              className="font-heading text-[clamp(6rem,15vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-400"
+              className="font-heading text-[clamp(4rem,12vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-400"
             >
               30+
             </h2>
-            <p className="font-heading text-[clamp(3rem,6vw,5rem)] leading-[0.8] tracking-[-0.04em] text-lime-400 mt-2">
+            <p className="font-heading text-[clamp(2rem,5vw,5rem)] leading-[0.8] tracking-[-0.04em] text-lime-400 mt-2">
               Clinics
             </p>
             <p className="text-navy-300 text-xl max-w-md mt-6 leading-relaxed">
@@ -535,7 +535,7 @@ export default function Home() {
             <span className="inline-block py-1 px-3 rounded-full border border-navy-700/40 text-navy-400 text-xs uppercase tracking-[0.15em] font-medium mb-4">
               Seamless Integration
             </span>
-            <h2 className="font-heading text-[clamp(4rem,10vw,8rem)] leading-[0.85] text-lime-50">
+            <h2 className="font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.85] text-lime-50">
               From Chair <span className="text-lime-400">to Chat.</span>
             </h2>
             <p className="mt-6 text-navy-300 text-lg md:text-xl max-w-lg mx-auto leading-relaxed">
@@ -544,7 +544,7 @@ export default function Home() {
           </div>
 
           {/* Steps */}
-          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
+          <div data-gsap-stagger className="relative grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
             {/* Connector line (desktop) */}
             <div
               data-gsap="step-line"
@@ -588,7 +588,7 @@ export default function Home() {
           <div data-gsap="fade-up" className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-2">Knowledge Hub</span>
-              <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.85] text-lime-50">
+              <h2 className="font-heading text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-lime-50">
                 Clinical<br /><span className="text-navy-400">Intelligence.</span>
               </h2>
             </div>

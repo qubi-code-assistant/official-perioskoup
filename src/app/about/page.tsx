@@ -96,7 +96,7 @@ export default function AboutPage() {
           <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
             Our Mission
           </p>
-          <h1 className="font-heading text-[clamp(4rem,10vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
+          <h1 className="font-heading text-[clamp(3rem,8vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
             Our Story
           </h1>
           <p className="mt-8 max-w-3xl mx-auto text-lg md:text-xl text-navy-300 leading-relaxed">
