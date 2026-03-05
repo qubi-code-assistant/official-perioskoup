@@ -154,3 +154,62 @@ INDEXNOW_KEY=            # For search engine notification
 - Put marketing fluff in llms.txt
 - Autoplay video on mobile
 - Use lorem ipsum anywhere — all copy must be real
+
+## Content Matrix (from Niche Ownership Roadmap)
+Source: https://periosroad-n7mrkl3e.manus.space/
+
+### 5 Content Pillars
+1. **P1: Periodontal Reality** — Great clinical work + absent home support = poor outcomes
+2. **P2: Patient Behavior & Communication** — Understanding the patient journey
+3. **P3: Care Beyond the Chair** — Between-visit engagement solutions
+4. **P4: AI as a Tool** — Technology supporting dental care
+5. **P5: Clinician Journey & Reflection** — The dentist's perspective
+
+### Content Inventory
+- 50 Hooks (10 per pillar) — mix of Contrarian, Question, Pain, Statistic, Mistake, Story
+- 25 Meets (5 per pillar) — Problem-Agitate-Solve, Story with Lesson, Framework/List, Myth-Bust, Before-After
+- 10 CTAs (2 per pillar) — Soft + Direct variants
+- Each outputs to: 🎬 Instagram/TikTok + 💼 LinkedIn
+- Recombination: 125+ video scripts, 125+ LinkedIn posts, 25 carousels, 25 blog foundations
+
+### Key SEO Keywords (from roadmap)
+- "AI dental companion app" — KD 5, near-zero competition
+- "between-visit patient engagement dentistry" — KD 2, unoccupied
+- "dental habit tracking app" — KD 10
+- "dental patient engagement software" — KD 10
+- "improve dental patient adherence" — KD 20
+- "periodontal maintenance at home" — KD 30
+- "gum disease self care" — KD 40
+- "AI in periodontology" — KD 25
+- "periodontal patient engagement tools" — KD 8
+
+### Competitive Landscape
+- Dentally — Cloud PMS (no between-visit)
+- Hello Pearl — Diagnostic Imaging AI (no engagement)
+- CareStack — Practice Management (no patient companion)
+- PerioPredict — Clinical Staging (minimal overlap)
+- **Perioskoup — Between-Visit AI Companion (CATEGORY CREATOR)**
+
+### Timeline Targets
+- Weeks 1-4: Foundation — first 20-30 pieces, domain indexed
+- Months 2-3: Compounding — blog reinforces social, EFP backlink amplifies DR
+- Months 4-6: Expansion — guest posts on dental publications, DR 25-30
+- Months 6-12: Dominance — DR 35-45, AI citation ownership
+
+## SaMD Compliance (CRITICAL — follow strictly)
+Perioskoup must NEVER be positioned as a medical device. Use SAFE language only.
+
+### Safe Positioning
+✅ Habit tracking · ✅ Between-visit engagement · ✅ Communication companion
+✅ Educational content · ✅ Motivation & reminders · ✅ Routine tracking
+
+### Forbidden Language (triggers SaMD classification)
+✕ "diagnose", "detect", "treat", "cure", "manage [disease]"
+✕ "monitor inflammation", "track bleeding points"
+✕ "clinical management", "therapy", "therapeutic"
+✕ "dental patient compliance software" → USE "dental patient engagement platform"
+✕ "track gum health" → USE "build healthy gum habits"
+✕ "manage your gum disease" → USE "support your daily oral care routine"
+✕ "personalized clinical guidance" → USE "supportive reminders and encouragement"
+✕ "adherence dashboard" → USE "visibility into engagement patterns"
+✕ "extending your care" → USE "extending your connection with patients"
