@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createMetadata } from '@/lib/metadata'
 import HomeAnimations from './HomeAnimations'
-import WaitlistForm from './waitlist/WaitlistForm'
+import InlineWaitlistForm from '@/components/InlineWaitlistForm'
 
 export const metadata = createMetadata({
   title: 'Home',
@@ -60,8 +60,8 @@ const STEPS = [
     title: 'Scan',
     description: 'Sync intraoral data instantly from your existing scanner.',
     icon: (
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-12 h-12 md:w-16 md:h-16">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5ZM13.5 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5Z" />
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 md:w-14 md:h-14">
+        <path fillRule="evenodd" d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z" clipRule="evenodd" />
       </svg>
     ),
   },
@@ -70,8 +70,8 @@ const STEPS = [
     title: 'Analyze',
     description: 'AI maps risk zones & translates perio charts into habits.',
     icon: (
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-12 h-12 md:w-16 md:h-16">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 md:w-14 md:h-14">
+        <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5Z" clipRule="evenodd" />
       </svg>
     ),
   },
@@ -80,8 +80,9 @@ const STEPS = [
     title: 'Engage',
     description: 'Patients receive actionable nudges on their device.',
     icon: (
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-12 h-12 md:w-16 md:h-16">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 md:w-14 md:h-14">
+        <path d="M10.5 18.75a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" />
+        <path fillRule="evenodd" d="M8.625.75A3.375 3.375 0 0 0 5.25 4.125v15.75a3.375 3.375 0 0 0 3.375 3.375h6.75a3.375 3.375 0 0 0 3.375-3.375V4.125A3.375 3.375 0 0 0 15.375.75h-6.75ZM7.5 4.125C7.5 3.504 8.004 3 8.625 3h6.75C16.496 3 17 3.504 17 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-6.75A1.125 1.125 0 0 1 7.5 19.875V4.125Z" clipRule="evenodd" />
       </svg>
     ),
   },
@@ -117,6 +118,33 @@ const BLOG_POSTS = [
   },
 ]
 
+const TRUST_BADGES = [
+  {
+    label: 'HIPAA Compliant',
+    icon: (
+      <svg aria-hidden="true" className="w-4 h-4 text-navy-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'SOC2 Certified',
+    icon: (
+      <svg aria-hidden="true" className="w-4 h-4 text-navy-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'End-to-End Encrypted',
+    icon: (
+      <svg aria-hidden="true" className="w-4 h-4 text-navy-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+      </svg>
+    ),
+  },
+]
+
 /* ─── Component ─── */
 
 export default function Home() {
@@ -136,7 +164,7 @@ export default function Home() {
             {/* Badge */}
             <div
               data-gsap="hero-text"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-navy-700/50 text-navy-300 mb-8"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-navy-700/50 text-navy-300 mb-8 backdrop-blur-md bg-navy-950/40"
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-lime-400">
                 <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
@@ -169,15 +197,17 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
               </Link>
-              <span className="text-navy-400 text-sm">Free for early adopters</span>
+              <span className="bg-lime-400/10 border border-lime-400/20 text-lime-400 px-4 py-1.5 rounded-full text-sm font-medium">
+                Free for early adopters
+              </span>
             </div>
           </div>
 
           {/* Right: Massive phone mockup */}
           <div data-gsap="hero-phone" className="lg:col-span-7 relative flex justify-center lg:justify-end">
-            <div className="relative w-[240px] sm:w-[320px] md:w-[400px] lg:w-[480px] -rotate-[6deg] lg:translate-x-12">
+            <div className="relative w-[240px] sm:w-[320px] md:w-[400px] lg:w-[600px] xl:w-[720px] -rotate-[6deg] lg:translate-x-24 xl:translate-x-32">
               {/* Phone bezel */}
-              <div className="bg-[#1a1a1a] rounded-[3rem] p-2 shadow-[0_20px_60px_rgba(0,0,0,0.5)] ring-1 ring-white/10">
+              <div className="bg-[#1d3449] rounded-[3rem] p-2 shadow-[0_20px_60px_rgba(0,0,0,0.5)] ring-1 ring-lime-400/10">
                 <div className="rounded-[2.5rem] overflow-hidden">
                   <Image
                     src="/app-screens/app_image.webp"
@@ -202,6 +232,8 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* ═══════════════════ COMPARISON — "A Tale of Two Clinics" ═══════════════════ */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
@@ -218,8 +250,8 @@ export default function Home() {
 
           {/* Comparison grid */}
           <div data-gsap-stagger className="relative grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 md:gap-y-20">
-            {/* Central timeline (desktop) */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] -ml-[1px] bg-gradient-to-b from-navy-700/30 via-lime-400/40 to-lime-400 glow-lime z-0" />
+            {/* Central timeline (desktop) — thicker */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[3px] -ml-[1.5px] bg-gradient-to-b from-navy-700/30 via-lime-400/40 to-lime-400 glow-lime z-0" />
 
             {/* Column headers */}
             <div className="hidden md:block text-center pb-6 border-b border-white/5">
@@ -235,10 +267,10 @@ export default function Home() {
                 {/* Problem card */}
                 <div data-gsap="stagger-item" className="flex flex-col items-end md:pr-12">
                   <div className="md:hidden text-navy-500 text-xs uppercase tracking-wider font-semibold mb-2">The Standard</div>
-                  <div className="bg-navy-800/40 border border-white/5 p-8 rounded-[2rem] w-full transition-all duration-300 hover:bg-navy-800/60">
+                  <div className="bg-red-500/5 border border-white/5 border-l-2 border-l-red-400/30 p-8 rounded-[2rem] w-full transition-all duration-300 hover:bg-navy-800/60">
                     <div className="flex items-start gap-4">
-                      <div className="shrink-0 w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mt-1">
-                        <svg aria-hidden="true" className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <div className="shrink-0 w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mt-1">
+                        <svg aria-hidden="true" className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
                       </div>
@@ -253,10 +285,10 @@ export default function Home() {
                 {/* Solution card */}
                 <div data-gsap="stagger-item" className="flex flex-col items-start md:pl-12">
                   <div className="md:hidden text-lime-400 text-xs uppercase tracking-wider font-semibold mb-2 mt-4">With Perioskoup</div>
-                  <div className="bg-navy-800 border border-lime-400/20 p-8 rounded-[2rem] w-full shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
+                  <div className="bg-navy-800 border border-lime-400/30 border-l-2 border-l-lime-400 p-8 rounded-[2rem] w-full shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
                     <div className="flex items-start gap-4">
-                      <div className="shrink-0 w-10 h-10 rounded-full bg-lime-400 flex items-center justify-center mt-1 shadow-lg shadow-lime-400/20">
-                        <svg aria-hidden="true" className="w-5 h-5 text-navy-950" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <div className="shrink-0 w-12 h-12 rounded-full bg-lime-400 flex items-center justify-center mt-1 shadow-lg shadow-lime-400/20">
+                        <svg aria-hidden="true" className="w-6 h-6 text-navy-950" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
                       </div>
@@ -287,6 +319,8 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* ═══════════════════ BENTO FEATURES ═══════════════════ */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
@@ -299,10 +333,10 @@ export default function Home() {
             </p>
           </header>
 
-          {/* Bento grid */}
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)] md:auto-rows-[minmax(320px,auto)]">
-            {/* Card 1: AI Companion (2x2) */}
-            <div data-gsap="stagger-item" className="titanium-card col-span-1 md:col-span-2 md:row-span-2 overflow-hidden relative flex flex-col min-h-[400px] md:min-h-0">
+          {/* Bento grid — 2-column */}
+          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Card 1: AI Companion */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[400px] md:min-h-[520px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
               <div className="absolute bottom-0 left-0 p-8 z-20 w-full bg-gradient-to-t from-navy-800 via-navy-800/90 to-transparent pt-20">
                 <h3 className="font-heading text-[2.5rem] leading-none text-lime-50 mb-1">AI Companion</h3>
@@ -362,25 +396,25 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card 2: Habit Tracking (1x2) */}
-            <div data-gsap="stagger-item" className="titanium-card col-span-1 md:row-span-2 overflow-hidden flex flex-col min-h-[360px] md:min-h-0">
+            {/* Card 2: Habit Tracking */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden flex flex-col min-h-[400px] md:min-h-[520px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="flex-1 p-8 flex flex-col justify-center items-center gap-8">
                 <div className="flex items-end gap-6 h-64 w-full justify-center px-4">
-                  <div className="flex flex-col items-center gap-3 w-12">
-                    <div className="relative w-full bg-navy-950/50 rounded-full h-48 overflow-hidden">
-                      <div className="absolute bottom-0 left-0 w-full bg-navy-600/40 h-[45%] rounded-full" />
+                  <div className="flex flex-col items-center gap-3 w-14">
+                    <div className="relative w-full bg-navy-900 rounded-t-xl h-48 overflow-hidden">
+                      <div className="absolute bottom-0 left-0 w-full bg-navy-600/40 h-[45%] rounded-t-xl" />
                     </div>
                     <span className="text-xs text-navy-400 uppercase tracking-wider">Floss</span>
                   </div>
-                  <div className="flex flex-col items-center gap-3 w-12">
-                    <div className="relative w-full bg-navy-950/50 rounded-full h-64 overflow-hidden shadow-[0_0_15px_rgba(192,229,122,0.15)]">
-                      <div className="absolute bottom-0 left-0 w-full bg-lime-400 h-[82%] rounded-full" />
+                  <div className="flex flex-col items-center gap-3 w-14">
+                    <div className="relative w-full bg-navy-900 rounded-t-xl h-64 overflow-hidden shadow-[0_0_15px_rgba(192,229,122,0.15)]">
+                      <div className="absolute bottom-0 left-0 w-full bg-lime-400 h-[82%] rounded-t-xl" />
                     </div>
                     <span className="text-xs text-lime-400 uppercase tracking-wider font-semibold">Brush</span>
                   </div>
-                  <div className="flex flex-col items-center gap-3 w-12">
-                    <div className="relative w-full bg-navy-950/50 rounded-full h-48 overflow-hidden">
-                      <div className="absolute bottom-0 left-0 w-full bg-navy-600/40 h-[60%] rounded-full" />
+                  <div className="flex flex-col items-center gap-3 w-14">
+                    <div className="relative w-full bg-navy-900 rounded-t-xl h-48 overflow-hidden">
+                      <div className="absolute bottom-0 left-0 w-full bg-navy-600/40 h-[60%] rounded-t-xl" />
                     </div>
                     <span className="text-xs text-navy-400 uppercase tracking-wider">Rinse</span>
                   </div>
@@ -392,20 +426,26 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card 3: Dentist Dashboard (2x1) */}
-            <div data-gsap="stagger-item" className="titanium-card col-span-1 md:col-span-2 overflow-hidden relative flex flex-col min-h-[280px]">
+            {/* Card 3: Dentist Dashboard */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[280px] md:min-h-[300px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="absolute inset-0 flex items-center justify-center opacity-80">
                 <svg className="w-full h-full" fill="none" viewBox="0 0 500 150" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="fadeGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#C0E57A" stopOpacity="0.2" />
+                      <stop offset="0%" stopColor="#C0E57A" stopOpacity="0.25" />
                       <stop offset="100%" stopColor="#C0E57A" stopOpacity="0" />
                     </linearGradient>
                   </defs>
+                  {/* Grid lines */}
+                  <line x1="0" y1="30" x2="500" y2="30" stroke="#234966" strokeWidth="0.5" strokeDasharray="4 4" />
+                  <line x1="0" y1="60" x2="500" y2="60" stroke="#234966" strokeWidth="0.5" strokeDasharray="4 4" />
+                  <line x1="0" y1="90" x2="500" y2="90" stroke="#234966" strokeWidth="0.5" strokeDasharray="4 4" />
+                  <line x1="0" y1="120" x2="500" y2="120" stroke="#234966" strokeWidth="0.5" strokeDasharray="4 4" />
+                  {/* Wave fill + line */}
                   <path d="M0 100 C 50 100, 50 40, 100 40 C 150 40, 150 110, 200 110 C 250 110, 250 20, 300 20 C 350 20, 350 90, 400 90 C 450 90, 450 60, 500 60 L 500 150 L 0 150 Z" fill="url(#fadeGrad)" />
                   <path d="M0 100 C 50 100, 50 40, 100 40 C 150 40, 150 110, 200 110 C 250 110, 250 20, 300 20 C 350 20, 350 90, 400 90 C 450 90, 450 60, 500 60" fill="none" stroke="#C0E57A" strokeWidth="3" strokeLinecap="round" />
-                  <circle cx="100" cy="40" r="4" fill="#C0E57A" />
-                  <circle cx="300" cy="20" r="4" fill="#C0E57A" />
+                  <circle cx="100" cy="40" r="5" fill="#C0E57A" />
+                  <circle cx="300" cy="20" r="5" fill="#C0E57A" />
                 </svg>
               </div>
               <div className="absolute top-6 right-6 bg-navy-950/80 border border-navy-700/30 px-3 py-1.5 rounded-lg flex items-center gap-2">
@@ -418,9 +458,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card 4: Smart Reminders (1x1) */}
-            <div data-gsap="stagger-item" className="titanium-card col-span-1 overflow-hidden flex flex-col justify-between min-h-[320px]">
-              <div className="flex-1 flex items-center justify-center relative">
+            {/* Card 4: Smart Reminders */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden flex flex-col justify-between min-h-[280px] md:min-h-[300px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+              <div className="flex-1 flex flex-col items-center justify-center relative p-8">
                 <div className="absolute w-32 h-32 bg-lime-400/5 rounded-full animate-ping opacity-20" />
                 <div className="relative">
                   <svg aria-hidden="true" className="w-20 h-20 text-navy-400" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
@@ -429,6 +469,19 @@ export default function Home() {
                   <div className="absolute -top-1 -right-1 bg-lime-400 text-navy-950 font-semibold text-sm w-7 h-7 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(192,229,122,0.6)] border-2 border-navy-800">
                     2
                   </div>
+                </div>
+                {/* Notification preview */}
+                <div className="mt-6 bg-navy-950/50 border border-navy-700/30 rounded-2xl p-4 max-w-[220px]">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-5 h-5 rounded-full bg-lime-400/20 flex items-center justify-center">
+                      <svg aria-hidden="true" className="w-3 h-3 text-lime-400" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                      </svg>
+                    </div>
+                    <span className="text-lime-50 text-[11px] font-medium">Perioskoup</span>
+                    <span className="text-navy-500 text-[10px] ml-auto">now</span>
+                  </div>
+                  <p className="text-navy-300 text-xs leading-relaxed">Time to floss! Your evening routine builds consistency.</p>
                 </div>
               </div>
               <div className="p-8 pt-0">
@@ -439,6 +492,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="section-divider" />
 
       {/* ═══════════════════ AUTHORITY & PROOF ═══════════════════ */}
       <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden">
@@ -457,7 +512,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Stat */}
+          {/* Stat — combined on ONE line */}
           <div className="flex flex-col items-center text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-navy-800 bg-navy-800/30 mb-4">
               <span className="relative flex h-2 w-2">
@@ -469,13 +524,10 @@ export default function Home() {
             <h2
               data-clinic-counter
               data-gsap
-              className="font-heading text-[clamp(4rem,12vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-400"
+              className="font-heading text-[clamp(5rem,14vw,12rem)] leading-[0.8] tracking-[-0.04em] text-lime-400"
             >
-              30+
+              30 Clinics
             </h2>
-            <p className="font-heading text-[clamp(2rem,5vw,5rem)] leading-[0.8] tracking-[-0.04em] text-lime-400 mt-2">
-              Clinics
-            </p>
             <p className="text-navy-300 text-xl max-w-md mt-6 leading-relaxed">
               Already transforming patient engagement across Europe&rsquo;s top periodontal practices.
             </p>
@@ -492,7 +544,7 @@ export default function Home() {
                 alt="Dr. Anca Constantin"
                 width={96}
                 height={96}
-                className="w-24 h-24 rounded-full object-cover border-2 border-lime-400/20 grayscale"
+                className="w-24 h-24 rounded-full object-cover border-2 border-lime-400/20"
               />
               <div className="absolute -bottom-1 -right-1 bg-navy-950 rounded-full p-1 border border-navy-800">
                 <svg aria-hidden="true" className="w-5 h-5 text-lime-400 bg-navy-800 rounded-full p-0.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -509,19 +561,19 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Trust row */}
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-8 border-t border-white/5 w-full max-w-2xl">
-            {['GDPR Ready', 'End-to-End Encrypted', 'Privacy-First'].map((item) => (
-              <div key={item} className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-                <svg aria-hidden="true" className="w-5 h-5 text-navy-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-                </svg>
-                <span className="text-xs text-navy-400 tracking-wide">{item}</span>
+          {/* Trust row — pill styling with distinct icons */}
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8 pt-8 border-t border-white/5 w-full max-w-2xl">
+            {TRUST_BADGES.map((badge) => (
+              <div key={badge.label} className="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity bg-navy-800/30 px-4 py-2 rounded-full border border-navy-700/30">
+                {badge.icon}
+                <span className="text-xs text-navy-400 tracking-wide">{badge.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      <div className="section-divider" />
 
       {/* ═══════════════════ WORKFLOW — "From Chair to Chat" ═══════════════════ */}
       <section
@@ -545,20 +597,34 @@ export default function Home() {
 
           {/* Steps */}
           <div data-gsap-stagger className="relative grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
-            {/* Connector line (desktop) */}
+            {/* SVG curved connector (desktop) */}
             <div
               data-gsap="step-line"
-              className="hidden md:block absolute top-[100px] left-[16.67%] right-[16.67%] h-px bg-lime-400/30 origin-left"
-            />
+              className="hidden md:block absolute top-0 left-0 right-0 h-[320px] pointer-events-none"
+            >
+              <svg className="w-full h-full" viewBox="0 0 1200 320" fill="none" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="stepGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#2f5f84" />
+                    <stop offset="100%" stopColor="#c0e57a" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M0,100 C200,100 350,200 600,200 C850,200 1000,100 1200,100"
+                  stroke="url(#stepGrad)"
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
 
             {STEPS.map((step, i) => (
-              <div key={step.number} data-gsap="stagger-item" className={`flex flex-col items-center text-center ${i === 1 ? 'md:mt-16' : ''}`}>
+              <div key={step.number} data-gsap="stagger-item" className={`flex flex-col items-center text-center ${i === 1 ? 'md:mt-20' : ''}`}>
                 <div className="relative mb-8">
-                  <div className="w-36 h-36 md:w-44 md:h-44 rounded-full bg-navy-800 border border-white/5 flex items-center justify-center glow-lime transition-transform duration-500 hover:scale-105">
-                    <div className="absolute inset-0 rounded-full border border-white/5 scale-90" />
+                  <div className={`${i === 1 ? 'w-44 h-44 md:w-48 md:h-48' : 'w-40 h-40 md:w-44 md:h-44'} rounded-full bg-navy-800 border border-navy-700/40 flex items-center justify-center relative transition-transform duration-500 hover:scale-105`}>
+                    <div className="absolute inset-3 rounded-full border border-navy-700/30" />
                     <div className="text-lime-400">{step.icon}</div>
                   </div>
-                  <div className={`absolute -top-2 -right-2 text-sm font-semibold px-3 py-1 rounded-full ${i === 0 ? 'bg-lime-400 text-navy-950' : 'bg-navy-800 border border-navy-700/50 text-lime-50'}`}>
+                  <div className="absolute -top-2 -right-2 text-sm font-semibold px-3 py-1 rounded-full bg-lime-400 text-navy-950">
                     {step.number}
                   </div>
                 </div>
@@ -582,6 +648,8 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
       {/* ═══════════════════ KNOWLEDGE HUB / BLOG PREVIEW ═══════════════════ */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
@@ -603,28 +671,88 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Blog grid */}
+          {/* Blog grid — featured layout */}
           <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {BLOG_POSTS.map((post) => (
+            {/* Featured post */}
+            <Link
+              href={BLOG_POSTS[0].slug}
+              data-gsap="stagger-item"
+              className="titanium-card group md:col-span-2 md:row-span-2 relative overflow-hidden flex flex-col justify-end min-h-[400px] md:min-h-0"
+            >
+              {/* Abstract background */}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-900/80 to-navy-800/40" />
+              <div className="absolute inset-0 opacity-10">
+                <svg className="w-full h-full" viewBox="0 0 600 400" fill="none">
+                  <circle cx="150" cy="200" r="80" stroke="#c0e57a" strokeWidth="0.5" opacity="0.3" />
+                  <circle cx="300" cy="150" r="120" stroke="#3578aa" strokeWidth="0.5" opacity="0.3" />
+                  <circle cx="450" cy="250" r="60" stroke="#c0e57a" strokeWidth="0.5" opacity="0.3" />
+                  <line x1="150" y1="200" x2="300" y2="150" stroke="#3578aa" strokeWidth="0.3" opacity="0.4" />
+                  <line x1="300" y1="150" x2="450" y2="250" stroke="#c0e57a" strokeWidth="0.3" opacity="0.4" />
+                  <line x1="150" y1="200" x2="450" y2="250" stroke="#3578aa" strokeWidth="0.3" opacity="0.2" />
+                </svg>
+              </div>
+              <div className="relative z-10 p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="bg-lime-400 text-navy-950 text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Featured</span>
+                  <span className="text-navy-400 text-xs flex items-center gap-1.5">
+                    <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    {BLOG_POSTS[0].readTime}
+                  </span>
+                </div>
+                <h3 className="font-heading text-[clamp(2.5rem,5vw,4rem)] text-lime-50 leading-tight mb-3 group-hover:text-lime-400 transition-colors">
+                  {BLOG_POSTS[0].title}
+                </h3>
+                <p className="text-navy-300 text-sm leading-relaxed mb-6 max-w-lg">{BLOG_POSTS[0].excerpt}</p>
+                <div className="flex items-center gap-3">
+                  <Image src="/team/team-anca.webp" alt="Dr. Anca Constantin" width={32} height={32} className="w-8 h-8 rounded-full object-cover" />
+                  <div>
+                    <p className="text-lime-50 text-sm font-medium">Dr. Anca Constantin</p>
+                    <p className="text-navy-500 text-xs">PhD, Periodontology</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Side cards */}
+            {BLOG_POSTS.slice(1).map((post) => (
               <Link
                 key={post.slug}
                 href={post.slug}
                 data-gsap="stagger-item"
-                className="titanium-card group p-8 flex flex-col justify-between"
+                className="titanium-card group p-6 md:p-8 flex flex-col justify-between"
               >
                 <div>
                   <span className="text-lime-400 text-xs uppercase tracking-[0.15em] font-semibold">{post.category}</span>
-                  <h3 className="font-heading text-[clamp(1.8rem,3vw,2.5rem)] text-lime-50 leading-tight mt-3 mb-3 group-hover:text-lime-400 transition-colors">
+                  <h3 className="font-heading text-[clamp(1.8rem,3vw,2.5rem)] text-lime-50 leading-tight mt-2 mb-2 group-hover:text-lime-400 transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-navy-400 text-sm leading-relaxed">{post.excerpt}</p>
                 </div>
-                <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5">
                   <span className="text-navy-500 text-sm">{post.readTime}</span>
                   <svg aria-hidden="true" className="w-5 h-5 text-lime-50 group-hover:text-lime-400 transition-colors" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
                   </svg>
                 </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Category filter pills */}
+          <div className="flex flex-wrap gap-3 mt-10">
+            {['All Articles', 'Clinical Studies', 'AI Technology', 'Practice Growth'].map((cat, i) => (
+              <Link
+                key={cat}
+                href="/blog"
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${
+                  i === 0
+                    ? 'bg-lime-400 text-navy-950'
+                    : 'border border-navy-700/40 text-navy-400 hover:border-lime-400/40 hover:text-lime-50'
+                }`}
+              >
+                {cat}
               </Link>
             ))}
           </div>
@@ -646,7 +774,7 @@ export default function Home() {
             Join the inner circle. Be the first to experience the future of periodontal care intelligence.
           </p>
 
-          <WaitlistForm />
+          <InlineWaitlistForm />
 
           <p className="text-navy-500 text-xs text-center mt-6 flex items-center justify-center gap-2">
             <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">

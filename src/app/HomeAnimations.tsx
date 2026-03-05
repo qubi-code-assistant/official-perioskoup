@@ -68,18 +68,18 @@ export default function HomeAnimations({ children }: { children: React.ReactNode
               ease: 'power1.out',
               scrollTrigger: { trigger: clinicCounter, start: 'top 85%', once: true },
               onUpdate: () => {
-                clinicCounter.textContent = `${Math.round(target.val)}+`
+                clinicCounter.textContent = `${Math.round(target.val)} Clinics`
               },
             })
           }
 
-          /* Steps connector line */
+          /* Steps connector line — clip-path reveal */
           gsap.fromTo(
             '[data-gsap="step-line"]',
-            { scaleX: 0 },
+            { clipPath: 'inset(0 100% 0 0)' },
             {
-              scaleX: 1,
-              duration: 1.2,
+              clipPath: 'inset(0 0% 0 0)',
+              duration: 1.5,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: '[data-steps-section]',

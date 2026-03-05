@@ -153,8 +153,16 @@ body {
 }
 
 .titanium-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Section divider ── */
+.section-divider {
+  height: 1px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: linear-gradient(to right, transparent, rgba(35, 73, 102, 0.3), transparent);
 }
 
 /* ── Ambient glow utility ── */
