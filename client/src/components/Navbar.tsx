@@ -1,5 +1,5 @@
 /* =============================================================
-   PERIOSKOUP — NAVBAR
+   PERIOSKOUP -- NAVBAR
    Apple-style: frosted glass on scroll, minimal links, pill CTA
    Animation: JS hover mutations replaced with CSS .nav-link-item class.
    Mobile drawer uses CSS keyframe slide-in + staggered link reveals.
@@ -78,7 +78,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop nav — CSS hover via .nav-link-item, no JS style mutations */}
+          {/* Desktop nav -- CSS hover via .nav-link-item, no JS style mutations */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }} className="hide-mobile">
             {NAV_LINKS.map(({ href, label }) => (
               <Link key={href} href={href}>
@@ -131,7 +131,7 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* Mobile drawer — CSS keyframe slide-in with staggered link reveals */}
+      {/* Mobile drawer -- CSS keyframe slide-in with staggered link reveals */}
       {menuOpen && (
         <div
           id="mobile-nav"

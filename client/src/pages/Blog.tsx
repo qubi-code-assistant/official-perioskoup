@@ -1,6 +1,6 @@
 /*
- * PERIOSKOUP — BLOG PAGE
- * Design: Clinical Precision, Human Warmth — Dark Tech-Medical Premium
+ * PERIOSKOUP -- BLOG PAGE
+ * Design: Clinical Precision, Human Warmth -- Dark Tech-Medical Premium
  * Animation: JS onMouseEnter/Leave replaced with CSS .blog-card-hover and .blog-row-hover.
  */
 import { Helmet } from "react-helmet-async";
@@ -56,7 +56,7 @@ const POSTS = [
     slug: "efp-digital-innovation-award-2025",
     category: "Company News",
     title: "Perioskoup Wins EFP Digital Innovation Award 2025",
-    excerpt: "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards — selected from 20 submissions across 17 national societies.",
+    excerpt: "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards - selected from 20 submissions across 17 national societies.",
     date: "17 May 2025",
     readTime: "4 min read",
     author: "Eduard Ciugulea",
@@ -66,7 +66,7 @@ const POSTS = [
   {
     slug: "how-ai-is-changing-dental-monitoring",
     category: "Technology",
-    title: "How AI Is Changing Dental Monitoring — And Why It Matters",
+    title: "How AI Is Changing Dental Monitoring - And Why It Matters",
     excerpt: "From pattern recognition in X-rays to personalised habit coaching, AI is beginning to close the gap between clinical visits. Here's what's real and what's hype.",
     date: "3 Dec 2025",
     readTime: "7 min read",
@@ -89,7 +89,7 @@ const POSTS = [
     slug: "why-patients-forget-instructions",
     category: "Clinical Insight",
     title: "Why Patients Forget Dental Instructions (And What to Do About It)",
-    excerpt: "Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why — and how technology is changing this.",
+    excerpt: "Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why - and how technology is changing this.",
     date: "5 Oct 2025",
     readTime: "6 min read",
     author: "Dr. Anca Laura Constantin",
@@ -118,10 +118,10 @@ export default function Blog() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>Dental Health &amp; AI Blog — Periodontal Care Insights | Perioskoup</title>
+        <title>Dental Health &amp; AI Blog | Periodontal Care Insights | Perioskoup</title>
         <meta name="description" content="Evidence-based articles on periodontal health, dental AI, and patient care from Dr. Anca Constantin (Periodontist, EFP Award 2025) and the Perioskoup team." />
         <link rel="canonical" href="https://perioskoup.com/blog" />
-        <meta property="og:title" content="Dental Health &amp; AI Blog — Periodontal Care Insights | Perioskoup" />
+        <meta property="og:title" content="Dental Health &amp; AI Blog | Periodontal Care Insights | Perioskoup" />
         <meta property="og:description" content="Articles on periodontal disease, AI in dental care, and daily oral health habits. Written by Dr. Anca Laura Constantin and the Perioskoup team." />
         <meta property="og:url" content="https://perioskoup.com/blog" />
         <meta property="og:type" content="website" />
@@ -140,7 +140,7 @@ export default function Blog() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ItemList",
-            "name": "Perioskoup Blog — Dental Health & AI Insights",
+            "name": "Perioskoup Blog. Dental Health & AI Insights",
             "description": "Evidence-based articles on periodontal health, dental AI, and patient care from the Perioskoup team.",
             "url": "https://perioskoup.com/blog",
             "itemListElement": POSTS.map((p, i) => ({
@@ -200,7 +200,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Featured posts — CSS .blog-card-hover, no JS style mutations */}
+      {/* Featured posts -- CSS .blog-card-hover, no JS style mutations */}
       <section style={{ paddingBottom: "80px" }}>
         <div className="container">
           <div
@@ -260,7 +260,7 @@ export default function Blog() {
               Interested in what we're building?
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, color: "#8C9C8C", marginBottom: 24 }}>
-              Join 500+ patients and 30+ founding clinics on the Perioskoup waitlist. The AI dental companion launching March 2026.
+              Join 30+ founding clinics on the Perioskoup waitlist. The AI dental companion launching March 2026.
             </p>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "14px 28px" }}>
               Join the Waitlist
@@ -270,7 +270,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* All articles — CSS .blog-row-hover, no JS style mutations */}
+      {/* All articles -- CSS .blog-row-hover, no JS style mutations */}
       <section style={{ paddingBottom: "120px", borderTop: "1px solid #234966", paddingTop: "80px" }}>
         <div className="container">
           <h2 className="display-sm reveal" style={{ marginBottom: "48px" }}>All Articles</h2>
@@ -294,11 +294,11 @@ export default function Blog() {
                     <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(24px, 2.5vw, 32px)", fontWeight: 700, color: "#F5F9EA", lineHeight: 1.1, margin: "0 0 8px" }}>
                       {post.title}
                     </h3>
-                    <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", color: "#8C9C8C", lineHeight: 1.6, margin: 0 }}>
+                    <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", color: "#8C9C8C", lineHeight: 1.6, margin: 0, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>
                       {post.excerpt}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3 flex-shrink-0 sm:ml-auto">
+                  <div className="flex items-center gap-3 flex-shrink-0 sm:ml-auto" style={{ minWidth: "fit-content" }}>
                     <img src={post.authorImg} alt={post.author} width={36} height={36} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
                     <div style={{ textAlign: "right" }}>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600, margin: 0 }}>{post.author.split(" ")[0]}</p>
@@ -315,7 +315,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Newsletter CTA — input uses .p-input class for consistent focus animation */}
+      {/* Newsletter CTA -- input uses .p-input class for consistent focus animation */}
       <section style={{ background: "#050C10", padding: "80px 0", borderTop: "1px solid #234966" }}>
         <div className="container" style={{ maxWidth: "560px", textAlign: "center" }}>
           <div className="reveal" style={{ marginBottom: "16px" }}>

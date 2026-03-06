@@ -1,5 +1,5 @@
 /**
- * Navbar — Unit tests
+ * Navbar -- Unit tests
  *
  * Framework: Vitest + React Testing Library
  *
@@ -8,7 +8,7 @@
  *   component source. It is revealed only by the `.show-mobile-flex` CSS class
  *   via a media query, which jsdom does not process. Therefore standard
  *   getByRole queries that respect visibility will not find it.
- *   We use querySelector with the aria-label attribute to locate it directly —
+ *   We use querySelector with the aria-label attribute to locate it directly --
  *   this is intentional and correct for jsdom unit tests.
  *
  * Covers:
@@ -46,7 +46,7 @@ function getMenuToggleButton(): HTMLElement {
   return btn;
 }
 
-describe("Navbar — desktop nav links", () => {
+describe("Navbar -- desktop nav links", () => {
   it("renders the Features link", () => {
     renderNavbar();
     const links = screen.getAllByRole("link", { name: "Features" });
@@ -78,7 +78,7 @@ describe("Navbar — desktop nav links", () => {
   });
 });
 
-describe("Navbar — mobile menu toggle button exists in DOM", () => {
+describe("Navbar -- mobile menu toggle button exists in DOM", () => {
   it("hamburger button exists in DOM with aria-label='Open menu'", () => {
     renderNavbar();
     const btn = document.querySelector('button[aria-label="Open menu"]');
@@ -98,7 +98,7 @@ describe("Navbar — mobile menu toggle button exists in DOM", () => {
   });
 });
 
-describe("Navbar — mobile drawer toggle", () => {
+describe("Navbar -- mobile drawer toggle", () => {
   it("mobile drawer (id=mobile-nav) is NOT in DOM before toggle is clicked", () => {
     renderNavbar();
     expect(document.getElementById("mobile-nav")).toBeNull();
@@ -134,7 +134,7 @@ describe("Navbar — mobile drawer toggle", () => {
   });
 });
 
-describe("Navbar — body scroll lock", () => {
+describe("Navbar -- body scroll lock", () => {
   it("body.style.overflow is 'hidden' when menu is open", () => {
     renderNavbar();
     fireEvent.click(getMenuToggleButton());
@@ -149,7 +149,7 @@ describe("Navbar — body scroll lock", () => {
   });
 });
 
-describe("Navbar — mobile drawer content", () => {
+describe("Navbar -- mobile drawer content", () => {
   it("mobile drawer contains all 4 nav link labels after toggle", () => {
     renderNavbar();
     fireEvent.click(getMenuToggleButton());

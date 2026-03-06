@@ -6,7 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
-// Route-level code splitting — every non-Home page is lazy loaded
+// Route-level code splitting -- every non-Home page is lazy loaded
 const Features = React.lazy(() => import("./pages/Features"));
 const ForDentists = React.lazy(() => import("./pages/ForDentists"));
 const Pricing = React.lazy(() => import("./pages/Pricing"));
@@ -44,7 +44,7 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
 
 /**
  * Announces SPA route changes to screen readers and moves keyboard
- * focus to the #main-content landmark — WCAG 2.4.3 / 4.1.3
+ * focus to the #main-content landmark -- WCAG 2.4.3 / 4.1.3
  */
 function RouteAnnouncer() {
   const [location] = useLocation();
@@ -105,7 +105,7 @@ export default function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-          {/* Skip to main content — visually hidden, appears on keyboard focus (WCAG 2.4.1) */}
+          {/* Skip to main content -- visually hidden, appears on keyboard focus (WCAG 2.4.1) */}
           <a href="#main-content" className="skip-link">Skip to main content</a>
           <Router />
         </TooltipProvider>

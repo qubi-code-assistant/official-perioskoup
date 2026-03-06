@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — CONTACT PAGE
+ * PERIOSKOUP -- CONTACT PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -77,8 +77,7 @@ export default function Contact() {
     "email": "hello@perioskoup.com",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Bucharest",
-      "addressCountry": "RO"
+      "addressCountry": "EU"
     },
     "foundingDate": "2025-06",
     "founders": [
@@ -95,10 +94,10 @@ export default function Contact() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>Contact Perioskoup — Dental AI Enquiries</title>
+        <title>Contact Perioskoup | Dental AI Enquiries</title>
         <meta name="description" content="Reach the Perioskoup team for press, clinic partnerships, investor enquiries, or product questions. We respond within 24 hours." />
         <link rel="canonical" href="https://perioskoup.com/contact" />
-        <meta property="og:title" content="Contact Perioskoup — Dental AI Enquiries" />
+        <meta property="og:title" content="Contact Perioskoup | Dental AI Enquiries" />
         <meta property="og:description" content="Get in touch with the Perioskoup team for press, clinic partnerships, or general enquiries. Based in Bucharest, serving clinics across Europe." />
         <meta property="og:url" content="https://perioskoup.com/contact" />
         <meta property="og:type" content="website" />
@@ -126,7 +125,7 @@ export default function Contact() {
             <span style={{ color: "#C0E57A" }}>dental health.</span>
           </h1>
           <p className="body-lg reveal" style={{ maxWidth: 480, transitionDelay: "0.16s" }}>
-            Whether you're a patient, a dentist, an investor, or just curious — we'd love to hear from you.
+            Whether you're a patient, a dentist, an investor, or just curious - we'd love to hear from you.
           </p>
           <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", marginTop: 12, transitionDelay: "0.24s" }}>
             Perioskoup is the AI dental companion bridging clinic and home.
@@ -142,7 +141,7 @@ export default function Contact() {
             <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
               {[
                 { icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z", label: "Email", value: "hello@perioskoup.com", sub: "We reply within 24 hours." },
-                { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z", label: "Location", value: "Bucharest, Romania", sub: "Serving clinics across Europe." },
+                { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z", label: "Location", value: "Based in Europe", sub: "Serving dental practices worldwide." },
                 { icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z", label: "For Clinics", value: "clinic@perioskoup.com", sub: "Founding partner enquiries." },
               ].map((item) => (
                 <div key={item.label} className="reveal" style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>

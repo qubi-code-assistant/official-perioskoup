@@ -1,5 +1,5 @@
 /**
- * Breadcrumb — Discrete breadcrumb navigation with JSON-LD structured data
+ * Breadcrumb -- Discrete breadcrumb navigation with JSON-LD structured data
  * 
  * Brand: sage grey (#8C9C8C) text, subtle styling, SEO-optimized
  * Renders both visible breadcrumbs and JSON-LD BreadcrumbList schema

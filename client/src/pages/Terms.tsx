@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — TERMS OF SERVICE PAGE
+ * PERIOSKOUP -- TERMS OF SERVICE PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -25,7 +25,7 @@ export default function Terms() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <Helmet>
-        <title>Terms of Service — Perioskoup</title>
+        <title>Terms of Service | Perioskoup</title>
         <meta name="description" content="Terms governing the use of the Perioskoup dental companion application, including wellness disclaimer and data responsibilities." />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://perioskoup.com/terms" />

@@ -1,5 +1,5 @@
 /**
- * PhoneMockup — Coded iPhone 15 Pro frame with Perioskoup "Select your role" screen
+ * PhoneMockup -- Coded iPhone 15 Pro frame with Perioskoup "Select your role" screen
  * Animation: Logo image uses .img-load/.loaded for fade-in on load.
  */
 
@@ -140,7 +140,7 @@ export default function PhoneMockup() {
               marginTop: -8,
             }}
           >
-            {/* Logo — fades in once loaded */}
+            {/* Logo -- fades in once loaded */}
             <img
               src={LOGO_URL}
               alt="Perioskoup logo"

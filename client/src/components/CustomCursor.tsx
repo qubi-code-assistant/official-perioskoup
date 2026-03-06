@@ -1,5 +1,5 @@
 /* =============================================================
-   PERIOSKOUP — CUSTOM CURSOR
+   PERIOSKOUP -- CUSTOM CURSOR
    Lime dot + trailing ring with hover expansion
    ============================================================= */
 import { useEffect, useRef } from 'react';

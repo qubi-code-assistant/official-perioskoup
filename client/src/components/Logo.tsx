@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — INLINE SVG LOGO COMPONENT
+ * PERIOSKOUP -- INLINE SVG LOGO COMPONENT
  * Colors: #C0E57A lime, #0A171E dark, #F5F9EA text
  * Font: Gabarito (brand wordmark)
  */

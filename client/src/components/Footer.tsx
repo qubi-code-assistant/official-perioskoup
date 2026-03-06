@@ -78,7 +78,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns — CSS .footer-link hover, no JS mutations */}
+          {/* Link columns -- CSS .footer-link hover, no JS mutations */}
           {Object.entries(FOOTER_LINKS).map(([category, links]) => (
             <div key={category}>
               <h3 style={{
@@ -119,7 +119,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Perioskoup. All rights reserved.
           </p>
           <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#8C9C8C' }}>
-            Built in Bucharest, Romania
+            Made in Europe
           </p>
         </div>
       </div>

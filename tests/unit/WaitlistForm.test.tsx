@@ -1,5 +1,5 @@
 /**
- * WaitlistForm — Unit tests
+ * WaitlistForm -- Unit tests
  *
  * Framework: Vitest + React Testing Library
  *
@@ -29,7 +29,7 @@ afterEach(() => {
   cleanup();
 });
 
-describe("Waitlist form — initial render", () => {
+describe("Waitlist form -- initial render", () => {
   it("renders the first name input", () => {
     renderWithRouter(<Waitlist />);
     expect(screen.getByPlaceholderText("First name")).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe("Waitlist form — initial render", () => {
   });
 });
 
-describe("Waitlist form — role switcher", () => {
+describe("Waitlist form -- role switcher", () => {
   it("clicking Patient role hides the clinic name field", () => {
     renderWithRouter(<Waitlist />);
     const patientButton = screen.getByRole("button", { name: /Patient/i });
@@ -87,7 +87,7 @@ describe("Waitlist form — role switcher", () => {
   });
 });
 
-describe("Waitlist form — successful submission", () => {
+describe("Waitlist form -- successful submission", () => {
   it("shows success state after filling required fields and submitting (dentist)", () => {
     renderWithRouter(<Waitlist />);
 
@@ -176,7 +176,7 @@ describe("Waitlist form — successful submission", () => {
   });
 });
 
-describe("Waitlist form — email input attributes", () => {
+describe("Waitlist form -- email input attributes", () => {
   it("email input has type='email'", () => {
     renderWithRouter(<Waitlist />);
     const emailInput = screen.getByPlaceholderText("Email address");

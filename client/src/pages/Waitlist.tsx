@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — WAITLIST PAGE
+ * PERIOSKOUP -- WAITLIST PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -31,7 +31,7 @@ function useReveal() {
 
 export default function Waitlist() {
   useReveal();
-  const [role, setRole] = useState<"patient" | "dentist">("patient");
+  const [role, setRole] = useState<"patient" | "dentist">("dentist");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -62,7 +62,7 @@ export default function Waitlist() {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "What happens after I join the waitlist?", "acceptedAnswer": { "@type": "Answer", "text": "After joining, you'll receive a confirmation email. We onboard in batches — founding clinics and early patients get priority access. You'll hear from us before the March 2026 public launch." } },
+      { "@type": "Question", "name": "What happens after I join the waitlist?", "acceptedAnswer": { "@type": "Answer", "text": "After joining, you'll receive a confirmation email. We onboard in batches. Founding clinics and early patients get priority access. You'll hear from us before the March 2026 public launch." } },
       { "@type": "Question", "name": "Is the waitlist free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Joining the Perioskoup waitlist is completely free and comes with no obligations. Patients will always have free access to the app. Founding clinics receive locked-in pricing." } },
       { "@type": "Question", "name": "When will I get access?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup's public launch is planned for March 2026. Founding waitlist members receive priority access before the public launch date." } },
     ]
@@ -71,16 +71,16 @@ export default function Waitlist() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>Join the Perioskoup Waitlist — Early Access</title>
-        <meta name="description" content="Get priority access to the AI dental companion app launching in March 2026. 500+ patients and 30+ clinics already on the list." />
+        <title>Join the Perioskoup Waitlist | Early Access</title>
+        <meta name="description" content="Get priority access to the AI dental companion app launching in March 2026. 30+ founding clinics already on the list." />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://perioskoup.com/waitlist" />
-        <meta property="og:title" content="Join the Perioskoup Waitlist — Early Access" />
-        <meta property="og:description" content="Get priority access to the AI dental companion app launching March 2026. Join 500+ patients and 30+ dental clinics already on the founding waitlist." />
+        <meta property="og:title" content="Join the Perioskoup Waitlist | Early Access" />
+        <meta property="og:description" content="Get priority access to the AI dental companion app launching March 2026. Join 30+ founding dental clinics already on the waitlist." />
         <meta property="og:url" content="https://perioskoup.com/waitlist" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Join the Perioskoup Waitlist" />
-        <meta name="twitter:description" content="Get priority access to the AI dental companion launching March 2026. 500+ patients and 30+ clinics already on the list." />
+        <meta name="twitter:description" content="Get priority access to the AI dental companion launching March 2026. 30+ founding clinics already on the list." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
@@ -113,10 +113,10 @@ export default function Waitlist() {
                 <span style={{ color: "#C0E57A" }}>founding waitlist.</span>
               </h1>
               <p className="body-lg reveal" style={{ marginBottom: 48, transitionDelay: "0.16s" }}>
-                Be among the first to experience Perioskoup. Patients get free early access. Clinics get founding partner pricing — locked in forever.
+                Be among the first to experience Perioskoup. Patients get free early access. Clinics get founding partner pricing - locked in forever.
               </p>
 
-              {/* Role selector — aria-pressed communicates selected state to AT (A09) */}
+              {/* Role selector -- aria-pressed communicates selected state to AT (A09) */}
               <div className="reveal" role="group" aria-label="Select your role" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 32, transitionDelay: "0.24s" }}>
                 {(["dentist", "patient"] as const).map((r) => (
                   <button
@@ -140,7 +140,7 @@ export default function Waitlist() {
                 ))}
               </div>
 
-              {/* Form — all inputs have associated labels via sr-only (A03) */}
+              {/* Form -- all inputs have associated labels via sr-only (A03) */}
               <form onSubmit={handleSubmit} className="reveal" style={{ display: "flex", flexDirection: "column", gap: 14, transitionDelay: "0.32s" }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
@@ -186,7 +186,6 @@ export default function Waitlist() {
               <div className="reveal" style={{ marginTop: 48, padding: 24, background: "#1D3449", border: "1px solid #234966", borderRadius: 16, transitionDelay: "0.4s" }}>
                 <div className="flex flex-wrap gap-6 justify-center">
                   {[
-                    { value: "500+", label: "on the waitlist" },
                     { value: "30+", label: "founding clinics" },
                     { value: "Winner", label: "EFP Award 2025" },
                   ].map((s) => (

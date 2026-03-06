@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — ABOUT PAGE
+ * PERIOSKOUP -- ABOUT PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -51,7 +51,7 @@ export default function About() {
     "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, co-founder and Chief Dental Officer of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national societies.",
     "image": "https://perioskoup.com/images/anca-headshot.jpg",
     "worksFor": { "@id": "https://perioskoup.com/#organization" },
-    "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
+    "award": "EFP Digital Innovation Award 2025, 3rd Prize, European Federation of Periodontology",
     "knowsAbout": ["Periodontal Disease", "Periodontology", "AI in Dental Care", "Patient Engagement"],
     "sameAs": [
       "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
@@ -67,7 +67,7 @@ export default function About() {
         "name": "Who founded Perioskoup?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically the challenge of maintaining patient engagement between dental appointments."
+          "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice. Specifically, the challenge of maintaining patient engagement between dental appointments."
         }
       },
       {
@@ -100,14 +100,14 @@ export default function About() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>About Perioskoup — Dental AI Built in Bucharest</title>
+        <title>About Perioskoup | Dental AI Built in Bucharest</title>
         <meta name="description" content="Meet the team behind Perioskoup: a periodontist, engineer, and AI specialist building the dental companion they always wished existed." />
         <link rel="canonical" href="https://perioskoup.com/about" />
-        <meta property="og:title" content="About Perioskoup — Dental AI Built in Bucharest" />
+        <meta property="og:title" content="About Perioskoup | Dental AI Built in Bucharest" />
         <meta property="og:description" content="Meet the founders of Perioskoup: Dr. Anca Constantin (Periodontist), Eduard Ciugulea (CGO), and Petrica Nancu (CTO). EFP Award winners 2025." />
         <meta property="og:url" content="https://perioskoup.com/about" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:title" content="About Perioskoup — Dental AI Built in Bucharest" />
+        <meta name="twitter:title" content="About Perioskoup | Dental AI Built in Bucharest" />
         <meta name="twitter:description" content="A periodontist, an engineer, and an AI specialist walk into a dental chair... and build the companion they always wished existed. EFP Award 2025." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -131,7 +131,7 @@ export default function About() {
             <span style={{ color: "#C0E57A" }}>Built for every patient.</span>
           </h1>
           <p className="body-lg reveal" style={{ fontSize: 19, maxWidth: 600, transitionDelay: "0.16s" }}>
-            Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest — and decided to build the solution herself.
+            Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest - and decided to build the solution herself.
           </p>
           <div className="reveal" style={{ marginTop: 32, transitionDelay: "0.24s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "12px 28px" }}>
@@ -161,7 +161,7 @@ export default function About() {
                 "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health."
               </blockquote>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", margin: 0 }}>
-                — European Federation of Periodontology
+                - European Federation of Periodontology
               </p>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, lineHeight: 1.7, color: "#8C9C8C", margin: 0 }}>
                 Selected from 20 submissions across 17 national societies, recognized by an international expert jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos.
@@ -190,9 +190,6 @@ export default function About() {
                 Close the gap<br />
                 <span style={{ color: "#C0E57A" }}>between visits.</span>
               </h2>
-              <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, marginTop: 8 }}>
-                Periodontal disease affects 1 in 2 adults worldwide. Most patients forget care instructions within 48 hours. Perioskoup bridges this gap with personalised AI-powered dental support between appointments.
-              </p>
               <p className="body-lg reveal" style={{ marginBottom: 20, transitionDelay: "0.16s" }}>
                 Periodontal disease affects 1 in 2 adults worldwide, yet most patients don't understand their diagnosis, forget their care instructions within 48 hours, and don't return for follow-up appointments.
               </p>
@@ -203,14 +200,16 @@ export default function About() {
             <div className="reveal" style={{ transitionDelay: "0.08s" }}>
               <div className="bg-[#1D3449] border border-[#234966] rounded-2xl p-6 lg:p-10">
                 {[
-                  { value: "50%", label: "of adults have periodontal disease" },
-                  { value: "48h", label: "until patients forget care instructions" },
-                  { value: "60%", label: "of patients don't return for follow-up" },
-                  { value: "3×", label: "better outcomes with digital support" },
+                  { value: "62%", label: "of adults have periodontitis worldwide", source: "Bernabe et al. 2020, JCP", href: "https://doi.org/10.1111/jcpe.13217" },
+                  { value: "80%", label: "of care instructions forgotten within 48h", source: "Kessels 2003, BMJ", href: "https://doi.org/10.1136/bmj.326.7395.920" },
+                  { value: "87%", label: "of mHealth studies show improved outcomes", source: "Toniazzo et al. 2019, JCP", href: "https://doi.org/10.1111/jcpe.13064" },
                 ].map((stat, i) => (
-                  <div key={stat.label} style={{ display: "flex", alignItems: "center", gap: 20, padding: "16px 0", borderBottom: i < 3 ? "1px solid #234966" : "none" }}>
+                  <div key={stat.label} style={{ display: "flex", alignItems: "center", gap: 20, padding: "16px 0", borderBottom: i < 2 ? "1px solid #234966" : "none" }}>
                     <span style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 32, color: "#C0E57A", minWidth: 60 }}>{stat.value}</span>
-                    <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C" }}>{stat.label}</span>
+                    <div>
+                      <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", display: "block" }}>{stat.label}</span>
+                      <a href={stat.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "#6B7F7B", textDecoration: "none" }}>{stat.source}</a>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -223,7 +222,7 @@ export default function About() {
       <section style={{ background: "#050C10", padding: "80px 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
-            <img src={ANCA_IMG} alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+            <img src={ANCA_IMG} alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0 }} />
             <div style={{ flex: 1, minWidth: 280 }}>
               <blockquote style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, margin: 0 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, fontStyle: "italic", color: "rgba(245,249,234,0.85)", lineHeight: 1.65 }}>
@@ -246,14 +245,14 @@ export default function About() {
             Why now?
           </h2>
           <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, marginTop: 8 }}>
-            Three things changed at the same time — making the AI dental companion possible for the first time.
+            Three things changed at the same time - making the AI dental companion possible for the first time.
           </p>
           <div className="reveal" style={{ transitionDelay: "0.08s" }}>
             <p className="body-lg" style={{ marginBottom: 16 }}>
               Three things changed. AI became capable of personalising recommendations at scale. Smartphones became the primary health interface. And patients began expecting continuous digital support between appointments.
             </p>
             <p className="body-lg">
-              Perioskoup exists at the intersection of these shifts — an AI dental companion built for a world where care doesn't end when the appointment does.
+              Perioskoup exists at the intersection of these shifts - an AI dental companion built for a world where care doesn't end when the appointment does.
             </p>
           </div>
         </div>
@@ -269,25 +268,29 @@ export default function About() {
               <span style={{ color: "#C0E57A" }}>for clinicians.</span>
             </h2>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-              The Perioskoup founding team combines clinical periodontology, full-stack engineering, and AI expertise — united by the mission to improve dental outcomes through technology.
+              The Perioskoup founding team combines clinical periodontology, full-stack engineering, and AI expertise - united by the mission to improve dental outcomes through technology.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[900px] mx-auto">
             {[
-              { img: ANCA_IMG, name: "Dr. Anca Laura Constantin", role: "Periodontist & Co-founder, CDO", creds: "DMD, PhD in Periodontology", bio: "Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill — it was the communication gap between chair and home." },
-              { img: EDI_IMG, name: "Eduard Ciugulea", role: "CGO & Co-Founder", creds: "Full-stack engineer & growth strategist", bio: "Eduard brings the technical architecture and growth strategy that transforms Anca's clinical vision into a scalable product built for both patients and clinics." },
-              { img: PETRICA_IMG, name: "Petrica Nancu", role: "CTO & Head of AI", creds: "AI & machine learning specialist", bio: "Petrica leads the AI engine powering Perioskoup's clinical intelligence — transforming raw periodontal data into actionable nudges that keep patients engaged." },
+              { img: ANCA_IMG, name: "Dr. Anca Laura Constantin", role: "Periodontist & Co-founder, CDO", creds: "DMD, PhD in Periodontology", bio: "Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill - it was the communication gap between chair and home.", linkedin: "https://www.linkedin.com/in/anca-constantin-99800633b/" },
+              { img: EDI_IMG, name: "Eduard Ciugulea", role: "CGO & Co-Founder", creds: "Full-stack engineer & growth strategist", bio: "Eduard brings the technical architecture and growth strategy that transforms Anca's clinical vision into a scalable product built for both patients and clinics.", linkedin: "https://www.linkedin.com/in/eduard-ciugulea/" },
+              { img: PETRICA_IMG, name: "Petrica Nancu", role: "CTO & Head of AI", creds: "AI & machine learning specialist", bio: "Petrica leads the AI engine powering Perioskoup's clinical intelligence - transforming raw periodontal data into actionable nudges that keep patients engaged.", linkedin: "https://www.linkedin.com/in/petrica-nancu-b16468241/" },
             ].map((f, i) => (
               <div key={f.name} className="card reveal" style={{ padding: 0, overflow: "hidden", transitionDelay: `${i * 0.08}s` }}>
                 <div className="h-48 sm:h-56 lg:h-[280px] overflow-hidden relative">
-                  <img src={f.img} alt={f.name} loading="lazy" width={300} height={280} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+                  <img src={f.img} alt={f.name} loading="lazy" width={300} height={280} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: f.name.includes("Anca") ? "center 25%" : "top" }} />
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 80, background: "linear-gradient(to top, #1D3449, transparent)" }} />
                 </div>
                 <div style={{ padding: 24 }}>
                   <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 26, fontWeight: 700, color: "#F5F9EA", marginBottom: 4 }}>{f.name}</h3>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, fontWeight: 600, color: "#C0E57A", marginBottom: 4 }}>{f.role}</p>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", marginBottom: 12 }}>{f.creds}</p>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, lineHeight: 1.65, color: "#8C9C8C" }}>{f.bio}</p>
+                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, lineHeight: 1.65, color: "#8C9C8C", marginBottom: 12 }}>{f.bio}</p>
+                  <a href={f.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${f.name} on LinkedIn`} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", textDecoration: "none" }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ color: "#8C9C8C" }}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                  </a>
                 </div>
               </div>
             ))}

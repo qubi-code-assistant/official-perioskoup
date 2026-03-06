@@ -1,5 +1,5 @@
 /**
- * ErrorBoundary — Unit tests
+ * ErrorBoundary -- Unit tests
  *
  * Framework: Vitest + React Testing Library
  *
@@ -79,7 +79,7 @@ describe("ErrorBoundary", () => {
 
   it("componentDidCatch logs the error to console.error (DEF-006 fix)", () => {
     render(<TestWrapper throwError={true} />);
-    // console.error is spied — verify it was called with the error
+    // console.error is spied -- verify it was called with the error
     const calls = (console.error as ReturnType<typeof vi.fn>).mock.calls;
     const errorCalls = calls.filter((args) =>
       args.some(

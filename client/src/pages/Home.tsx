@@ -1,6 +1,6 @@
 /**
  * PERIOSKOUP HOME PAGE
- * Design: Clinical Precision, Human Warmth — Dark Tech-Medical Premium
+ * Design: Clinical Precision, Human Warmth -- Dark Tech-Medical Premium
  * Animation fixes:
  *   - Phone mockup: reveal-scale outer div, phone-float inner div (fix transform conflict)
  *   - Counter: prefers-reduced-motion guard
@@ -9,7 +9,7 @@
  */
 
 import { Helmet } from "react-helmet-async";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
@@ -27,7 +27,7 @@ const ASSETS = {
   howItWorks:   "/images/howitworks-rings-bg.webp",
 };
 
-/* Scroll reveal hook — respects prefers-reduced-motion */
+/* Scroll reveal hook -- respects prefers-reduced-motion */
 function useReveal() {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -52,122 +52,6 @@ function useReveal() {
   }, []);
 }
 
-/* Animated counter — respects prefers-reduced-motion */
-function Counter({ to, suffix = "", duration = 2000 }: { to: number; suffix?: string; duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    // Respect reduced motion — show final value immediately
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      setCount(to);
-      return;
-    }
-
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true;
-        const start = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min((now - start) / duration, 1);
-          const ease = 1 - Math.pow(1 - p, 3);
-          setCount(Math.floor(ease * to));
-          if (p < 1) requestAnimationFrame(tick);
-          else setCount(to);
-        };
-        requestAnimationFrame(tick);
-        io.disconnect();
-      }
-    }, { threshold: 0.5 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [to, duration]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-}
-
-/* Waitlist form */
-function WaitlistForm({ compact = false }: { compact?: boolean }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [emailError, setEmailError] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) {
-      setEmailError("Email address is required.");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError("Please enter a valid email address.");
-      return;
-    }
-    setEmailError("");
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
-      <div role="status" aria-live="polite" aria-atomic="true" className="text-center py-8">
-        <div style={{ width: 56, height: 56, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", background: "rgba(192,229,122,0.12)", border: "1px solid rgba(192,229,122,0.35)" }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        </div>
-        <p style={{ fontFamily: "Dongle, sans-serif", fontSize: "36px", color: "#C0E57A", lineHeight: 1 }}>You're on the list.</p>
-        <p className="body-md" style={{ marginTop: 8 }}>We'll reach out when your spot opens up.</p>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }} noValidate>
-      {!compact && (
-        <>
-          <label htmlFor="home-waitlist-name" className="sr-only">Your name</label>
-          <input id="home-waitlist-name" className="p-input" type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
-        </>
-      )}
-      <label htmlFor="home-waitlist-email" className="sr-only">Email address</label>
-      <input
-        id="home-waitlist-email"
-        className="p-input"
-        type="email"
-        placeholder="Your email address"
-        value={email}
-        onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(""); }}
-        required
-        aria-required="true"
-        aria-invalid={!!emailError}
-        aria-describedby={emailError ? "home-email-error" : undefined}
-      />
-      {emailError && <span id="home-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A" }}>{emailError}</span>}
-      {!compact && (
-        <>
-          <label htmlFor="home-waitlist-role" className="sr-only">I am a...</label>
-          <select id="home-waitlist-role" className="p-select" value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="">I am a...</option>
-            <option value="patient">Patient</option>
-            <option value="dentist">Dentist / Periodontist</option>
-            <option value="clinic">Clinic Owner</option>
-            <option value="other">Other</option>
-          </select>
-        </>
-      )}
-      <button type="submit" className="btn-primary w-full" style={{ justifyContent: "center", fontSize: 16, padding: "16px 28px" }}>
-        Join the Waitlist
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-      </button>
-      <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", textAlign: "center" }}>No spam. Unsubscribe anytime. GDPR compliant.</p>
-    </form>
-  );
-}
-
 /* ══════════════════════════════════════════════════════════════
    MAIN COMPONENT
    ══════════════════════════════════════════════════════════════ */
@@ -189,14 +73,14 @@ export default function Home() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <Helmet>
-        <title>Perioskoup — AI Dental Companion App | Between-Visit Dental Care</title>
+        <title>Perioskoup | AI Dental Companion App | Between-Visit Dental Care</title>
         <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025." />
         <link rel="canonical" href="https://perioskoup.com/" />
-        <meta property="og:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
+        <meta property="og:title" content="Perioskoup | AI Dental Companion App | Between-Visit Dental Care" />
         <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
         <meta property="og:url" content="https://perioskoup.com/" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
+        <meta name="twitter:title" content="Perioskoup | AI Dental Companion App | Between-Visit Dental Care" />
         <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -209,7 +93,7 @@ export default function Home() {
 
       {/* HERO */}
       <section id="main-content" style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(48px, 8vw, 80px)", overflow: "hidden" }}>
-        {/* Hero LCP image — outside wrapper so overflow:hidden doesn't block LCP detection */}
+        {/* Hero LCP image -- outside wrapper so overflow:hidden doesn't block LCP detection */}
         <img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" fetchPriority="high" width={1280} height={714} className="hero-lcp-img ken-burns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
         {/* Animated background overlays */}
         <div className="animated-bg-wrapper">
@@ -221,7 +105,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-16 items-center">
             {/* Left: text content */}
             <div>
-              {/* EFP badge — CSS hover via .efp-badge-hover */}
+              {/* EFP badge -- CSS hover via .efp-badge-hover */}
               <div className="reveal" style={{ marginBottom: 28 }}>
                 <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
                   className="efp-badge-hover"
@@ -240,7 +124,7 @@ export default function Home() {
 
               {/* Product subhead */}
               <p className="reveal body-lg" style={{ maxWidth: 520, marginBottom: 32, transitionDelay: "0.15s", color: "rgba(245,249,234,0.8)" }}>
-                Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+                Perioskoup is a free AI dental companion app - personalised guidance, habit tracking, and a direct line to your clinic between appointments.
               </p>
 
               {/* Dr. Anca quote */}
@@ -249,7 +133,7 @@ export default function Home() {
                   "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
                 </p>
                 <footer style={{ marginTop: 10, fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>
-                  — Dr. Anca Constantin, Periodontist &amp; Co-founder
+                  - Dr. Anca Constantin, Periodontist &amp; Co-founder
                 </footer>
               </blockquote>
 
@@ -266,20 +150,20 @@ export default function Home() {
 
               {/* Social proof micro-bar */}
               <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginBottom: 32, transitionDelay: "0.35s" }}>
-                30+ founding clinics · 500+ on the waitlist · Free for patients
+                30+ founding clinics · EFP Award Winner 2025 · Free for patients
               </p>
 
               {/* Stats row */}
               <div className="reveal flex flex-wrap gap-6 lg:gap-10" style={{ transitionDelay: "0.4s" }}>
                 {[
-                  { label: "Treatment Acceptance", value: "85%", source: "digital health research" },
-                  { label: "Fewer No-Shows", value: "40%", source: "digital health research" },
-                  { label: "EFP Innovation Award", value: "Winner", source: "" },
+                  { label: "of mHealth studies show improved oral health", value: "87%", source: "Toniazzo et al. 2019, JCP", href: "https://doi.org/10.1111/jcpe.13064" },
+                  { label: "of care instructions forgotten within 48h", value: "80%", source: "Kessels 2003, BMJ", href: "https://doi.org/10.1136/bmj.326.7395.920" },
+                  { label: "EFP Innovation Award", value: "Winner", source: "", href: "" },
                 ].map((s) => (
                   <div key={s.label}>
                     <div style={{ fontFamily: "Dongle, sans-serif", fontSize: 44, color: "#C0E57A", lineHeight: 1 }}>{s.value}</div>
                     <div style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginTop: 4 }}>{s.label}</div>
-                    {s.source && <div style={{ fontFamily: "Gabarito, sans-serif", fontSize: 10, color: "#6B7F7B", marginTop: 2 }}>{s.source}</div>}
+                    {s.source && <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 10, color: "#6B7F7B", marginTop: 2, display: "block", textDecoration: "none" }}>{s.source}</a>}
                   </div>
                 ))}
               </div>
@@ -289,7 +173,7 @@ export default function Home() {
                 FIX: reveal-scale on outer div, phone-float on inner div.
                 Previously both classes were on the same element, which caused
                 the CSS animation (float) to override the CSS transition (reveal-scale)
-                on the transform property — the scale-in never fired. */}
+                on the transform property -- the scale-in never fired. */}
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} aria-hidden="true">
               <div className="reveal-scale" style={{ transitionDelay: "0.2s" }}>
                 <div className="phone-float">
@@ -322,7 +206,7 @@ export default function Home() {
           <div className="reveal grid grid-cols-1 md:grid-cols-2" style={{ borderRadius: 24, overflow: "hidden", border: "1px solid #234966" }}>
             {/* Left: ceremony photo */}
             <div style={{ position: "relative", minHeight: 420, overflow: "hidden" }}>
-              <img src={ASSETS.award} alt="EFP Digital Innovation Award ceremony — Perioskoup" loading="lazy" decoding="async" width={800} height={446} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              <img src={ASSETS.award} alt="EFP Digital Innovation Award ceremony - Perioskoup" loading="lazy" decoding="async" width={800} height={446} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, #1D3449 100%)" }} />
             </div>
             {/* Right: content */}
@@ -335,7 +219,7 @@ export default function Home() {
                   "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health."
                 </p>
                 <footer style={{ marginTop: 12, fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>
-                  — European Federation of Periodontology
+                  - European Federation of Periodontology
                 </footer>
               </blockquote>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", lineHeight: 1.65, marginBottom: 24 }}>
@@ -381,10 +265,10 @@ export default function Home() {
           {/* Bento grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { span: 2, title: "AI-Powered Guidance", desc: "Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations — not generic advice. It learns what works for you and adapts over time.", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
+              { span: 2, title: "AI-Powered Guidance", desc: "Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations - not generic advice. It learns what works for you and adapts over time.", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
               { span: 1, title: "Habit Tracking", desc: "Daily streaks, reminders, and progress visualisation that make good dental habits stick.", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
               { span: 1, title: "For Clinicians", desc: "Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
-              { span: 2, title: "Privacy First", desc: "Your dental data stays yours. Perioskoup is built with GDPR protection at its core — no selling of health data, ever. Encrypted end-to-end, stored in the EU.", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
+              { span: 2, title: "Privacy First", desc: "Your dental data stays yours. Perioskoup is built with GDPR protection at its core - no selling of health data, ever. Encrypted end-to-end, stored in the EU.", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
             ].map((f, i) => (
               <div key={f.title} className={`card reveal ${f.span === 2 ? "md:col-span-2" : ""}`} style={{ transitionDelay: `${i * 0.08}s`, background: "rgba(29,52,73,0.75)", backdropFilter: "blur(12px)" }}>
                 <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(192,229,122,0.1)", border: "1px solid rgba(192,229,122,0.25)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
@@ -416,7 +300,7 @@ export default function Home() {
               Not a chatbot. Not a practice management system. Not a fitness tracker for teeth.
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
-              An AI dental companion translates clinical recommendations into personalised daily habits — with smart reminders, progress tracking, and a direct line to your dental team. Perioskoup is the first.
+              An AI dental companion translates clinical recommendations into personalised daily habits - with smart reminders, progress tracking, and a direct line to your dental team. Perioskoup is the first.
             </p>
           </div>
         </div>
@@ -490,101 +374,6 @@ export default function Home() {
                   <p className="body-md" style={{ maxWidth: 240, margin: "0 auto" }}>{item.desc}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOUNDERS / TEAM */}
-      <section style={{ background: "#050C10", padding: "120px 0" }}>
-        <div className="container">
-          <div className="text-center reveal" style={{ marginBottom: 72 }}>
-            <span className="label-tag" style={{ marginBottom: 20, display: "inline-flex" }}>The Team</span>
-            <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 20 }}>
-              Built by people who<br />care about <span style={{ color: "#C0E57A" }}>your health.</span>
-            </h2>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-              Perioskoup was founded by Dr. Anca Laura Constantin (Periodontist), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI) in Bucharest, Romania.
-            </p>
-            <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
-              Perioskoup was founded by a periodontist, a full-stack engineer, and an AI specialist — united by a single mission.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { img: ASSETS.anca, name: "Dr. Anca Laura Constantin", role: "Co-founder & Chief Dental Officer", cred: "Periodontist · Bucharest, Romania", quote: "I see patients every day who don't know how to maintain their oral health between visits. Perioskoup is the companion I always wished I could give them." },
-              { img: ASSETS.edi, name: "Eduard Ciugulea", role: "Co-founder & CGO", cred: "Full-Stack Engineer & Growth Strategist", quote: "We built Perioskoup to be the kind of app that actually changes behaviour — not just tracks it. The technology has to serve the human outcome." },
-              { img: ASSETS.petrica, name: "Petrica Nancu", role: "CTO & Head of AI", cred: "AI & Machine Learning Specialist", quote: "Every screen in Perioskoup is designed to reduce friction and increase confidence. Health apps should feel empowering, not clinical." },
-            ].map((f, i) => (
-              <div key={f.name} className="card reveal" style={{ transitionDelay: `${i * 0.12}s`, padding: 0, overflow: "hidden" }}>
-                <div style={{ position: "relative", height: 280, overflow: "hidden" }}>
-                  <img src={f.img} alt={f.name} loading="lazy" decoding="async" width={400} height={280} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #1D3449 0%, rgba(29,52,73,0.3) 60%, transparent 100%)" }} />
-                </div>
-                <div style={{ padding: 24 }}>
-                  <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, color: "#F5F9EA", marginBottom: 4 }}>{f.name}</h3>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, fontWeight: 600, color: "#C0E57A", marginBottom: 4 }}>{f.role}</p>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", marginBottom: 16 }}>{f.cred}</p>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", lineHeight: 1.6, fontStyle: "italic" }}>"{f.quote}"</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section style={{ position: "relative", background: "#0A171E", padding: "120px 0", overflow: "hidden" }}>
-        <div className="cta-bg-canvas">
-          <div className="cta-orb cta-orb--1" />
-          <div className="cta-orb cta-orb--2" />
-          <div className="cta-orb cta-orb--3" />
-          <div className="cta-orb cta-orb--4" />
-          <div className="cta-orb cta-orb--5" />
-          <div className="cta-grid" />
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div
-              key={`p-${i}`}
-              className="cta-particle"
-              style={{
-                left: `${8 + (i * 7.5) % 84}%`,
-                bottom: `${-5 - (i * 3)}%`,
-                animationDuration: `${6 + (i % 5) * 2}s`,
-                animationDelay: `${(i * 1.3) % 8}s`,
-                width: `${2 + (i % 3)}px`,
-                height: `${2 + (i % 3)}px`,
-                opacity: 0.3 + (i % 4) * 0.15,
-              }}
-            />
-          ))}
-          <div className="cta-scan-line" />
-          <div className="cta-vignette" />
-        </div>
-
-        <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <div className="reveal" style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-            <span className="label-tag" style={{ marginBottom: 24, display: "inline-flex" }}>Join the Waitlist</span>
-            <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 24 }}>
-              Be first when<br /><span style={{ color: "#C0E57A" }}>we launch.</span>
-            </h2>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-              Perioskoup is currently in private beta with a public launch planned for March 2026. Founding waitlist members receive priority access and founding pricing.
-            </p>
-            <p className="body-lg" style={{ marginBottom: 48, maxWidth: 480, margin: "0 auto 48px" }}>
-              We're onboarding founding clinics and early patients now. Get priority access, founding member pricing, and a direct line to the team.
-            </p>
-            <div style={{
-              maxWidth: 440,
-              margin: "0 auto",
-              background: "rgba(29,52,73,0.35)",
-              border: "1px solid rgba(192,229,122,0.15)",
-              borderRadius: 20,
-              padding: "32px 28px",
-              backdropFilter: "blur(12px)",
-              boxShadow: "0 0 60px rgba(192,229,122,0.06), 0 8px 32px rgba(0,0,0,0.3)",
-            }}>
-              <WaitlistForm />
             </div>
           </div>
         </div>

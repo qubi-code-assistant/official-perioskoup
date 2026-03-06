@@ -1,6 +1,6 @@
 /**
  * Subtle mesh glow overlay for hero sections.
- * Two soft radial gradients — absolute positioned within the hero.
+ * Two soft radial gradients -- absolute positioned within the hero.
  */
 export default function HeroGlow() {
   return (

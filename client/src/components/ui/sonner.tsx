@@ -1,6 +1,6 @@
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
-// App always uses dark mode — no next-themes dependency needed
+// App always uses dark mode -- no next-themes dependency needed
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner

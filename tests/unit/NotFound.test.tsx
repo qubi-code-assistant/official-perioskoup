@@ -1,5 +1,5 @@
 /**
- * NotFound (404 page) — Unit tests
+ * NotFound (404 page) -- Unit tests
  *
  * Framework: Vitest + React Testing Library
  *
@@ -16,11 +16,11 @@ import { Router } from "wouter";
 import NotFound from "../../client/src/pages/NotFound";
 import type { ReactElement } from "react";
 
-// NotFound uses Navbar, Footer, and ParallaxHeroBg — all need a Router context
+// NotFound uses Navbar, Footer, and ParallaxHeroBg -- all need a Router context
 const renderWithRouter = (ui: ReactElement) =>
   render(<Router>{ui}</Router>);
 
-describe("NotFound page — content", () => {
+describe("NotFound page -- content", () => {
   it("renders the '404' numeral", () => {
     renderWithRouter(<NotFound />);
     expect(screen.getByText("404")).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("NotFound page — content", () => {
   });
 });
 
-describe("NotFound page — DEF-013 regression (stale HeroGlow import)", () => {
+describe("NotFound page -- DEF-013 regression (stale HeroGlow import)", () => {
   it("page renders without errors (stale HeroGlow import removed)", () => {
     // If HeroGlow were imported but undefined this would throw on render.
     // Successful render confirms the stale import was cleaned up.

@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — FEATURES PAGE
+ * PERIOSKOUP -- FEATURES PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text
  * Fonts: Dongle (display), Gabarito (body)
  */
@@ -31,12 +31,12 @@ function useReveal() {
 }
 
 const FEATURES = [
-  { icon: "💡", title: "AI Clinical Companion", desc: "Patients get instant, evidence-based answers about their periodontal health in plain language — no medical jargon, no confusion.", bullets: ["Personalised oral health guidance", "Evidence-based answers", "Understands clinical reports", "Available 24/7"], tag: "Patients" },
-  { icon: "🔔", title: "Smart Reminders", desc: "Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication — all tracked and encouraged.", bullets: ["Adaptive reminder timing", "Habit-based nudge frequency", "Appointment reminders", "Opt-in communication"], tag: "Patients" },
+  { icon: "💡", title: "AI Clinical Companion", desc: "Patients get instant, evidence-based answers about their periodontal health in plain language - no medical jargon, no confusion.", bullets: ["Personalised oral health guidance", "Evidence-based answers", "Understands clinical reports", "Available 24/7"], tag: "Patients" },
+  { icon: "🔔", title: "Smart Reminders", desc: "Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication - all tracked and encouraged.", bullets: ["Adaptive reminder timing", "Habit-based nudge frequency", "Appointment reminders", "Opt-in communication"], tag: "Patients" },
   { icon: "📊", title: "Progress Tracking", desc: "Visual timelines and habit streaks that show the oral health journey over time. Patients see their own improvement.", bullets: ["Daily habit logging", "Visual progress dashboards", "Streak rewards", "Weekly engagement reports"], tag: "Patients" },
-  { icon: "💬", title: "Secure Messaging", desc: "Patients can send questions and updates directly to their dental team between appointments — reducing anxiety and unnecessary calls.", bullets: ["GDPR-compliant messaging", "File and photo sharing", "Read receipts", "Archived conversation history"], tag: "Both" },
+  { icon: "💬", title: "Secure Messaging", desc: "Patients can send questions and updates directly to their dental team between appointments - reducing anxiety and unnecessary calls.", bullets: ["GDPR-compliant messaging", "File and photo sharing", "Read receipts", "Archived conversation history"], tag: "Both" },
   { icon: "🖥️", title: "Dentist Dashboard", desc: "A dedicated portal for clinicians to monitor engagement, send care plans, and track patient outcomes across their entire practice.", bullets: ["Patient engagement overview", "Appointment preparation briefs", "Multi-patient practice view", "Exportable summaries"], tag: "Dentists" },
-  { icon: "📚", title: "Education Library", desc: "Curated, clinician-approved content about periodontal conditions, treatments, and home care — always up to date.", bullets: ["Condition explainers", "Treatment guides", "Home care tutorials", "Clinician-approved content"], tag: "Patients" },
+  { icon: "📚", title: "Education Library", desc: "Curated, clinician-approved content about periodontal conditions, treatments, and home care - always up to date.", bullets: ["Condition explainers", "Treatment guides", "Home care tutorials", "Clinician-approved content"], tag: "Patients" },
   { icon: "📅", title: "Appointment Prep", desc: "Patients arrive better prepared with a summary of their progress and questions ready. Dentists save time on history-taking.", bullets: ["Pre-visit summaries", "Question prompts", "Progress snapshots", "Reduced chair time"], tag: "Both" },
   { icon: "🔒", title: "GDPR-Compliant & Secure", desc: "End-to-end encrypted, EU-hosted, and built with privacy-first principles. Patient data never leaves European servers.", bullets: ["End-to-end encryption", "GDPR Article 9 compliant", "EU-hosted servers", "Right to erasure built-in"], tag: "Both" },
 ];
@@ -63,15 +63,15 @@ export default function Features() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <Helmet>
-        <title>AI Dental Companion App Features — Habit Tracking & Care Plans | Perioskoup</title>
+        <title>AI Dental Companion App Features | Habit Tracking & Care Plans | Perioskoup</title>
         <meta name="description" content="Explore Perioskoup's AI dental companion features: personalised habit tracking, smart reminders, progress dashboards, secure patient-clinician messaging, and GDPR-compliant data storage." />
         <link rel="canonical" href="https://perioskoup.com/features" />
-        <meta property="og:title" content="AI Dental App Features — Habit Tracking & Care Plans | Perioskoup" />
+        <meta property="og:title" content="AI Dental App Features | Habit Tracking & Care Plans | Perioskoup" />
         <meta property="og:description" content="AI-powered habit tracking, smart reminders, clinician dashboard, and secure messaging for dental patients and practices." />
         <meta property="og:url" content="https://perioskoup.com/features" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:title" content="AI Dental App Features — Habit Tracking & Care Plans | Perioskoup" />
-        <meta name="twitter:description" content="Personalised habit tracking, smart reminders, clinician dashboard, and GDPR-compliant secure messaging — all in one AI dental companion." />
+        <meta name="twitter:title" content="AI Dental App Features | Habit Tracking & Care Plans | Perioskoup" />
+        <meta name="twitter:description" content="Personalised habit tracking, smart reminders, clinician dashboard, and GDPR-compliant secure messaging. All in one AI dental companion." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
@@ -88,7 +88,7 @@ export default function Features() {
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />
           <span className="label-tag reveal" style={{ marginBottom: "24px", display: "inline-flex" }}>Features</span>
           <h1 className="display-lg reveal" style={{ marginTop: "16px", marginBottom: "24px", transitionDelay: "0.1s" }}>
-            AI dental companion features —<br />
+            AI dental companion features -<br />
             <span className="text-gradient">everything between your visits.</span>
           </h1>
           <p className="body-lg reveal" style={{ maxWidth: "520px", margin: "0 auto 40px", transitionDelay: "0.2s" }}>
@@ -149,7 +149,7 @@ export default function Features() {
         <div className="container">
           <h2 className="display-md reveal" style={{ marginBottom: "20px" }}>Ready to get started?</h2>
           <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-            Join 30+ founding clinics and 500+ patients on the Perioskoup waitlist. Free for patients, founding pricing for clinics.
+            Join 30+ founding clinics on the Perioskoup waitlist. Free for patients, founding pricing for clinics.
           </p>
           <p className="body-lg reveal" style={{ marginBottom: "36px", maxWidth: "480px", margin: "0 auto 36px", transitionDelay: "0.1s" }}>
             Join the founding waitlist and be among the first to experience Perioskoup.

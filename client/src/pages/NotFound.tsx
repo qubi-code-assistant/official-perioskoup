@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — 404 NOT FOUND PAGE
+ * PERIOSKOUP -- 404 NOT FOUND PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <Helmet>
-        <title>Page Not Found — Perioskoup</title>
+        <title>Page Not Found | Perioskoup</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <Navbar />

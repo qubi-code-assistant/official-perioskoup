@@ -1,12 +1,11 @@
 /*
  * PERIOSKOUP BLOG POST DETAIL PAGE
- * Design: Clinical Precision, Human Warmth — Dark Tech-Medical Premium
+ * Design: Clinical Precision, Human Warmth -- Dark Tech-Medical Premium
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  * SEO: Article JSON-LD, BreadcrumbList, per-page meta, og:image
  */
 
-import { useEffect } from "react";
 import type { ReactElement } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "wouter";
@@ -41,7 +40,7 @@ const ARTICLES: Record<string, Article> = {
     slug: "what-is-periodontal-disease",
     title: "What Is Periodontal Disease? A Patient's Complete Guide",
     metaTitle: "What Is Periodontal Disease? | Perioskoup",
-    metaDescription: "Periodontal disease affects 1 in 2 adults. Learn what it is, how it progresses, and what you can do about it — from a practising periodontist.",
+    metaDescription: "Periodontal disease affects 1 in 2 adults. Learn what it is, how it progresses, and what you can do about it, from a practising periodontist.",
     category: "Patient Education",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
@@ -52,9 +51,9 @@ const ARTICLES: Record<string, Article> = {
     body: `
 ## The Silent Epidemic in Your Mouth
 
-Periodontal disease — commonly called gum disease — is one of the most prevalent chronic conditions in the world. According to the European Federation of Periodontology, approximately 50% of adults have some form of gum disease, and roughly 10% have the severe form that can lead to tooth loss. Yet it remains one of the most under-discussed health conditions in primary care.
+Periodontal disease - commonly called gum disease - is one of the most prevalent chronic conditions in the world. According to the European Federation of Periodontology, approximately 50% of adults have some form of gum disease, and roughly 10% have the severe form that can lead to tooth loss. Yet it remains one of the most under-discussed health conditions in primary care.
 
-As a practising periodontist, I see patients every week who have been living with gum disease for years without knowing it. The reason is simple: periodontal disease is largely painless in its early stages. By the time patients notice symptoms — bleeding gums, loose teeth, or receding gum lines — the disease has often been progressing silently for months or years.
+As a practising periodontist, I see patients every week who have been living with gum disease for years without knowing it. The reason is simple: periodontal disease is largely painless in its early stages. By the time patients notice symptoms - bleeding gums, loose teeth, or receding gum lines - the disease has often been progressing silently for months or years.
 
 This guide is designed to change that. Understanding periodontal disease is the first step to preventing it.
 
@@ -62,33 +61,33 @@ This guide is designed to change that. Understanding periodontal disease is the 
 
 Your teeth are held in place by a complex support system: the gums (gingiva), the periodontal ligament, and the alveolar bone. Periodontal disease is a bacterial infection that destroys this support system.
 
-It begins with **gingivitis** — inflammation of the gums caused by bacterial plaque accumulating at the gum line. At this stage, the damage is entirely reversible. With proper brushing, flossing, and a professional clean, your gums can return to full health.
+It begins with **gingivitis** - inflammation of the gums caused by bacterial plaque accumulating at the gum line. At this stage, the damage is entirely reversible. With proper brushing, flossing, and a professional clean, your gums can return to full health.
 
-If gingivitis is left untreated, it can progress to **periodontitis** — a more serious infection where the bacteria move below the gum line, forming "pockets" between the teeth and gums. The body's immune response to this infection causes the destruction of the bone and tissue that hold your teeth in place. This damage is irreversible.
+If gingivitis is left untreated, it can progress to **periodontitis** - a more serious infection where the bacteria move below the gum line, forming "pockets" between the teeth and gums. The body's immune response to this infection causes the destruction of the bone and tissue that hold your teeth in place. This damage is irreversible.
 
 The most severe form, **advanced periodontitis**, can result in teeth becoming loose, shifting, or needing to be extracted.
 
 ## The Stages of Gum Disease
 
-**Stage 1 — Gingivitis:**
+**Stage 1 - Gingivitis:**
 - Gums appear red, swollen, or puffy
 - Gums bleed when you brush or floss
 - No bone loss has occurred yet
 - Fully reversible with treatment
 
-**Stage 2 — Mild Periodontitis:**
+**Stage 2 - Mild Periodontitis:**
 - Pockets of 4–5mm form between teeth and gums
 - Early bone loss begins
 - Bacteria are now below the gum line
 - Requires professional treatment but manageable
 
-**Stage 3 — Moderate Periodontitis:**
+**Stage 3 - Moderate Periodontitis:**
 - Pockets of 5–7mm
 - Significant bone loss
 - Teeth may begin to shift
 - More intensive treatment required
 
-**Stage 4 — Severe Periodontitis:**
+**Stage 4 - Severe Periodontitis:**
 - Pockets deeper than 7mm
 - Severe bone loss
 - Teeth may be loose or require extraction
@@ -96,39 +95,39 @@ The most severe form, **advanced periodontitis**, can result in teeth becoming l
 
 ## What Causes Periodontal Disease?
 
-The primary cause is bacterial plaque — the sticky film that forms on your teeth throughout the day. If plaque is not removed through regular brushing and flossing, it hardens into **tartar** (calculus), which can only be removed by a dental professional.
+The primary cause is bacterial plaque - the sticky film that forms on your teeth throughout the day. If plaque is not removed through regular brushing and flossing, it hardens into **tartar** (calculus), which can only be removed by a dental professional.
 
 However, several factors significantly increase your risk:
 
-**Smoking and tobacco use** — Smokers are 3–6 times more likely to develop periodontal disease. Smoking impairs the immune response and reduces blood flow to the gums, masking early symptoms.
+**Smoking and tobacco use** - Smokers are 3–6 times more likely to develop periodontal disease. Smoking impairs the immune response and reduces blood flow to the gums, masking early symptoms.
 
-**Diabetes** — The relationship between diabetes and periodontal disease is bidirectional. Diabetes increases the risk of gum disease, and severe gum disease makes blood sugar harder to control.
+**Diabetes** - The relationship between diabetes and periodontal disease is bidirectional. Diabetes increases the risk of gum disease, and severe gum disease makes blood sugar harder to control.
 
-**Genetics** — Some people are genetically predisposed to periodontal disease. If your parents lost teeth to gum disease, your risk is higher.
+**Genetics** - Some people are genetically predisposed to periodontal disease. If your parents lost teeth to gum disease, your risk is higher.
 
-**Stress** — Chronic stress impairs the immune system's ability to fight infection, including the bacteria responsible for gum disease.
+**Stress** - Chronic stress impairs the immune system's ability to fight infection, including the bacteria responsible for gum disease.
 
-**Medications** — Certain medications, including some antihypertensives, antidepressants, and immunosuppressants, can affect gum health.
+**Medications** - Certain medications, including some antihypertensives, antidepressants, and immunosuppressants, can affect gum health.
 
-**Hormonal changes** — Pregnancy, puberty, and menopause can make gums more sensitive and susceptible to inflammation.
+**Hormonal changes** - Pregnancy, puberty, and menopause can make gums more sensitive and susceptible to inflammation.
 
 ## The Systemic Connection
 
-One of the most important — and least discussed — aspects of periodontal disease is its connection to systemic health. The mouth is not separate from the body. Bacteria from periodontal pockets can enter the bloodstream and contribute to inflammation throughout the body.
+One of the most important - and least discussed - aspects of periodontal disease is its connection to systemic health. The mouth is not separate from the body. Bacteria from periodontal pockets can enter the bloodstream and contribute to inflammation throughout the body.
 
 Research has established associations between periodontal disease and:
 
-- **Cardiovascular disease** — People with gum disease have a significantly higher risk of heart attack and stroke
-- **Type 2 diabetes** — Periodontal inflammation worsens insulin resistance
-- **Adverse pregnancy outcomes** — Including preterm birth and low birth weight
-- **Respiratory disease** — Periodontal bacteria can be aspirated into the lungs
-- **Alzheimer's disease** — Emerging research suggests a link between periodontal bacteria and cognitive decline
+- **Cardiovascular disease** - People with gum disease have a significantly higher risk of heart attack and stroke
+- **Type 2 diabetes** - Periodontal inflammation worsens insulin resistance
+- **Adverse pregnancy outcomes** - Including preterm birth and low birth weight
+- **Respiratory disease** - Periodontal bacteria can be aspirated into the lungs
+- **Alzheimer's disease** - Emerging research suggests a link between periodontal bacteria and cognitive decline
 
-This is why periodontal health is not just a dental issue — it is a whole-body health issue.
+This is why periodontal health is not just a dental issue - it is a whole-body health issue.
 
 ## How Is Periodontal Disease Diagnosed?
 
-Diagnosis requires a clinical examination by a dentist or periodontist. The key diagnostic tool is **periodontal probing** — using a small instrument to measure the depth of the pockets around each tooth. Healthy pockets are 1–3mm. Pockets of 4mm or more indicate disease.
+Diagnosis requires a clinical examination by a dentist or periodontist. The key diagnostic tool is **periodontal probing** - using a small instrument to measure the depth of the pockets around each tooth. Healthy pockets are 1–3mm. Pockets of 4mm or more indicate disease.
 
 Your dentist will also take X-rays to assess bone levels, and examine your gums for signs of inflammation, recession, and bleeding.
 
@@ -136,7 +135,7 @@ Your dentist will also take X-rays to assess bone levels, and examine your gums 
 
 **For gingivitis:** A thorough professional clean (scale and polish) combined with improved home care is usually sufficient to reverse gingivitis.
 
-**For periodontitis:** Treatment involves **scaling and root planing** (also called a "deep clean") — a procedure where the dental hygienist or periodontist removes bacteria and calculus from below the gum line and smooths the root surfaces to discourage bacterial reattachment.
+**For periodontitis:** Treatment involves **scaling and root planing** (also called a "deep clean") - a procedure where the dental hygienist or periodontist removes bacteria and calculus from below the gum line and smooths the root surfaces to discourage bacterial reattachment.
 
 In more advanced cases, surgical intervention may be required to access deeper pockets, regenerate lost bone, or cover exposed roots.
 
@@ -147,10 +146,10 @@ In more advanced cases, surgical intervention may be required to access deeper p
 The most powerful thing you can do is establish a consistent daily routine:
 
 1. **Brush twice daily** for two full minutes, using a soft-bristled brush at a 45-degree angle to the gum line
-2. **Clean between your teeth daily** — floss, interdental brushes, or a water flosser
-3. **Use a fluoride toothpaste** — fluoride strengthens enamel and helps prevent decay
-4. **Avoid smoking** — this single change has the largest impact on periodontal health
-5. **Manage systemic conditions** — keep diabetes well-controlled, eat a balanced diet, manage stress
+2. **Clean between your teeth daily** - floss, interdental brushes, or a water flosser
+3. **Use a fluoride toothpaste** - fluoride strengthens enamel and helps prevent decay
+4. **Avoid smoking** - this single change has the largest impact on periodontal health
+5. **Manage systemic conditions** - keep diabetes well-controlled, eat a balanced diet, manage stress
 
 ## The Role of Technology in Periodontal Care
 
@@ -158,33 +157,33 @@ One of the biggest challenges in periodontal care is the gap between the dental 
 
 This is precisely why I co-founded Perioskoup. The app translates clinical recommendations into personalised daily habits, sends gentle reminders, and helps patients track their progress between appointments. It gives clinicians visibility into patient engagement and allows them to send targeted guidance without requiring an additional appointment.
 
-Periodontal disease is manageable. With the right knowledge, the right professional support, and the right daily habits, most patients can maintain their teeth for life. The key is catching it early — and staying consistent.
+Periodontal disease is manageable. With the right knowledge, the right professional support, and the right daily habits, most patients can maintain their teeth for life. The key is catching it early - and staying consistent.
 
 *Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, and co-founder of Perioskoup. She holds a specialisation in periodontology and has treated hundreds of patients with periodontal disease.*
     `,
     answerCapsules: {
       "The Silent Epidemic in Your Mouth": "Periodontal disease is one of the most common chronic conditions worldwide, affecting roughly 50% of adults. It progresses silently and painlessly in its early stages, which is why most people do not know they have it until significant damage has occurred.",
-      "What Exactly Is Periodontal Disease?": "Periodontal disease is a bacterial infection that destroys the tissues supporting the teeth — the gums, periodontal ligament, and alveolar bone. It begins as gingivitis (reversible gum inflammation) and can progress to periodontitis (irreversible bone loss) if untreated.",
+      "What Exactly Is Periodontal Disease?": "Periodontal disease is a bacterial infection that destroys the tissues supporting the teeth - the gums, periodontal ligament, and alveolar bone. It begins as gingivitis (reversible gum inflammation) and can progress to periodontitis (irreversible bone loss) if untreated.",
       "The Stages of Gum Disease": "Gum disease progresses through four stages: gingivitis (reversible inflammation), mild periodontitis (early bone loss, 4–5mm pockets), moderate periodontitis (significant bone loss, 6–7mm pockets), and advanced periodontitis (severe destruction, tooth mobility, possible tooth loss).",
       "What Causes Periodontal Disease?": "The primary cause is bacterial plaque that accumulates on teeth and below the gum line. Risk factors include smoking, diabetes, genetic predisposition, hormonal changes, certain medications, and poor oral hygiene.",
       "The Systemic Connection": "Periodontal disease is linked to systemic conditions including cardiovascular disease, diabetes, respiratory infections, and adverse pregnancy outcomes. The chronic inflammation in the mouth can affect the entire body.",
       "How Is Periodontal Disease Diagnosed?": "Diagnosis involves measuring the depth of gum pockets with a periodontal probe and taking X-rays to assess bone levels. Pockets deeper than 3mm and evidence of bone loss indicate periodontitis.",
       "Treatment Options": "Treatment ranges from professional cleaning and scaling/root planing for early stages, to surgical interventions such as flap surgery and bone grafting for advanced cases. All treatment requires ongoing maintenance.",
       "What You Can Do at Home": "Effective home care includes brushing twice daily with a soft-bristled or electric toothbrush, daily interdental cleaning with the correct size brushes, and attending regular professional check-ups every 3–6 months.",
-      "The Role of Technology in Periodontal Care": "Technology bridges the gap between dental appointments by translating clinical recommendations into personalised daily habits, providing reminders, and tracking patient progress — giving clinicians visibility into patient engagement.",
+      "The Role of Technology in Periodontal Care": "Technology bridges the gap between dental appointments by translating clinical recommendations into personalised daily habits, providing reminders, and tracking patient progress - giving clinicians visibility into patient engagement.",
     },
     faqs: [
       { q: "What is periodontal disease?", a: "Periodontal disease is a chronic bacterial infection that destroys the gums, periodontal ligament, and bone that support your teeth. It affects approximately 50% of adults and is the leading cause of tooth loss in adults." },
-      { q: "Can periodontal disease be reversed?", a: "Gingivitis (the earliest stage) is fully reversible with proper oral hygiene and professional cleaning. However, once it progresses to periodontitis with bone loss, the damage is irreversible — though the disease can be managed and stabilised." },
+      { q: "Can periodontal disease be reversed?", a: "Gingivitis (the earliest stage) is fully reversible with proper oral hygiene and professional cleaning. However, once it progresses to periodontitis with bone loss, the damage is irreversible, though the disease can be managed and stabilised." },
       { q: "What are the warning signs of gum disease?", a: "Common warning signs include bleeding gums when brushing or flossing, red or swollen gums, persistent bad breath, receding gum lines, and loose or shifting teeth. However, early-stage gum disease is often painless." },
     ],
   },
 
   "how-ai-is-changing-dental-monitoring": {
     slug: "how-ai-is-changing-dental-monitoring",
-    title: "How AI Is Changing Dental Monitoring — And Why It Matters",
+    title: "How AI Is Changing Dental Monitoring - And Why It Matters",
     metaTitle: "How AI Is Changing Dental Monitoring | Perioskoup",
-    metaDescription: "AI is transforming how dentists monitor patient health between appointments. Here's what the technology actually does — and what it doesn't.",
+    metaDescription: "AI is transforming how dentists monitor patient health between appointments. Here's what the technology actually does, and what it doesn't.",
     category: "Technology",
     author: "Eduard Ciugulea",
     authorImg: EDI_IMG,
@@ -195,13 +194,13 @@ Periodontal disease is manageable. With the right knowledge, the right professio
     body: `
 ## The Problem With Annual Check-Ups
 
-The traditional model of dental care is built around periodic appointments — typically every six months to a year. The dentist examines the patient, identifies problems, provides treatment, and sends the patient home with instructions. The patient then has to maintain their oral health for the next six months largely on their own, with minimal support or feedback.
+The traditional model of dental care is built around periodic appointments - typically every six months to a year. The dentist examines the patient, identifies problems, provides treatment, and sends the patient home with instructions. The patient then has to maintain their oral health for the next six months largely on their own, with minimal support or feedback.
 
 This model has a fundamental flaw: **the gap between appointments is where most of the damage happens**.
 
-Periodontal disease, tooth decay, and other oral health conditions are not static. They progress continuously, influenced by daily habits, diet, stress, and systemic health. A patient who leaves a dental appointment in good health can develop significant problems before their next visit — and by the time those problems are detected, they may require much more intensive treatment.
+Periodontal disease, tooth decay, and other oral health conditions are not static. They progress continuously, influenced by daily habits, diet, stress, and systemic health. A patient who leaves a dental appointment in good health can develop significant problems before their next visit - and by the time those problems are detected, they may require much more intensive treatment.
 
-Artificial intelligence is beginning to address this gap. Not by replacing dentists — that's not what AI does — but by extending the reach of clinical expertise into the spaces between appointments.
+Artificial intelligence is beginning to address this gap. Not by replacing dentists - that's not what AI does - but by extending the reach of clinical expertise into the spaces between appointments.
 
 ## What AI Actually Does in Dental Care
 
@@ -209,17 +208,17 @@ Let's be precise about what AI means in this context, because the term is often 
 
 **Pattern recognition in diagnostic imaging** is the most mature application of AI in dentistry. Machine learning models trained on millions of dental X-rays can detect caries, bone loss, and other pathologies with accuracy that rivals experienced clinicians. Companies like Overjet, Denti.AI, and Pearl have developed FDA-cleared diagnostic AI tools that assist dentists in identifying problems they might otherwise miss.
 
-**Predictive risk modelling** uses patient data — medical history, lifestyle factors, genetic markers, previous treatment outcomes — to predict which patients are at highest risk of developing specific conditions. This allows clinicians to allocate their time and resources more effectively, focusing intensive monitoring on high-risk patients.
+**Predictive risk modelling** uses patient data - medical history, lifestyle factors, genetic markers, previous treatment outcomes - to predict which patients are at highest risk of developing specific conditions. This allows clinicians to allocate their time and resources more effectively, focusing intensive monitoring on high-risk patients.
 
 **Natural language processing** enables AI systems to extract structured clinical data from unstructured notes, improving documentation efficiency and enabling better data analysis across patient populations.
 
-**Personalised coaching and habit formation** — this is where Perioskoup operates. Using patient-specific data (dental history, current habits, risk factors, clinician recommendations), AI can generate personalised daily routines, reminders, and educational content that is far more relevant and actionable than generic advice.
+**Personalised coaching and habit formation** - this is where Perioskoup operates. Using patient-specific data (dental history, current habits, risk factors, clinician recommendations), AI can generate personalised daily routines, reminders, and educational content that is far more relevant and actionable than generic advice.
 
 ## The Behaviour Change Problem
 
 Here's a truth that every dentist knows but rarely says out loud: **most patients don't follow instructions**.
 
-Not because they don't care about their health. But because generic instructions — "brush twice a day, floss daily, avoid sugar" — don't account for individual circumstances, don't provide feedback, and don't adapt to the patient's progress.
+Not because they don't care about their health. But because generic instructions - "brush twice a day, floss daily, avoid sugar" - don't account for individual circumstances, don't provide feedback, and don't adapt to the patient's progress.
 
 Behaviour change research is clear on what works: specificity, feedback loops, social accountability, and progressive difficulty. Generic dental advice provides none of these.
 
@@ -231,11 +230,11 @@ That level of personalisation was previously only possible in a clinical setting
 
 It's important to be equally clear about the limitations.
 
-AI cannot diagnose. In the context of a consumer-facing dental app, AI can provide information, flag potential concerns, and recommend professional consultation — but it cannot replace clinical examination and diagnosis by a qualified dental professional. This is both a regulatory reality and a clinical one.
+AI cannot diagnose. In the context of a consumer-facing dental app, AI can provide information, flag potential concerns, and recommend professional consultation - but it cannot replace clinical examination and diagnosis by a qualified dental professional. This is both a regulatory reality and a clinical one.
 
 AI cannot replace the patient-clinician relationship. Trust, empathy, and clinical judgment are human qualities that AI augments, not replaces.
 
-AI is only as good as its data. A model trained on biased or incomplete data will produce biased or incomplete outputs. In healthcare, this is not just a technical problem — it is an ethical one.
+AI is only as good as its data. A model trained on biased or incomplete data will produce biased or incomplete outputs. In healthcare, this is not just a technical problem - it is an ethical one.
 
 ## The Perioskoup Approach
 
@@ -243,7 +242,7 @@ When we built Perioskoup, we made a deliberate decision about where AI should an
 
 The AI in Perioskoup does not diagnose. It does not tell patients what is wrong with their teeth. It does not interpret X-rays or clinical measurements.
 
-What it does is take the clinical recommendations made by a qualified periodontist or dentist — during a real appointment, based on a real examination — and translate them into a personalised daily programme that the patient can actually follow.
+What it does is take the clinical recommendations made by a qualified periodontist or dentist - during a real appointment, based on a real examination - and translate them into a personalised daily programme that the patient can actually follow.
 
 The clinician remains in control. The AI is the bridge between the chair and the home.
 
@@ -253,15 +252,15 @@ We built it this way because we believe the most valuable thing technology can d
 
 Building AI for healthcare is not just a machine learning problem. It is a data infrastructure problem, a regulatory problem, and a trust problem.
 
-Patient health data is among the most sensitive data that exists. In Europe, it is protected by GDPR and, specifically, by Article 9, which imposes strict conditions on the processing of health data. Any AI system that handles dental health data must be built with privacy by design — not as an afterthought.
+Patient health data is among the most sensitive data that exists. In Europe, it is protected by GDPR and, specifically, by Article 9, which imposes strict conditions on the processing of health data. Any AI system that handles dental health data must be built with privacy by design - not as an afterthought.
 
-At Perioskoup, we store all patient data in EU-based servers, encrypted at rest and in transit. We do not sell health data. We do not use patient data to train models without explicit consent. These are not just legal requirements — they are ethical commitments.
+At Perioskoup, we store all patient data in EU-based servers, encrypted at rest and in transit. We do not sell health data. We do not use patient data to train models without explicit consent. These are not just legal requirements - they are ethical commitments.
 
 ## Where This Is Going
 
 The next five years will see significant advances in AI-assisted dental care. Intraoral cameras with real-time AI analysis will become standard. Predictive models will identify patients at risk of periodontal disease before clinical signs appear. Personalised coaching will become more sophisticated as models learn from larger datasets.
 
-But the fundamental dynamic will remain the same: AI is a tool that extends human capability. The most effective dental care will always combine clinical expertise with intelligent technology — and the most important relationship in that system will always be the one between a patient and their dentist.
+But the fundamental dynamic will remain the same: AI is a tool that extends human capability. The most effective dental care will always combine clinical expertise with intelligent technology - and the most important relationship in that system will always be the one between a patient and their dentist.
 
 *Eduard Ciugulea is the CGO and co-founder of Perioskoup. He has a background in full-stack engineering and AI systems, with a focus on building technology that changes health behaviour.*
     `,
@@ -296,11 +295,11 @@ But the fundamental dynamic will remain the same: AI is a tool that extends huma
     body: `
 ## Why Most People's Dental Routine Isn't Working
 
-I've been a practising periodontist for over a decade. In that time, I've seen thousands of patients — and I've noticed a pattern. Most people who come to me with advanced gum disease were not neglecting their teeth entirely. They were brushing. They thought they were doing the right things.
+I've been a practising periodontist for over a decade. In that time, I've seen thousands of patients - and I've noticed a pattern. Most people who come to me with advanced gum disease were not neglecting their teeth entirely. They were brushing. They thought they were doing the right things.
 
 The problem wasn't effort. It was technique, consistency, and completeness.
 
-The average person spends 45 seconds brushing their teeth. The recommended minimum is two minutes. They brush the surfaces they can see — the fronts of their teeth — and miss the areas where disease actually starts: the gum line, the spaces between teeth, and the backs of the molars.
+The average person spends 45 seconds brushing their teeth. The recommended minimum is two minutes. They brush the surfaces they can see - the fronts of their teeth - and miss the areas where disease actually starts: the gum line, the spaces between teeth, and the backs of the molars.
 
 This guide is the routine I give my own patients. It takes three minutes. It is evidence-based. And if you do it consistently, it will make a measurable difference to your periodontal health.
 
@@ -308,23 +307,23 @@ This guide is the routine I give my own patients. It takes three minutes. It is 
 
 ### Minute 1: Interdental Cleaning First
 
-The single most impactful change most people can make is to clean between their teeth — and to do it **before** brushing, not after.
+The single most impactful change most people can make is to clean between their teeth - and to do it **before** brushing, not after.
 
 Why before? Because cleaning between your teeth dislodges bacteria and food debris from the spaces your toothbrush can't reach. When you brush afterwards, the fluoride in your toothpaste can penetrate those spaces more effectively.
 
 **Choose your tool:**
-- **Floss** — most effective for tight contacts between teeth, but requires good technique
-- **Interdental brushes** — easier to use, more effective for wider spaces, preferred by many periodontists
-- **Water flosser** — excellent for patients with bridges, implants, or orthodontic appliances
+- **Floss** - most effective for tight contacts between teeth, but requires good technique
+- **Interdental brushes** - easier to use, more effective for wider spaces, preferred by many periodontists
+- **Water flosser** - excellent for patients with bridges, implants, or orthodontic appliances
 
 **The technique:**
-- Work systematically around the mouth — don't skip teeth
+- Work systematically around the mouth - don't skip teeth
 - For floss: curve it into a C-shape around each tooth, slide gently below the gum line, and move up and down against the tooth surface
 - For interdental brushes: insert gently, move back and forth several times, and don't force if there's resistance
 
 This takes approximately 60 seconds if you're thorough.
 
-### Minute 2: Brushing — The Right Way
+### Minute 2: Brushing - The Right Way
 
 Most people brush incorrectly. The most common mistakes are:
 1. Brushing too hard (damages enamel and gum tissue)
@@ -334,36 +333,36 @@ Most people brush incorrectly. The most common mistakes are:
 **The modified Bass technique** is the gold standard recommended by the EFP:
 
 1. Hold your toothbrush at a 45-degree angle to the gum line
-2. Use small, circular or vibratory motions — not scrubbing
-3. Apply light pressure — you should be able to feel the bristles, not force them
+2. Use small, circular or vibratory motions - not scrubbing
+3. Apply light pressure - you should be able to feel the bristles, not force them
 4. Spend 30 seconds on each quadrant (upper right, upper left, lower right, lower left)
 5. Don't forget the backs of your last molars and the inside surfaces of your front teeth
 
 **Electric vs manual:** A good electric toothbrush (oscillating-rotating type, like Oral-B) is clinically superior to manual brushing for most people. The built-in timer and pressure sensor remove two of the most common errors. If you use manual, set a timer.
 
-**Toothpaste:** Use a fluoride toothpaste with at least 1,450ppm fluoride. Don't rinse with water after brushing — spit and leave the residue. This allows the fluoride to continue working.
+**Toothpaste:** Use a fluoride toothpaste with at least 1,450ppm fluoride. Don't rinse with water after brushing - spit and leave the residue. This allows the fluoride to continue working.
 
 ### Minute 3: Targeted Attention
 
-The final minute is for the areas your dentist or periodontist has flagged as high-risk — and for a quick check of your own gum health.
+The final minute is for the areas your dentist or periodontist has flagged as high-risk - and for a quick check of your own gum health.
 
 **If you have active periodontal disease or a history of it:**
 - Spend extra time on the areas your periodontist has identified as problem zones
 - Use a chlorhexidine mouthwash if prescribed (not as a permanent substitute for mechanical cleaning)
-- Consider a tongue scraper — the tongue harbours significant bacterial load
+- Consider a tongue scraper - the tongue harbours significant bacterial load
 
 **The 30-second self-check:**
-Look in the mirror. Are your gums pink and firm, or red and puffy? Do they bleed when you press gently? Is there any recession — can you see more of the tooth root than before? These are early warning signs. Note them. Mention them at your next appointment.
+Look in the mirror. Are your gums pink and firm, or red and puffy? Do they bleed when you press gently? Is there any recession - can you see more of the tooth root than before? These are early warning signs. Note them. Mention them at your next appointment.
 
 ## The Habit Stack
 
-The hardest part of any dental routine is not the technique — it's the consistency. Here's how to make it automatic:
+The hardest part of any dental routine is not the technique - it's the consistency. Here's how to make it automatic:
 
-**Habit stacking:** Attach your dental routine to an existing habit. Most people already have a morning and evening routine. Link your dental care to something you already do without thinking — making coffee, showering, or getting into bed.
+**Habit stacking:** Attach your dental routine to an existing habit. Most people already have a morning and evening routine. Link your dental care to something you already do without thinking - making coffee, showering, or getting into bed.
 
 **Environment design:** Keep your interdental tools visible and accessible. If your floss is buried in a drawer, you won't use it. Put it next to your toothbrush.
 
-**Track it:** Research on habit formation consistently shows that tracking increases engagement. Even a simple tick on a calendar works. Apps like Perioskoup are designed specifically for this — they send reminders, track streaks, and adapt to your specific risk profile.
+**Track it:** Research on habit formation consistently shows that tracking increases engagement. Even a simple tick on a calendar works. Apps like Perioskoup are designed specifically for this - they send reminders, track streaks, and adapt to your specific risk profile.
 
 **The two-day rule:** Never miss two days in a row. One missed day is a slip. Two missed days is the start of a new (bad) habit.
 
@@ -371,15 +370,15 @@ The hardest part of any dental routine is not the technique — it's the consist
 
 Done consistently, this three-minute routine prevents:
 
-- **Gingivitis** — the reversible early stage of gum disease
-- **Progression to periodontitis** — the irreversible, bone-destroying stage
-- **Tooth decay** — fluoride and mechanical plaque removal are the two most evidence-based caries prevention strategies
-- **Bad breath** — 85% of persistent bad breath originates from bacterial activity in the mouth
-- **Systemic health complications** — by reducing the bacterial load in your mouth, you reduce the risk of bacteria entering your bloodstream
+- **Gingivitis** - the reversible early stage of gum disease
+- **Progression to periodontitis** - the irreversible, bone-destroying stage
+- **Tooth decay** - fluoride and mechanical plaque removal are the two most evidence-based caries prevention strategies
+- **Bad breath** - 85% of persistent bad breath originates from bacterial activity in the mouth
+- **Systemic health complications** - by reducing the bacterial load in your mouth, you reduce the risk of bacteria entering your bloodstream
 
 ## A Note on Professional Care
 
-This routine is not a substitute for professional dental care. You should still see a dentist or hygienist regularly — the frequency depends on your individual risk profile, but for most adults, every six months is appropriate. For patients with a history of periodontal disease, every three to four months is typically recommended.
+This routine is not a substitute for professional dental care. You should still see a dentist or hygienist regularly - the frequency depends on your individual risk profile, but for most adults, every six months is appropriate. For patients with a history of periodontal disease, every three to four months is typically recommended.
 
 What this routine does is maximise the time between those appointments. It keeps your mouth in the best possible condition, so that when you do see your dentist, there is less to treat and more to celebrate.
 
@@ -388,7 +387,7 @@ Three minutes a day. That's the investment. The return is a lifetime of healthy 
 *Dr. Anca Laura Constantin is a practising periodontist and co-founder of Perioskoup. She sees patients daily and has developed this routine based on the latest EFP clinical guidelines and her own clinical experience.*
     `,
     answerCapsules: {
-      "Why Most People's Dental Routine Isn't Working": "Most adults brush their teeth but skip interdental cleaning entirely. Brushing alone only reaches about 60% of tooth surfaces, leaving the areas between teeth — where periodontal disease most commonly starts — completely unclean.",
+      "Why Most People's Dental Routine Isn't Working": "Most adults brush their teeth but skip interdental cleaning entirely. Brushing alone only reaches about 60% of tooth surfaces, leaving the areas between teeth - where periodontal disease most commonly starts - completely unclean.",
       "The 3-Minute Routine": "The evidence-based 3-minute routine consists of: (1) 30 seconds interdental cleaning with correctly sized brushes, (2) 2 minutes brushing with fluoride toothpaste using a soft-bristled or electric brush, and (3) 30 seconds tongue cleaning. Interdental cleaning comes first to dislodge bacteria before brushing.",
       "The Habit Stack": "Successful habit formation relies on four principles: habit stacking (linking dental care to existing routines), environment design (keeping tools visible), tracking progress (using apps or calendars), and the two-day rule (never missing two consecutive days).",
       "What This Routine Prevents": "Consistent daily oral care prevents gingivitis, progression to periodontitis, tooth decay, persistent bad breath, and systemic health complications by reducing the bacterial load that can enter the bloodstream.",
@@ -412,15 +411,15 @@ Three minutes a day. That's the investment. The return is a lifetime of healthy 
     authorRole: "Co-founder & CGO, Perioskoup",
     date: "2025-05-17",
     readTime: "4 min read",
-    excerpt: "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards — selected from 20 submissions across 17 national societies.",
+    excerpt: "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards - selected from 20 submissions across 17 national societies.",
     body: `
 ## Vienna, May 2025
 
-On the 16th of May 2025, at EuroPerio11 in Vienna — the world's largest periodontology congress — Perioskoup was awarded **3rd Prize at the EFP Digital Innovation Awards**.
+On the 16th of May 2025, at EuroPerio11 in Vienna - the world's largest periodontology congress - Perioskoup was awarded **3rd Prize at the EFP Digital Innovation Awards**.
 
 The award is presented annually by the European Federation of Periodontology (EFP), sponsored by Haleon, to recognise the most innovative digital projects advancing periodontal health across Europe.
 
-This year, 20 submissions were received from 17 national societies. Perioskoup was selected by an international expert jury that included Professors James Deschner, David Herrera, and Andreas Stavropoulos — three of the most respected names in European periodontology.
+This year, 20 submissions were received from 17 national societies. Perioskoup was selected by an international expert jury that included Professors James Deschner, David Herrera, and Andreas Stavropoulos - three of the most respected names in European periodontology.
 
 ## What the EFP Said
 
@@ -432,7 +431,7 @@ You can read the full announcement on the [EFP website](https://www.efp.org/news
 
 ## What This Means to Us
 
-When Dr. Anca Constantin first described the problem she wanted to solve — the gap between the dental chair and the patient's daily life — it was a clinical observation born from years of practice. She had seen too many patients who understood their diagnosis but couldn't translate it into consistent daily behaviour.
+When Dr. Anca Constantin first described the problem she wanted to solve - the gap between the dental chair and the patient's daily life - it was a clinical observation born from years of practice. She had seen too many patients who understood their diagnosis but couldn't translate it into consistent daily behaviour.
 
 Building Perioskoup was our attempt to bridge that gap. The EFP award is validation that the problem we identified is real, that our approach is credible, and that the European periodontology community sees value in what we're building.
 
@@ -442,7 +441,7 @@ Every one of those conversations confirmed that we are building something genuin
 
 ## The Road to Vienna
 
-Perioskoup was founded in 2024 by three people: Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
+Perioskoup was founded in 2024 by three people: Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice - specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
 
 The first version of the app was built in three months. The EFP submission was prepared in parallel with ongoing development. Winning the award at our first major international submission was beyond what we had expected.
 
@@ -450,7 +449,7 @@ The first version of the app was built in three months. The EFP submission was p
 
 The award accelerates our timeline. We are currently in a private beta with a small group of founding clinics across Romania and the UK. We are onboarding new clinics on a rolling basis, with priority given to periodontology practices.
 
-For patients, the app will be available on iOS and Android. We are building the waitlist now — founding members will receive priority access, founding pricing, and a direct line to the team.
+For patients, the app will be available on iOS and Android. We are building the waitlist now - founding members will receive priority access, founding pricing, and a direct line to the team.
 
 If you are a periodontist, dental hygienist, or clinic owner interested in piloting Perioskoup with your patients, we would love to hear from you. If you are a patient who wants to take control of your periodontal health between appointments, join the waitlist.
 
@@ -475,32 +474,32 @@ We are just getting started.
     slug: "why-patients-forget-instructions",
     title: "Why Patients Forget Dental Instructions (And What to Do About It)",
     metaTitle: "Why Patients Forget Dental Instructions | Perioskoup",
-    metaDescription: "Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why — and how technology is changing this.",
+    metaDescription: "Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why, and how technology is changing this.",
     category: "Clinical Insight",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
     authorRole: "Periodontist & Co-founder, Perioskoup",
     date: "2025-10-05",
     readTime: "6 min read",
-    excerpt: "Research consistently shows that patients forget up to 80% of what they are told in a clinical consultation within 24 hours. This is not a patient failure — it is a systems failure.",
+    excerpt: "Research consistently shows that patients forget up to 80% of what they are told in a clinical consultation within 24 hours. This is not a patient failure - it is a systems failure.",
     body: `
 ## The Forgetting Curve in Dental Care
 
-In 1885, the German psychologist Hermann Ebbinghaus described what he called the "forgetting curve" — the rate at which newly learned information is lost over time without reinforcement. His research showed that people forget approximately 50% of new information within an hour, 70% within 24 hours, and up to 90% within a week.
+In 1885, the German psychologist Hermann Ebbinghaus described what he called the "forgetting curve" - the rate at which newly learned information is lost over time without reinforcement. His research showed that people forget approximately 50% of new information within an hour, 70% within 24 hours, and up to 90% within a week.
 
-More than a century later, this phenomenon is as relevant as ever — and nowhere more consequentially than in healthcare.
+More than a century later, this phenomenon is as relevant as ever - and nowhere more consequentially than in healthcare.
 
 Research published in the *Journal of the American Dental Association* found that patients recall only 20–40% of the information provided during a dental consultation. A study in the *British Dental Journal* found that patients who were given oral hygiene instructions during an appointment could recall fewer than half of those instructions when surveyed 24 hours later.
 
-This is not a patient intelligence problem. It is a human memory problem — and it has profound implications for how we deliver dental care.
+This is not a patient intelligence problem. It is a human memory problem - and it has profound implications for how we deliver dental care.
 
 ## Why Clinical Consultations Are Poor Learning Environments
 
 A dental appointment is, from a cognitive science perspective, a terrible place to learn new habits.
 
-**Anxiety impairs memory consolidation.** Dental anxiety affects a significant proportion of the population. Even mild anxiety activates the stress response, which interferes with the hippocampus — the brain structure responsible for converting short-term memories into long-term ones. Patients who are anxious during an appointment are physiologically less able to retain information.
+**Anxiety impairs memory consolidation.** Dental anxiety affects a significant proportion of the population. Even mild anxiety activates the stress response, which interferes with the hippocampus - the brain structure responsible for converting short-term memories into long-term ones. Patients who are anxious during an appointment are physiologically less able to retain information.
 
-**Information overload.** A typical periodontal consultation involves a diagnosis, an explanation of the condition, a treatment plan, post-procedure instructions, and home care recommendations — all delivered in 30–45 minutes. The human brain can only process a limited amount of new information at once. When that limit is exceeded, retention drops sharply.
+**Information overload.** A typical periodontal consultation involves a diagnosis, an explanation of the condition, a treatment plan, post-procedure instructions, and home care recommendations - all delivered in 30–45 minutes. The human brain can only process a limited amount of new information at once. When that limit is exceeded, retention drops sharply.
 
 **The absence of context.** Instructions given in a clinical setting are disconnected from the environment where they need to be applied. Telling a patient to "use a 0.4mm interdental brush on the lower left quadrant" in a dental chair does not help them remember what to do when they are standing in their bathroom at 10pm.
 
@@ -508,33 +507,33 @@ A dental appointment is, from a cognitive science perspective, a terrible place 
 
 ## The Consequences of Forgetting
 
-The consequences of poor instruction retention are not trivial. For patients with periodontal disease, the period between appointments is critical. Periodontal disease is a chronic condition that requires consistent daily management. A patient who forgets their home care instructions — or who understands them but cannot maintain them without support — will experience disease recurrence regardless of the quality of their clinical treatment.
+The consequences of poor instruction retention are not trivial. For patients with periodontal disease, the period between appointments is critical. Periodontal disease is a chronic condition that requires consistent daily management. A patient who forgets their home care instructions - or who understands them but cannot maintain them without support - will experience disease recurrence regardless of the quality of their clinical treatment.
 
-This creates a frustrating cycle for clinicians. We invest significant time and expertise in treating patients, only to see the disease return at the next appointment because the home care has broken down. It is not a reflection of the patient's commitment — it is a reflection of the inadequacy of the support system we have traditionally provided.
+This creates a frustrating cycle for clinicians. We invest significant time and expertise in treating patients, only to see the disease return at the next appointment because the home care has broken down. It is not a reflection of the patient's commitment - it is a reflection of the inadequacy of the support system we have traditionally provided.
 
 ## What the Research Says About Better Approaches
 
 The evidence on improving patient engagement with health instructions is clear:
 
-**Written materials improve retention** — but only if they are personalised, jargon-free, and given at the right moment. Generic leaflets have minimal impact.
+**Written materials improve retention** - but only if they are personalised, jargon-free, and given at the right moment. Generic leaflets have minimal impact.
 
 **Repetition and spaced learning** dramatically improve long-term retention. Information encountered multiple times, at spaced intervals, is far more likely to be retained than information encountered once.
 
-**Immediate application** — practising a skill immediately after instruction — significantly improves retention. This is why in-chair brushing instruction is more effective than verbal advice alone.
+**Immediate application** - practising a skill immediately after instruction - significantly improves retention. This is why in-chair brushing instruction is more effective than verbal advice alone.
 
-**Accountability mechanisms** — knowing that someone will check on your progress — significantly improve engagement. This is the basis of health coaching, and it is why patients with a dedicated hygienist who follows up between appointments tend to have better outcomes.
+**Accountability mechanisms** - knowing that someone will check on your progress - significantly improve engagement. This is the basis of health coaching, and it is why patients with a dedicated hygienist who follows up between appointments tend to have better outcomes.
 
-**Technology-mediated reminders** — smartphone notifications, in particular — have been shown in multiple studies to improve habit consistency and health behaviour engagement.
+**Technology-mediated reminders** - smartphone notifications, in particular - have been shown in multiple studies to improve habit consistency and health behaviour engagement.
 
 ## The Role of Technology
 
 This is precisely the gap that Perioskoup was built to address.
 
-The app does not replace the clinical consultation. It extends it. After a patient's appointment, their periodontist or hygienist can set up a personalised programme in Perioskoup — specific techniques for specific areas, reminders timed to the patient's daily routine, and educational content that reinforces what was discussed in the chair.
+The app does not replace the clinical consultation. It extends it. After a patient's appointment, their periodontist or hygienist can set up a personalised programme in Perioskoup - specific techniques for specific areas, reminders timed to the patient's daily routine, and educational content that reinforces what was discussed in the chair.
 
 The patient receives their instructions not as a one-time verbal briefing, but as a daily companion that reminds, encourages, and tracks their progress. The clinician receives engagement data that allows them to identify patients who are struggling and intervene before the disease recurs.
 
-This is not a technological solution to a clinical problem. It is a clinical solution to a systems problem — the problem of a healthcare model that was designed for acute conditions, not chronic disease management.
+This is not a technological solution to a clinical problem. It is a clinical solution to a systems problem - the problem of a healthcare model that was designed for acute conditions, not chronic disease management.
 
 ## What Clinicians Can Do Now
 
@@ -544,11 +543,11 @@ While technology continues to develop, there are evidence-based strategies that 
 
 **Use teach-back.** Ask patients to explain back what they have understood. This identifies gaps in comprehension before the patient leaves the clinic.
 
-**Provide written summaries.** A brief, personalised written summary of the key instructions — in plain language — significantly improves retention.
+**Provide written summaries.** A brief, personalised written summary of the key instructions - in plain language - significantly improves retention.
 
 **Follow up.** A brief phone call or message 48 hours after an appointment, asking how the patient is getting on with their home care, has a disproportionate impact on engagement.
 
-**Acknowledge the difficulty.** Patients who feel judged for not following instructions are less likely to be honest about their engagement. A non-judgmental, supportive approach creates the psychological safety that makes honest reporting — and therefore effective support — possible.
+**Acknowledge the difficulty.** Patients who feel judged for not following instructions are less likely to be honest about their engagement. A non-judgmental, supportive approach creates the psychological safety that makes honest reporting - and therefore effective support - possible.
 
 The forgetting curve is not a patient failure. It is a design failure. And like all design failures, it can be fixed.
 
@@ -584,7 +583,7 @@ The forgetting curve is not a patient failure. It is a design failure. And like 
     body: `
 ## The Appointment That Started Everything
 
-It was an ordinary Tuesday afternoon in my practice in Bucharest. I had just finished a periodontal maintenance appointment with a patient I had been treating for three years. Her disease had been well-controlled for the first two years — her pocket depths were stable, her bone levels were holding, her home care was good.
+It was an ordinary Tuesday afternoon in my practice in Bucharest. I had just finished a periodontal maintenance appointment with a patient I had been treating for three years. Her disease had been well-controlled for the first two years - her pocket depths were stable, her bone levels were holding, her home care was good.
 
 But at this appointment, something had changed. Her gums were inflamed again. The pocket depths had increased. When I asked about her home care, she was honest: she had been going through a difficult period at work, her routine had slipped, and she had stopped using her interdental brushes consistently.
 
@@ -596,11 +595,11 @@ That evening, I called Eduard.
 
 ## The Team
 
-I had known Eduard Ciugulea for several years through mutual friends. He had a background in full-stack engineering and had been working on consumer applications for most of his career. When I described the problem — the gap between clinical care and daily life — he immediately understood it not as a dental problem, but as a product problem.
+I had known Eduard Ciugulea for several years through mutual friends. He had a background in full-stack engineering and had been working on consumer applications for most of his career. When I described the problem - the gap between clinical care and daily life - he immediately understood it not as a dental problem, but as a product problem.
 
 "You're describing a habit formation challenge," he said. "The clinical knowledge exists. The patient motivation exists. What's missing is the infrastructure to connect them."
 
-We brought in Petrica Nancu, an AI specialist with experience in health and wellness applications, a few months later. The three of us spent the first several weeks not building anything — just mapping the problem.
+We brought in Petrica Nancu, an AI specialist with experience in health and wellness applications, a few months later. The three of us spent the first several weeks not building anything - just mapping the problem.
 
 ## The Problem We Were Actually Solving
 
@@ -624,11 +623,11 @@ Perioskoup was designed to address all five of these gaps.
 
 The first version of Perioskoup was built in three months. It was deliberately simple: a patient-facing app that translated clinical recommendations into a personalised daily programme, with reminders, tracking, and educational content.
 
-The clinician-facing dashboard came later — a tool that allows periodontists and dental hygienists to set up patient programmes, monitor engagement, and send targeted guidance between appointments.
+The clinician-facing dashboard came later - a tool that allows periodontists and dental hygienists to set up patient programmes, monitor engagement, and send targeted guidance between appointments.
 
 We made several deliberate decisions early on that shaped the product:
 
-**The clinician stays in control.** Perioskoup does not diagnose. It does not make clinical recommendations independently. Everything in the patient's programme is set by their clinician, based on a real examination. The AI personalises the delivery and timing of those recommendations — it does not generate them.
+**The clinician stays in control.** Perioskoup does not diagnose. It does not make clinical recommendations independently. Everything in the patient's programme is set by their clinician, based on a real examination. The AI personalises the delivery and timing of those recommendations - it does not generate them.
 
 **Privacy by design.** Patient health data is among the most sensitive data that exists. We built GDPR requirements into the architecture from day one, not as an afterthought. All data is stored in EU-based servers, encrypted at rest and in transit.
 
@@ -646,7 +645,7 @@ We are currently in private beta with a small group of founding clinics. We are 
 
 The waitlist for patients is open. Founding members will receive priority access, founding pricing, and a direct line to the team.
 
-We are not trying to replace the dentist. We are trying to make every dentist more effective — by extending their reach into the 8,700 hours between annual appointments, and giving patients the support they need to actually follow through.
+We are not trying to replace the dentist. We are trying to make every dentist more effective - by extending their reach into the 8,700 hours between annual appointments, and giving patients the support they need to actually follow through.
 
 The bridge between the chair and the home. That's what we're building.
 
@@ -667,23 +666,6 @@ The bridge between the chair and the home. That's what we're building.
     ],
   },
 };
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
 
 function renderBody(body: string, capsules: Record<string, string> = {}) {
   const lines = body.trim().split("\n");
@@ -725,13 +707,13 @@ function renderBody(body: string, capsules: Record<string, string> = {}) {
       );
     } else if (trimmed.startsWith("- ")) {
       elements.push(
-        <li key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "16px", color: "#8C9C8C", lineHeight: 1.7, marginBottom: "8px", paddingLeft: "8px" }}>
+        <li key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "17px", color: "#8C9C8C", lineHeight: 1.75, marginBottom: "10px", paddingLeft: "8px" }}>
           {trimmed.slice(2).replace(/\*\*(.*?)\*\*/g, (_, t) => t)}
         </li>
       );
     } else if (trimmed.startsWith("> ")) {
       elements.push(
-        <blockquote key={key++} style={{ borderLeft: "3px solid #C0E57A", paddingLeft: "20px", margin: "24px 0", fontFamily: "Gabarito, sans-serif", fontSize: "17px", fontStyle: "italic", color: "#F5F9EA", lineHeight: 1.65 }}>
+        <blockquote key={key++} style={{ borderLeft: "3px solid #C0E57A", paddingLeft: "20px", margin: "32px 0", fontFamily: "Gabarito, sans-serif", fontSize: "18px", fontStyle: "italic", color: "#F5F9EA", lineHeight: 1.7 }}>
           {trimmed.slice(2)}
         </blockquote>
       );
@@ -745,7 +727,7 @@ function renderBody(body: string, capsules: Record<string, string> = {}) {
       // Parse inline bold
       const parts = trimmed.split(/(\*\*.*?\*\*)/g);
       elements.push(
-        <p key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "17px", color: "#8C9C8C", lineHeight: 1.75, marginBottom: "16px" }}>
+        <p key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "18px", color: "#8C9C8C", lineHeight: 1.8, marginBottom: "20px" }}>
           {parts.map((part, i) =>
             part.startsWith("**") && part.endsWith("**")
               ? <strong key={i} style={{ color: "#F5F9EA", fontWeight: 700 }}>{part.slice(2, -2)}</strong>
@@ -762,7 +744,6 @@ export default function BlogPost() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug || "";
   const article = ARTICLES[slug];
-  useReveal();
 
   // Meta tags handled by react-helmet-async Helmet component below
 
@@ -865,9 +846,9 @@ export default function BlogPost() {
       <section id="main-content" style={{ paddingTop: "120px", paddingBottom: "64px", background: "#0A171E", borderBottom: "1px solid #234966", position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
-        <div className="container" style={{ maxWidth: "800px" }}>
+        <div className="container" style={{ maxWidth: "720px" }}>
           {/* Breadcrumb */}
-          <nav className="reveal" style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "32px" }}>
+          <nav style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "32px" }}>
             <Link href="/" style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#8C9C8C", textDecoration: "none" }}>Home</Link>
             <span style={{ color: "#234966" }}>/</span>
             <Link href="/blog" style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#8C9C8C", textDecoration: "none" }}>Blog</Link>
@@ -876,20 +857,20 @@ export default function BlogPost() {
           </nav>
 
           {/* Category badge */}
-          <div className="reveal" style={{ marginBottom: "20px" }}>
+          <div style={{ marginBottom: "20px" }}>
             <span className="label-tag">{article.category}</span>
           </div>
 
-          <h1 className="display-md reveal" style={{ transitionDelay: "0.1s", marginBottom: "24px" }}>
+          <h1 className="display-md" style={{ marginBottom: "24px" }}>
             {article.title}
           </h1>
 
-          <p className="body-lg reveal" style={{ transitionDelay: "0.15s", marginBottom: "40px", maxWidth: "680px" }}>
+          <p className="body-lg" style={{ marginBottom: "40px", maxWidth: "680px" }}>
             {article.excerpt}
           </p>
 
           {/* Author + meta */}
-          <div className="reveal" style={{ transitionDelay: "0.2s", display: "flex", alignItems: "center", gap: "16px", paddingTop: "24px", borderTop: "1px solid #234966" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", paddingTop: "24px", borderTop: "1px solid #234966" }}>
             <img src={article.authorImg} alt={article.author} loading="lazy" width={48} height={48} style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
             <div>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", fontWeight: 700, color: "#F5F9EA" }}>{article.author}</p>
@@ -905,8 +886,8 @@ export default function BlogPost() {
 
       {/* Article body */}
       <section style={{ paddingTop: "64px", paddingBottom: "120px" }}>
-        <div className="container" style={{ maxWidth: "800px" }}>
-          <div className="reveal">
+        <div className="container" style={{ maxWidth: "700px" }}>
+          <div>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {renderBody(article.body, article.answerCapsules)}
             </ul>
@@ -925,13 +906,10 @@ export default function BlogPost() {
       {/* CTA */}
       <section style={{ background: "#050C10", padding: "80px 0", borderTop: "1px solid #234966" }}>
         <div className="container" style={{ maxWidth: "600px", textAlign: "center" }}>
-          <h2 className="display-sm reveal" style={{ marginBottom: "16px" }}>
-            Ready to take control of your dental health?
-          </h2>
-          <p className="body-lg reveal" style={{ transitionDelay: "0.1s", marginBottom: "32px" }}>
+          <p className="body-lg" style={{ marginBottom: "24px" }}>
             Join the Perioskoup waitlist and be first when we launch.
           </p>
-          <div className="reveal" style={{ transitionDelay: "0.2s", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/waitlist" className="btn-primary">
               Join the Waitlist
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>

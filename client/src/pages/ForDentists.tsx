@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — FOR DENTISTS PAGE
+ * PERIOSKOUP -- FOR DENTISTS PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -33,7 +33,7 @@ const FEATURES = [
   {
     icon: "M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18h6",
     title: "Practice Dashboard",
-    desc: "A unified view of all your patients — their engagement rates, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.",
+    desc: "A unified view of all your patients - their engagement rates, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.",
     bullets: ["Patient engagement heatmaps", "Appointment preparation briefs", "Multi-patient practice overview", "Exportable clinical summaries"],
   },
   {
@@ -99,7 +99,7 @@ export default function ForDentists() {
             <span style={{ color: "#C0E57A" }}>better prepared.</span>
           </h1>
           <p className="body-lg reveal" style={{ maxWidth: 520, marginBottom: 28, transitionDelay: "0.16s" }}>
-            Perioskoup gives your clinic a powerful tool to extend care beyond the appointment — improving engagement, reducing no-shows, and building lasting patient relationships.
+            Perioskoup gives your clinic a powerful tool to extend care beyond the appointment - improving engagement, reducing no-shows, and building lasting patient relationships.
           </p>
 
           {/* EFP Award badge + founding clinic count */}
@@ -136,7 +136,7 @@ export default function ForDentists() {
               Patients forget 80% of care instructions within 48 hours. Perioskoup translates your clinical recommendations into daily habits they actually follow.
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "rgba(140,156,140,0.7)" }}>
-              Perioskoup is the AI dental companion that extends your care beyond the appointment — bridging the gap between what you recommend and what patients actually do at home.
+              Recent research confirms patients lack awareness of their own responsibility for oral health and face barriers including understanding instructions, conflicting recommendations, and lack of motivation (<a href="https://doi.org/10.1111/jcpe.70044" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>Weinert et al. 2025, JCP</a>). Perioskoup is the AI dental companion that extends your care beyond the appointment.
             </p>
           </div>
         </div>
@@ -147,9 +147,9 @@ export default function ForDentists() {
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#234966] rounded-2xl overflow-hidden">
             {[
-              { value: "40%", label: "Reduction in no-shows", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-              { value: "3×", label: "Higher engagement rates", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
-              { value: "85%", label: "Treatment acceptance", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+              { value: "80%", label: "of instructions forgotten within 48h", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", source: "Kessels 2003, BMJ", href: "https://doi.org/10.1136/bmj.326.7395.920" },
+              { value: "87%", label: "of mHealth studies show improved outcomes", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6", source: "Toniazzo et al. 2019, JCP", href: "https://doi.org/10.1111/jcpe.13064" },
+              { value: "62%", label: "of adults have periodontitis worldwide", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", source: "Bernabe et al. 2020, JCP", href: "https://doi.org/10.1111/jcpe.13217" },
             ].map((s, i) => (
               <div key={s.label} className="reveal" style={{ background: "#0A171E", padding: "40px 32px", textAlign: "center", transitionDelay: `${i * 0.06}s` }}>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
@@ -157,7 +157,7 @@ export default function ForDentists() {
                 </div>
                 <div style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 48, color: "#C0E57A", lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>{s.label}</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "rgba(140,156,140,0.55)", marginTop: 4 }}>digital health research</p>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "rgba(140,156,140,0.55)", marginTop: 4, display: "block", textDecoration: "none" }}>{s.source}</a>
               </div>
             ))}
           </div>
@@ -168,7 +168,7 @@ export default function ForDentists() {
       <section style={{ padding: "80px 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
-            <img src="/images/anca-headshot.jpg" alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+            <img src="/images/anca-headshot.jpg" alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0 }} />
             <div style={{ flex: 1, minWidth: 280 }}>
               <blockquote style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, margin: 0 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, fontStyle: "italic", color: "rgba(245,249,234,0.85)", lineHeight: 1.65 }}>
@@ -230,12 +230,12 @@ export default function ForDentists() {
               <span style={{ color: "#C0E57A" }}>your practice.</span>
             </h2>
             <p className="body-lg reveal" style={{ maxWidth: 520, margin: "16px auto 0", transitionDelay: "0.16s" }}>
-              Perioskoup slots into your existing appointment flow — no hardware, no software migration, no training days.
+              Perioskoup slots into your existing appointment flow - no hardware, no software migration, no training days.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5" style={{ maxWidth: 900, margin: "0 auto" }}>
             {[
-              { step: "Before", title: "Pre-Visit Prep", desc: "Patients arrive better prepared. You receive a summary of their engagement, habits, and questions — reducing chair time on history-taking." },
+              { step: "Before", title: "Pre-Visit Prep", desc: "Patients arrive better prepared. You receive a summary of their engagement, habits, and questions - reducing chair time on history-taking." },
               { step: "During", title: "Set the Plan", desc: "After the appointment, set a personalised care plan in under 2 minutes. Perioskoup translates it into daily habits with reminders and tracking." },
               { step: "After", title: "Between Visits", desc: "Patients follow their plan at home with AI guidance. You monitor engagement and intervene early if someone falls off track." },
             ].map((item, i) => (
@@ -259,7 +259,7 @@ export default function ForDentists() {
             Practice management systems track appointments. Patient portals send reminders. But neither helps a patient build the daily habits that prevent disease recurrence.
           </p>
           <p className="body-lg reveal" style={{ marginBottom: 32, transitionDelay: "0.16s" }}>
-            Perioskoup is for the behavioural side — translating your clinical recommendations into a personalised daily programme. It's the AI dental companion for what happens between visits.
+            Perioskoup is for the behavioural side - translating your clinical recommendations into a personalised daily programme. It's the AI dental companion for what happens between visits.
           </p>
           <div className="reveal" style={{ padding: 24, background: "rgba(192,229,122,0.06)", border: "1px solid rgba(192,229,122,0.15)", borderRadius: 16, transitionDelay: "0.24s" }}>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, fontWeight: 600, color: "#C0E57A", marginBottom: 8 }}>Founding clinic spots are limited.</p>

@@ -1,12 +1,12 @@
 /**
- * Breadcrumb — Unit tests
+ * Breadcrumb -- Unit tests
  *
  * Framework: Vitest + React Testing Library
  *
  * Tests:
  *  - Renders a nav with aria-label="Breadcrumb"
  *  - Renders the correct number of list items
- *  - Last item is a <span> — no link (current page indicator)
+ *  - Last item is a <span> -- no link (current page indicator)
  *  - Non-last items with href render as links
  *  - "/" separator is rendered between items
  *  - Single item renders without separator
@@ -23,7 +23,7 @@ import type { ReactElement } from "react";
 const renderWithRouter = (ui: ReactElement) =>
   render(<Router>{ui}</Router>);
 
-describe("Breadcrumb — visible navigation", () => {
+describe("Breadcrumb -- visible navigation", () => {
   it("renders nav with aria-label='Breadcrumb'", () => {
     renderWithRouter(
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />
@@ -102,7 +102,7 @@ describe("Breadcrumb — visible navigation", () => {
   });
 });
 
-describe("Breadcrumb — JSON-LD structured data", () => {
+describe("Breadcrumb -- JSON-LD structured data", () => {
   it("injects a JSON-LD script tag into the DOM", () => {
     renderWithRouter(
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />

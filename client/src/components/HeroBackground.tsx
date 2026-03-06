@@ -1,5 +1,5 @@
 /**
- * HeroBackground — Reusable animated hero background component
+ * HeroBackground -- Reusable animated hero background component
  * 
  * Brand: #0A171E (dark navy), #1D3449 (mid navy), #C0E57A (lime), #8C9C8C (sage)
  * Each variant provides a unique subtle animated background for secondary pages.
@@ -9,11 +9,11 @@
 import { type CSSProperties } from "react";
 
 type Variant =
-  | "orbs"        // Floating lime/teal orbs — For Dentists, Features
-  | "grid"        // Subtle grid with scan line — Pricing
-  | "rings"       // Concentric rings pulse — About
-  | "particles"   // Rising particles — Waitlist, Contact
-  | "wave"        // Horizontal wave — Privacy, Terms
+  | "orbs"        // Floating lime/teal orbs -- For Dentists, Features
+  | "grid"        // Subtle grid with scan line -- Pricing
+  | "rings"       // Concentric rings pulse -- About
+  | "particles"   // Rising particles -- Waitlist, Contact
+  | "wave"        // Horizontal wave -- Privacy, Terms
   ;
 
 interface HeroBackgroundProps {

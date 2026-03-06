@@ -1,5 +1,5 @@
 /**
- * PERIOSKOUP — PRICING PAGE
+ * PERIOSKOUP -- PRICING PAGE
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
@@ -81,14 +81,14 @@ export default function Pricing() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>Perioskoup Pricing — Free for Patients, Plans for Dental Clinics</title>
+        <title>Perioskoup Pricing | Free for Patients, Plans for Dental Clinics</title>
         <meta name="description" content="Perioskoup is free for patients during beta. Dental clinic plans launching March 2026. Join the founding waitlist for priority access and founding pricing." />
         <link rel="canonical" href="https://perioskoup.com/pricing" />
-        <meta property="og:title" content="Perioskoup Pricing — Free for Patients, Plans for Dental Clinics" />
+        <meta property="og:title" content="Perioskoup Pricing | Free for Patients, Plans for Dental Clinics" />
         <meta property="og:description" content="Perioskoup is free for patients during beta. Clinic plans launching March 2026 from €39/mo. Join the founding waitlist for priority access." />
         <meta property="og:url" content="https://perioskoup.com/pricing" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:title" content="Perioskoup Pricing — Free for Patients, Plans for Clinics" />
+        <meta name="twitter:title" content="Perioskoup Pricing | Free for Patients, Plans for Clinics" />
         <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans from €39/mo launching March 2026. Join 30+ founding clinics on the waitlist." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -112,7 +112,7 @@ export default function Pricing() {
             <span style={{ color: "#C0E57A" }}>pricing.</span>
           </h1>
           <p className="body-lg reveal" style={{ maxWidth: 480, margin: "0 auto", transitionDelay: "0.16s" }}>
-            We're in beta — so right now, Perioskoup is free for patients. Clinic pricing is coming soon.
+            We're in beta - so right now, Perioskoup is free for patients. Clinic pricing is coming soon.
           </p>
           <div className="reveal" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap", marginTop: 24, transitionDelay: "0.24s" }}>
             <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"

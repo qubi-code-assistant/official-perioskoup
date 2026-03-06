@@ -25,12 +25,12 @@ Perioskoup is a free AI dental companion app — personalised guidance, habit tr
 > "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
 > — Dr. Anca Constantin, Periodontist & Co-founder
 
-Social proof: 30+ founding clinics · 500+ on the waitlist · Free for patients
+Social proof: 30+ founding clinics · EFP Award Winner 2025 · Free for patients
 
 Stats:
-- Treatment Acceptance: 85% (digital health research)
-- Fewer No-Shows: 40% (digital health research)
-- EFP Innovation Award: Winner
+- 87% of mHealth studies show improved oral health (Toniazzo et al. 2019, JCP)
+- 80% of care instructions forgotten within 48h (Kessels 2003, BMJ)
+- EFP Innovation Award: Winner (EuroPerio11, Vienna 2025)
 
 ### EFP Award Recognition
 
@@ -320,7 +320,7 @@ A: Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data i
 - Award: EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna)
 - Founding: Bucharest, Romania — Romanian SRL, June 2025
 - Status: Private beta — March 2026 public launch
-- Waitlist: 30+ founding clinics, 500+ patients
+- Waitlist: 30+ founding clinics
 - Patient pricing: Free
 - Clinic pricing: EUR 39-199/month (launching March 2026)
 - Contact: hello@perioskoup.com
