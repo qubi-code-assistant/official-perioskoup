@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 
-const OG_IMAGE = "/images/og-image.png";
+const OG_IMAGE = "/images/og-image.jpg";
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
 
@@ -846,12 +846,12 @@ export default function BlogPost() {
         <meta property="og:description" content={article.metaDescription} />
         <meta property="og:url" content={`https://perioskoup.com/blog/${article.slug}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="/images/og-image.png" />
+        <meta property="og:image" content="/images/og-image.jpg" />
         <meta property="article:published_time" content={`${article.date}T00:00:00Z`} />
         <meta property="article:author" content={article.author} />
         <meta name="twitter:title" content={article.metaTitle} />
         <meta name="twitter:description" content={article.metaDescription} />
-        <meta name="twitter:image" content="/images/og-image.png" />
+        <meta name="twitter:image" content="/images/og-image.jpg" />
         <meta name="twitter:creator" content="@perioskoup" />
       </Helmet>
       {/* JSON-LD */}

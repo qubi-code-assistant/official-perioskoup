@@ -89,7 +89,7 @@ export default function Navbar() {
 
           {/* CTA + mobile toggle */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Link href="/waitlist">
+            <Link href="/waitlist" aria-label="Join the waitlist">
               <span className="btn-primary hide-mobile" style={{ fontSize: '13px', padding: '9px 20px' }}>
                 Join Waitlist
               </span>
@@ -173,7 +173,7 @@ export default function Navbar() {
                 animationDelay: `${0.05 + NAV_LINKS.length * 0.06}s`,
               }}
             >
-              <Link href="/waitlist">
+              <Link href="/waitlist" aria-label="Join the waitlist">
                 <span className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', padding: '16px 24px' }}>
                   Join the Waitlist
                 </span>
