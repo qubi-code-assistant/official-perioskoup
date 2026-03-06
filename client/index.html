@@ -168,13 +168,13 @@
   </head>
 
   <body>
-    <div id="lcp-shell" style="position:relative;background:#0A171E;min-height:100vh;display:flex;align-items:center;padding:24px;overflow:hidden">
+    <div id="lcp-shell" style="position:fixed;inset:0;background:#0A171E;display:flex;align-items:center;padding:24px;overflow:hidden;z-index:0">
       <img src="/images/hero-bg.jpg" alt="Perioskoup dental companion" width="1280" height="714" fetchpriority="high" decoding="sync" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4" />
       <div style="position:relative;z-index:1;max-width:640px;margin:0 auto">
         <h1 style="font-family:system-ui,sans-serif;font-size:clamp(64px,7vw,96px);color:#F5F9EA;line-height:0.95;font-weight:700;margin:0">Between visits,<br><span style="color:#C0E57A">we take over.</span></h1>
       </div>
     </div>
-    <div id="root"></div>
+    <div id="root" style="position:relative;z-index:1"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
