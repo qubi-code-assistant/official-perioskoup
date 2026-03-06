@@ -15,11 +15,11 @@ Each audit agent MUST read the relevant skill file(s) listed below BEFORE starti
 - **Status**: 30-clinic waitlist, March 2026 public launch
 - **Target audience**: Dentists/periodontists (B2B buyers) AND patients (B2C users)
 - **Primary market**: Romania (English content covers UK/EU automatically)
-- **Revenue model**: Dentists pay (Starter €39/mo, Growth €89/mo, Pro €199/mo). Patients are FREE.
+- **Revenue model**: Dentists pay, but pricing model is not yet done. Patients are having free tier, connect-with-doctor tier and paid tier.
 - **Competitive advantage**: ZERO competitors in "AI dental companion for between-visit engagement + habit tracking". Category creation opportunity.
-- **Domain**: perioskoup.com (currently on official-perioskoup.vercel.app)
+- **Domain**: perioskoup.com (currently on official-perioskoup.vercel.app, but will be moved when done, right now is work in progress)
 - **Key differentiator**: Dr. Anca's clinical authority + EFP award = strongest trust signal in the space
-- **Vision**: Own the "AI dental companion" category in search before competitors (PerioPredict, CareStack) start their SEO
+- **Vision**: Own the "AI dental companion" category in search before competitors (PerioPredict, CareStack) start their SEO, GEO
 - **EFP article**: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/ (DR 60+, #1 asymmetric SEO advantage)
 
 ## Brand
