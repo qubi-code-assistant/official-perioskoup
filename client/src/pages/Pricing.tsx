@@ -8,6 +8,8 @@ import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
@@ -75,6 +77,7 @@ export default function Pricing() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <Navbar />
       <ParallaxHeroBg />
+      <HeroGlow />
 
       {/* Hero */}
       <section style={{ paddingTop: 140, paddingBottom: 80, textAlign: "center", position: "relative", overflow: "hidden" }}>
@@ -140,7 +143,7 @@ export default function Pricing() {
 
       {/* FAQ */}
       <section style={{ padding: "120px 0" }}>
-        <div className="container" style={{ maxWidth: 640 }}>
+        <div className="container" style={{}}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>FAQ</span>
             <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, transitionDelay: "0.08s" }}>Common questions</h2>

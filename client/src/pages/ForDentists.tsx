@@ -8,6 +8,8 @@ import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
@@ -63,10 +65,11 @@ export default function ForDentists() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistsFaqJsonLd) }} />
       <Navbar />
       <ParallaxHeroBg />
+      <HeroGlow />
 
       {/* Hero */}
       <section style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
-        <div className="container" style={{ maxWidth: 680, position: "relative", zIndex: 2 }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "For Dentists" }]} />
           <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>For Dentists</span>
           <h1 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(56px, 7vw, 88px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24, marginTop: 16, transitionDelay: "0.08s" }}>

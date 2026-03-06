@@ -8,6 +8,8 @@ import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 
@@ -57,6 +59,7 @@ export default function Features() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresFaqJsonLd) }} />
       <Navbar />
       <ParallaxHeroBg />
+      <HeroGlow />
 
       {/* Hero */}
       <section className="section" style={{ minHeight: "55vh", display: "flex", alignItems: "center", paddingTop: "120px", position: "relative", zIndex: 1 }}>

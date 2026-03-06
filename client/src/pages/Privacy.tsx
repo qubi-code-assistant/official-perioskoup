@@ -6,6 +6,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 const SECTIONS = [
@@ -23,9 +25,10 @@ export default function Privacy() {
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <Navbar />
       <ParallaxHeroBg />
+      <HeroGlow />
 
       <section style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>
-        <div className="container" style={{ maxWidth: 720, position: "relative", zIndex: 2 }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Privacy Policy" }]} />
           <span className="label-tag" style={{ marginBottom: 16, display: "inline-flex" }}>Legal</span>
           <h1 style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: "clamp(40px, 5vw, 64px)", lineHeight: 0.95, color: "#F5F9EA", marginBottom: 12, marginTop: 16 }}>Privacy Policy</h1>

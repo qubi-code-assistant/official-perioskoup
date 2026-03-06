@@ -8,6 +8,8 @@ import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 const ANCA_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg";
@@ -47,6 +49,7 @@ export default function About() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       <Navbar />
       <ParallaxHeroBg />
+      <HeroGlow />
 
       {/* Hero */}
       <section style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>

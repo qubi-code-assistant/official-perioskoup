@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
@@ -35,7 +37,9 @@ export default function Waitlist() {
       <Navbar />
 
       <section style={{ paddingTop: 140, paddingBottom: 120, position: "relative", overflow: "hidden" }}>
-        <div className="container" style={{ maxWidth: 640, position: "relative", zIndex: 2 }}>
+        <ParallaxHeroBg />
+        <HeroGlow />
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           {submitted ? (
             <div className="reveal-scale" style={{ textAlign: "center", padding: "60px 0" }}>
               <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(192,229,122,0.12)", border: "1px solid rgba(192,229,122,0.25)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>

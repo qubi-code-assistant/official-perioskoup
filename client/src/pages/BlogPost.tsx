@@ -11,6 +11,8 @@ import type { ReactElement } from "react";
 import { useParams, Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
 
 const APP_START_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/app_start_92056ad9.png";
 const ANCA_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg";
@@ -876,7 +878,9 @@ export default function BlogPost() {
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: "120px", paddingBottom: "64px", background: "#0A171E", borderBottom: "1px solid #234966" }}>
+      <section style={{ paddingTop: "120px", paddingBottom: "64px", background: "#0A171E", borderBottom: "1px solid #234966", position: "relative", overflow: "hidden" }}>
+        <ParallaxHeroBg />
+        <HeroGlow />
         <div className="container" style={{ maxWidth: "800px" }}>
           {/* Breadcrumb */}
           <nav className="reveal" style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "32px" }}>

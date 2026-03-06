@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import HeroGlow from "@/components/HeroGlow";
+import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
@@ -54,6 +56,7 @@ export default function Contact() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }} />
       <Navbar />
       <ParallaxHeroBg />
+      <HeroGlow />
 
       {/* Hero */}
       <section style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
