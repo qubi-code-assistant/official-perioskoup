@@ -11,7 +11,6 @@ import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
-import HeroGlow from "@/components/HeroGlow";
 
 const ANCA_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg";
 const EDI_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/edi_32419062.jpeg";
@@ -105,12 +104,12 @@ export default function Blog() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <Navbar />
-      <ParallaxHeroBg />
-      <HeroGlow />
 
       {/* Hero */}
-      <section style={{ paddingTop: "140px", paddingBottom: "80px" }}>
-        <div className="container">
+      <section style={{ paddingTop: "140px", paddingBottom: "80px", position: "relative", overflow: "hidden" }}>
+        <ParallaxHeroBg />
+        <HeroGlow />
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
           <div className="reveal" style={{ marginBottom: "20px" }}>
             <span className="label-tag">Knowledge Hub</span>

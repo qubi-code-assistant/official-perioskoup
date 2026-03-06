@@ -8,7 +8,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
-import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
@@ -55,11 +54,11 @@ export default function Contact() {
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }} />
       <Navbar />
-      <ParallaxHeroBg />
-      <HeroGlow />
 
       {/* Hero */}
       <section style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
+        <ParallaxHeroBg />
+        <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
           <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Contact</span>

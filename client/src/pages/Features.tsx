@@ -9,7 +9,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
-import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
 
@@ -58,12 +57,12 @@ export default function Features() {
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresFaqJsonLd) }} />
       <Navbar />
-      <ParallaxHeroBg />
-      <HeroGlow />
 
       {/* Hero */}
-      <section className="section" style={{ minHeight: "55vh", display: "flex", alignItems: "center", paddingTop: "120px", position: "relative", zIndex: 1 }}>
-        <div className="container section-content" style={{ textAlign: "center" }}>
+      <section className="section" style={{ minHeight: "55vh", display: "flex", alignItems: "center", paddingTop: "120px", position: "relative", zIndex: 1, overflow: "hidden" }}>
+        <ParallaxHeroBg />
+        <HeroGlow />
+        <div className="container section-content" style={{ textAlign: "center", position: "relative", zIndex: 2 }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />
           <span className="label-tag reveal" style={{ marginBottom: "24px", display: "inline-flex" }}>Features</span>
           <h1 className="display-lg reveal" style={{ marginTop: "16px", marginBottom: "24px", transitionDelay: "0.1s" }}>
