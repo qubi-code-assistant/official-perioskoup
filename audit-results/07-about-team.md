@@ -1,220 +1,285 @@
 # Audit 07 — About / Team Page Trust Analysis
-**Auditor:** Health-Tech Brand Trust Specialist  
-**Date:** 2026-03-06  
-**Pages reviewed:** `/about`, `/` (team section), `Navbar.tsx`, `Footer.tsx`, `App.tsx`  
-**Score: 5 / 10**
+**Auditor:** Health-Tech Brand Trust Specialist
+**Date:** 2026-03-06 (re-audited against current code on branch `fix/final-launch-audit`)
+**Pages reviewed:** `/about` (About.tsx), `/` (Home.tsx), App.tsx, Footer.tsx, sitemap.xml
+**Score: 5.5 / 10**
 
 ---
 
 ## Executive Summary
 
-The About page has a solid visual foundation and the EFP Award section is strong. However, for a health-tech product asking clinicians to trust it with their patient relationships, the page falls short in almost every dimension that matters most: Dr. Anca's clinical authority is dramatically underplayed, founder titles contain a critical error, Person schema coverage is thin, there are no professional profile links, no advisory layer, and the founding story stops just before it becomes compelling. This is a trust page that looks like a marketing page.
+Since the previous audit pass, LinkedIn links have been added to all three founder cards and Dr. Anca's visible card title has been corrected to "CDO". These are meaningful improvements. However, the page continues to under-deliver as a health-tech trust asset. The single most damaging issue is the CEO title error that persists inside the FAQ structured data block — a piece of copy that Google indexes and surfaces directly. Beyond that: Person schema covers only one of three founders, there are no individual team pages, the founding story stops short of its emotional conclusion, and every major external trust layer (advisory board, clinical advisors, press section, company legal identity) is absent. A clinician researching this product before sharing it with patients will not find enough to justify trust.
 
 ---
 
-## 1. Founder Title Correctness
+## 1. Founder Title Correctness — Current Code State
 
-### Critical Bug — Dr. Anca's Title
+### Remaining Bug — FAQ Schema (About.tsx, line 70)
+The FAQ structured data block, which Google can render directly in search results, contains:
 
-**In `About.tsx` (Team section, line 154):**
 ```
-role: "Periodontist & CEO"
+"text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CEO)..."
 ```
-Dr. Anca's designated title is CDO (Chief Dental Officer), not CEO. The company has no CEO listed anywhere. This is factually wrong and undersells the clinical role that is the entire trust proposition of this product.
 
-**In `Home.tsx` (Team section, line 412):**
-```
-role: "Co-founder & Chief Dental Officer"
-```
-This is correct. The title is inconsistent between pages.
+Dr. Anca's designated title is CDO (Chief Dental Officer), not CEO. This is now the only location with the CEO error, but it is also the highest-exposure location for it — structured data scraped directly by search engines. Fix required before any SEO gains are possible.
 
-**In `Home.tsx` (Hero blockquote attribution, line 177):**
+### Visible Card Title — Now Correct
+`About.tsx` team card (line 276): `role: "Periodontist & Co-founder, CDO"` — correct.
+This was the critical bug in the prior audit. It has been fixed.
+
+### Dr. Anca Quote Attribution — CDO Missing
+`Home.tsx` blockquote attribution (line 136):
 ```
 — Dr. Anca Constantin, Periodontist & Co-founder
 ```
-Missing "CDO" or "Chief Dental Officer" — a missed trust signal at the highest-visibility location on the site.
-
-**In `Home.tsx` (Social Proof section, line 508):**
+`Home.tsx` social proof section (line 394):
 ```
 Periodontist & Co-founder, Perioskoup
 ```
-Again CDO title is absent.
+Both omit "CDO" or "Chief Dental Officer". These are two of the highest-visibility touchpoints on the site. The title is not wrong, but the omission of CDO is a missed trust signal at the moment of maximum attention.
 
-**In `Home.tsx` (Team section intro paragraph, line 406):**
-```
-"...founded by a periodontist, a full-stack engineer, and a product designer..."
-```
-Petrica Nancu is CTO & Head of AI, not a product designer. This is a direct title error in visible body copy.
+### Eduard Ciugulea — Correct
+`About.tsx` line 277: "CGO & Co-Founder" — correct across all instances.
 
-### Eduard Ciugulea — Title Correct
-Both pages correctly show "CGO" or "CGO & Co-Founder". No issue here.
-
-### Petrica Nancu — Title Correct in Cards
-Both `About.tsx` (line 156) and `Home.tsx` (line 414) correctly show "CTO & Head of AI". The only error is the intro paragraph on Home.
+### Petrica Nancu — Correct
+`About.tsx` line 278: "CTO & Head of AI" — correct. The "product designer" error mentioned in a prior audit is no longer present in the current codebase.
 
 ---
 
 ## 2. Dr. Anca's Clinical Authority — Is It Maximized?
 
-### What Exists
-- Her name and photo appear in multiple sections
-- EFP Award is prominently featured site-wide
-- She has a first-person quote on the homepage hero
-- Person schema exists in `About.tsx` linking to the EFP announcement
+The short answer is no. The EFP Award is well presented. Everything else is underplayed.
 
-### What Is Missing — High Impact
+### What Is Working
+- EFP Award section on the About page is visually strong with the ceremony photo, jury names, and a link to the official EFP announcement.
+- Dr. Anca's quote appears in the homepage hero at a prominent position.
+- `About.tsx` Person schema includes `"honorificPrefix": "Dr."`, `"medicalSpecialty": "Periodontology"`, `"memberOf": EFP`, and `"award"` with correct 3rd Prize designation.
+- The schema `description` field (line 51) is thorough and correct.
+- All three team card LinkedIn links are now live.
 
-**No educational credentials displayed.**  
-The team card in `About.tsx` shows `creds: "DMD, PhD in Periodontology"` — but this is one of the most trust-building pieces of information on the entire site and it renders at 12px in muted color (#8C9C8C) below her name. It is visually invisible at normal reading distance.
+### What Remains Missing — Ranked by Impact
 
-**No clinic name or practice location with specificity.**  
-"periodontal clinic in Bucharest" appears in the hero paragraph but is not linked, not named, and not verifiable. Naming the clinic (if public) or at minimum stating "private periodontal specialist practice" with a city reference transforms an unverifiable claim into a verifiable one.
+**1. Award prize tier absent from all visible on-page text.**
+The structured data correctly states "3rd Prize" but every visible badge, heading, and inline mention reads "EFP Innovation Award Winner 2025" or "EFP Award Winner 2025" with no tier disclosed. The schema is transparent; the page copy is not. A clinician who clicks the EFP link will see "3rd Prize" and wonder why the site does not say so. Transparency on prize tier — "3rd Prize (from 20 submissions across 17 national societies)" — is more credible than implied top honors.
 
-**EFP Award context is incomplete.**  
-The award is described as "EFP Innovation Award Winner 2025" but the prize tier (3rd Prize) is omitted. Omitting the prize tier when it was 3rd place is a minor misdirection — a sophisticated reader looking up the EFP announcement will notice. Being transparent ("3rd Prize, selected from 20 submissions across 17 national societies") is more credible than implied top honors.
+**2. Credentials visually buried.**
+`creds: "DMD, PhD in Periodontology"` renders at 12px in `#8C9C8C` (muted color) immediately below the name. At normal reading contrast this is effectively invisible. DMD and PhD in Periodontology are the strongest credentials on the entire site. They should be styled as a trust badge, not a subscript.
 
-**No publications, conference presentations, or research links.**  
-For a periodontist co-founding a product with clinical credibility as its core trust asset, the absence of any academic or professional publication reference is a significant gap. Even one citation (e.g., "Speaker at EuroPerio11, Vienna 2025") would elevate the page considerably.
+**3. No named clinic or verifiable practice reference.**
+"Her periodontal clinic in Bucharest" is mentioned in the hero paragraph but is unnamed, unlinked, and unverifiable. If the clinic name is public, naming it transforms a claim into a fact. If it must remain unnamed, at minimum "private specialist practice, Bucharest" with a statement about active clinical hours signals ongoing practice.
 
-**No link to her professional profile.**  
-LinkedIn, ROMDENT (Romanian Dental Association) profile, or any verifiable professional directory — none are linked. For a health-tech product asking clinicians to trust it, this is a meaningful omission.
+**4. No publications, conference presentations, or research links.**
+For a periodontist founding a company on clinical credibility, zero academic citations attributed to her is a significant omission. Even one entry — "Speaker, EuroPerio11, Vienna, May 2025" — changes the profile from "dentist who built an app" to "clinician-researcher who built an app."
 
-**No statement about active clinical practice.**  
-The hero text mentions "her periodontal clinic in Bucharest" but the Team section bio does not. A simple line — "Currently practicing at [Clinic Name], Bucharest, seeing patients weekly" — converts "clinician founder" from a claim into a credible fact.
+**5. No LinkedIn sameAs in Person schema.**
+The `sameAs` array contains only the EFP press release URL. LinkedIn profile URL (`https://www.linkedin.com/in/anca-constantin-99800633b/`) should also be in `sameAs`. This is the primary mechanism by which Google associates structured data with a real, verifiable person.
+
+**6. No statement of active clinical practice in the team bio.**
+The bio (line 276) reads: "Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill — it was the communication gap between chair and home." This is entirely past-tense and founding-focused. It says nothing about current practice. A single sentence — "She continues to see patients at her specialist practice in Bucharest." — grounds the authority claim in the present tense.
 
 ---
 
-## 3. Person Schema Coverage
+## 3. Person Schema Coverage — Detailed Assessment
 
-### What Exists
-`About.tsx` includes a single `Person` JSON-LD block for Dr. Anca (lines 33–44):
+### Dr. Anca Constantin (About.tsx, lines 40–59)
+Schema is reasonably complete. Issues:
+
+- `"@type": ["Person", "Physician"]` — "Physician" is technically correct but "Dentist" is the more specific Schema.org type for dental professionals. Consider `["Person", "Dentist"]` or adding `"MedicalBusiness"` affiliation.
+- `sameAs` contains only the EFP press release. LinkedIn URL should be included.
+- `jobTitle` reads `"Periodontist"`. Does not reflect CDO role. Should be `"Periodontist; Chief Dental Officer, Perioskoup"` or split across `jobTitle` and `hasOccupation`.
+- `alumniOf` is absent — DMD and PhD institution would strengthen E-E-A-T signal.
+- `url` pointing to `/about#anca-constantin` is absent. Without a canonical URL for the person entity, Google cannot anchor the graph node reliably.
+
+### Eduard Ciugulea — No Schema
+No Person JSON-LD exists for Eduard anywhere on the site.
+
+### Petrica Nancu — No Schema
+No Person JSON-LD exists for Petrica anywhere on the site.
+
+### Organization Schema Cross-Reference
+The Dr. Anca schema has `"worksFor": { "@id": "https://perioskoup.com/#organization" }`. There is no corresponding `Organization` schema block that declares this `@id` and lists members. The graph reference is broken. Google cannot resolve the node.
+
+### Recommended Schema Structure (About.tsx)
+Replace the current single-person block with a `@graph` array:
 
 ```json
 {
-  "@type": "Person",
-  "@id": "https://perioskoup.com/#anca-constantin",
-  "name": "Dr. Anca Laura Constantin",
-  "jobTitle": "Periodontist",
-  "worksFor": { "@id": "https://perioskoup.com/#organization" },
-  "award": "EFP Digital Innovation Award 2025",
-  "sameAs": [
-    "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://perioskoup.com/#organization",
+      "name": "Perioskoup",
+      "url": "https://perioskoup.com",
+      "foundingDate": "2025-06",
+      "foundingLocation": { "@type": "Place", "addressCountry": "RO", "addressLocality": "Bucharest" },
+      "member": [
+        { "@id": "https://perioskoup.com/#anca-constantin" },
+        { "@id": "https://perioskoup.com/#eduard-ciugulea" },
+        { "@id": "https://perioskoup.com/#petrica-nancu" }
+      ],
+      "award": "EFP Digital Innovation Award 2025, 3rd Prize"
+    },
+    {
+      "@type": ["Person", "Dentist"],
+      "@id": "https://perioskoup.com/#anca-constantin",
+      "name": "Dr. Anca Laura Constantin",
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Periodontist; Chief Dental Officer",
+      "medicalSpecialty": "Periodontology",
+      "worksFor": { "@id": "https://perioskoup.com/#organization" },
+      "url": "https://perioskoup.com/about",
+      "image": "https://perioskoup.com/images/anca-headshot.jpg",
+      "award": "EFP Digital Innovation Award 2025, 3rd Prize",
+      "sameAs": [
+        "https://www.linkedin.com/in/anca-constantin-99800633b/",
+        "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://perioskoup.com/#eduard-ciugulea",
+      "name": "Eduard Ciugulea",
+      "jobTitle": "Chief Growth Officer",
+      "worksFor": { "@id": "https://perioskoup.com/#organization" },
+      "url": "https://perioskoup.com/about",
+      "image": "https://perioskoup.com/images/eduard-headshot.jpg",
+      "sameAs": ["https://www.linkedin.com/in/eduard-ciugulea/"]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://perioskoup.com/#petrica-nancu",
+      "name": "Petrica Nancu",
+      "jobTitle": "Chief Technology Officer",
+      "worksFor": { "@id": "https://perioskoup.com/#organization" },
+      "url": "https://perioskoup.com/about",
+      "image": "https://perioskoup.com/images/petrica.webp",
+      "sameAs": ["https://www.linkedin.com/in/petrica-nancu-b16468241/"]
+    }
   ]
 }
 ```
-
-### Issues With This Schema
-
-**`jobTitle` is incomplete.** Should be "Periodontist & Chief Dental Officer" or include `"hasOccupation"` for the CDO role separately.
-
-**`sameAs` points to a news article, not a profile.** The EFP link is a press release, not a profile page for Dr. Anca. It should point to her LinkedIn profile, or a verified professional directory. The press release can still appear but should not be the only `sameAs` entry.
-
-**No `alumniOf`, `knowsAbout`, `description`, or `url` fields.** These matter for rich results and knowledge graph association.
-
-**Eduard and Petrica have zero schema coverage.** No `Person` JSON-LD exists for either founder anywhere on the site. This is a missed SEO and E-E-A-T signal for both.
-
-**No `Organization` schema with `member` array linking back to founders.** The `worksFor` reference points to `#organization` but there is no `Organization` schema block that declares the founders as members, creating a broken schema graph.
 
 ---
 
 ## 4. Individual /team/[name] Pages
 
 ### Current State
-There are no individual founder profile pages. The router in `App.tsx` has no `/team` or `/team/:name` routes. Founder information exists only inside shared sections on `/about` and `/`.
+No individual founder profile pages exist. `App.tsx` has no `/team` or `/team/:name` routes. No team URLs appear in `sitemap.xml`.
 
-### Why This Matters for a Health-Tech Product
+### Why This Matters
 
-For a product where clinical authority is the primary trust signal, Dr. Anca deserves a standalone page at `/team/dr-anca-constantin` (or `/team/anca-constantin`). This page would:
+For a health-tech product where clinical authority is the primary trust signal, the absence of a standalone page for Dr. Anca Constantin is a material SEO and trust gap.
 
-1. Rank for branded searches like "Dr. Anca Constantin periodontist Perioskoup"
-2. Host the full Person schema including publications, credentials, and clinic affiliation
-3. Provide a linkable, citable page that journalists and dental associations can reference
-4. Serve as the canonical `sameAs` URL in schema markup across the site
+A page at `/team/dr-anca-constantin` would:
 
-The EFP Digital Innovation Award 2025 is a significant professional credential. There is currently no page on this site that could appear in search results for someone researching Dr. Anca's background. That is a trust gap.
+1. Rank for branded searches ("Dr. Anca Constantin periodontist", "Dr. Anca Constantin Perioskoup") — currently no page on this domain can rank for these.
+2. Host a complete Person schema with full credentials, clinic affiliation, publications, and EFP award context.
+3. Serve as the canonical `url` in the Person schema, giving Google a stable anchor for the knowledge graph node.
+4. Provide a linkable page that journalists, dental associations, and clinicians can cite.
+5. Create an internal link target that all other pages can point to, distributing authority.
+
+**Recommendation:** Create `/team/dr-anca-constantin` as a minimum. Eduard and Petrica pages are secondary. The Anca page alone is high-value because the EFP Award creates a real search demand surface.
 
 ---
 
 ## 5. Founding Story — Compelling and Authentic?
 
-### What Exists
-The hero text:
-> "Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest — and decided to build the solution herself."
-
-This is clean and direct. The hero headline "Born in a dental chair. Built for every patient." is effective.
-
-The hero blockquote on the homepage:
-> "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
-
-This is credible and specific. It names two real clinical pain points.
+### Strengths
+The hero headline "Born in a dental chair. Built for every patient." is effective and specific to a health context. The opening paragraph attributes the problem observation to a real person in a real place (Bucharest). The hero blockquote names two concrete clinical pain points: time shortage and lack of patient engagement.
 
 ### What Is Missing
 
-**The story ends too early.** It describes the problem observation but does not describe the moment of decision, the early prototype, the validation with peers, or the EFP entry. The narrative arc stops at "she decided to build it" — the reader is left without a payoff.
+**The story ends at the observation, not the decision.**
+After "she decided to build the solution herself" — nothing. The reader never learns how the decision became a company, how the team formed, or what happened between "dental chair observation" and "EFP Award in Vienna." The narrative arc has no second act.
 
-**No timeline or milestones.** When was Perioskoup first conceived? When did the first patient or clinic test it? When was the EFP entry submitted? A simple timeline — even three or four points — adds credibility and specificity that generic founding stories lack.
+**No timeline or milestones.**
+When was the company conceived? When did the first clinic test it? When was the EFP Award entry submitted? Three or four dated milestones — even approximate — add the specificity that distinguishes a real founding story from a pitch deck paragraph.
 
-**No "why now" framing.** The page explains the problem but not why this moment in dental care is the right moment to build this product. AI maturity, post-COVID patient engagement patterns, EU digital health regulation — any of these could anchor the story more powerfully.
+**No team formation story.**
+The page presents three founders as a fait accompli. How did Eduard (Northampton, UK, full-stack engineer) and Petrica (AI specialist) join a Bucharest periodontist's project? That story — specifically why two engineers chose to work on dental care — is an authenticity signal that is completely absent. Its absence makes the team feel assembled rather than built.
 
-**Eduard and Petrica's joining stories are absent.** The founding story presents as Dr. Anca building it alone. How did Eduard and Petrica join? What brought a Northampton-based engineer and an AI specialist into a Bucharest periodontist's project? That human story is absent and its absence makes the team feel assembled rather than organically built.
+**The "Why Now" section (About.tsx, lines 241–258) is generic.**
+It names three macro trends (AI capability, smartphone health interface, patient expectations for continuous support) without connecting them to anything specific about periodontal care or this team's unique position. The section reads as industry boilerplate.
 
 ---
 
 ## 6. Missing Trust Infrastructure
 
 ### Advisory Board / Clinical Advisors
-No advisory board is mentioned anywhere on the site. For a health-tech product in the dental space, even a single named clinical advisor (outside the founding team) dramatically increases credibility with both clinicians and investors. The EFP jury members (Professors Deschner, Herrera, Stavropoulos) are mentioned in the award copy but not as advisors — if any relationship exists, it should be stated.
+No advisory board is mentioned anywhere on the site. For a health-tech product, even a single named clinical advisor outside the founding team dramatically increases credibility with clinicians, patients, and investors. The EFP jury members (Professors Deschner, Herrera, Stavropoulos) are named in the award copy as "jury members" — if any ongoing advisory relationship exists, it should be stated explicitly.
 
-### University or Research Partnerships
-No academic affiliations are mentioned. For a product with PhD-level clinical leadership, the absence of any university partnership or research collaboration is a missed signal.
+### University / Research Partnerships
+No academic affiliations are mentioned. A product with PhD-level clinical leadership and an EFP award should have a natural path to university partnership. Even a "research collaboration with [institution] — in discussion" statement signals ambition in the right direction.
 
-### Press Mentions
-The EFP award announcement is linked but framed only as an award, not as external press coverage. A "Coverage" or "As Seen In" section — even just the EFP announcement — would give the page a press validation layer that is completely absent.
+### Press / Coverage Section
+The EFP award is linked but framed only as an award, not as media coverage. A "Coverage" or "As featured in" row — even consisting solely of the EFP announcement — gives the page an external validation layer that currently does not exist. The EFP is a trusted institution in European dental care; its mention of Perioskoup is press coverage, not just an award.
 
-### Company Registration Details
-The Romanian SRL (incorporated June 2025) is not mentioned on the About page. For B2B health-tech selling to clinics, stating legal incorporation details (company name, registration number, country) is a standard trust signal. The footer says "Built in Bucharest, Romania" but gives no company identity.
+### Company Legal Identity
+The Romanian SRL (incorporated June 2025) is not mentioned on the About page. The footer says "Made in Europe" but gives no company name, registration country, or incorporation detail. For B2B health-tech selling to clinics, stating the legal entity — even just "Perioskoup SRL, incorporated in Romania, June 2025" — is a standard enterprise trust signal.
 
-### LinkedIn Links
-No LinkedIn profile links exist for any founder anywhere on the site. This is the single highest-impact missing trust element for a professional B2B audience.
+### Waitlist Social Proof
+"30-clinic waitlist" is mentioned in the homepage micro-bar (`30+ founding clinics`) but does not appear on the About page. The About page is where this number would carry the most trust weight, placed immediately before the CTA.
 
 ---
 
-## 7. Specific Code Issues Requiring Fixes
+## 7. Specific Code Issues by Priority
 
-### Priority 1 — Title Bug (About.tsx, line 154)
+### P0 — FAQ Schema Title Error (About.tsx, line 70)
 ```tsx
-// WRONG:
-role: "Periodontist & CEO"
+// CURRENT — wrong:
+"Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CEO)..."
 
 // CORRECT:
-role: "Periodontist & CDO"
+"Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CDO)..."
 ```
+This is indexed by Google as structured data and can appear directly in search results. Fix immediately.
 
-### Priority 2 — Home.tsx Team Intro Paragraph (line 406)
+### P1 — Person Schema: Replace Single Block with @graph Array
+See Section 3 above. Add Eduard and Petrica as Person nodes. Add Organization node. Add LinkedIn to Anca's sameAs. Fix broken `worksFor` graph reference.
+
+### P1 — Add CDO to Dr. Anca's Quote Attributions (Home.tsx)
 ```tsx
-// WRONG:
-"...a periodontist, a full-stack engineer, and a product designer..."
+// Line 136 — current:
+— Dr. Anca Constantin, Periodontist & Co-founder
 
-// CORRECT:
-"...a periodontist, a full-stack engineer, and an AI specialist..."
+// Correct:
+— Dr. Anca Constantin, Periodontist & CDO, Perioskoup
+
+// Line 394 — current:
+Periodontist & Co-founder, Perioskoup
+
+// Correct:
+Periodontist & Chief Dental Officer, Perioskoup
 ```
 
-### Priority 3 — Person Schema Expansion (About.tsx)
-The existing single-founder schema should be replaced with a `@graph` array containing all three founders plus the Organization, with proper `sameAs` LinkedIn links and `member` relationships.
+### P2 — Disclose Award Prize Tier in Visible Copy
+Every visible badge reads "EFP Innovation Award Winner 2025". The schema correctly states "3rd Prize" but on-page text does not. Change the About page award badge (line 158) to:
+```
+EFP Digital Innovation Award — 3rd Prize, 2025
+```
 
-### Priority 4 — Award Prize Tier Disclosure
-Every instance of "EFP Innovation Award Winner 2025" should read "EFP Digital Innovation Award 2025 — 3rd Prize" for full transparency.
+### P2 — Elevate Credentials Visually
+`creds: "DMD, PhD in Periodontology"` renders at 12px muted. Add a credential badge treatment matching the EFP award badge style. At minimum increase font size to 13px and use `#C0E57A` or `#F5F9EA` instead of `#8C9C8C`.
+
+### P3 — Create `/team/dr-anca-constantin` Route
+Add the route to `App.tsx`, a new `TeamAnca.tsx` page, and a sitemap entry. Full Person schema, complete credentials, clinic affiliation, and link to the EFP award announcement.
+
+### P3 — Add Founding Story Timeline Section
+Between the "Why Now" section and the Team section, add a 4-point timeline: 2024 (problem identified in clinical practice), early 2025 (prototype with founding clinics), May 2025 (EFP Award, Vienna), June 2025 (Romanian SRL incorporated), 2026 (public launch).
 
 ---
 
 ## 8. What Is Working Well
 
-- The EFP Award section on the About page is visually strong and the jury member names add weight
-- The statistics block (50% adults, 48h forgetting, 60% no follow-up, 3x with digital support) provides good clinical context — though sources would strengthen it
-- Dr. Anca's quote appears in the homepage hero at a prominent position
-- The award photo adds real-world ceremony authenticity
-- The EFP link is present, working, and correctly attributed
-- Petrica's title is consistently correct across the site
+- EFP Award section is visually strong. Ceremony photo, jury names, and official EFP link all present.
+- Schema for Dr. Anca is the best on the site — `memberOf`, `award`, `medicalSpecialty`, `honorificPrefix`, and `description` are all populated correctly.
+- LinkedIn links exist for all three founders in team cards.
+- Founding story headline is effective ("Born in a dental chair. Built for every patient.").
+- Clinical statistics block (62%, 80%, 87%) with cited academic sources is strong evidence-based content.
+- Dr. Anca's quote on the homepage hero is prominent and specific.
+- The award is linked to the actual EFP announcement — not a self-hosted press release.
+- Petrica's title is correct throughout the codebase.
 
 ---
 
@@ -222,31 +287,38 @@ Every instance of "EFP Innovation Award Winner 2025" should read "EFP Digital In
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Trust signal density | 4/10 | Award is strong; everything else is thin |
-| Dr. Anca authority maximization | 3/10 | Credentials buried, no practice link, no publications |
-| Founder title accuracy | 6/10 | Critical CDO/CEO error on About page; "product designer" error on Home |
-| Individual team pages | 0/10 | Do not exist |
-| Founding story quality | 5/10 | Opens well but story arc incomplete |
-| Advisory / external validation | 1/10 | Nothing beyond the award itself |
-| Person schema completeness | 3/10 | One founder only, incomplete fields, no LinkedIn sameAs |
-| Professional profile links | 0/10 | No LinkedIn links anywhere on site |
-| Press / coverage section | 1/10 | Award linked but not framed as media coverage |
-| Company identity transparency | 2/10 | No registration details, no company legal name on About |
+| Trust signal density for health-tech | 4.5/10 | Award strong; everything else thin. No advisory, no legal identity, no press section. |
+| Dr. Anca authority maximization | 4/10 | Schema is good; visible page underplays credentials, no practice name, no publications |
+| Founder title accuracy | 7/10 | Cards correct; FAQ schema has CEO error; hero attributions omit CDO |
+| Individual team pages | 0/10 | No /team routes exist anywhere |
+| Founding story quality | 5/10 | Opens well but has no second act, no timeline, no team formation story |
+| Advisory / external validation layer | 1/10 | Nothing beyond the award itself |
+| Person schema completeness | 4/10 | One founder only, missing LinkedIn sameAs, broken Organization graph reference |
+| Professional profile links (visible) | 5/10 | LinkedIn links present in cards but styled as muted 12px footnote text |
+| Press / coverage section | 1/10 | Award linked but not framed as third-party coverage |
+| Company identity transparency | 1/10 | No SRL registration, no company legal name, footer says only "Made in Europe" |
 
-**Overall: 5 / 10**
+**Overall: 5.5 / 10**
 
 ---
 
 ## Recommended Priority Actions
 
-1. Fix the "CEO" title bug in `About.tsx` to "CDO" immediately — this is factually incorrect and visible to every clinician who reads the team section.
-2. Fix the "product designer" reference in `Home.tsx` team intro paragraph.
-3. Add LinkedIn profile links for all three founders in the team cards.
-4. Create `/team/dr-anca-constantin` as a standalone page with full credentials, a publications list or conference mention, clinic affiliation, and a complete Person schema.
-5. Add Eduard and Petrica Person schema blocks to `About.tsx`.
-6. Amend the founding story to include a brief timeline with milestones (conception, first clinic test, EFP submission, waitlist growth).
-7. Add a "Coverage" row below the EFP award section with the press mention properly framed.
-8. Add at least one named clinical advisor or academic partner.
-9. Disclose the award as 3rd Prize across all instances for transparency.
-10. Add company legal name and Romanian SRL registration context to the About page footer area.
+**This week (trust-critical):**
+1. Fix the "CEO" title in the FAQ structured data block (`About.tsx` line 70). This is indexed by Google.
+2. Replace the single-person schema with a full `@graph` array including Organization, all three founders, and LinkedIn in Anca's `sameAs`.
+3. Add "CDO" / "Chief Dental Officer" to Dr. Anca's two quote attributions on `Home.tsx`.
 
+**Before launch (high-value):**
+4. Add "3rd Prize" to the visible About page award badge — structured data is honest, visible copy should match.
+5. Increase credential font size and contrast for "DMD, PhD in Periodontology" to match the visual weight of the role title.
+6. Add "30+ founding clinics" social proof to the About page CTA section.
+7. Add a 4-point founding timeline section between "Why Now" and "The Team".
+8. Add a "Coverage" or "As featured in" row with the EFP announcement framed as external press.
+9. Add company legal identity to About page: "Perioskoup SRL, incorporated Romania, June 2025".
+10. Add active practice statement to Dr. Anca's bio: "Currently seeing patients at her specialist practice in Bucharest."
+
+**Strategic (post-launch):**
+11. Create `/team/dr-anca-constantin` standalone page with full credentials, publications, and complete Person schema.
+12. Add named clinical advisor(s) to the team section or a dedicated advisory section.
+13. Pursue one university or research partnership announcement, even informal, to establish academic credibility layer.

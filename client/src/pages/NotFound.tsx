@@ -11,7 +11,7 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 
 export default function NotFound() {
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Page Not Found | Perioskoup</title>
         <meta name="robots" content="noindex, nofollow" />

@@ -10,7 +10,7 @@
     <lastBuildDate>Thu, 06 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://perioskoup.com/feed.xml" rel="self" type="application/rss+xml" />
     <image>
-      <url>/images/logomark-dark.png</url>
+      <url>https://perioskoup.com/images/logomark-dark.png</url>
       <title>Perioskoup Blog</title>
       <link>https://perioskoup.com/blog</link>
     </image>

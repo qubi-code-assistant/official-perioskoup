@@ -4,30 +4,13 @@
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
+import { useReveal } from "@/hooks/useReveal";
 
 const PLANS = [
   {
@@ -35,7 +18,7 @@ const PLANS = [
     price: "Free",
     period: "during beta",
     description: "For patients who want to understand and manage their periodontal health.",
-    features: ["Plain-language oral health education", "Personalized care plan", "Daily habit reminders", "Progress tracking", "Secure messaging with your dentist", "Educational content library"],
+    features: ["Plain-language oral health education", "Personalized care plan", "Daily habit reminders", "Progress tracking (coming soon)", "Educational content library (coming soon)"],
     cta: "Join the Waitlist",
     href: "/waitlist",
     highlighted: false,
@@ -45,7 +28,7 @@ const PLANS = [
     price: "Coming soon",
     period: "",
     description: "For dental practices that want to improve patient engagement and outcomes.",
-    features: ["Everything in Patient", "Clinician dashboard", "Patient monitoring & alerts", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports", "Multi-dentist support", "Priority support"],
+    features: ["Everything in Patient", "Clinician dashboard", "Patient engagement visibility", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports (coming soon)", "Multi-dentist support", "Priority support"],
     cta: "Apply as a Founding Clinic",
     href: "/waitlist",
     highlighted: true,
@@ -61,7 +44,7 @@ export default function Pricing() {
     "mainEntity": [
       { "@type": "Question", "name": "How much does Perioskoup cost?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is currently free for patients during the beta period. Clinic pricing will be announced closer to the public launch. Founding members who join the waitlist receive founding pricing and priority access." } },
       { "@type": "Question", "name": "Is there a free trial for dental practices?", "acceptedAnswer": { "@type": "Answer", "text": "Founding clinics that join during the beta period receive complimentary access. Contact the team through the waitlist for details on the founding clinic programme." } },
-      { "@type": "Question", "name": "What is included in the Patient plan?", "acceptedAnswer": { "@type": "Answer", "text": "The Patient plan includes plain-language oral health education, personalised care plans, daily habit reminders, progress tracking, secure messaging with your dentist, and access to the educational content library." } },
+      { "@type": "Question", "name": "What is included in the Patient plan?", "acceptedAnswer": { "@type": "Answer", "text": "The Patient plan includes plain-language oral health education, personalised care plans, daily habit reminders, progress tracking, and access to the educational content library." } },
     ]
   };
 
@@ -85,11 +68,11 @@ export default function Pricing() {
         <meta name="description" content="Perioskoup is free for patients during beta. Dental clinic plans launching March 2026. Join the founding waitlist for priority access and founding pricing." />
         <link rel="canonical" href="https://perioskoup.com/pricing" />
         <meta property="og:title" content="Perioskoup Pricing | Free for Patients, Plans for Dental Clinics" />
-        <meta property="og:description" content="Perioskoup is free for patients during beta. Clinic plans launching March 2026 from €39/mo. Join the founding waitlist for priority access." />
+        <meta property="og:description" content="Perioskoup is free for patients during beta. Clinic plans launching March 2026. Join the founding waitlist for priority access and locked-in pricing." />
         <meta property="og:url" content="https://perioskoup.com/pricing" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup Pricing | Free for Patients, Plans for Clinics" />
-        <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans from €39/mo launching March 2026. Join 30+ founding clinics on the waitlist." />
+        <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans launching March 2026. Join 30+ founding clinics on the waitlist for locked-in pricing." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />

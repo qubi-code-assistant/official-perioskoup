@@ -3,8 +3,10 @@
    Apple-style: frosted glass on scroll, minimal links, pill CTA
    Animation: JS hover mutations replaced with CSS .nav-link-item class.
    Mobile drawer uses CSS keyframe slide-in + staggered link reveals.
+   A05: Focus trap for mobile drawer (WCAG 2.1.2 / 2.4.3)
+   A06: aria-current="page" on active links (WCAG 4.1.2)
    ============================================================= */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Menu, X } from 'lucide-react';
 import { LogoFull } from './Logo';
@@ -22,6 +24,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -36,14 +40,40 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  // Close mobile nav when Escape is pressed (A08)
+  // A05: Focus trap + initial focus + Escape close for mobile drawer (WCAG 2.1.2 / 2.4.3)
   useEffect(() => {
-    if (!menuOpen) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMenuOpen(false);
+    if (!menuOpen || !drawerRef.current) return;
+
+    const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    // Move focus to first focusable element when drawer opens
+    const firstFocusable = drawerRef.current.querySelector<HTMLElement>(FOCUSABLE);
+    firstFocusable?.focus();
+
+    const trap = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        hamburgerRef.current?.focus();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const focusables = Array.from(
+        drawerRef.current!.querySelectorAll<HTMLElement>(FOCUSABLE)
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
+
+    document.addEventListener('keydown', trap);
+    return () => document.removeEventListener('keydown', trap);
   }, [menuOpen]);
 
   return (
@@ -79,9 +109,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav -- CSS hover via .nav-link-item, no JS style mutations */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }} className="hide-mobile">
+          {/* A06: aria-current="page" on active link anchor (WCAG 4.1.2) */}
+          <div className="hidden md:flex items-center gap-0.5">
             {NAV_LINKS.map(({ href, label }) => (
-              <Link key={href} href={href}>
+              <Link
+                key={href}
+                href={href}
+                aria-current={location === href ? 'page' : undefined}
+              >
                 <span className={`nav-link-item${location === href ? ' active' : ''}`}>
                   {label}
                 </span>
@@ -92,11 +127,12 @@ export default function Navbar() {
           {/* CTA + mobile toggle */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Link href="/waitlist" aria-label="Join the waitlist">
-              <span className="btn-primary hide-mobile" style={{ fontSize: '13px', padding: '9px 20px' }}>
+              <span className="btn-primary hidden md:inline-flex" style={{ fontSize: '13px', padding: '9px 20px' }}>
                 Join Waitlist
               </span>
             </Link>
             <button
+              ref={hamburgerRef}
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
                 background: 'rgba(255,255,255,0.07)',
@@ -105,11 +141,8 @@ export default function Navbar() {
                 color: '#FFFFFF',
                 width: '44px',
                 height: '44px',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
               }}
-              className="show-mobile-flex"
+              className="flex md:hidden items-center justify-center"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
@@ -121,19 +154,13 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .hide-mobile { display: none !important; }
-          .show-mobile-flex { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .show-mobile-flex { display: none !important; }
-        }
-      `}</style>
+
 
       {/* Mobile drawer -- CSS keyframe slide-in with staggered link reveals */}
+      {/* A05: ref={drawerRef} enables the focus trap implemented in useEffect above */}
       {menuOpen && (
         <div
+          ref={drawerRef}
           id="mobile-nav"
           role="dialog"
           aria-modal="true"
@@ -149,13 +176,17 @@ export default function Navbar() {
         >
           <div className="container" style={{ paddingTop: '96px', display: 'flex', flexDirection: 'column', gap: '0' }}>
             {NAV_LINKS.map(({ href, label }, i) => (
-              <Link key={href} href={href}>
+              <Link
+                key={href}
+                href={href}
+                aria-current={location === href ? 'page' : undefined}
+              >
                 <div
                   className="mobile-drawer-link"
                   style={{
                     fontFamily: 'Dongle, sans-serif',
                     fontWeight: 700,
-                    fontSize: '48px',
+                    fontSize: 'clamp(36px, 10vw, 48px)',
                     color: location === href ? '#C0E57A' : '#F5F9EA',
                     letterSpacing: '-0.04em',
                     padding: '16px 0',

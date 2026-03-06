@@ -1,5 +1,5 @@
 /**
- * Shared test fixtures for Perioskoup E2E tests
+ * Shared test fixtures for Perioskoup E2E and unit tests
  *
  * Usage: import { VALID_DENTIST, VALID_PATIENT, INVALID_EMAILS } from '../fixtures/test-data';
  */
@@ -70,4 +70,77 @@ export const UNKNOWN_ROUTES = [
   "/admin",
   "/dashboard",
   "/login",
+] as const;
+
+/** Contact form valid submission payload */
+export const VALID_CONTACT = {
+  firstName: "Anca",
+  lastName: "Constantin",
+  email: "anca@perioskoup.com",
+  role: "dentist",
+  message: "Interested in the founding clinic partnership.",
+} as const;
+
+/** Blog article metadata used in unit + E2E tests */
+export const BLOG_ARTICLES = [
+  {
+    slug: "what-is-periodontal-disease",
+    title: "What Is Periodontal Disease? A Patient's Complete Guide",
+    category: "Patient Education",
+    author: "Dr. Anca Laura Constantin",
+  },
+  {
+    slug: "efp-digital-innovation-award-2025",
+    title: "Perioskoup Wins EFP Digital Innovation Award 2025",
+    category: "Company News",
+    author: "Eduard Ciugulea",
+  },
+  {
+    slug: "how-ai-is-changing-dental-monitoring",
+    title: "How AI Is Changing Dental Monitoring",
+    category: "Technology",
+    author: "Petrica Nancu",
+  },
+  {
+    slug: "3-minute-routine-save-teeth",
+    title: "The 3-Minute Daily Routine",
+    category: "Patient Habits",
+    author: "Dr. Anca Laura Constantin",
+  },
+  {
+    slug: "why-patients-forget-instructions",
+    title: "Why Patients Forget Dental Instructions",
+    category: "Clinical Insight",
+    author: "Dr. Anca Laura Constantin",
+  },
+  {
+    slug: "building-the-bridge-perioskoup-story",
+    title: "Building the Bridge: The Perioskoup Story",
+    category: "Founder Story",
+    author: "Eduard Ciugulea",
+  },
+] as const;
+
+/** All internal Footer link hrefs */
+export const FOOTER_INTERNAL_HREFS = [
+  "/features",
+  "/for-dentists",
+  "/pricing",
+  "/waitlist",
+  "/about",
+  "/blog",
+  "/contact",
+  "/privacy",
+  "/terms",
+] as const;
+
+export const EFP_URL =
+  "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" as const;
+
+/** Invalid blog slugs for fallback UI testing */
+export const INVALID_BLOG_SLUGS = [
+  "this-slug-does-not-exist",
+  "completely-made-up-xyz",
+  "admin",
+  "undefined",
 ] as const;

@@ -277,3 +277,77 @@ After (Round 3):
 - LCP: hero image loads ~84% faster (13 KB vs 82 KB), no `decoding="async"` blocking LCP measurement
 - Performance score improvement: +5 to +10 points on LCP metric
 - Package.json: 7 fewer production dependencies (cleaner, faster `pnpm install`)
+
+---
+
+## Round 4 — DRY Hook Extraction, Dead File Removal, Dependency Cleanup
+
+**Date:** 2026-03-06
+**Source:** audit-results/09-code-performance.md — Section 3 (Component Architecture) and Section 2 (Dependency Audit)
+
+### 1. Extract shared `useReveal` hook
+
+**File created:** `client/src/hooks/useReveal.ts`
+
+The `useReveal()` scroll-reveal function was copy-pasted verbatim into 8 separate page files. Each copy maintained its own local IntersectionObserver instance and inline `prefers-reduced-motion` check. This is a critical DRY violation — any future change to reveal behaviour (threshold, timing, class names) required 8 simultaneous edits.
+
+The implementation is now a single exported hook:
+
+```ts
+export function useReveal(threshold = 0.1) { ... }
+```
+
+**Updated pages (8 total):**
+
+| File | Change |
+|------|--------|
+| `client/src/pages/Home.tsx` | Removed inline function + `useEffect` import; added `import { useReveal } from "@/hooks/useReveal"`; calls `useReveal(0.12)` to preserve original threshold |
+| `client/src/pages/About.tsx` | Removed inline function + `useEffect` import; added shared import |
+| `client/src/pages/Blog.tsx` | Removed inline function + `useEffect` import; added shared import |
+| `client/src/pages/Contact.tsx` | Removed inline function; removed `useEffect` from `{ useEffect, useState }` (useState kept); added shared import |
+| `client/src/pages/Features.tsx` | Removed inline function + `useEffect` import; added shared import |
+| `client/src/pages/ForDentists.tsx` | Removed inline function + `useEffect` import; added shared import |
+| `client/src/pages/Pricing.tsx` | Removed inline function + `useEffect` import; added shared import |
+| `client/src/pages/Waitlist.tsx` | Removed inline function; removed `useEffect` from `{ useEffect, useState }` (useState kept); added shared import |
+
+`client/src/hooks/useScrollReveal.ts` was left untouched — it has a different interface (returns a ref, uses a class-based observer).
+
+### 2. Delete dead component files
+
+**Deleted:** `client/src/components/Map.tsx`
+
+Never imported by any page or layout. Imported `usePersistFn` (which exists) and referenced `@types/google.maps` via triple-slash directive, but the component itself had zero consumers. Removing it also unlocks removal of the `@types/google.maps` devDependency.
+
+**Deleted:** `client/src/components/HeroBackground.tsx`
+
+Never imported anywhere. A full multi-variant animated background component (orbs, grid, rings, particles, wave variants) that was superseded by `ParallaxHeroBg` before reaching production. All pages use `ParallaxHeroBg` from `@/components/ParallaxHeroBg` instead.
+
+### 3. Delete orphan static assets
+
+**Deleted:** `client/public/images/hero-bg.jpg` (82 KB)
+
+The WebP equivalent (`hero-bg.webp`, 13 KB) is the image used throughout the codebase and preloaded in `index.html`. The `.jpg` was unreferenced by any source file. Already converted to WebP in Round 3 — this round confirms the `.jpg` is gone from the deploy.
+
+**Deleted:** `client/public/images/petrica.jpg` (86 KB)
+
+The WebP equivalent (`petrica.webp`, 27 KB) is referenced by `Home.tsx` and `About.tsx`. The `.jpg` was unreferenced anywhere. Removing saves 86 KB from every Vercel deployment.
+
+**Total static asset savings this round: 168 KB removed from deploy.**
+
+### 4. Remove devDependencies with zero consumers
+
+**Removed from `package.json` devDependencies:**
+
+| Package | Reason |
+|---------|--------|
+| `add@^2.0.6` | pnpm CLI wrapper with no script, hook, or config reference in this project |
+| `@types/google.maps@^3.58.1` | TypeScript types used only by `Map.tsx` (now deleted) |
+
+### Build Verification
+
+```
+pnpm check  → TypeScript: 0 errors
+pnpm build  → Vite v7.1.9: 1638 modules transformed in 857ms, 0 errors, 18 chunks
+```
+
+The `useReveal` hook (≈400 bytes minified) is small enough that Rollup correctly inlines it into each route chunk rather than splitting it into a separate shared chunk, which avoids an extra network round-trip while preserving the DRY benefit in source code.

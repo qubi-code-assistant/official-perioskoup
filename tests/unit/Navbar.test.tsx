@@ -73,7 +73,8 @@ describe("Navbar -- desktop nav links", () => {
 
   it("renders the Join Waitlist CTA link", () => {
     renderNavbar();
-    const cta = screen.getAllByRole("link", { name: /Join Waitlist/i });
+    // The desktop CTA link has aria-label="Join the waitlist" -- match via aria-label text
+    const cta = screen.getAllByRole("link", { name: /Join.*[Ww]aitlist/i });
     expect(cta.length).toBeGreaterThan(0);
   });
 });

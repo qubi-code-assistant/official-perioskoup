@@ -51,16 +51,20 @@ function RouteAnnouncer() {
   const [announcement, setAnnouncement] = useState("");
 
   useEffect(() => {
-    const title = document.title;
-    setAnnouncement(`Navigated to ${title}`);
-    // Move focus to main content so keyboard users start at the top of the new page
-    const main = document.getElementById("main-content");
-    if (main) {
-      main.setAttribute("tabindex", "-1");
-      main.focus({ preventScroll: true });
-    }
-    // Clear after screen reader has read it
-    const t = setTimeout(() => setAnnouncement(""), 1000);
+    // A12: defer document.title read by one tick so react-helmet-async has time
+    // to update the <title> tag before we announce the navigation (WCAG 4.1.3)
+    const t = setTimeout(() => {
+      const title = document.title;
+      setAnnouncement(`Navigated to ${title}`);
+      // Move focus to main content so keyboard users start at the top of the new page
+      const main = document.getElementById("main-content");
+      if (main) {
+        main.setAttribute("tabindex", "-1");
+        main.focus({ preventScroll: true });
+      }
+      // Clear after screen reader has had time to read it
+      setTimeout(() => setAnnouncement(""), 1000);
+    }, 0);
     return () => clearTimeout(t);
   }, [location]);
 

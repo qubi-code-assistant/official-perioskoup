@@ -22,7 +22,7 @@ const SECTIONS = [
 
 export default function Privacy() {
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Privacy Policy | Perioskoup Data Protection</title>
         <meta name="description" content="How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law." />

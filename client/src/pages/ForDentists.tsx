@@ -3,7 +3,6 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
-import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
@@ -11,30 +10,14 @@ import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
+import { useReveal } from "@/hooks/useReveal";
 
 const FEATURES = [
   {
     icon: "M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18h6",
     title: "Practice Dashboard",
     desc: "A unified view of all your patients - their engagement rates, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.",
-    bullets: ["Patient engagement heatmaps", "Appointment preparation briefs", "Multi-patient practice overview", "Exportable clinical summaries"],
+    bullets: ["Patient engagement overview", "Appointment preparation briefs", "Multi-patient practice overview", "Exportable clinical summaries"],
   },
   {
     icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
@@ -44,9 +27,9 @@ const FEATURES = [
   },
   {
     icon: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z",
-    title: "Engagement Analytics",
-    desc: "Track which patients are following their care plans and which need a nudge. Identify patterns across your practice and intervene before problems escalate.",
-    bullets: ["Individual engagement scores", "Practice-wide trend analysis", "At-risk patient flagging", "Monthly engagement reports"],
+    title: "Engagement Insights",
+    desc: "See which patients are following their care plans and which may need an extra nudge. Engagement visibility between appointments — coming in Q2 2026.",
+    bullets: ["Patient programme overview", "Appointment preparation briefs", "Engagement visibility (in development)", "Practice-wide insights (coming Q2 2026)"],
   },
 ];
 
@@ -57,8 +40,8 @@ export default function ForDentists() {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "How does Perioskoup help my dental practice?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup provides a clinician dashboard where you can set up personalised patient programmes, monitor engagement between appointments, send targeted guidance, and receive pre-visit summaries. This extends your care beyond the chair and reduces time spent on history-taking." } },
-      { "@type": "Question", "name": "Is Perioskoup a medical device?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is designed as a clinical support tool, not a diagnostic device. It does not diagnose conditions or make independent clinical recommendations. All patient programmes are set by the clinician. The app is built with EU MDR and FDA SaMD guidance in mind." } },
+      { "@type": "Question", "name": "How does Perioskoup help my dental practice?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup provides a clinician dashboard where you can set up personalised patient programmes, stay connected with patients between appointments, send targeted guidance, and receive pre-visit summaries. This extends your care beyond the chair and reduces time spent on history-taking." } },
+      { "@type": "Question", "name": "Is Perioskoup a medical device?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is a wellness and patient engagement companion, not a medical device. It does not provide diagnoses or medical advice. All patient programmes are set by the clinician. The app is built with EU MDR and FDA SaMD guidance in mind." } },
       { "@type": "Question", "name": "Is patient data secure with Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All patient data is stored in EU-based servers with end-to-end encryption, GDPR Article 9 protection, and right to erasure built in. Patient data never leaves European servers and is never sold or used for model training without explicit consent." } },
       { "@type": "Question", "name": "What platforms does Perioskoup support?", "acceptedAnswer": { "@type": "Answer", "text": "The clinician dashboard is accessible via web browser on any device. The patient app will be available on iOS and Android. No special hardware or software is required." } },
       { "@type": "Question", "name": "How do I get started with Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is currently in private beta with founding clinics. You can join the waitlist for priority access. Founding clinics receive onboarding support, founding pricing, and a direct line to the team." } },
@@ -70,14 +53,14 @@ export default function ForDentists() {
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Dental Patient Engagement App for Clinicians | Perioskoup</title>
-        <meta name="description" content="Perioskoup gives dental practices a clinician dashboard, personalised care plans, and engagement analytics to extend care beyond the appointment and reduce no-shows." />
+        <meta name="description" content="Perioskoup gives dental practices a clinician dashboard, personalised care plans, and patient engagement visibility to extend care and reduce no-shows." />
         <link rel="canonical" href="https://perioskoup.com/for-dentists" />
         <meta property="og:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
-        <meta property="og:description" content="Clinician dashboard, personalised care plans, and patient engagement analytics for dental practices. Extend care beyond the appointment." />
+        <meta property="og:description" content="Clinician dashboard, personalised care plans, and patient engagement visibility for dental practices. Extend care beyond the appointment." />
         <meta property="og:url" content="https://perioskoup.com/for-dentists" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
-        <meta name="twitter:description" content="Give your dental practice a clinician dashboard, personalised care plans, and engagement analytics. Join 30+ founding clinics on the Perioskoup waitlist." />
+        <meta name="twitter:description" content="Give your dental practice a clinician dashboard, personalised care plans, and patient engagement visibility. Join 30+ founding clinics on the Perioskoup waitlist." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
@@ -126,7 +109,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 2. PROBLEM-FIRST ────────────────────────────────────────────────── */}
-      <section style={{ background: "#0A171E", padding: "80px 0" }}>
+      <section style={{ background: "#0A171E", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 24 }}>
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(36px, 4vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 16 }}>
@@ -135,15 +118,18 @@ export default function ForDentists() {
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, lineHeight: 1.7, color: "#8C9C8C", marginBottom: 12 }}>
               Patients forget 80% of care instructions within 48 hours. Perioskoup translates your clinical recommendations into daily habits they actually follow.
             </p>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "rgba(140,156,140,0.7)" }}>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C" }}>
               Recent research confirms patients lack awareness of their own responsibility for oral health and face barriers including understanding instructions, conflicting recommendations, and lack of motivation (<a href="https://doi.org/10.1111/jcpe.70044" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>Weinert et al. 2025, JCP</a>). Perioskoup is the AI dental companion that extends your care beyond the appointment.
+            </p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C", marginTop: 12 }}>
+              Only 30% of patients follow post-treatment oral hygiene instructions after leaving the chair (<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/cre2.526" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>J Clin Periodontol</a>). Oral diseases cost €90 billion annually in Europe (<a href="https://www.oralhealthplatform.eu/" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>Platform for Better Oral Health in Europe</a>). Prevention is not just better care — it is better economics.
             </p>
           </div>
         </div>
       </section>
 
       {/* ── 3. STATS ────────────────────────────────────────────────────────── */}
-      <section style={{ background: "#050C10", padding: "64px 0" }}>
+      <section style={{ background: "#050C10", padding: "clamp(40px, 5vw, 64px) 0" }}>
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#234966] rounded-2xl overflow-hidden">
             {[
@@ -153,11 +139,11 @@ export default function ForDentists() {
             ].map((s, i) => (
               <div key={s.label} className="reveal" style={{ background: "#0A171E", padding: "40px 32px", textAlign: "center", transitionDelay: `${i * 0.06}s` }}>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d={s.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d={s.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <div style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 48, color: "#C0E57A", lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>{s.label}</p>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "rgba(140,156,140,0.55)", marginTop: 4, display: "block", textDecoration: "none" }}>{s.source}</a>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "#8C9C8C", marginTop: 4, display: "block", textDecoration: "none" }}>{s.source}</a>
               </div>
             ))}
           </div>
@@ -165,7 +151,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 4. DR. ANCA QUOTE ───────────────────────────────────────────────── */}
-      <section style={{ padding: "80px 0" }}>
+      <section style={{ padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
             <img src="/images/anca-headshot.jpg" alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0 }} />
@@ -186,7 +172,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 5. CLINICAL TOOLS ───────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 0" }}>
+      <section style={{ padding: "clamp(64px, 8vw, 120px) 0" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Clinical Tools</span>
@@ -198,7 +184,7 @@ export default function ForDentists() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 800, margin: "0 auto" }}>
             {FEATURES.map((f, i) => (
-              <div key={f.title} className="card reveal" style={{ padding: 36, display: "flex", gap: 28, transitionDelay: `${i * 0.08}s` }}>
+              <div key={f.title} className="card reveal flex flex-col sm:flex-row gap-4 sm:gap-7 p-5 sm:p-9" style={{ transitionDelay: `${i * 0.08}s` }}>
                 <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d={f.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
@@ -221,7 +207,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 6. HOW IT FITS YOUR WORKFLOW ────────────────────────────────────── */}
-      <section style={{ background: "#050C10", padding: "100px 0" }}>
+      <section style={{ background: "#050C10", padding: "clamp(56px, 7vw, 100px) 0" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Workflow</span>
@@ -237,7 +223,7 @@ export default function ForDentists() {
             {[
               { step: "Before", title: "Pre-Visit Prep", desc: "Patients arrive better prepared. You receive a summary of their engagement, habits, and questions - reducing chair time on history-taking." },
               { step: "During", title: "Set the Plan", desc: "After the appointment, set a personalised care plan in under 2 minutes. Perioskoup translates it into daily habits with reminders and tracking." },
-              { step: "After", title: "Between Visits", desc: "Patients follow their plan at home with AI guidance. You monitor engagement and intervene early if someone falls off track." },
+              { step: "After", title: "Between Visits", desc: "Patients follow their plan at home with AI personalised guidance. You stay connected and can reach out if someone needs an extra nudge." },
             ].map((item, i) => (
               <div key={item.step} className="card reveal" style={{ padding: 32, transitionDelay: `${i * 0.08}s` }}>
                 <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#C0E57A", marginBottom: 12, display: "block" }}>{item.step}</span>
@@ -250,7 +236,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 7. COMPETITIVE POSITIONING ──────────────────────────────────────── */}
-      <section style={{ padding: "100px 0" }}>
+      <section style={{ padding: "clamp(56px, 7vw, 100px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24 }}>
             Not another PMS plugin.
@@ -269,7 +255,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 8. CTA ──────────────────────────────────────────────────────────── */}
-      <section style={{ background: "#050C10", padding: "120px 0", textAlign: "center" }}>
+      <section style={{ background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0", textAlign: "center" }}>
         <div className="container">
           <div className="reveal" style={{ marginBottom: 16 }}>
             <span className="label-tag" style={{ display: "inline-flex" }}>Founding Clinics Open</span>
@@ -277,8 +263,11 @@ export default function ForDentists() {
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20, marginTop: 16, transitionDelay: "0.08s" }}>
             Be a founding clinic.
           </h2>
-          <p className="body-lg reveal" style={{ maxWidth: 440, margin: "0 auto 36px", transitionDelay: "0.16s" }}>
+          <p className="body-lg reveal" style={{ maxWidth: 440, margin: "0 auto 24px", transitionDelay: "0.16s" }}>
             Founding clinics get lifetime discounted pricing, direct input on the product roadmap, and a dedicated onboarding specialist.
+          </p>
+          <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", maxWidth: 440, margin: "0 auto 36px", transitionDelay: "0.20s" }}>
+            Every €1 invested in prevention saves €8–50 in future treatment costs. Source: <a href="https://www.who.int/news-room/fact-sheets/detail/oral-health" target="_blank" rel="noopener noreferrer" style={{ color: "#8C9C8C", textDecoration: "none" }}>WHO Oral Health</a>
           </p>
           <div className="reveal" style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", transitionDelay: "0.24s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 36px" }}>

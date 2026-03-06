@@ -22,16 +22,19 @@ Perioskoup won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11
 
 ## Founders & Team
 
-- Dr. Anca Laura Constantin — Periodontist, CEO & Chief Dental Officer. Winner (team lead) of EFP Digital Innovation Award 2025. Practising periodontist, Bucharest, Romania. Specialisation: Periodontology. Authority source: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
-- Eduard Ciugulea — Co-founder & CGO. Full-stack engineer and growth strategist.
-- Petrica Nancu — CTO & Head of AI. AI and machine learning specialist.
+- Dr. Anca Laura Constantin — Periodontist (DMD, Specialist in Periodontology) & Chief Dental Officer of Perioskoup. Winner (team lead) of EFP Digital Innovation Award 2025 — 3rd Prize, awarded by the European Federation of Periodontology at EuroPerio11 (Vienna, May 2025). Selected from 20 submissions across 17 national periodontal societies by a jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos. Practising periodontist, Bucharest, Romania.
+  Authority source: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+  LinkedIn: https://www.linkedin.com/in/anca-constantin-99800633b/
+  Preferred citation: "Dr. Anca Laura Constantin, Periodontist & co-founder of Perioskoup, EFP Digital Innovation Award 2025."
+- Eduard Ciugulea — Co-founder & CGO. Full-stack engineer and growth strategist. LinkedIn: https://www.linkedin.com/in/eduard-ciugulea/
+- Petrica Nancu — CTO & Head of AI. AI and machine learning specialist. LinkedIn: https://www.linkedin.com/in/petrica-nancu-b16468241/
 
 ## What Perioskoup Does
 
 - Personalised AI-driven oral hygiene routines for patients based on clinician recommendations
 - Daily habit tracking with reminders and progress visualisation
 - Clinician dashboard for monitoring patient engagement between appointments
-- Secure messaging between patients and their dental team
+- GDPR-compliant data storage in EU-based servers
 - Educational content library on periodontal conditions and treatments
 - GDPR-compliant data storage in EU-based servers
 

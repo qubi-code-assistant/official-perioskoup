@@ -61,9 +61,9 @@ Perioskoup connects patients and clinicians with AI-powered tools that make dail
 
 The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
 
-Step 01: Scan — Sync intraoral data instantly from your existing scanner.
-Step 02: Analyze — AI maps risk zones & translates perio charts into habits.
-Step 03: Engage — Patients receive actionable nudges on their device.
+Step 01: Visit Your Dentist — Your dentist examines and sets a personalised care plan using Perioskoup.
+Step 02: Get Your Plan — AI translates clinical recommendations into daily habits with smart reminders and tracking.
+Step 03: Build Daily Habits — Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.
 
 ### The Team
 
@@ -99,7 +99,7 @@ We're onboarding founding clinics and early patients now. Get priority access, f
 ## Features (/features)
 
 Title: AI Dental Companion App Features — Habit Tracking & Care Plans | Perioskoup
-Description: Explore Perioskoup's AI-powered features: personalised habit coaching, daily reminders, progress tracking, clinician dashboards, secure messaging, and GDPR-compliant data protection.
+Description: Explore Perioskoup's AI-powered features: personalised habit coaching, daily reminders, progress tracking, clinician dashboards, and GDPR-compliant data protection.
 
 # Built for the full dental journey.
 
@@ -125,17 +125,10 @@ From the moment a patient leaves the chair to their next appointment, Perioskoup
    Visual timelines and habit streaks that show the oral health journey over time. Patients see their own improvement.
    - Daily habit logging
    - Visual progress dashboards
-   - Streak rewards
-   - Weekly engagement reports
+   - Habit streaks
+   - Routine consistency tools
 
-4. Secure Messaging (For Both)
-   Patients can send questions and updates directly to their dental team between appointments — reducing anxiety and unnecessary calls.
-   - GDPR-compliant messaging
-   - File and photo sharing
-   - Read receipts
-   - Archived conversation history
-
-5. Dentist Dashboard (For Dentists)
+4. Dentist Dashboard (For Dentists)
    A dedicated portal for clinicians to monitor engagement, send care plans, and track patient outcomes across their entire practice.
    - Patient engagement overview
    - Appointment preparation briefs
@@ -174,10 +167,10 @@ Description: Perioskoup gives dental clinics a powerful patient engagement tool 
 
 Perioskoup gives your clinic a powerful tool to extend care beyond the appointment — improving engagement, reducing no-shows, and building lasting patient relationships.
 
-### Clinical Impact Stats
-- 40% reduction in no-shows (digital health research)
-- 3x higher engagement rates (digital health research)
-- 85% treatment acceptance (digital health research)
+### Research on the problem Perioskoup addresses
+- 80% of care instructions forgotten within 48h (Kessels 2003, BMJ — https://doi.org/10.1136/bmj.326.7395.920)
+- 87% of mHealth studies show improved oral health outcomes (Toniazzo et al. 2019, JCP — https://doi.org/10.1111/jcpe.13064)
+- 62% of adults have periodontitis worldwide (Bernabe et al. 2020, JCP — https://doi.org/10.1111/jcpe.13217)
 
 ### Clinical Tools
 
@@ -262,14 +255,13 @@ For patients who want to understand and manage their periodontal health.
 - Personalized care plan
 - Daily habit reminders
 - Progress tracking
-- Secure messaging with your dentist
-- Educational content library
+- Educational content library (coming soon)
 
 ### Clinic Plan — Coming Soon (Founding Partner)
 For dental practices that want to improve patient engagement and outcomes.
 - Everything in Patient plan
 - Clinician dashboard
-- Patient monitoring & alerts
+- Patient engagement visibility
 - Custom care plan builder
 - Appointment reminders
 - Analytics & engagement reports

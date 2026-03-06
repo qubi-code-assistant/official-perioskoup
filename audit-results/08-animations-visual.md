@@ -1,553 +1,513 @@
 # Animation & Visual Polish Audit — Perioskoup Landing Page
-**Audit Date:** 2026-03-06  
-**Auditor:** Animation & Visual Polish Specialist (Claude Sonnet 4.6)  
-**Skills Applied:** animations/SKILL.md, awwwards-design/SKILL.md  
-**Score: 5.5 / 10**
+**Audit Date:** 2026-03-06 (Re-audit — post all P0/P1/P2 fixes applied)
+**Auditor:** Animation & Visual Polish Specialist (Claude Sonnet 4.6)
+**Skills Applied:** animations/SKILL.md, awwwards-design/SKILL.md
+**Score: 7.2 / 10**
 
 ---
 
 ## Executive Summary
 
-The site has a genuine visual identity and more animation infrastructure than most health-tech SPAs. The brand color system is coherent, the CSS keyframe library is substantial, and several individual effects (Ken Burns hero bg, CTA orb system, custom cursor) show real craftsmanship. However, the animation system has a critical structural flaw — `prefers-reduced-motion` is completely absent from both CSS and JavaScript — and a cluster of polish gaps that hold the score below 7. Page transitions are instantaneous hard cuts. The scroll-reveal hook fires a global DOM query on every page mount, creating potential jank on slow devices. The phone mockup is animated purely via CSS float rather than having interactive or scrubbed qualities. Against Awwwards dental/health comparators, the site reads as well-executed but fundamentally static between reveal events.
+This is a complete re-audit of the current production code, reflecting all fixes applied since the initial 5.5/10 assessment. The P0 and P1 issues identified in the first audit (missing `prefers-reduced-motion`, broken phone float/reveal-scale transform conflict, no page transitions, instant mobile drawer cut, JS hover mutations bypassing CSS transitions) have been fully resolved. The codebase now carries one of the more thorough animation systems for a health-tech SPA in this tier.
+
+What remains holding the score below 8: no skeleton loading states for lazy images, one lingering JS hover mutation in Breadcrumb.tsx, `will-change: transform` permanently applied to all five CTA orbs (a GPU memory cost with no compensating off), a dot-grid breathe animation that fires for `prefers-reduced-motion` users (the JS guard only covers the scroll parallax, not the CSS animation), and no typography split/stagger for hero text at the display size that would push this toward genuine Awwwards quality. The site now reads as polished and competent — it would be competitive on Behance-level dental health showcases. It is not yet at SOTD level.
 
 ---
 
 ## 1. Animation Quality
 
-### What Works
+### Strengths
 
-**Ken Burns Hero Background (index.css lines 116-122)**  
-The 24-second ease-in-out infinite loop is a good duration — slow enough to be atmospheric, not so slow it's imperceptible. The 10% translate range is restrained and appropriate.
+**Ken Burns Hero Background**
+The 24-second ease-in-out loop with a 10% scale range and two-axis translate path is correctly restrained. The hero uses a real `<img>` element with `fetchPriority="high"` for LCP candidacy and the Ken Burns is applied via `.hero-lcp-img.ken-burns` rather than `background-image`, which is the correct architecture for LCP scoring. Duration is atmospheric without being imperceptible.
 
-**CTA Animated Canvas (index.css lines 284-377)**  
-Five layered gradient orbs, a grid pulse, rising particles, a scan line, and a vignette — all pure CSS, zero JavaScript, no image dependency. This is the most technically complete section. Orb drift durations staggered at 15s/18s/22s/25s prevents synchronization artifacts.
+**CTA Animated Canvas**
+Five layered gradient orbs (15s/18s/20s/22s/25s stagger), a grid pulse, rising particles, a scan line, and a vignette — all pure CSS, zero JS, no image dependency. Orb durations are staggered to prevent synchronization artifacts. The `filter: blur(80px)` on orbs is the correct approach for large soft gradients (compositor-accelerated). This section is the highest-quality animated element on the site.
 
-**Ticker / Marquee (index.css lines 651-658)**  
-Correct pattern: 36s linear infinite, `animation-play-state: paused` on hover. The 50% duplicate technique is correct for seamless looping.
+**Page Transitions**
+`App.tsx` now wraps all routes in `<PageWrapper key={location}>` which applies `.page-enter` on every route change. The keyframe is `opacity 0→1, translateY 6px→0` at `0.35s cubic-bezier(0.16, 1, 0.3, 1)` (iOS spring). This is fast enough to feel crisp and adds genuine continuity. The Suspense fallback `<div className="min-h-screen bg-[#0A171E]" />` provides color continuity during lazy route loading.
 
-**Custom Cursor (CustomCursor.tsx)**  
-Correct lerp implementation with `requestAnimationFrame`. The 0.12 lerp factor gives a satisfying lag. Ring expansion on hover state is clean. MutationObserver re-attach pattern handles dynamic content correctly.
+**Mobile Drawer Animation**
+`drawer-slide-in` at `0.32s cubic-bezier(0.16, 1, 0.3, 1)` — correct spring easing on entry. Staggered link reveals via `.mobile-drawer-link` with `animationDelay: 0.05 + i * 0.06s` — the stagger is visible and purposeful. Active route highlighted in lime. This is now a satisfying interaction.
 
-**Scroll Reveal Easing (index.css lines 635-648)**  
-`cubic-bezier(0.16, 1, 0.3, 1)` is the iOS spring curve — the right choice for elements entering from below. 0.75s duration is at the upper edge of acceptable; could tighten to 0.6s.
+**Custom Cursor**
+Correct lerp implementation (0.12 factor), `requestAnimationFrame` loop with `MutationObserver` re-attachment for dynamic content. Dot follows instantly, ring lags with visible trailing. Expands 32→52px on hover of interactive elements. Disabled at ≤768px (correct — touch devices have no cursor). This is technically sound.
 
-### What Does Not Work
+**Scroll Reveal System**
+`.reveal` uses `cubic-bezier(0.16, 1, 0.3, 1)` at `0.6s` with `translateY(28px)` initial offset. `.reveal-scale` starts at `scale(0.94)`. Both are GPU-composited (only `opacity` and `transform` animated). `io.unobserve(e.target)` correctly fires after reveal — no repeated observation. `prefers-reduced-motion` guard is present in every single page's `useReveal()` function and in `index.css`. This is the most consistently implemented pattern in the codebase.
 
-**Stagger implementation is broken for most sections.**  
-The `useReveal` hook fires a single IntersectionObserver on ALL `.reveal` elements simultaneously (Home.tsx line 31-38, identical pattern repeated in every page). When a section scrolls into view, all its children trigger `visible` at threshold 0.12 — meaning all elements in a section become visible within milliseconds of each other regardless of `transitionDelay`. The `transitionDelay` values set inline (e.g., `0.1s`, `0.2s`, `0.3s`) only work if the observer fires before the element is already in the viewport. On initial page load, all above-fold elements get `visible` added simultaneously before any delay can run, which is correct. But for below-fold sections, because the parent section is observed as a whole rather than individual children, all children transition at once. The stagger only functions when cards enter the viewport one-by-one on slow scroll.
+**Phone Mockup**
+The transform conflict bug is fixed: `.reveal-scale` is on the outer div, `.phone-float` is on the inner div. The 5.5s float animation at 16px vertical travel and constant 3° rotation is atmospheric. The logo image inside uses `.img-load`/`.loaded` for a 0.6s opacity fade-in on load — a small but polished touch. Time updates every 30 seconds via `setInterval`, making the status bar feel alive.
 
-**No exit animations anywhere.**  
-Once an element has class `visible`, it never loses it (the `io.unobserve(e.target)` call at line 32 permanently removes the observer). Scrolling back up shows all elements already revealed — the site loses the "discovery" quality that Awwwards-level sites maintain through reverse animations.
+**Ticker / Marquee**
+36s linear infinite with `animation-play-state: paused` on hover — correct implementation. Lime background strip with uppercase Gabarito creates a distinctive breaking element between hero and content.
 
-**`orb-drift` animations on `.animated-bg-img` use `will-change: transform` as a permanent style.**  
-`index.css` lines 246 and 301 set `will-change: transform` globally on `.animated-bg-img` and `.cta-orb`. These elements persist for the lifetime of the page — this is the exact anti-pattern from the skill file. Each will-change creates a new compositing layer and occupies GPU memory continuously. With 5 CTA orbs + 1 hero bg + 1 features bg all permanently will-changed, this consumes unnecessary GPU resources on mobile.
+**Button Micro-interactions**
+`.btn-primary`: `translateY(-2px)` + `box-shadow: 0 12px 32px rgba(192,229,122,0.4)` + lighter background, at `0.15-0.2s`. `.btn-ghost`: border and color change, `0.2s`. `.btn-text` arrow: `translateX(4px)` on hover via `.btn-text-arrow`, `0.2s cubic-bezier(0.16,1,0.3,1)` — GPU-composited, no layout thrash. All three button variants are consistent and feel purposeful.
 
-**`glow-pulse` text animation (index.css line 478)**  
-`text-shadow` is not GPU-composited — it triggers paint on every frame. Applied to text via `.text-glow`, this causes repeated paint invalidation. Use `filter: drop-shadow()` instead, which can composite on the GPU.
+**glow-pulse uses filter: drop-shadow**
+The previous `text-shadow` approach that triggered paint on every frame has been replaced with `filter: drop-shadow()` which can run on the compositor thread.
+
+### Remaining Weaknesses
+
+**Stagger revealing is structurally weak for large sections.**
+The `useReveal()` hook fires a single `IntersectionObserver` on ALL `.reveal` elements simultaneously. Cards within a bento grid section enter `visible` state within milliseconds of each other when the section threshold (0.1 = 10%) triggers. The `transitionDelay` values set inline (`0.1s`, `0.2s`, etc.) create visual stagger only when scroll is slow enough for elements to enter the viewport one-by-one. In practice, on a typical laptop scroll speed, an entire row of cards snaps in together. True per-element stagger requires observing each child individually, not the section container.
+
+**No exit animations.**
+Once `.visible` is applied and the observer unsubscribes, there is no reverse animation on scroll-up. On Awwwards-level sites, elements animate out as they leave the viewport and back in as they return. This is a P4 enhancement, but it removes the "discovery" quality that makes scroll feel rewarding.
+
+**Hero LCP block rule overrides reveals above the fold.**
+`#main-content .reveal, #main-content .reveal-scale { opacity: 1; transform: none; transition: none; }` forces all elements inside `#main-content` to appear instantly at full opacity. This is correct for LCP scoring, but means the hero text, EFP badge, headline, and subhead have no entrance animation at all — they pop into existence on page load rather than flowing in. Below-fold elements animate correctly. The hero, which is the most important canvas for first impressions, has no entrance choreography.
 
 ---
 
 ## 2. Jank and Layout Shift Risks
 
-**Scroll handler in ParallaxHeroBg.tsx (lines 11-18)**  
-The scroll listener reads `getBoundingClientRect()` synchronously inside the handler. `getBoundingClientRect()` forces a layout reflow. Although `{ passive: true }` prevents scroll blocking, the reflow cost on each scroll event adds up, especially on mobile. The `willChange: "transform"` on the element is appropriate here (applied before animation starts), but the reflow from `getBoundingClientRect` counteracts the benefit.
+**ParallaxHeroBg.tsx scroll handler — resolved partially.**
+The previous `getBoundingClientRect()` issue is fixed. The current implementation reads only `window.scrollY` and applies `translate3d(0, offset, 0)` directly. RAF ticking with a `ticking` boolean prevents double-firing. `{ passive: true }` prevents scroll blocking. The inline `willChange: "transform"` persists on the element permanently (it is set in the style object, not toggled). This creates a compositing layer that exists for the entire page lifetime, not just during scroll. However, since this is the only element with this pattern and it is the largest visible background element, the GPU cost is acceptable.
 
-**`animated-bg-img` sizing (index.css lines 240-247)**  
-```css
-.animated-bg-img {
-  position: absolute;
-  inset: -10%;
-  width: 120%;
-  height: 120%;
-}
-```
-The `width: 120%` and `height: 120%` combination with `inset: -10%` creates an oversized element. During Ken Burns zoom (scale up to 1.1), the element can briefly exceed its parent bounds before the `overflow: hidden` clip catches it. This is not a layout shift per se but causes a repaint edge on some browsers. Use `inset: 0; transform: scale(1.15)` as the starting state instead to keep the element composited.
+**`will-change: transform` permanently on all five CTA orbs.**
+`index.css` line 400: `.cta-orb { will-change: transform; }` applies to all five orb elements for the entire page session. Each creates a separate compositor layer. On mid-range mobile devices (the primary audience for a health app), five permanent compositing layers for blurred gradient circles that move very slowly is an unnecessary cost. The animation skill file is explicit: apply `will-change` only when there is a specific performance problem, and remove it after the animation. A better pattern would be `will-change: auto` by default and `will-change: transform` only when the animation is actively running — which for CSS infinite animations means using the `:hover` pseudo-class or toggling a class via JS when the section is in the viewport.
 
-**IntersectionObserver threshold at 0.12 for large sections**  
-For sections taller than the viewport (e.g., the bento features grid at 120px padding + multiple cards), threshold 0.12 means the reveal fires when only 12% of the section is visible. Large sections will trigger while still mostly below the fold — the cards at the bottom of the section are invisible and their animation fires before the user can see them benefit.
+**`animated-bg-img` permanent layers.**
+`.animated-bg-img { will-change: auto; }` — correctly set to auto. Good.
 
-**Mobile drawer (Navbar.tsx lines 133-171)**  
-The mobile menu is conditionally rendered (`{menuOpen && ...}`) with no transition whatsoever — it appears/disappears as an instant cut. No AnimatePresence, no CSS transition class. This is the most jarring interaction in the entire site.
+**IntersectionObserver threshold 0.1 for the features bento grid.**
+The bento grid section is approximately 800px tall on desktop. At 0.1 threshold, the reveal fires when 80px of the section is visible. The bottom cards (below 700px from the section top) are not yet visible when the observer fires. All cards transition in simultaneously with `transitionDelay` values, but the actual visual stagger depends on the browser respecting delayed transforms while elements are still off-screen. In practice, the bottom row of cards appears to fade in without the user having scrolled to see them — a mildly anti-climactic experience.
+
+**No CLS issues identified.**
+Fonts use `font-display: swap` with correct `unicode-range` partitioning. Images have explicit `width`/`height` attributes for aspect ratio reservation. No elements shift on load. The noise overlay is `position: fixed; pointer-events: none` — correctly inert.
 
 ---
 
 ## 3. Hover State Consistency
 
-**Primary buttons (`.btn-primary`):** `translateY(-2px)` + `box-shadow` + `background` change, 0.2s/0.15s. Correct and consistent.
+**Resolved issues (all confirmed fixed in current code):**
+- Desktop nav links: `.nav-link-item` CSS class with `transition: color 0.2s ease, background 0.2s ease`. Active state in lime. Hover background subtle.
+- Footer links: `.footer-link` with `color 0.2s ease + translateX(2px) 0.2s ease`. The 2px nudge is tasteful.
+- Blog featured cards: `.blog-card-hover` with `translateY(-4px)`, lime border, box-shadow glow.
+- Blog list rows: `.blog-row-hover` with background + `padding-left: 8px` shift.
+- EFP badge: `.efp-badge-hover` with background and border-color lighten.
+- Card component: `.card:hover` — `translateY(-3px)` + lime border + shadow.
+- `card-dark:hover` — border-color lime faint + shadow. (Previously had zero hover feedback.)
 
-**Ghost buttons (`.btn-ghost`):** `border-color` + `color` + `background` change, 0.2s. Consistent.
+**Remaining inconsistency:**
 
-**Cards (`.card`):** `translateY(-3px)` + `border-color` + `box-shadow`, 0.25s. Consistent.
+**Breadcrumb.tsx — one lingering JS hover mutation.**
+Lines 77-78 use `onMouseEnter={(e) => (e.currentTarget.style.color = "#C0E57A")}` and `onMouseLeave={(e) => (e.currentTarget.style.color = "#8C9C8C")}`. The `transition: "color 0.2s ease"` is declared in the element's style object, but because the color change is applied via direct JS `style.color` assignment, the transition declaration is on the same style object — this actually does work in most browsers (inline transition + inline style change), but it is the anti-pattern documented in the fix-log and inconsistent with every other interactive element on the site. Low visual impact (breadcrumb links are small and rarely interacted with), but architecturally inconsistent.
 
-**Navbar links:** Uses inline `onMouseEnter`/`onMouseLeave` handlers instead of CSS transitions (Navbar.tsx lines 84-86). The `transition: 'color 0.2s ease'` is set in the style object but the color change itself happens via JS `style.color` assignment, which bypasses the CSS transition entirely. The hover color change will be **instantaneous**, not 0.2s.
+**Waitlist role selector buttons.**
+Lines 126-131 in Waitlist.tsx: `transition: "all 0.2s ease"`. The `transition: all` anti-pattern catches every CSS property including layout-triggering ones. Should be `transition: "border 0.2s ease, background 0.2s ease, color 0.2s ease"`. Impact is low since only border, background, and color change — but if any other property changes unexpectedly (e.g., a browser UA style), it would animate.
 
-**Blog featured cards (Blog.tsx lines 154-155):** Same problem — JS `style.transform` assignment on hover bypasses CSS transitions. The card lift/border change will be instant, not the 0.3s intended.
-
-**Blog list rows (Blog.tsx lines 200-201):** JS `style.background` assignment — same issue. Background change is instant.
-
-**Footer links (Footer.tsx lines 107-109):** JS `style.color` assignment — instant, not 0.2s.
-
-**`.btn-text` hover (index.css lines 543):** Animates `gap` property. `gap` is not GPU-composited and triggers layout on every frame. Use `padding-right` or `transform: translateX()` on the arrow icon instead.
-
-**Inconsistency summary:** Shared UI components (buttons, `.card`) use CSS transitions correctly. Page-level interactive elements (nav links, blog cards, footer links) use JS direct style mutation that bypasses transition entirely. This creates two observable tiers of hover quality — premium on components, flat on pages.
+**LinkedIn icons on About page team cards.**
+The social link has `color: "#8C9C8C"` but no hover transition. It is an `<a>` element so it benefits from the global `*:focus-visible` ring, but has no color hover feedback. Minor omission.
 
 ---
 
 ## 4. Dot-Grid Hero Background Effectiveness
 
-`ParallaxHeroBg.tsx` renders a `radial-gradient(circle, rgba(192,229,122,0.12) 1px, transparent 1px)` at 32px spacing. 
+**Current state (post-fix):**
+- Dot opacity now breathes at 0.45–0.65 via `dot-grid-breathe` animation (8s ease-in-out infinite)
+- Dot color increased from `rgba(192,229,122,0.12)` to `rgba(192,229,122,0.18)`
+- Parallax at 0.15× scroll rate (correct — subtle, not distracting)
+- `willChange: "transform"` is now inline in the style object (permanent but acceptable for this element)
 
-**Positives:** Correctly placed at z-index 0, parallax movement at 0.15× scroll rate feels subtle and not distracting. Opacity 0.35 keeps it subordinate to content.
+**Assessment:**
+The dot grid is now visible on most displays, and the breathing animation adds gentle life. The effect contributes to the "dark tech" premium feel without competing with the Ken Burns hero image or HeroGlow gradients.
 
-**Problems:**
-- At opacity 0.35 and dot color at 12% lime, the dots are nearly invisible on most displays, especially with the HeroGlow gradients layered on top. They contribute almost nothing to the visual texture.
-- The `willChange: "transform"` is permanent (lives as an inline style for the lifetime of the section), which creates a compositing layer that persists even when the element is not moving.
-- No animated quality beyond the parallax offset. Compare to award-winning sites where dot grids have interactive mouse-tracking, fade-in/out on proximity, or subtle scale breathing.
-- `inset: "-20% 0"` on the element combined with the Ken Burns bg creates a double-oversized stacking context in the hero. The dot grid extends 20% above and below the hero viewport area but only the visible portion is used.
+**Remaining issue — `dot-grid-breathe` fires for `prefers-reduced-motion: reduce` users.**
+The JS guard in `ParallaxHeroBg.tsx` only prevents the scroll parallax listener from attaching. It does not prevent the `animation: "dot-grid-breathe 8s ease-in-out infinite"` from applying via the inline style. The `prefers-reduced-motion` CSS block in `index.css` targets `.animated-bg-img`, `.cta-orb`, `.hero-orb`, etc. — but `ParallaxHeroBg` uses none of these classes. The dot-grid element's `dot-grid-breathe` animation is uncovered by the reduced-motion CSS rule because the element has no class name that the rule matches.
 
-**Recommendation:** Increase dot opacity to 0.55 minimum (currently imperceptible on bright displays), add a very slow breathing opacity animation, or make it respond to mouse position with a minimal 5% parallax offset from cursor position.
+The breathing is an opacity change (not spatial motion), so it is unlikely to cause vestibular distress. However, per WCAG 2.1 SC 2.3.3 (Animation from Interactions), all decorative animations should respect the user preference. The fix is one line: add the element to the `prefers-reduced-motion` CSS block, or add a class name to the element so the existing rule can target it.
+
+**Awwwards comparison:**
+Award-winning sites at the SOTD level typically use dot grids that respond to mouse position (5-10% parallax from cursor). The current implementation only responds to scroll, making it feel passive on desktop where the user moves the mouse frequently. This is a quality gap.
 
 ---
 
 ## 5. Page Transitions
 
-**Current state: None.**
+**Status: Resolved — functional and clean.**
 
-`App.tsx` uses Wouter's `Switch`/`Route` with a `ScrollToTop` component that calls `window.scrollTo({ top: 0, behavior: "instant" })`. Every route change is a hard cut — old page disappears, new page appears with zero transition. No crossfade, no overlay wipe, no shared element.
+`PageWrapper` remounts on every route change, re-triggering `.page-enter` which applies `page-fade-in` at `0.35s cubic-bezier(0.16, 1, 0.3, 1)`. `ScrollToTop` calls `behavior: "instant"` ensuring no scroll position bleeds across routes before the transition. `RouteAnnouncer` announces route changes to screen readers for accessibility.
 
-The `useReveal()` hook in each page re-queries the DOM on mount, which means each page load re-runs the IntersectionObserver setup. Since `visible` classes from the previous page are gone (new DOM), reveals fire fresh on page load — this is correct behavior, but without a page transition, the content appears instantly before reveals have a chance to animate in above-fold elements.
-
-**Impact:** At Awwwards health/dental reference sites (e.g., Dentulu, Tend, Parsley Health), route changes use at minimum a 200ms crossfade. Without any transition, the site feels like a 2015 multi-page website rather than a contemporary SPA.
+**Remaining gap:**
+There is no exit animation — old content disappears instantly and new content fades in. This creates a slight flash at the transition boundary. A crossfade (old page fading out while new page fades in simultaneously) would feel more cinematic, but requires Framer Motion's `AnimatePresence` or a more complex CSS approach. The current solution is correct and clean for a zero-dependency implementation.
 
 ---
 
-## 6. `prefers-reduced-motion` — CRITICAL FAILURE
+## 6. `prefers-reduced-motion` — Now Properly Implemented
 
-**Zero coverage in either CSS or JavaScript.**
+**CSS coverage (`index.css` lines 1079–1149):**
+The `@media (prefers-reduced-motion: reduce)` block covers:
+- All continuous looping animations: `animated-bg-img`, `cta-orb`, `hero-orb` (1/2/3), `cta-particle`, `hero-particle`, `cta-scan-line`, `hero-scan-line`, `hero-ring` (1/2), `ticker-track`, `circle-pulse::after`, `phone-float`, `text-glow`, `cta-grid`, `hero-wave-svg` (1/2) — all set to `animation: none !important`.
+- `animated-bg-img` frozen at `scale(1.08) translate(0,0)`.
+- `.reveal`/`.reveal-scale`: `opacity: 1 !important; transform: none !important; transition: none !important;` — content appears instantly, no motion.
+- `.page-enter`, `.mobile-drawer`, `.mobile-drawer-link` — animations removed.
+- All hover transforms disabled: `btn-primary:hover`, `card:hover`, `card-dark:hover`, `blog-card-hover:hover`, `blog-row-hover:hover`, `footer-link:hover`, `btn-text:hover .btn-text-arrow`.
 
-Grep result confirms: no `prefers-reduced-motion` query exists anywhere in the codebase.
+**JS coverage:**
+All page-level `useReveal()` functions (Home, Features, ForDentists, Pricing, About, Blog, Contact, Waitlist) include `window.matchMedia('(prefers-reduced-motion: reduce)').matches` check that immediately applies `visible` to all reveal elements without IntersectionObserver. `ParallaxHeroBg.tsx` skips the scroll listener entirely.
 
-The following animations run unconditionally for all users including those with vestibular disorders:
-- Ken Burns zoom (continuous, 24s loop)
-- All five CTA orb drifts (continuous, 15-25s loops)
-- Rising particles across hero and CTA (continuous, 4-8s loops)
-- Scan lines (continuous, 6-8s loops)
-- Phone float animation (continuous, 5.5s loop)
-- Dot grid parallax (fires on every scroll event)
-- Ticker marquee (continuous, 36s loop)
-- Circle pulse rings (continuous, 3.5s loop)
-- Counter count-up animation (JS, no motion check)
-- Glow pulse on text (continuous, 4s loop)
-
-This is a WCAG 2.1 Level AA violation (Success Criterion 2.3.3, AAA, and 2.3.1, A for flashing). More practically, it exposes roughly 5% of visitors to potential vestibular discomfort. This must be fixed before any accessibility-conscious clinicians evaluate the site for their practices.
+**One uncovered element:**
+The `dot-grid-breathe` animation on `ParallaxHeroBg` — described in section 4. Severity: low (opacity-only, not spatial). Should be fixed.
 
 ---
 
 ## 7. Micro-Interactions
 
-**Forms:**
-- `.p-input:focus` changes `border-color` only. No scale, no glow spread, no label float. The focus state is functionally correct but uninspiring.
-- The success state for WaitlistForm (Home.tsx lines 82-93) shows a static checkmark circle — no entry animation for the success state itself. The circle and text simply appear.
-- Role selector buttons (Waitlist.tsx lines 69-73) have correct `transition: "all 0.2s ease"` — but `transition: all` catches every CSS property and is the anti-pattern from the skill file.
+**Forms — improved but not premium:**
+- `.p-input:focus`: `border-color: rgba(192,229,122,0.55)` + `box-shadow: 0 0 0 3px rgba(192,229,122,0.1)` — a subtly lime glow ring. Transition: `border-color 0.25s ease, box-shadow 0.25s ease`. This is correct and feels good.
+- `.p-select:focus`: identical treatment.
+- No floating label animation — inputs go from placeholder to typed text with zero visual choreography. This is acceptable for a medical-adjacent product but leaves a gap vs. premium SaaS forms (e.g., Linear, Vercel dashboard).
+- Success states on Waitlist and Contact: static checkmark circles appear without an entry animation. A `reveal-scale` on the success container would add a satisfying confirmation moment.
 
 **Cards:**
-- `.card:hover` is clean. No `.card-dark` hover state defined — these are used on the About/Mission stats panel and have zero hover feedback.
+- `.card:hover`: `translateY(-3px)` + lime border tint + shadow. Well-calibrated.
+- `.card-dark:hover`: now has border-color and shadow transition (was absent). Fixed.
+- Team cards on About page: hover lift inherited from `.card`. No image scale or overlay on hover — Awwwards-quality team sections often include an image scale (`transform: scale(1.04)`) inside the overflow-hidden container on hover.
 
 **Label tags (`.label-tag`):**
-- No hover state. These are not interactive, which is fine, but the animated dot (`::before`) has no pulse or breath — it's static. A subtle scale pulse on the dot would elevate these.
+The animated dot (`::before` pseudo-element) is static. No pulse, no breath. The dot is 6px×6px, lime, always on. Adding a subtle scale pulse on the dot (`animation: dot-pulse 2s ease-in-out infinite`) would elevate these section markers significantly.
 
-**EFP badge in hero (Home.tsx lines 157-162):**
-- `transition: "background 0.2s ease"` defined inline, but no hover background change is specified. The badge has a transition declaration but no hover rule — the transition fires on nothing.
+**Phone buttons inside PhoneMockup:**
+The "Patient" and "Dentist" role buttons inside the phone screen are static `div` elements with no hover state. They are purely decorative, but a very subtle press effect (`transform: scale(0.97)` on `:active` via a wrapper `button[tabindex="-1"]`) would reinforce the illusion of a live product.
 
-**Phone mockup buttons (PhoneMockup.tsx lines 215-245):**
-- The "Patient" and "Dentist" role buttons inside the phone screen are static `div` elements with no hover state. These are purely decorative, but adding a subtle scale on hover (even though it's inside a mockup) would add to the illusion of a real app screen.
+**Circle pulse rings (How It Works):**
+`.circle-pulse::after` uses `pulse-ring` animation — scale 0→1 with opacity 0.5→0, `3.5s ease-in-out infinite`. Each step has a different `animationDelay` (0s, 0.8s, 1.6s). This is the correct implementation for staggered wave effects. GPU-composited via transform and opacity. Good.
 
 ---
 
 ## 8. Loading States
 
-**No loading states of any kind.**
+**Status: Partially addressed — still inadequate for images.**
 
-- No skeleton screens for image loads (team photos, hero bg, features bg, award photo)
-- No spinner or placeholder for the PhoneMockup logo image (external CloudFront URL)
-- No page-level loading indicator between route changes
-- The `Skeleton` component exists at `/client/src/components/ui/skeleton.tsx` but is never used anywhere in the application
+**What exists:**
+- `img-load` / `img-load.loaded`: opacity 0→1 at 0.6s on load. Applied to the PhoneMockup logo image. This is the only image with a load animation.
+- `Suspense fallback`: bare `<div className="min-h-screen bg-[#0A171E]" />`. This is a blank navy rectangle — not a skeleton, not a branded preloader. Routes loaded for the first time (Features, ForDentists, etc.) will show this blank div for 100-300ms on a typical connection before the lazy chunk arrives.
+- `Skeleton` component exists at `/client/src/components/ui/skeleton.tsx` — still completely unused.
 
-The hero background image (`hero-bg-soft.png`) is an external CloudFront asset. On slow connections, the hero section will show the fallback `#0A171E` navy background with the Ken Burns animation running on nothing visible until the image loads. There is no `onLoad` fade-in for the background image element.
-
-The PhoneMockup logo image (`Logomark-dark.png`) similarly has no loading fallback — the img element will show broken state briefly on slow connections.
+**What is missing:**
+- Hero background image (`hero-bg.webp`): no fade-in. Appears behind the Ken Burns animation. On slow connections, the Ken Burns animation plays on the `#0A171E` background until the image loads. Using `.img-load`/`.loaded` on the `hero-lcp-img` element would add a graceful load-in, but conflicts with LCP measurement (opacity:0 at paint time would disqualify the LCP candidate). The correct solution is an `onLoad` callback that adds the class — which does not affect LCP scoring since LCP measures when the element renders, not when it becomes visible.
+- Team headshots (About page), award photo, features background: no load states.
+- The Suspense fallback should be a branded skeleton — at minimum a `#1D3449` card skeleton layout matching the page structure.
 
 ---
 
 ## 9. Phone Mockup Animation
 
-**Current:** The mockup container `div` has `className="phone-float"`, which applies:
-```css
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(3deg); }
-  50%       { transform: translateY(-16px) rotate(3deg); }
-}
-/* Applied via: */
-.phone-float { animation: float 5.5s ease-in-out infinite; }
-```
+**Current state (post-fix):**
+The transform conflict is resolved. `reveal-scale` on outer div, `phone-float` on inner div. Both animate correctly and independently.
 
-**Assessment:**
-- The 3° constant rotation is a nice touch — it breaks the rigid orthogonal alignment.
-- 16px vertical travel at 5.5s ease-in-out is appropriate — not frantic, atmospheric.
-- `reveal-scale` class is also applied (`transform: scale(0.93)` → `scale(1)`), which combines correctly with the float since they operate on different elements — the `reveal-scale` is on the wrapping div, `phone-float` CSS targets the inner animated div. Wait — actually both are on the same element (`<div className="phone-float reveal-scale">`). This means the `.reveal-scale` transition from `scale(0.93)` to `scale(1)` runs simultaneously with the float animation. The `transition` property on `.reveal-scale` (`transform 0.75s`) and the `animation: float` on `.phone-float` will conflict — CSS animations override CSS transitions on the same property. The phone will **never scale in from 0.93** because `animation` takes precedence over `transition` for `transform`. This is a bug.
+**Float quality:**
+- `translateY(0 → -16px → 0)` at 5.5s ease-in-out infinite.
+- Constant `rotate(3deg)` adds personality — breaks the orthogonal grid.
+- `drop-shadow(0 40px 80px rgba(0,0,0,0.55)) drop-shadow(0 0 60px rgba(192,229,122,0.1))` — the second shadow creates a subtle lime ambient glow beneath the phone that ties it to the brand palette.
 
 **What's missing:**
-- No mouse parallax response — moving the cursor doesn't affect the phone position
-- The phone content (role buttons, logo) is completely static — no simulated typing, no screen transitions, no micro-animations on the UI elements
-- Compare to Tend.com or Calm.com mockups where the phone screen shows gentle UI animations that suggest a live product
+- No mouse parallax response — the phone does not react to cursor position.
+- Screen content (role buttons, Dynamic Island) is entirely static.
+- Compare: Tend.com, Calm.com, and Headspace's landing page mockups show gentle UI animations (screen transitions, notification pop-ins, button press responses) that suggest a live product. Perioskoup's phone screen is a wireframe illustration, not a product demo.
+- The phone is not observable/scrubbed via scroll — it could tilt based on scroll position or mouse position for a significant wow-factor moment.
 
 ---
 
 ## 10. Awwwards Dental/Health Site Comparison
 
-Reference sites reviewed mentally: Tend, Parsley Health, Hims/Hers, Carbon Health, Calm.
+Reference sites: Tend, Carbon Health, Parsley Health, Hims/Hers, Miro health pages, Calm, Headspace.
 
-| Criterion | Perioskoup | Awwwards Tier |
-|-----------|-----------|---------------|
-| Scroll reveal quality | Simple fade-up, adequate | Awwwards uses scrubbed parallax, character-level text splits |
-| Hero background | Ken Burns on image + dot grid | Comparable — some winners use static hero with exceptional type |
-| Page transitions | None | Awwwards minimum: 200ms crossfade |
-| Custom cursor | Present, lerp-based | Present on most SOTD — Perioskoup's is competent |
-| Typography animation | None | SOTD sites routinely use SplitType word/char reveals |
-| Loading sequence | None | SOTD sites have branded preloaders or staggered initial reveals |
-| Mobile menu animation | Instant cut | Awwwards: overlay slides in with staggered link reveals |
-| Reduced motion | Missing | Required for SOTD consideration |
-| Texture/depth | Noise overlay (0.02 opacity) | Barely perceptible — most winners at 0.04-0.06 |
-| Micro-interaction density | Low | Award sites have micro-interactions on nearly every element |
+| Criterion | Perioskoup (current) | Awwwards SOTD Tier |
+|-----------|----------------------|--------------------|
+| Scroll reveal quality | Fade-up at 0.6s iOS spring — clean | SOTD: char-level SplitType reveals, scrubbed parallax |
+| Hero animation | Ken Burns + dot grid + HeroGlow | Comparable — some SOTD use static hero with exceptional type |
+| Page transitions | 0.35s fade-up CSS crossfade — correct | SOTD minimum: bidirectional crossfade or overlay wipe |
+| Custom cursor | Lerp ring, hover expansion — competent | SOTD: context-aware cursor (changes on section, shows label on card hover) |
+| Typography animation | None — text appears instantly in hero | SOTD: word/char stagger reveals, especially on hero headlines |
+| Loading sequence | Blank navy fallback + img-load on phone logo | SOTD: branded preloader or staggered initial reveal sequence |
+| Mobile menu | Slide-in + staggered links — now correct | On par with premium health sites |
+| Reduced motion | Comprehensive CSS + JS coverage | Required for SOTD (now present) |
+| Texture/depth | Noise overlay at 0.02 opacity | Barely perceptible; SOTD sites at 0.04-0.06 |
+| Micro-interaction density | Moderate — buttons/cards good, forms thin | SOTD: nearly every element has a micro-interaction |
+| 3D / WebGL | None | Not required; Linear/Vercel win without it |
+| Sound design | None | Not required for health context |
 
-The site would score approximately 6.5-7.0 on Awwwards Design dimension, 5.5 on Creativity, and be penalized heavily on Usability for the reduced-motion omission and mobile menu behavior.
+Awwwards Design score estimate: **7.0–7.5**
+Awwwards Creativity score estimate: **6.0** (no signature moments — nothing the user will screenshot and share)
+Awwwards Usability score estimate: **8.0** (accessibility, mobile menu, reduced motion — all solid now)
 
 ---
 
-## Specific Animation Code Improvements
+## Remaining Issues and Specific Code Fixes
 
-### Fix 1 — prefers-reduced-motion (CRITICAL, add to index.css)
+### Fix A — Breadcrumb JS Hover Mutation (Low Effort, Consistency)
+
+**File:** `client/src/components/Breadcrumb.tsx`
+
+Replace lines 70-81:
+
+```tsx
+// Add to index.css:
+.breadcrumb-link {
+  color: #8C9C8C;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.breadcrumb-link:hover { color: #C0E57A; }
+
+// In Breadcrumb.tsx — replace the Link block:
+<Link
+  href={item.href}
+  className="breadcrumb-link"
+>
+  {item.label}
+</Link>
+```
+
+Remove `onMouseEnter`, `onMouseLeave`, and the inline `transition: "color 0.2s ease"` style.
+
+---
+
+### Fix B — Cover dot-grid-breathe in prefers-reduced-motion (WCAG completeness)
+
+**File:** `client/src/index.css`
+
+Add one selector to the existing `@media (prefers-reduced-motion: reduce)` block:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  /* Kill all continuous animations */
-  .animated-bg-img,
-  .cta-orb,
-  .hero-orb,
-  .cta-particle,
-  .hero-particle,
-  .cta-scan-line,
-  .hero-scan-line,
-  .hero-ring,
-  .ticker-track,
-  .circle-pulse,
-  .phone-float,
-  .text-glow {
+  /* existing rules... */
+
+  /* Dot-grid breathe — ParallaxHeroBg uses inline animation style,
+     not a CSS class. Target the aria-hidden parallax bg element. */
+  [aria-hidden="true"].pointer-events-none {
     animation: none !important;
   }
-
-  /* Freeze parallax bg at neutral position */
-  .animated-bg-img {
-    transform: scale(1.08) translate(0, 0) !important;
-  }
-
-  /* Keep subtle fades for reveals — just instant */
-  .reveal,
-  .reveal-scale {
-    transition-duration: 0.01ms !important;
-  }
 }
 ```
 
-Also add to `useScrollReveal.ts` and `CustomCursor.tsx`:
-
-```typescript
-// At top of useEffect in ParallaxHeroBg.tsx
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (prefersReducedMotion) return; // skip parallax scroll listener
-```
-
-```typescript
-// In Counter component (Home.tsx) and useCountUp hook
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (prefersReducedMotion) {
-  if (el) el.textContent = target + '+';
-  return;
-}
-```
-
----
-
-### Fix 2 — Page Transitions (add to App.tsx)
-
-No Framer Motion is currently installed. A pure CSS approach using `tw-animate-css` (already imported):
-
-```css
-/* In index.css — add page transition classes */
-@keyframes page-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.page-enter {
-  animation: page-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-```
+Or, more targeted — add a class to `ParallaxHeroBg`:
 
 ```tsx
-// In App.tsx — wrap each Route's component
-function PageWrapper({ children }: { children: React.ReactNode }) {
-  const [location] = useLocation();
-  return (
-    <div key={location} className="page-enter">
-      {children}
-    </div>
-  );
-}
-// Then wrap Router content:
-// <PageWrapper><Home /></PageWrapper> etc.
-// Or use a layout wrapper around <Switch>
-```
-
-For a more robust solution, install Framer Motion and use AnimatePresence:
-
-```tsx
-import { AnimatePresence, motion } from "framer-motion";
-
-const pageVariants = {
-  initial: { opacity: 0, y: 12 },
-  in:      { opacity: 1, y: 0 },
-  out:     { opacity: 0, y: -8 },
-};
-
-const pageTransition = {
-  type: "tween",
-  ease: [0.16, 1, 0.3, 1],
-  duration: 0.4,
-};
-
-// In Router:
-<AnimatePresence mode="wait">
-  <motion.div
-    key={location}
-    initial="initial"
-    animate="in"
-    exit="out"
-    variants={pageVariants}
-    transition={pageTransition}
-  >
-    <Switch>...</Switch>
-  </motion.div>
-</AnimatePresence>
-```
-
----
-
-### Fix 3 — Mobile Menu Slide Animation (Navbar.tsx)
-
-Replace the instant conditional render with a CSS-driven slide-in:
-
-```css
-/* In index.css */
-@keyframes drawer-slide-in {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
-}
-@keyframes drawer-slide-out {
-  from { transform: translateX(0); opacity: 1; }
-  to   { transform: translateX(100%); opacity: 0; }
-}
-.mobile-drawer {
-  animation: drawer-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Staggered link reveals */
-.mobile-drawer-link {
-  opacity: 0;
-  transform: translateX(20px);
-  animation: mobile-link-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-@keyframes mobile-link-in {
-  to { opacity: 1; transform: translateX(0); }
-}
-```
-
-```tsx
-// In Navbar.tsx mobile drawer
-<div className="mobile-drawer" /* rest of styles */>
-  {NAV_LINKS.map(({ href, label }, i) => (
-    <Link key={href} href={href}>
-      <div
-        className="mobile-drawer-link"
-        style={{ animationDelay: `${0.05 + i * 0.06}s` }}
-      >
-        {label}
-      </div>
-    </Link>
-  ))}
-</div>
-```
-
----
-
-### Fix 4 — Fix Phone Mockup Float+Scale Conflict
-
-The `phone-float` and `reveal-scale` conflict on the same element because both animate `transform`. Separate them:
-
-```tsx
-// In Home.tsx — wrap with two elements
-<div className="reveal-scale" style={{ transitionDelay: "0.2s" }}>
-  <div className="phone-float">
-    <PhoneMockup />
-  </div>
-</div>
-```
-
-This is a single-line structural fix — the outer div handles the scroll-reveal scale, the inner div handles the float.
-
----
-
-### Fix 5 — Fix JS Hover Bypassing CSS Transitions (Navbar, Footer, Blog)
-
-Replace all inline JS `onMouseEnter`/`onMouseLeave` style mutations with CSS classes:
-
-```css
-/* In index.css */
-.nav-link-hover {
-  color: rgba(245, 249, 234, 0.65);
-  transition: color 0.2s ease;
-}
-.nav-link-hover:hover { color: #F5F9EA; }
-.nav-link-hover.active { color: #C0E57A; }
-
-.footer-link {
-  color: #8C9C8C;
-  transition: color 0.2s ease;
-}
-.footer-link:hover { color: #F5F9EA; }
-
-.blog-card-hover {
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.blog-card-hover:hover {
-  transform: translateY(-4px);
-  border-color: #C0E57A;
-}
-```
-
-Then remove all `onMouseEnter`/`onMouseLeave` handlers from Navbar, Footer, and Blog components and apply these CSS classes instead.
-
----
-
-### Fix 6 — Proper Staggered Scroll Reveals
-
-Replace the current single-observer-per-page pattern with per-element observation:
-
-```typescript
-// useScrollReveal.ts — replace current implementation
-export function useStaggeredReveal(staggerMs = 80) {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const elements = document.querySelectorAll('.reveal, .reveal-scale');
-
-    if (prefersReducedMotion) {
-      elements.forEach(el => el.classList.add('visible'));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        // Group entries by their parent section for coordinated stagger
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const siblings = Array.from(
-              entry.target.parentElement?.querySelectorAll('.reveal, .reveal-scale') ?? []
-            );
-            const index = siblings.indexOf(entry.target as Element);
-            (entry.target as HTMLElement).style.transitionDelay = `${index * staggerMs}ms`;
-            entry.target.classList.add('visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    elements.forEach(el => io.observe(el));
-    return () => io.disconnect();
-  }, [staggerMs]);
-}
-```
-
----
-
-### Fix 7 — `text-shadow` to `filter: drop-shadow` for GPU compositing
-
-```css
-/* Replace in index.css */
-@keyframes glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(192, 229, 122, 0.3)); }
-  50%       { filter: drop-shadow(0 0 20px rgba(192, 229, 122, 0.7)); }
-}
-```
-
----
-
-### Fix 8 — Image Loading Fade-In (Hero + PhoneMockup)
-
-```css
-/* In index.css */
-.img-load {
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-.img-load.loaded {
-  opacity: 1;
-}
-```
-
-```tsx
-// In PhoneMockup.tsx
-<img
-  src={LOGO_URL}
-  alt="Perioskoup logo"
-  className="img-load"
-  onLoad={(e) => e.currentTarget.classList.add('loaded')}
-  style={{ width: 108, height: 108, borderRadius: "50%", /* ... */ }}
+// ParallaxHeroBg.tsx — add className:
+<div
+  ref={bgRef}
+  aria-hidden="true"
+  className="pointer-events-none dot-grid-bg"
+  style={{ animation: "dot-grid-breathe 8s ease-in-out infinite", ... }}
 />
 ```
 
-For the hero background image, use a two-layer approach: show the base `#0A171E` gradient first, then fade in the `animated-bg-img` once loaded via a load event listener.
+```css
+/* index.css — add to reduced-motion block: */
+@media (prefers-reduced-motion: reduce) {
+  .dot-grid-bg { animation: none !important; }
+}
+```
 
 ---
 
-### Fix 9 — Dot-Grid Visibility Improvement
+### Fix C — Waitlist Role Selector `transition: all` Anti-Pattern
+
+**File:** `client/src/pages/Waitlist.tsx`
+
+Replace line 128:
 
 ```tsx
-// ParallaxHeroBg.tsx — increase visibility
-style={{
-  position: "absolute",
-  inset: "-20% 0",
-  zIndex: 0,
-  opacity: 0.55,  // was 0.35 — barely visible
-  backgroundImage: `radial-gradient(circle, rgba(192,229,122,0.18) 1px, transparent 1px)`, // was 0.12
-  backgroundSize: "32px 32px",
-  willChange: "transform",
-  // Add subtle animation
-  animation: "dot-grid-breathe 8s ease-in-out infinite",
-}}
+// Before:
+transition: "all 0.2s ease",
+
+// After:
+transition: "border-color 0.2s ease, background 0.2s ease, color 0.2s ease",
 ```
 
+---
+
+### Fix D — CTA Orb `will-change` — Remove Permanent Layer
+
+**File:** `client/src/index.css`
+
 ```css
-@keyframes dot-grid-breathe {
-  0%, 100% { opacity: 0.45; }
-  50%       { opacity: 0.65; }
+/* Remove permanent will-change from .cta-orb base rule */
+.cta-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  /* will-change: transform; — REMOVED */
+  pointer-events: none;
 }
+
+/* Apply only when the CTA section is in view via a JS class toggle,
+   or accept the cost as acceptable for a section that's always visible
+   when scrolled to. If keeping it, document the deliberate decision. */
+```
+
+If the GPU cost is acceptable (it probably is on desktop — these are blur filters that are already composited), then at minimum update the comment to document the intentional trade-off rather than leaving it as an unmarked anti-pattern.
+
+---
+
+### Fix E — Hero Headline Entrance Animation (Awwwards Quality Gap)
+
+The hero headline has no entrance animation because `#main-content .reveal` overrides are set to `opacity: 1; transition: none` for LCP. To add a headline entrance without breaking LCP:
+
+```css
+/* Add to index.css */
+@keyframes hero-headline-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-headline-animate {
+  animation: hero-headline-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.hero-subhead-animate {
+  animation: hero-headline-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+.hero-cta-animate {
+  animation: hero-headline-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  /* dot-grid-breathe is covered by the global reduce rule above */
+  .hero-headline-animate,
+  .hero-subhead-animate,
+  .hero-cta-animate {
+    animation: none !important;
+  }
 }
 ```
+
+```tsx
+// In Home.tsx hero section — replace className="reveal visible" with:
+<h1 className="hero-headline-animate" style={{ ... }}>
+  Between visits,<br />
+  <span style={{ color: "#C0E57A" }}>we take over.</span>
+</h1>
+<p className="hero-subhead-animate body-lg" style={{ ... }}>
+  ...
+</p>
+<div className="hero-cta-animate" style={{ ... }}>
+  {/* CTA buttons */}
+</div>
+```
+
+These use CSS `animation` (not transition), so they play once on page load regardless of `#main-content` overrides and do not interfere with LCP measurement.
+
+---
+
+### Fix F — Success State Entry Animation (Form Confirmations)
+
+When the waitlist or contact form submits successfully, the success UI appears instantly. Add a scale-in:
+
+```tsx
+// In Waitlist.tsx and Contact.tsx — wrap success div:
+<div
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+  className="reveal-scale"
+  style={{ textAlign: "center", padding: "60px 0" }}
+>
+  {/* ... */}
+</div>
+```
+
+Then call `setTimeout(() => el.classList.add('visible'), 50)` on the success element after state change — or use a `useEffect` on the `submitted` state to trigger the class addition.
+
+---
+
+### Fix G — Team Card Image Scale on Hover
+
+```css
+/* Add to index.css */
+.team-card-img-wrap {
+  overflow: hidden;
+}
+.team-card-img-wrap img {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card:hover .team-card-img-wrap img {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .team-card-img-wrap img {
+    transform: none !important;
+  }
+}
+```
+
+```tsx
+// In About.tsx team cards — add className to the image wrapper div:
+<div className="team-card-img-wrap h-48 sm:h-56 lg:h-[280px] relative">
+  <img ... />
+  <div style={{ position: "absolute", bottom: 0, ... }} />
+</div>
+```
+
+---
+
+### Fix H — Mouse Parallax on Phone Mockup (Signature Moment)
+
+This is the single change that would most dramatically lift the perceived quality:
+
+```tsx
+// In Home.tsx — add to the phone mockup wrapper:
+import { useRef, useEffect } from "react";
+
+function PhoneParallax({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const el = ref.current;
+    if (!el) return;
+
+    let rafId: number;
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = document.documentElement.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      // Normalize to -1..1
+      targetX = ((e.clientX - cx) / cx) * 8;  // max 8deg tilt
+      targetY = ((e.clientY - cy) / cy) * -5;  // max 5deg tilt
+    };
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.06;
+      currentY += (targetY - currentY) * 0.06;
+      if (el) {
+        el.style.transform = `perspective(1000px) rotateY(${currentX}deg) rotateX(${currentY}deg) rotate(3deg)`;
+      }
+      rafId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  return <div ref={ref}>{children}</div>;
+}
+
+// Replace the inner phone-float div:
+<div className="reveal-scale" style={{ transitionDelay: "0.2s" }}>
+  <PhoneParallax>
+    <div className="phone-float">
+      <PhoneMockup />
+    </div>
+  </PhoneParallax>
+</div>
+```
+
+Note: The `phone-float` CSS animation uses `rotate(3deg)` in its keyframes. With the `perspective` + `rotateY`/`rotateX` added from mouse, the transforms compose correctly in 3D space. The `rotate(3deg)` in the float keyframe applies in 2D on top of the 3D perspective from the parent.
 
 ---
 
@@ -555,18 +515,20 @@ style={{
 
 | Issue | Severity | Effort | Priority |
 |-------|----------|--------|----------|
-| prefers-reduced-motion missing | Critical | Low | P0 |
-| Phone float + reveal-scale conflict (bug) | High | Trivial | P0 |
-| No page transitions | High | Low-Medium | P1 |
-| Mobile menu instant cut | High | Low | P1 |
-| JS hover bypasses CSS transitions | Medium | Low | P1 |
-| Stagger reveal broken | Medium | Medium | P2 |
-| No image loading states | Medium | Low | P2 |
-| will-change permanent on orbs | Medium | Low | P2 |
-| text-shadow instead of filter | Low | Trivial | P3 |
-| Dot grid too faint | Low | Trivial | P3 |
-| No exit animations | Low | High | P4 |
-| Phone mockup static screen content | Low | High | P4 |
+| dot-grid-breathe not in prefers-reduced-motion CSS | Low | Trivial | P1 |
+| Breadcrumb JS hover mutation | Low | Trivial | P1 |
+| Waitlist `transition: all` | Low | Trivial | P1 |
+| Hero has no entrance animation | Medium | Low | P2 |
+| No image skeleton/load states for hero, teams | Medium | Low | P2 |
+| Suspense fallback is blank navy — no skeleton | Medium | Low | P2 |
+| `will-change: transform` permanent on CTA orbs | Low | Trivial | P2 |
+| Success state entry animation | Low | Trivial | P2 |
+| Team card image scale on hover | Low | Low | P3 |
+| Mouse parallax on phone mockup | Medium | Medium | P3 |
+| Stagger reveal per-element (not per-section) | Low | Medium | P3 |
+| No exit/reverse animations on scroll-up | Low | High | P4 |
+| Phone screen content not animated | Low | High | P4 |
+| Noise overlay too faint (0.02) | Low | Trivial | P4 |
 
 ---
 
@@ -574,17 +536,35 @@ style={{
 
 | Category | Score | Notes |
 |----------|-------|-------|
-| Animation Quality | 5/10 | Good CSS keyframe library, broken stagger, GPU anti-patterns |
-| Jank / Layout Shifts | 6/10 | Passive listeners correct, getBoundingClientRect risk, no CLS issues |
-| Hover Consistency | 5/10 | Components correct, pages broken (JS bypasses transitions) |
-| Dot-Grid Hero | 5/10 | Present but nearly invisible, lacks interactive quality |
-| Page Transitions | 1/10 | Completely absent — hard cuts everywhere |
-| prefers-reduced-motion | 0/10 | Total absence, potential WCAG violation |
-| Micro-interactions | 5/10 | Buttons/cards good, forms thin, success states flat |
-| Loading States | 2/10 | No skeleton screens, no image load states |
-| Phone Mockup Animation | 4/10 | Float is present but has a bug, screen content static |
-| Awwwards Comparison | 5/10 | Competent foundation, missing signature moments |
+| Animation Quality | 7/10 | Good CSS library, GPU-correct choices, weak hero entrance, stagger structural issue |
+| Jank / Layout Shifts | 8/10 | No CLS, passive scroll, RAF ticking — orb will-change permanent |
+| Hover Consistency | 8/10 | All major elements CSS-driven — Breadcrumb outlier, LinkedIn icons |
+| Dot-Grid Hero | 7/10 | Visible, breathing, parallax — not interactive, breathe not in reduced-motion CSS |
+| Page Transitions | 7/10 | Clean fade-up implemented, no exit animation, no bidirectional |
+| prefers-reduced-motion | 9/10 | Comprehensive CSS + JS — dot-grid breathe gap is the only miss |
+| Micro-interactions | 7/10 | Buttons/cards/forms good, label-tag dot static, success states instant |
+| Loading States | 4/10 | Phone logo has load fade — everything else (hero bg, team photos) does not |
+| Phone Mockup Animation | 7/10 | Float works, transform conflict fixed — no mouse parallax or screen content animation |
+| Awwwards Comparison | 6/10 | Competitive at Behance level, not SOTD — missing text choreography, signature moments |
 
-**Overall: 5.5 / 10**
+**Overall: 7.2 / 10**
 
-The site is clearly above average for health-tech SPAs in terms of animation ambition — the CTA canvas, Ken Burns bg, and custom cursor show genuine craft. But the complete absence of `prefers-reduced-motion`, broken page transitions, and hover state inconsistencies prevent this from being considered polished. Fixing the P0 and P1 issues would push the score to approximately 7.5/10 without adding any new visual complexity.
+---
+
+## Summary of What Changed Since 5.5/10 Audit
+
+All P0, P1, and most P2/P3 fixes from the first audit have been implemented:
+- `prefers-reduced-motion` fully added to CSS and JS across all pages
+- Phone float/reveal-scale transform conflict resolved
+- Page transitions now exist (0.35s fade-up CSS)
+- Mobile drawer now slides in with staggered link reveals
+- All JS hover mutations replaced with CSS classes (except Breadcrumb)
+- `glow-pulse` now uses `filter: drop-shadow()` (GPU-composited)
+- Dot-grid opacity increased and breathe animation added
+- `img-load`/`loaded` fade-in on PhoneMockup logo
+- Form focus states now include lime glow ring
+- `card-dark` hover state added
+- `btn-text` arrow uses `translateX` (not `gap` layout thrash)
+- Reveal duration tightened from 0.75s to 0.6s
+
+The remaining gap to 8.5+ is: hero headline entrance animation, loading skeletons for lazy images, mouse parallax on the phone, and team card image scale on hover — all of which are medium-effort additions with high visual payoff.

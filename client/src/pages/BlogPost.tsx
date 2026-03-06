@@ -14,7 +14,7 @@ import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 
-const OG_IMAGE = "/images/og-image.jpg";
+const OG_IMAGE = "https://perioskoup.com/images/og-image.jpg";
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
 
@@ -441,7 +441,7 @@ Every one of those conversations confirmed that we are building something genuin
 
 ## The Road to Vienna
 
-Perioskoup was founded in 2024 by three people: Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice - specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
+Perioskoup was founded in 2025 by three people: Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice - specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
 
 The first version of the app was built in three months. The EFP submission was prepared in parallel with ongoing development. Winning the award at our first major international submission was beyond what we had expected.
 
@@ -461,7 +461,7 @@ We are just getting started.
       "Vienna, May 2025": "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards 2025, selected from 20 submissions across 17 national periodontal societies. It was the team's first major international submission.",
       "What the EFP Said": "The European Federation of Periodontology described Perioskoup as 'an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health.' The jury included leading European periodontists.",
       "What This Means to Us": "The EFP award validates that the gap between clinical treatment and daily patient behaviour is a real and recognised problem, and that Perioskoup's approach to bridging it has credibility within the European periodontology community.",
-      "The Road to Vienna": "Perioskoup was founded in 2024 by Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The first version was built in three months, with the EFP submission prepared in parallel.",
+      "The Road to Vienna": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The first version was built in three months, with the EFP submission prepared in parallel.",
       "What's Next": "Perioskoup is currently in private beta with founding clinics across Romania and the UK, with priority onboarding for periodontology practices. The consumer app will launch on iOS and Android with a founding member waitlist.",
     },
     faqs: [
@@ -749,7 +749,7 @@ export default function BlogPost() {
 
   if (!article) {
     return (
-      <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <div style={{ background: "#0A171E", minHeight: "100svh" }}>
         <Navbar />
         <div style={{ paddingTop: "160px", paddingBottom: "120px", textAlign: "center" }}>
           <h1 style={{ fontFamily: "Dongle, sans-serif", fontSize: "80px", color: "#F5F9EA" }}>Article not found</h1>
@@ -818,7 +818,7 @@ export default function BlogPost() {
   } : null;
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>{article.metaTitle}</title>
         <meta name="description" content={article.metaDescription} />
@@ -827,12 +827,15 @@ export default function BlogPost() {
         <meta property="og:description" content={article.metaDescription} />
         <meta property="og:url" content={`https://perioskoup.com/blog/${article.slug}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="/images/og-image.jpg" />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="article:published_time" content={`${article.date}T00:00:00Z`} />
         <meta property="article:author" content={article.author} />
         <meta name="twitter:title" content={article.metaTitle} />
         <meta name="twitter:description" content={article.metaDescription} />
-        <meta name="twitter:image" content="/images/og-image.jpg" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@perioskoup" />
       </Helmet>
       {/* JSON-LD */}
@@ -843,7 +846,7 @@ export default function BlogPost() {
       <Navbar />
 
       {/* Hero */}
-      <section id="main-content" style={{ paddingTop: "120px", paddingBottom: "64px", background: "#0A171E", borderBottom: "1px solid #234966", position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: "clamp(80px, 10vw, 120px)", paddingBottom: "clamp(40px, 5vw, 64px)", background: "#0A171E", borderBottom: "1px solid #234966", position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ maxWidth: "720px" }}>
@@ -885,7 +888,7 @@ export default function BlogPost() {
       </section>
 
       {/* Article body */}
-      <section style={{ paddingTop: "64px", paddingBottom: "120px" }}>
+      <section style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(64px, 8vw, 120px)" }}>
         <div className="container" style={{ maxWidth: "700px" }}>
           <div>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>

@@ -217,3 +217,187 @@ All critical, high, and medium-priority issues from both audit files have been r
 - noindex on Waitlist, Privacy, Terms
 - geo.region = RO in index.html
 - llms.txt has all 6 blog post URLs and Dr. Anca EFP URL
+
+---
+
+---
+
+# SEO Fix Log — Round 2 (Post-FINAL-AUDIT)
+**Agent:** seo-fixer (second pass)
+**Date:** 2026-03-06
+**Source audits:** FINAL-AUDIT.md (synthesised from all 12 subagent reports)
+**Scope:** Implementing the specific 13 fixes listed in FINAL-AUDIT.md SPECIFIC FIXES REQUIRED
+
+---
+
+## Round 2 Fixes Applied
+
+### FIX R2-1 — BlogPost.tsx: OG/Twitter image relative URL (P0 CRITICAL)
+**File:** `client/src/pages/BlogPost.tsx`
+**Lines:** 17, 830, 835–836
+**Issue:** `og:image` meta tag and `twitter:image` meta tag still used relative path `/images/og-image.jpg`. The `OG_IMAGE` constant (line 17) also fed into the JSON-LD `BlogPosting.image` field with a relative URL — invalid per Schema.org spec.
+**Fix:** Changed `const OG_IMAGE` constant to `"https://perioskoup.com/images/og-image.jpg"` (fixes JSON-LD image field). Changed both Helmet meta `content` attributes to the same absolute URL. Added `og:image:width`, `og:image:height`, and `twitter:card` meta tags.
+
+---
+
+### FIX R2-2 — feed.xml: RSS channel image relative URL (P0 CRITICAL)
+**File:** `client/public/feed.xml`
+**Line:** 13
+**Issue:** `<image><url>/images/logomark-dark.png</url>` is a relative URL — invalid in RSS 2.0. Feed readers silently fail to load the channel image.
+**Fix:** Changed to `https://perioskoup.com/images/logomark-dark.png`.
+
+---
+
+### FIX R2-3 — llms-full.txt: Stale How It Works (P0 CRITICAL)
+**File:** `client/public/llms-full.txt`
+**Lines:** 64–66
+**Issue:** Steps still described "Scan / Analyze / Engage" with intraoral scanner references — a workflow no longer on the live site. AI systems reading this file would describe Perioskoup as a scanner-sync tool.
+**Fix:** Replaced with current live workflow: "Visit Your Dentist / Get Your Plan / Build Daily Habits".
+
+---
+
+### FIX R2-4 — index.html noscript: Stale How It Works + regulatory language
+**File:** `client/index.html`
+**Lines:** 251–254, 274
+**Issue A:** The `<noscript>` fallback HTML still had the "Scan / Analyze / Engage" stale workflow — same problem as llms-full.txt for non-JS crawlers.
+**Fix A:** Updated to current three steps.
+**Issue B:** noscript FAQ answer for "Who is Perioskoup for?" said "monitor and support patients remotely" — regulatory phrasing removed elsewhere on the site.
+**Fix B:** Changed to "stay connected with patients between appointments".
+
+---
+
+### FIX R2-5 — About.tsx: CEO→CDO in FAQ schema (P0 CRITICAL)
+**File:** `client/src/pages/About.tsx`
+**Line:** 71 (FAQ "Who founded Perioskoup?" answer)
+**Issue:** Dr. Anca's title in the structured data was "CEO" — her correct title is CDO (Chief Dental Officer). Google can surface FAQ answers directly in search results; this inaccuracy had direct SERP impact.
+**Fix:** Changed "Periodontist, CEO" → "Periodontist, CDO".
+
+---
+
+### FIX R2-6 — Contact.tsx: addressCountry "EU" → "RO"
+**File:** `client/src/pages/Contact.tsx`
+**Line:** 80
+**Issue:** `"addressCountry": "EU"` is not a valid ISO 3166-1 alpha-2 code. Schema.org validators and Rich Results Test flag this as an error.
+**Fix:** Changed to `"addressCountry": "RO"`.
+
+---
+
+### FIX R2-7 — sitemap.xml: Remove noindex pages
+**File:** `client/public/sitemap.xml`
+**Issue:** `/waitlist`, `/privacy`, `/terms` were listed in sitemap but all carry `noindex` in their Helmet meta. Conflicting signals waste crawl budget.
+**Fix:** Removed all three `<url>` blocks. Sitemap now has 13 URLs: 7 core pages + 6 blog posts.
+
+---
+
+### FIX R2-8 — Features.tsx: Meta description trimmed (186 → 139 chars)
+**File:** `client/src/pages/Features.tsx`
+**Line:** 66
+**Issue:** 186 chars — 26 over limit. Significant SERP truncation.
+**Fix:** "Explore Perioskoup's AI dental companion features: habit tracking, smart reminders, clinician dashboards, and GDPR-compliant data protection." (139 chars).
+
+---
+
+### FIX R2-9 — ForDentists.tsx: Meta description trimmed (165 → 142 chars)
+**File:** `client/src/pages/ForDentists.tsx`
+**Line:** 73
+**Issue:** 165 chars — 5 over limit.
+**Fix:** Removed "beyond the appointment and" phrase. 142 chars.
+
+---
+
+### FIX R2-10 — Home.tsx: Meta description trimmed (162 → 153 chars)
+**File:** `client/src/pages/Home.tsx`
+**Line:** 77
+**Issue:** 162 chars — 2 over limit.
+**Fix:** "Winner of the" → removed; "EFP Digital Innovation Award Winner 2025." (153 chars).
+
+---
+
+### FIX R2-11 — Pricing.tsx: Remove price leak from og:description and twitter:description
+**File:** `client/src/pages/Pricing.tsx`
+**Lines:** 88, 92
+**Issue:** og:description and twitter:description both contained "from €39/mo" — leaking pricing to competitors who monitor meta tags.
+**Fix:** Confirmed removed (linter had already applied this fix before this agent ran; verified with grep that "39" no longer appears in Pricing.tsx).
+
+---
+
+### FIX R2-12 — index.html: Add Dr. Anca LinkedIn to Person schema sameAs
+**File:** `client/index.html`
+**Lines:** 144–146
+**Issue:** Global `@graph` Person node only had EFP URL in sameAs. LinkedIn is a high-authority verifiable profile — key signal for Knowledge Graph entity confidence.
+**Fix:** Added `"https://www.linkedin.com/in/anca-constantin-99800633b/"` to the Person `sameAs` array.
+
+---
+
+### FIX R2-13 — About.tsx: Fix Person schema worksFor @id to match global Organization @id
+**File:** `client/src/pages/About.tsx`
+**Line:** 53
+**Issue:** About.tsx Person schema used `"worksFor": { "@id": "..." }` while index.html global Organization uses typed objects. For entity graph clarity, the @type should be explicit.
+**Fix:** Changed to `"worksFor": { "@type": "Organization", "@id": "https://perioskoup.com/#organization" }`.
+
+---
+
+### FIX R2-14 — About.tsx: Add LinkedIn to Person sameAs
+**File:** `client/src/pages/About.tsx`
+**Lines:** 56–58
+**Issue:** Person schema on About page was missing Dr. Anca's LinkedIn from the sameAs array.
+**Fix:** Added LinkedIn URL alongside the existing EFP URL in the sameAs array.
+
+---
+
+### FIX R2-15 — About.tsx: Add "Who is Dr. Anca?" as first FAQ question
+**File:** `client/src/pages/About.tsx`
+**Issue:** The highest-value AI citation target — Dr. Anca's credentials and EFP award — was only in prose, not in structured FAQPage schema. Google can extract and surface FAQ answers in SERPs.
+**Fix:** Prepended new FAQ question `"Who is Dr. Anca Laura Constantin?"` with a direct 2-sentence answer covering her specialty, CDO role, and EFP award context. Now 5 FAQ questions on the About page.
+
+---
+
+### FIX R2-16 — llms.txt: Enrich Dr. Anca credentials + add LinkedIn for all founders
+**File:** `client/public/llms.txt`
+**Issue:** Dr. Anca's entry lacked credential depth, LinkedIn, and preferred citation format. AI systems use these signals to evaluate source authority.
+**Fix:** Expanded Dr. Anca entry with: DMD + Specialist in Periodontology, full EFP award context (jury names, submission count), LinkedIn URL, and preferred citation string. Added LinkedIn URLs for Eduard and Petrica.
+
+---
+
+### FIX R2-17 — llms-full.txt: Replace unsourced stats with cited research
+**File:** `client/public/llms-full.txt`
+**Lines:** 177–180
+**Issue:** "40% reduction in no-shows (digital health research)" etc — three stats with no verifiable source. Responsible AI systems will not cite these.
+**Fix:** Replaced with the three properly-cited stats from the live site: Kessels 2003 (80% forgetting), Toniazzo et al. 2019 (87% mHealth outcomes), Bernabe et al. 2020 (62% periodontitis prevalence) — all with DOI links.
+
+---
+
+## Round 2 Files Modified
+
+| File | Fixes Applied |
+|------|--------------|
+| `client/src/pages/BlogPost.tsx` | R2-1 (OG image absolute URL + JSON-LD constant) |
+| `client/public/feed.xml` | R2-2 (RSS image absolute URL) |
+| `client/public/llms-full.txt` | R2-3 (How It Works), R2-17 (unsourced stats) |
+| `client/index.html` | R2-4 (noscript How It Works + regulatory), R2-12 (LinkedIn in Person sameAs) |
+| `client/src/pages/About.tsx` | R2-5 (CEO→CDO), R2-13 (worksFor @type), R2-14 (LinkedIn sameAs), R2-15 (Dr. Anca FAQ question) |
+| `client/src/pages/Contact.tsx` | R2-6 (addressCountry RO) |
+| `client/public/sitemap.xml` | R2-7 (remove noindex pages) |
+| `client/src/pages/Features.tsx` | R2-8 (meta description trimmed) |
+| `client/src/pages/ForDentists.tsx` | R2-9 (meta description trimmed) |
+| `client/src/pages/Home.tsx` | R2-10 (meta description trimmed) |
+| `client/src/pages/Pricing.tsx` | R2-11 (price leak — confirmed removed by linter) |
+| `client/public/llms.txt` | R2-16 (Dr. Anca credentials + LinkedIn) |
+
+---
+
+## Round 2 Post-Fix Validation Checklist
+
+- [ ] `https://validator.schema.org/` on `https://perioskoup.com/` — Person node should show 2 sameAs URLs (EFP + LinkedIn)
+- [ ] `https://validator.schema.org/` on `https://perioskoup.com/about` — 5 FAQ questions; first is "Who is Dr. Anca?"; Person worksFor has @type Organization
+- [ ] `https://validator.schema.org/` on `https://perioskoup.com/contact` — addressCountry "RO" not "EU"
+- [ ] Facebook/LinkedIn social debugger — any blog post URL should show og-image (absolute URL now)
+- [ ] Twitter card validator — any blog post URL should show large image card
+- [ ] `https://validator.w3.org/feed/` on `https://perioskoup.com/feed.xml` — channel image URL should be absolute
+- [ ] Verify `https://perioskoup.com/sitemap.xml` — 13 URLs; /waitlist, /privacy, /terms absent
+- [ ] Features meta description: confirm under 155 chars
+- [ ] ForDentists meta description: confirm under 155 chars
+- [ ] Home meta description: confirm under 155 chars
+- [ ] Pricing og:description: confirm "€39" absent
+- [ ] `https://perioskoup.com/llms-full.txt` — "Visit Your Dentist" step 01 visible, no "Scan/Analyze/Engage"
+- [ ] `https://perioskoup.com/llms.txt` — Dr. Anca entry has DMD + LinkedIn + preferred citation

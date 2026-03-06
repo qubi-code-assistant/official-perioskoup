@@ -6,6 +6,71 @@
 
 ---
 
+## Pass 2 — Post Re-Audit Targeted Fixes (2026-03-06)
+
+**Re-audit score:** 7.2 / 10
+**Source:** audit-results/08-animations-visual.md (re-audit, after all Pass 1 fixes)
+
+Four remaining targeted fixes applied from the re-audit. All changes are CSS or className additions only — no layout, no ARIA, no text, no new dependencies.
+
+### Pass 2 / Fix A — Breadcrumb JS Hover Mutation Replaced with CSS Class
+
+**Severity:** Low | **Priority:** P1
+
+**Problem:** `Breadcrumb.tsx` used `onMouseEnter`/`onMouseLeave` to directly mutate `e.currentTarget.style.color`. This was the last remaining JS hover mutation in the codebase — every other interactive element had already been migrated to CSS pseudo-classes in Pass 1.
+
+**Files changed:**
+- `client/src/index.css` — added `.breadcrumb-link` class in the HOVER STATE CSS CLASSES section
+- `client/src/components/Breadcrumb.tsx` — replaced inline style + event handlers with `className="breadcrumb-link"`
+
+Added CSS:
+```css
+.breadcrumb-link {
+  color: #8C9C8C;
+  text-decoration: none;
+  font-family: 'Gabarito', sans-serif;
+  transition: color 0.2s ease;
+}
+.breadcrumb-link:hover { color: #C0E57A; }
+```
+
+### Pass 2 / Fix B — dot-grid-breathe Covered by prefers-reduced-motion
+
+**Severity:** Low (opacity-only, not spatial) | **Priority:** P1 | **WCAG 2.1 SC 2.3.3**
+
+**Problem:** The `dot-grid-breathe` animation ran for reduced-motion users. The JS guard in `ParallaxHeroBg.tsx` skips the scroll parallax listener but cannot block a CSS animation declared in the same inline `style` prop. The `prefers-reduced-motion` block in `index.css` could not target the element because it had no matching class name.
+
+**Files changed:**
+- `client/src/components/ParallaxHeroBg.tsx` — added `dot-grid-bg` to the element's className
+- `client/src/index.css` — added `.dot-grid-bg` to the selector list in the `@media (prefers-reduced-motion: reduce)` block
+
+### Pass 2 / Fix C — Waitlist Role Selector `transition: all` Anti-Pattern
+
+**Severity:** Low | **Priority:** P1
+
+**Problem:** Role selector buttons in `Waitlist.tsx` used `transition: "all 0.2s ease"` — the documented anti-pattern that captures every CSS property including layout-triggering ones.
+
+**File changed:**
+- `client/src/pages/Waitlist.tsx` line 128
+
+Before: `transition: "all 0.2s ease"`
+After: `transition: "border-color 0.2s ease, background 0.2s ease, color 0.2s ease"`
+
+### Pass 2 / Fix D — Removed Permanent `will-change: transform` from CTA Orbs
+
+**Severity:** Low-Medium (GPU memory, mid-range mobile) | **Priority:** P2
+
+**Problem:** `.cta-orb { will-change: transform; }` created permanent compositor layers for all five orb elements for the entire page session. The `filter: blur(80px)` already causes the browser to promote these elements to their own compositor layers. Adding an explicit `will-change: transform` on top creates duplicate promotion overhead with no measurable performance gain, and costs approximately 5MB GPU memory per element on mid-range Android devices.
+
+**File changed:**
+- `client/src/index.css` — removed `will-change: transform` from `.cta-orb`; added a comment documenting the intentional decision to omit it
+
+**TypeScript verification:** `pnpm check` exits 0, zero errors.
+
+---
+
+---
+
 ## Summary
 
 Implemented all P0 and P1 fixes from the animation audit, plus selected P2/P3 polish.

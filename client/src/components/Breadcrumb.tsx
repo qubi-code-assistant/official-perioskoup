@@ -69,18 +69,13 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
               {item.href && i < items.length - 1 ? (
                 <Link
                   href={item.href}
-                  style={{
-                    color: "#8C9C8C",
-                    textDecoration: "none",
-                    transition: "color 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#C0E57A")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "#8C9C8C")}
+                  className="breadcrumb-link"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span style={{ color: "#8C9C8C" }}>
+                /* A11: aria-current="page" on the last (current) breadcrumb item (WCAG 1.3.1) */
+                <span aria-current="page" style={{ color: "#8C9C8C" }}>
                   {item.label}
                 </span>
               )}

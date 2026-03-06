@@ -9,11 +9,11 @@
  */
 
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import PhoneMockup from "@/components/PhoneMockup";
+import { useReveal } from "@/hooks/useReveal";
 
 // Local Asset URLs
 const ASSETS = {
@@ -27,54 +27,29 @@ const ASSETS = {
   howItWorks:   "/images/howitworks-rings-bg.webp",
 };
 
-/* Scroll reveal hook -- respects prefers-reduced-motion */
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const els = document.querySelectorAll(".reveal, .reveal-scale");
-
-    if (prefersReducedMotion) {
-      els.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("visible");
-          io.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.12 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
-
 /* ══════════════════════════════════════════════════════════════
    MAIN COMPONENT
    ══════════════════════════════════════════════════════════════ */
 export default function Home() {
-  useReveal();
+  useReveal(0.12);
 
   const homeFaqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "What is Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is an AI-powered dental companion app that bridges the gap between dental appointments. It translates clinical recommendations into personalised daily programmes with reminders, tracking, and educational content for patients, while giving clinicians real-time engagement data." } },
-      { "@type": "Question", "name": "Who is Perioskoup for?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is designed for two audiences: patients who want to take control of their oral health between dental appointments, and dental professionals (periodontists, hygienists, clinic owners) who want to monitor and support their patients remotely." } },
-      { "@type": "Question", "name": "Is Perioskoup a medical device?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is designed as a clinical support tool, not a diagnostic device. It does not diagnose conditions or make independent clinical recommendations. All patient programmes are set by their clinician. The app is built with EU MDR and FDA SaMD guidance in mind." } },
+      { "@type": "Question", "name": "What is Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is an AI-powered dental companion app that bridges the gap between dental appointments. It translates clinical recommendations into personalised daily programmes with reminders, tracking, and educational content for patients, while giving clinicians patient engagement visibility between visits." } },
+      { "@type": "Question", "name": "Who is Perioskoup for?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is designed for two audiences: patients who want to take control of their oral health between dental appointments, and dental professionals (periodontists, hygienists, clinic owners) who want to stay connected with their patients between appointments." } },
+      { "@type": "Question", "name": "Is Perioskoup a medical device?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is a wellness and patient engagement companion, not a medical device. It does not provide diagnoses or medical advice. All patient programmes are set by their clinician. The app is built with EU MDR and FDA SaMD guidance in mind." } },
       { "@type": "Question", "name": "How much does Perioskoup cost?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is currently in private beta. Founding members who join the waitlist will receive priority access and founding pricing when the app launches on iOS and Android. Pricing details will be announced closer to launch." } },
       { "@type": "Question", "name": "Is my health data safe with Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Perioskoup stores all patient data in EU-based servers, encrypted at rest and in transit. The platform is built with GDPR protection by design. Patient data is never sold or used for model training without explicit consent." } },
     ]
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Perioskoup | AI Dental Companion App | Between-Visit Dental Care</title>
-        <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025." />
+        <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. EFP Digital Innovation Award Winner 2025." />
         <link rel="canonical" href="https://perioskoup.com/" />
         <meta property="og:title" content="Perioskoup | AI Dental Companion App | Between-Visit Dental Care" />
         <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
@@ -109,15 +84,15 @@ export default function Home() {
               <div className="reveal" style={{ marginBottom: 28 }}>
                 <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
                   className="efp-badge-hover"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none", whiteSpace: "nowrap" as const }}>
-                  <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const, whiteSpace: "nowrap" as const }}>EFP Award Winner 2025</span>
-                  <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500, whiteSpace: "nowrap" as const }}>Digital Innovation</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ color: "#C0E57A", flexShrink: 0 }}><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none", flexWrap: "wrap" as const }}>
+                  <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>EFP Award Winner 2025</span>
+                  <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500 }}>Digital Innovation</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ color: "#C0E57A", flexShrink: 0 }}><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
               </div>
 
               {/* Headline */}
-              <h1 className="reveal visible" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(64px, 7vw, 96px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 32, transitionDelay: "0.1s" }}>
+              <h1 className="reveal visible" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(52px, 7vw, 96px)", color: "#F5F9EA", lineHeight: 1.0, marginBottom: 32, transitionDelay: "0.1s" }}>
                 Between visits,<br />
                 <span style={{ color: "#C0E57A" }}>we take over.</span>
               </h1>
@@ -133,7 +108,7 @@ export default function Home() {
                   "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
                 </p>
                 <footer style={{ marginTop: 10, fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>
-                  - Dr. Anca Constantin, Periodontist &amp; Co-founder
+                  - Dr. Anca Constantin, Periodontist &amp; CDO, Perioskoup
                 </footer>
               </blockquote>
 
@@ -141,7 +116,7 @@ export default function Home() {
               <div className="reveal" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 48, transitionDelay: "0.3s" }}>
                 <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 32px" }}>
                   Join the Waitlist
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </Link>
                 <Link href="/for-dentists" className="btn-ghost" style={{ fontSize: 16, padding: "16px 32px" }}>
                   For Clinicians
@@ -163,7 +138,7 @@ export default function Home() {
                   <div key={s.label}>
                     <div style={{ fontFamily: "Dongle, sans-serif", fontSize: 44, color: "#C0E57A", lineHeight: 1 }}>{s.value}</div>
                     <div style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginTop: 4 }}>{s.label}</div>
-                    {s.source && <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 10, color: "#6B7F7B", marginTop: 2, display: "block", textDecoration: "none" }}>{s.source}</a>}
+                    {s.source && <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 10, color: "#8C9C8C", marginTop: 2, display: "block", textDecoration: "none" }}>{s.source}</a>}
                   </div>
                 ))}
               </div>
@@ -174,10 +149,12 @@ export default function Home() {
                 Previously both classes were on the same element, which caused
                 the CSS animation (float) to override the CSS transition (reveal-scale)
                 on the transform property -- the scale-in never fired. */}
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} aria-hidden="true">
-              <div className="reveal-scale" style={{ transitionDelay: "0.2s" }}>
-                <div className="phone-float">
-                  <PhoneMockup />
+            <div className="flex justify-center items-center w-full" aria-hidden="true">
+              <div className="w-full max-w-[300px] sm:max-w-[340px] mx-auto px-2">
+                <div className="reveal-scale" style={{ transitionDelay: "0.2s" }}>
+                  <div className="phone-float">
+                    <PhoneMockup />
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,16 +178,16 @@ export default function Home() {
       </div>
 
       {/* EFP AWARD CARD */}
-      <section style={{ background: "#0A171E", padding: "80px 0" }}>
+      <section style={{ background: "#0A171E", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container">
           <div className="reveal grid grid-cols-1 md:grid-cols-2" style={{ borderRadius: 24, overflow: "hidden", border: "1px solid #234966" }}>
             {/* Left: ceremony photo */}
-            <div style={{ position: "relative", minHeight: 420, overflow: "hidden" }}>
+            <div className="relative min-h-[240px] md:min-h-[420px] overflow-hidden">
               <img src={ASSETS.award} alt="EFP Digital Innovation Award ceremony - Perioskoup" loading="lazy" decoding="async" width={800} height={446} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, #1D3449 100%)" }} />
             </div>
             {/* Right: content */}
-            <div style={{ background: "#1D3449", padding: 48 }}>
+            <div className="bg-[#1D3449] p-6 md:p-12 flex flex-col gap-0">
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C0E57A", color: "#0A171E", fontSize: 11, fontWeight: 700, padding: "5px 14px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 24 }}>
                 EFP Innovation Award Winner 2025
               </div>
@@ -242,7 +219,7 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section style={{ position: "relative", background: "#050C10", padding: "120px 0", overflow: "hidden" }}>
+      <section style={{ position: "relative", background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0", overflow: "hidden" }}>
         <div className="animated-bg-wrapper">
           <div className="animated-bg-img drift-x" style={{ backgroundImage: `url(${ASSETS.featuresBg})`, opacity: 0.35 }} />
           <div className="bg-overlay" style={{ background: "linear-gradient(to bottom, #050C10 0%, transparent 20%, transparent 80%, #050C10 100%)" }} />
@@ -255,10 +232,7 @@ export default function Home() {
               Everything your smile<br />needs. <span style={{ color: "#C0E57A" }}>In one place.</span>
             </h2>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-              Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and secure patient-clinic messaging into a single dental companion app.
-            </p>
-            <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
-              Perioskoup connects patients and clinicians with AI-powered tools that make daily dental care simple, consistent, and effective.
+              Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and GDPR-compliant privacy into a single dental companion app.
             </p>
           </div>
 
@@ -287,7 +261,7 @@ export default function Home() {
       </section>
 
       {/* WHAT IS AN AI DENTAL COMPANION */}
-      <section style={{ background: "#0A171E", padding: "100px 0" }}>
+      <section style={{ background: "#0A171E", padding: "clamp(56px, 7vw, 100px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ textAlign: "center" }}>
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24 }}>
@@ -307,7 +281,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ position: "relative", padding: "120px 0", overflow: "hidden", background: "#0A171E" }}>
+      <section style={{ position: "relative", padding: "clamp(64px, 8vw, 120px) 0", overflow: "hidden", background: "#0A171E" }}>
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div className="text-center reveal" style={{ marginBottom: 80 }}>
             <span className="label-tag" style={{ marginBottom: 20, display: "inline-flex" }}>Seamless Integration</span>
@@ -331,7 +305,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 0, position: "relative", zIndex: 2 }}>
               {[
                 {
-                  step: "01", title: "Visit Your Dentist", desc: "Your dentist examines, diagnoses, and sets a personalised care plan using Perioskoup.", offsetY: 0,
+                  step: "01", title: "Visit Your Dentist", desc: "Your dentist examines and creates a personalised care plan — then uploads it to Perioskoup.", offsetY: 0,
                   icon: <><rect x="4" y="4" width="7" height="7" rx="1.5" fill="#C0E57A"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="#C0E57A"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="#C0E57A"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="#C0E57A"/></>,
                 },
                 {
@@ -380,7 +354,7 @@ export default function Home() {
       </section>
 
       {/* SOCIAL PROOF / QUOTE */}
-      <section style={{ background: "#050C10", padding: "80px 0" }}>
+      <section style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container">
           <div className="reveal" style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
             <div style={{ width: 48, height: 3, background: "#C0E57A", margin: "0 auto 32px", borderRadius: 2 }} />
@@ -391,7 +365,7 @@ export default function Home() {
               <img src={ASSETS.anca} alt="Dr. Anca Laura Constantin" loading="lazy" decoding="async" width={44} height={44} style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
               <div style={{ textAlign: "left" }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & Co-founder, Perioskoup</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & Chief Dental Officer, Perioskoup</p>
               </div>
             </div>
           </div>

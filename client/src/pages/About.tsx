@@ -4,35 +4,18 @@
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
+import { useReveal } from "@/hooks/useReveal";
 
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
 const PETRICA_IMG = "/images/petrica.webp";
 const AWARD_IMG = "/images/efp-award.webp";
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
 
 export default function About() {
   useReveal();
@@ -50,11 +33,12 @@ export default function About() {
     "memberOf": { "@type": "Organization", "name": "European Federation of Periodontology", "url": "https://www.efp.org" },
     "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, co-founder and Chief Dental Officer of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national societies.",
     "image": "https://perioskoup.com/images/anca-headshot.jpg",
-    "worksFor": { "@id": "https://perioskoup.com/#organization" },
+    "worksFor": { "@type": "Organization", "@id": "https://perioskoup.com/#organization" },
     "award": "EFP Digital Innovation Award 2025, 3rd Prize, European Federation of Periodontology",
     "knowsAbout": ["Periodontal Disease", "Periodontology", "AI in Dental Care", "Patient Engagement"],
     "sameAs": [
-      "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
+      "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/",
+      "https://www.linkedin.com/in/anca-constantin-99800633b/"
     ]
   };
 
@@ -64,10 +48,18 @@ export default function About() {
     "mainEntity": [
       {
         "@type": "Question",
+        "name": "Who is Dr. Anca Laura Constantin?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, specialising in Periodontology. She is the co-founder and Chief Dental Officer of Perioskoup and won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "Who founded Perioskoup?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice. Specifically, the challenge of maintaining patient engagement between dental appointments."
+          "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically, the challenge of maintaining patient engagement between dental appointments."
         }
       },
       {
@@ -143,7 +135,7 @@ export default function About() {
       </section>
 
       {/* EFP Award */}
-      <section style={{ background: "#050C10", padding: "80px 0" }}>
+      <section style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container">
           <span className="label-tag reveal" style={{ marginBottom: 32, display: "inline-flex" }}>Recognition</span>
           <div className="reveal-scale grid grid-cols-1 md:grid-cols-2 rounded-3xl overflow-hidden border border-[#234966]" style={{ maxWidth: 900 }}>
@@ -181,7 +173,7 @@ export default function About() {
       </section>
 
       {/* Mission */}
-      <section style={{ padding: "120px 0" }}>
+      <section style={{ padding: "clamp(64px, 8vw, 120px) 0" }}>
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div>
@@ -208,7 +200,7 @@ export default function About() {
                     <span style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 32, color: "#C0E57A", minWidth: 60 }}>{stat.value}</span>
                     <div>
                       <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", display: "block" }}>{stat.label}</span>
-                      <a href={stat.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "#6B7F7B", textDecoration: "none" }}>{stat.source}</a>
+                      <a href={stat.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "#8C9C8C", textDecoration: "none" }}>{stat.source}</a>
                     </div>
                   </div>
                 ))}
@@ -219,7 +211,7 @@ export default function About() {
       </section>
 
       {/* Dr. Anca Quote */}
-      <section style={{ background: "#050C10", padding: "80px 0" }}>
+      <section style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
             <img src={ANCA_IMG} alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0 }} />
@@ -239,7 +231,7 @@ export default function About() {
       </section>
 
       {/* Why Now */}
-      <section style={{ padding: "80px 0" }}>
+      <section style={{ padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20 }}>
             Why now?
@@ -259,7 +251,7 @@ export default function About() {
       </section>
 
       {/* Team */}
-      <section style={{ background: "#050C10", padding: "120px 0" }}>
+      <section style={{ background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>The Team</span>
@@ -285,7 +277,7 @@ export default function About() {
                 <div style={{ padding: 24 }}>
                   <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 26, fontWeight: 700, color: "#F5F9EA", marginBottom: 4 }}>{f.name}</h3>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, fontWeight: 600, color: "#C0E57A", marginBottom: 4 }}>{f.role}</p>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", marginBottom: 12 }}>{f.creds}</p>
+                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: f.name.includes("Anca") ? "#F5F9EA" : "#8C9C8C", fontWeight: f.name.includes("Anca") ? 600 : 400, marginBottom: 12 }}>{f.creds}</p>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, lineHeight: 1.65, color: "#8C9C8C", marginBottom: 12 }}>{f.bio}</p>
                   <a href={f.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${f.name} on LinkedIn`} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", textDecoration: "none" }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ color: "#8C9C8C" }}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -299,7 +291,7 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px 0", textAlign: "center" }}>
+      <section style={{ padding: "clamp(48px, 6vw, 80px) 0", textAlign: "center" }}>
         <div className="container">
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20 }}>
             Want to be part of the story?

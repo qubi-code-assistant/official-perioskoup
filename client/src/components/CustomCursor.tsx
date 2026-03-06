@@ -12,6 +12,10 @@ export default function CustomCursor() {
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
+    // Don't run custom cursor on touch-only devices (saves RAF loop + mousemove listener)
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouch) return;
+
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;

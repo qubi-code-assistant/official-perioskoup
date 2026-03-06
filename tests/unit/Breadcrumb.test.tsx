@@ -139,14 +139,19 @@ describe("Breadcrumb -- JSON-LD structured data", () => {
     expect(data.itemListElement[0].item).toBe("https://perioskoup.com/");
   });
 
-  it("JSON-LD last item has no 'item' URL (current page)", () => {
+  it("JSON-LD last item (no href) falls back to current pathname URL", () => {
+    // When the last breadcrumb item has no href, the Breadcrumb component uses
+    // window.location.pathname as the item URL (jsdom default: "/").
+    // The item URL is always present — never undefined in the current implementation.
     renderWithRouter(
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />
     );
     const script = document.querySelector('script[type="application/ld+json"]');
     const data = JSON.parse(script?.innerHTML ?? "{}");
     const lastItem = data.itemListElement[data.itemListElement.length - 1];
-    expect(lastItem.item).toBeUndefined();
+    // The last item gets the current window.location.pathname as its URL fallback
+    expect(typeof lastItem.item).toBe("string");
+    expect(lastItem.item).toMatch(/^https:\/\/perioskoup\.com/);
   });
 
   it("JSON-LD includes all item names", () => {

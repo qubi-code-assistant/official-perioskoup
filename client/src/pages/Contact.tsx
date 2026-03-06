@@ -4,29 +4,13 @@
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
+import { useReveal } from "@/hooks/useReveal";
 
 export default function Contact() {
   useReveal();
@@ -77,7 +61,7 @@ export default function Contact() {
     "email": "hello@perioskoup.com",
     "address": {
       "@type": "PostalAddress",
-      "addressCountry": "EU"
+      "addressCountry": "RO"
     },
     "foundingDate": "2025-06",
     "founders": [

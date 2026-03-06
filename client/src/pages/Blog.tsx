@@ -4,41 +4,17 @@
  * Animation: JS onMouseEnter/Leave replaced with CSS .blog-card-hover and .blog-row-hover.
  */
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
+import { useReveal } from "@/hooks/useReveal";
 
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("visible");
-          io.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
 
 const POSTS = [
   {
@@ -114,6 +90,20 @@ const REGULAR = POSTS.filter((p) => !p.featured);
 
 export default function Blog() {
   useReveal();
+  // A10: aria-live feedback for newsletter subscription (WCAG 4.1.3 Status Messages)
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  function handleNewsletterSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const emailInput = form.querySelector<HTMLInputElement>('#newsletter-email');
+    if (!emailInput || !emailInput.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+      setNewsletterStatus('error');
+      return;
+    }
+    // No backend yet — optimistically show success
+    setNewsletterStatus('success');
+  }
 
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
@@ -203,14 +193,7 @@ export default function Blog() {
       {/* Featured posts -- CSS .blog-card-hover, no JS style mutations */}
       <section style={{ paddingBottom: "80px" }}>
         <div className="container">
-          <div
-            className="reveal"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-              gap: "24px",
-            }}
-          >
+          <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
             {FEATURED.map((post, i) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                 <div
@@ -230,7 +213,7 @@ export default function Blog() {
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span className="label-tag">{post.category}</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ color: "#C0E57A" }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ color: "#C0E57A" }}>
                       <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
@@ -264,7 +247,7 @@ export default function Blog() {
             </p>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "14px 28px" }}>
               Join the Waitlist
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
           </div>
         </div>
@@ -304,7 +287,7 @@ export default function Blog() {
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600, margin: 0 }}>{post.author.split(" ")[0]}</p>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "12px", color: "#C0E57A", margin: 0 }}>{post.readTime}</p>
                     </div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color: "#8C9C8C" }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ color: "#8C9C8C" }}>
                       <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
@@ -325,7 +308,17 @@ export default function Blog() {
           <p className="body-lg reveal" style={{ marginBottom: "32px", transitionDelay: "0.16s" }}>
             Get the latest articles on periodontal health and dental AI delivered to your inbox. No spam, ever.
           </p>
-          <div className="reveal" style={{ display: "flex", gap: "8px", transitionDelay: "0.24s", flexWrap: "wrap", justifyContent: "center" }}>
+          {/* A10: aria-live region announces subscription result to screen readers (WCAG 4.1.3) */}
+          <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+            {newsletterStatus === 'success' && 'Subscribed successfully. Thank you!'}
+            {newsletterStatus === 'error' && 'Please enter a valid email address.'}
+          </div>
+          <form
+            onSubmit={handleNewsletterSubmit}
+            noValidate
+            className="reveal"
+            style={{ display: "flex", gap: "8px", transitionDelay: "0.24s", flexWrap: "wrap", justifyContent: "center" }}
+          >
             <label htmlFor="newsletter-email" className="sr-only">Email address</label>
             <input
               id="newsletter-email"
@@ -334,9 +327,12 @@ export default function Blog() {
               className="p-input"
               style={{ flex: "1", minWidth: "220px" }}
               aria-required="true"
+              aria-invalid={newsletterStatus === 'error' || undefined}
             />
-            <button className="btn-primary" aria-label="Subscribe to newsletter">Subscribe</button>
-          </div>
+            <button type="submit" className="btn-primary" aria-label="Subscribe to newsletter">
+              {newsletterStatus === 'success' ? 'Subscribed!' : 'Subscribe'}
+            </button>
+          </form>
         </div>
       </section>
 

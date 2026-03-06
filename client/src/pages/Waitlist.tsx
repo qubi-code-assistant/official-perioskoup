@@ -4,30 +4,14 @@
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
-
-function useReveal() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      elements.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
+import { useReveal } from "@/hooks/useReveal";
 
 export default function Waitlist() {
   useReveal();
@@ -117,7 +101,7 @@ export default function Waitlist() {
               </p>
 
               {/* Role selector -- aria-pressed communicates selected state to AT (A09) */}
-              <div className="reveal" role="group" aria-label="Select your role" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 32, transitionDelay: "0.24s" }}>
+              <div className="reveal grid grid-cols-1 sm:grid-cols-2 gap-3" role="group" aria-label="Select your role" style={{ marginBottom: 32, transitionDelay: "0.24s" }}>
                 {(["dentist", "patient"] as const).map((r) => (
                   <button
                     key={r}
@@ -125,7 +109,7 @@ export default function Waitlist() {
                     onClick={() => setRole(r)}
                     aria-pressed={role === r}
                     style={{
-                      padding: 20, borderRadius: 16, cursor: "pointer", textAlign: "left", transition: "all 0.2s ease",
+                      padding: 20, borderRadius: 16, cursor: "pointer", textAlign: "left", transition: "border-color 0.2s ease, background 0.2s ease, color 0.2s ease",
                       border: role === r ? "1px solid rgba(192,229,122,0.4)" : "1px solid #234966",
                       background: role === r ? "rgba(192,229,122,0.06)" : "#1D3449",
                     }}

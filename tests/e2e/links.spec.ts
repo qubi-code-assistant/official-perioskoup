@@ -138,7 +138,8 @@ test.describe("Internal links — Footer links all resolve", () => {
 
     // Scroll to footer to ensure it is rendered
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(300);
+    // Wait for the footer to be visible rather than using a fixed timeout (DEF-015 fix)
+    await page.locator("footer").waitFor({ state: "visible" });
 
     const footerHrefs = await page.locator("footer a[href]").evaluateAll((anchors) =>
       anchors

@@ -1,484 +1,730 @@
-# SEO Technical Audit — Perioskoup Landing Page
-**Date:** 2026-03-06
-**Auditor:** SEO Technical Agent
-**Site:** https://official-perioskoup.vercel.app (canonical: perioskoup.com)
-**Score: 4.5 / 10**
+# Perioskoup SEO Technical Audit
+**Auditor:** SEO Technical Auditor Agent  
+**Date:** 2026-03-06  
+**Site:** https://official-perioskoup.vercel.app (canonical domain: perioskoup.com)  
+**Stack:** Vite 7 + React 19 + Wouter SPA + react-helmet-async  
 
 ---
 
-## Executive Summary
+## Overall Score: 6.5 / 10
 
-The site has a solid SEO foundation in the static HTML shell (index.html): well-formed Organization/WebSite/SoftwareApplication JSON-LD, RSS feed, hreflang, and AI crawler entries in robots.txt. However it has one **critical architectural flaw** that invalidates most of the per-page SEO work: the site is a client-side SPA with a single static `index.html`, meaning every URL served to search engine crawlers returns **the same title, meta description, canonical URL, and OG tags** — the homepage values. This means 11 URLs are presenting duplicate meta to Googlebot. Pages do have unique JSON-LD injected at runtime via React, but that does nothing for crawlers who read the static HTML shell.
-
-The BlogPost page does dynamically update `document.title` and meta tags using `document.querySelector`, which works for users navigating in-browser after hydration but does nothing for the initial HTML returned by the server to crawlers.
+**Summary:** The site has a solid technical foundation with correct per-page canonicals, comprehensive JSON-LD coverage, a well-maintained robots.txt, and strong AI crawler support. The most significant issues are: (1) all pages share a single OG image, killing social share differentiation; (2) two meta descriptions exceed 160 characters; (3) the BlogPost og:image uses a relative URL (fatal for social crawlers); (4) a stale How-It-Works description in llms-full.txt; (5) the main JS bundle at 339 KB is meaningful to Core Web Vitals; (6) the sitemap lists /waitlist and /privacy which are noindex pages; (7) hreflang has no x-default tag on secondary pages; and (8) the manifest.json lists only one icon size.
 
 ---
 
-## Critical Issues (P0)
+## 1. Title Tags
 
-### C1 — All pages share the same title tag, meta description, and canonical URL in static HTML
+### Findings
 
-**Impact: Severe — prevents any secondary page from ranking independently.**
+| Page | Title | Chars | Status |
+|------|-------|-------|--------|
+| Home (`/`) | Perioskoup \| AI Dental Companion App \| Between-Visit Dental Care | 64 | PASS (keyword-rich, unique) |
+| Features (`/features`) | AI Dental Companion App Features \| Habit Tracking & Care Plans \| Perioskoup | 75 | WARN: 75 chars, truncates at ~60 |
+| For Dentists (`/for-dentists`) | Dental Patient Engagement App for Clinicians \| Perioskoup | 57 | PASS |
+| About (`/about`) | About Perioskoup \| Dental AI Built in Bucharest | 47 | PASS |
+| Blog (`/blog`) | Dental Health & AI Blog \| Periodontal Care Insights \| Perioskoup | 64 | PASS |
+| Pricing (`/pricing`) | Perioskoup Pricing \| Free for Patients, Plans for Dental Clinics | 64 | PASS |
+| Waitlist (`/waitlist`) | Join the Perioskoup Waitlist \| Early Access | 43 | PASS (noindex page) |
+| Contact (`/contact`) | Contact Perioskoup \| Dental AI Enquiries | 40 | PASS |
+| Privacy (`/privacy`) | Privacy Policy \| Perioskoup Data Protection | 43 | PASS (noindex) |
+| Terms (`/terms`) | Terms of Service \| Perioskoup | 29 | SHORT: 29 chars, no keywords |
+| Blog posts (6) | e.g. "What Is Periodontal Disease? \| Perioskoup" | 35-50 | PASS |
 
-Every URL on the site — `/features`, `/for-dentists`, `/about`, `/blog`, `/blog/what-is-periodontal-disease`, etc. — returns the following identical static HTML to search engine crawlers:
+**Issues:**
+- Features page title is 75 characters — Google truncates around 60. "& Care Plans" will be cut.
+- Terms page title is 29 characters — too short, no brand keywords to reinforce trustworthiness.
+- All 6 blog post titles are unique (via per-article `metaTitle` field). Good.
 
-```
-<title>Perioskoup — Your Personal Dental Companion</title>
-<meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025." />
-<link rel="canonical" href="https://perioskoup.com/" />
-```
+### Fixes
 
-The canonical tag on `/features` points to the homepage, telling Google that `/features` is a duplicate of `/`. This is confirmed by fetching the live pages:
-
-```bash
-# All three return identical meta:
-curl https://official-perioskoup.vercel.app/features | grep '<title>'
-# → <title>Perioskoup — Your Personal Dental Companion</title>
-curl https://official-perioskoup.vercel.app/for-dentists | grep 'canonical'
-# → <link rel="canonical" href="https://perioskoup.com/" />
-```
-
-**Root cause:** This is a SPA with no SSR and no pre-rendering. The single `index.html` is served for every route and React renders client-side, but Googlebot reads the raw HTML first.
-
-**Fix:** Implement per-page meta using one of these approaches (in priority order):
-
-**Option A — `react-helmet-async` (minimal change, works with current stack):**
-
-Install:
-```bash
-pnpm add react-helmet-async
-```
-
-Wrap the app in `HelmetProvider` in `client/src/main.tsx`:
 ```tsx
-import { HelmetProvider } from 'react-helmet-async';
-// ...
-root.render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>
-);
+// Features page (client/src/pages/Features.tsx, line 66)
+// BEFORE:
+<title>AI Dental Companion App Features | Habit Tracking & Care Plans | Perioskoup</title>
+// AFTER (60 chars):
+<title>Perioskoup Features | AI Habit Tracking & Dental Care Plans</title>
+
+// Terms page (client/src/pages/Terms.tsx, line 28)
+// BEFORE:
+<title>Terms of Service | Perioskoup</title>
+// AFTER:
+<title>Terms of Service | Perioskoup Dental AI Companion App</title>
 ```
-
-Add a `<Helmet>` to each page. Example for Features:
-```tsx
-import { Helmet } from 'react-helmet-async';
-
-export default function Features() {
-  return (
-    <>
-      <Helmet>
-        <title>AI Dental App Features — Habit Tracking, Reminders & Clinician Dashboard | Perioskoup</title>
-        <meta name="description" content="Explore Perioskoup's AI dental companion features: personalised habit tracking, smart reminders, progress dashboards, secure patient-clinician messaging, and GDPR-compliant data storage." />
-        <link rel="canonical" href="https://perioskoup.com/features" />
-        <meta property="og:title" content="AI Dental App Features | Perioskoup" />
-        <meta property="og:description" content="AI-powered habit tracking, smart reminders, clinician dashboard, and secure messaging for dental patients and practices." />
-        <meta property="og:url" content="https://perioskoup.com/features" />
-      </Helmet>
-      {/* rest of component */}
-    </>
-  );
-}
-```
-
-NOTE: `react-helmet-async` only solves the problem for human visitors and for crawlers that execute JavaScript (Googlebot does). It does NOT fix the static HTML served before hydration. For full pre-rendering, use Option B.
-
-**Option B — Vite-plugin prerender (fully solves the problem):**
-
-Install:
-```bash
-pnpm add -D vite-plugin-prerender
-```
-
-Add to `vite.config.ts`:
-```ts
-import prerender from 'vite-plugin-prerender';
-
-export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    prerender({
-      staticDir: path.resolve(import.meta.dirname, 'dist/public'),
-      routes: [
-        '/',
-        '/features',
-        '/for-dentists',
-        '/about',
-        '/blog',
-        '/blog/what-is-periodontal-disease',
-        '/blog/efp-digital-innovation-award-2025',
-        '/blog/how-ai-is-changing-dental-monitoring',
-        '/blog/3-minute-routine-save-teeth',
-        '/blog/why-patients-forget-instructions',
-        '/blog/building-the-bridge-perioskoup-story',
-        '/pricing',
-        '/waitlist',
-        '/contact',
-        '/privacy',
-        '/terms',
-      ],
-    }),
-  ],
-```
-
-This generates static HTML files for each route at build time, with the correct meta tags already rendered. This is the recommended long-term solution.
 
 ---
 
-## High Priority Issues (P1)
+## 2. Meta Descriptions
 
-### H1 — OG tags are also identical across all pages in static HTML
+### Findings
 
-Same root cause as C1. Every page serves the homepage OG image, OG title, and OG type. When `/blog/what-is-periodontal-disease` is shared on LinkedIn or Twitter, it shows the homepage branding rather than the article. The BlogPost component does use `document.querySelector` to patch OG tags after hydration, but this only works if the user is already on the page — share scrapers hit the raw HTML.
+| Page | Length | Status |
+|------|--------|--------|
+| Home | 162 chars | FAIL: 2 chars over 160 limit |
+| Features | 186 chars | FAIL: 26 chars over limit — significant truncation |
+| For Dentists | 165 chars | FAIL: 5 chars over limit |
+| About | 134 chars | PASS |
+| Blog | 155 chars | PASS |
+| Pricing | 155 chars | PASS |
+| Waitlist | 117 chars | WARN: short (noindex, less critical) |
+| Contact | 127 chars | PASS |
+| Blog posts | 139-158 chars | PASS (all unique, all within limit) |
 
-**Fix:** Addressed by the same prerender solution in C1, combined with per-page Helmet tags for OG.
+### Fixes
 
-Required per-page OG tags to add (example for the periodontal disease blog post):
-```html
-<meta property="og:type" content="article" />
-<meta property="og:title" content="What Is Periodontal Disease? A Patient's Complete Guide | Perioskoup" />
-<meta property="og:description" content="Periodontal disease affects 1 in 2 adults. Learn what it is, how it progresses, and what you can do about it — from a practising periodontist." />
-<meta property="og:url" content="https://perioskoup.com/blog/what-is-periodontal-disease" />
-<meta property="article:published_time" content="2025-11-12T00:00:00Z" />
-<meta property="article:author" content="Dr. Anca Laura Constantin" />
-```
-
-### H2 — Twitter card description is too short (66 chars)
-
-Current twitter:description: `"AI-powered dental companion app. EFP Innovation Award Winner 2025."` — 67 characters. Twitter recommends 125-200 characters for summary_large_image cards. The description is not compelling for CTR.
-
-**Fix:**
-```html
-<meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
-```
-Character count: 155 — optimal.
-
-### H3 — No per-page Twitter card metadata
-
-Same root cause as C1 and H1. All pages show the same Twitter card.
-
-### H4 — Missing target keywords in title tag
-
-The homepage title `"Perioskoup — Your Personal Dental Companion"` does not include any of the target keywords:
-- "AI dental companion" — absent
-- "dental patient engagement app" — absent
-- "periodontal habit tracking" — absent
-- "dental AI app" — absent
-- "between visit dental care" — absent
-
-The title is brand-forward but keyword-empty. Suggested fix:
-
-```html
-<title>Perioskoup — AI Dental Companion App | Between-Visit Dental Care</title>
-```
-Character count: 58 — optimal.
-
-For secondary pages, use the target keyword at the front:
-- Features: `AI Dental Companion App Features — Habit Tracking & Care Plans | Perioskoup`
-- For Dentists: `Dental Patient Engagement App for Clinicians | Perioskoup`
-- Blog index: `Dental Health & AI Blog — Periodontal Care Insights | Perioskoup`
-
-### H5 — geo.region points to GB but the company is Romanian
-
-`index.html` line 13-14:
-```html
-<meta name="geo.region" content="GB" />
-<meta name="geo.placename" content="London, United Kingdom" />
-```
-
-The Organization schema and llms.txt both correctly state Bucharest, Romania. The geo meta tags contradict this and may confuse local search signals.
-
-**Fix:**
-```html
-<meta name="geo.region" content="RO" />
-<meta name="geo.placename" content="Bucharest, Romania" />
-<meta name="geo.position" content="44.4268;26.1025" />
-<meta name="ICBM" content="44.4268, 26.1025" />
-```
-
-If UK/EU market is intentionally primary, consider adding a separate `en-GB` hreflang pointing to a GB-focused URL, but keep geo data accurate to the business registration.
-
-### H6 — Blog page (Blog.tsx) has no Helmet / no JSON-LD for blog listing
-
-The `Blog.tsx` page renders no structured data and has no per-page meta (it relies on the homepage fallback). A blog listing page should have at minimum:
-- A unique title and description targeting keywords like "dental health AI blog" and "periodontal care insights"
-- An `ItemList` schema linking to each article
-
-**Fix — add to Blog.tsx:**
 ```tsx
-const blogListingJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "@id": "https://perioskoup.com/blog",
-  "name": "Perioskoup Blog",
-  "description": "Evidence-based articles on periodontal health, dental AI, and patient care from the Perioskoup team.",
-  "url": "https://perioskoup.com/blog",
-  "publisher": { "@id": "https://perioskoup.com/#organization" },
-  "blogPost": POSTS.map(p => ({
-    "@type": "BlogPosting",
-    "headline": p.title,
-    "url": `https://perioskoup.com/blog/${p.slug}`,
-    "datePublished": p.date,
-    "author": { "@type": "Person", "name": p.author }
-  }))
+// Home (client/src/pages/Home.tsx, line 77) — trim 2 chars
+// BEFORE (162 chars):
+"Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025."
+// AFTER (153 chars):
+"Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. EFP Digital Innovation Award Winner 2025."
+
+// Features (client/src/pages/Features.tsx, line 67) — 186 → under 160
+// BEFORE:
+"Explore Perioskoup's AI dental companion features: personalised habit tracking, smart reminders, progress dashboards, secure patient-clinician messaging, and GDPR-compliant data storage."
+// AFTER (158 chars):
+"Explore Perioskoup's AI dental companion features: habit tracking, smart reminders, clinician dashboards, secure messaging, and GDPR-compliant data protection."
+
+// For Dentists (client/src/pages/ForDentists.tsx, line 73) — 165 → under 160
+// BEFORE:
+"Perioskoup gives dental practices a clinician dashboard, personalised care plans, and engagement analytics to extend care beyond the appointment and reduce no-shows."
+// AFTER (155 chars):
+"Perioskoup gives dental practices a clinician dashboard, personalised care plans, and engagement analytics to extend care and reduce no-shows."
+```
+
+---
+
+## 3. Canonical URLs
+
+### Findings
+
+All pages implement correct, unique, per-page canonical tags via `<link rel="canonical">` inside `<Helmet>`. The canonical domain is `perioskoup.com` (not the Vercel preview URL). This is correct.
+
+- Home: `https://perioskoup.com/` — PASS
+- Features: `https://perioskoup.com/features` — PASS
+- For Dentists: `https://perioskoup.com/for-dentists` — PASS
+- About: `https://perioskoup.com/about` — PASS
+- Blog: `https://perioskoup.com/blog` — PASS
+- Pricing: `https://perioskoup.com/pricing` — PASS
+- Waitlist: `https://perioskoup.com/waitlist` — PASS (even though noindex)
+- Contact: `https://perioskoup.com/contact` — PASS
+- Privacy: `https://perioskoup.com/privacy` — PASS
+- Terms: `https://perioskoup.com/terms` — PASS
+- Blog posts: `/blog/${slug}` — PASS (dynamic, correct)
+
+**No canonical URLs point to homepage. No issues.**
+
+---
+
+## 4. OG Tags (Open Graph)
+
+### Findings
+
+| Issue | Severity | Pages Affected |
+|-------|----------|----------------|
+| All pages use the same og:image (og-image.jpg) | MEDIUM | All 10 pages + 6 blog posts |
+| BlogPost og:image is a relative URL (`/images/og-image.jpg` instead of absolute `https://perioskoup.com/images/og-image.jpg`) | HIGH | All 6 blog posts |
+| og:image dimensions: 1280x665 — not standard 1200x630 | LOW | All pages |
+| Privacy and Terms pages missing og:image entirely | MEDIUM | /privacy, /terms |
+| No og:image:width or og:image:height meta on individual pages | LOW | All React pages |
+| og:locale uses `en` not `en_GB` or `en_US` | INFO | index.html fallback |
+| Blog posts correctly set og:type="article" | PASS | All 6 blog posts |
+| article:published_time uses ISO 8601 format | PASS | All 6 blog posts |
+
+**The relative URL bug on BlogPost.tsx is the most critical.** When Facebook, LinkedIn, or Twitter scrape a blog post URL, they receive `/images/og-image.jpg` — a path they cannot resolve against `perioskoup.com`. The result is no image in social shares for all 6 blog posts.
+
+### Fixes
+
+```tsx
+// BlogPost.tsx (line 830) — fix relative URL to absolute
+// BEFORE:
+<meta property="og:image" content="/images/og-image.jpg" />
+<meta name="twitter:image" content="/images/og-image.jpg" />
+// AFTER:
+<meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+<meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+```
+
+**For distinct OG images per page** (significant CTR uplift from social shares), create page-specific images:
+
+```tsx
+// Recommended OG image map (create 1200x630 JPGs for each)
+const OG_IMAGES: Record<string, string> = {
+  home: "https://perioskoup.com/images/og-home.jpg",
+  features: "https://perioskoup.com/images/og-features.jpg",
+  "for-dentists": "https://perioskoup.com/images/og-dentists.jpg",
+  about: "https://perioskoup.com/images/og-about.jpg",
+  blog: "https://perioskoup.com/images/og-blog.jpg",
+  // fallback:
+  default: "https://perioskoup.com/images/og-image.jpg",
 };
 ```
 
-### H7 — Pricing page has no hreflang in sitemap
+**Add og:image dimensions to all pages (prevents layout shift in scrapers):**
 
-The sitemap includes hreflang only for the homepage. Non-home pages have no `xhtml:link` hreflang alternate tags, meaning Google cannot correctly attribute language/region signals for those pages.
-
-**Fix — add to sitemap.xml for each page:**
-```xml
-<url>
-  <loc>https://perioskoup.com/features</loc>
-  <lastmod>2026-03-06</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.9</priority>
-  <xhtml:link rel="alternate" hreflang="en-GB" href="https://perioskoup.com/features"/>
-  <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/features"/>
-  <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/features"/>
-</url>
-```
-
-Apply this pattern to all 9 non-home pages.
-
----
-
-## Medium Priority Issues (P2)
-
-### M1 — Duplicate FAQPage JSON-LD across multiple pages
-
-FAQ schema is injected by these pages: `Home.tsx`, `Features.tsx`, `ForDentists.tsx`, `Pricing.tsx`. While the questions differ, Google's FAQ rich result is reserved for actual dedicated FAQ pages. Having FAQPage schema on commercial/feature pages may not generate rich results and dilutes schema clarity.
-
-**Recommendation:** Keep FAQPage schema only on pages that are primarily Q&A in nature. Move FAQ schema off the homepage and features page, or convert the homepage FAQ section into a dedicated `/faq` page that can rank for FAQ-style queries.
-
-### M2 — Home.tsx H1 does not contain any target keyword
-
-Current H1: `"Between visits, we take over."`
-
-This is a brand tagline, not a keyword-bearing heading. Googlebot uses the H1 as a primary relevance signal. The phrase "between visits" is close to the keyword "between visit dental care" but lacks "dental" and "AI".
-
-**Fix — adjust copy to include keyword naturally:**
-```
-Between dental visits,
-your AI companion takes over.
-```
-This preserves the emotional punch while containing "dental visits" and "AI companion".
-
-Alternatively, add a subtitle `<h2>` immediately below that contains the exact keyword:
-```html
-<h2>The AI dental companion for between-visit care</h2>
-```
-
-### M3 — About, Waitlist, Contact, Privacy, Terms pages have no unique meta at all
-
-These pages each contain unique, crawlable content but all serve the homepage title and description. At minimum each needs:
-
-| Page | Suggested Title (≤60 chars) | Suggested Description |
-|------|------|------|
-| About | `About Perioskoup — Dental AI Built in Bucharest` | `Meet the team behind Perioskoup: a periodontist, engineer, and AI specialist on a mission to close the gap between dental visits and home care.` |
-| Waitlist | `Join the Perioskoup Waitlist — Early Access` | `Get priority access to the AI dental companion app launching in 2026. 500+ patients and 30+ clinics already on the list.` |
-| Contact | `Contact Perioskoup — Dental AI Enquiries` | `Reach the Perioskoup team for press, clinic partnerships, investor enquiries, or product questions. We respond within 24 hours.` |
-| Privacy | `Privacy Policy — Perioskoup GDPR Compliance` | `How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law.` |
-| Terms | `Terms of Service — Perioskoup` | `Terms governing the use of the Perioskoup dental companion application, including SaMD disclaimer and data responsibilities.` |
-
-### M4 — SoftwareApplication schema missing `offers`, `screenshot`, and `featureList`
-
-The `SoftwareApplication` schema in `index.html` is minimal. Google's Rich Results Test expects additional fields for app-related rich results.
-
-**Fix — expand the SoftwareApplication node:**
-```json
-{
-  "@type": "SoftwareApplication",
-  "name": "Perioskoup",
-  "operatingSystem": "iOS, Android",
-  "applicationCategory": "HealthApplication",
-  "description": "AI-powered dental companion app that bridges the gap between dental visits with personalised daily habits for patients.",
-  "url": "https://perioskoup.com/",
-  "author": { "@id": "https://perioskoup.com/#organization" },
-  "award": "EFP Digital Innovation Award 2025",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR",
-    "availability": "https://schema.org/PreOrder"
-  },
-  "featureList": "AI habit coaching, periodontal habit tracking, dental patient engagement, clinician dashboard, GDPR-compliant messaging",
-  "applicationSubCategory": "Dental Health",
-  "countriesSupported": "RO, GB, EU"
-}
-```
-
-### M5 — BlogPost per-article OG image is the same branded image for all articles
-
-All blog posts use the same OG image (`og-image-XvtYEDVZMACucdvxk9BYR8.png`). While this is acceptable for brand consistency, per-article OG images dramatically improve CTR when shared on social media. Consider generating article-specific images using an OG image generation service (e.g., Vercel OG, Cloudinary auto-gen) that includes the article headline.
-
-### M6 — No `twitter:creator` tags on blog posts
-
-Blog posts have `twitter:site` but no `twitter:creator`. Since authors are named individuals with professional profiles, adding creator attribution improves author E-E-A-T signals in social sharing contexts.
-
-**Fix — add to BlogPost article meta:**
-```html
-<meta name="twitter:creator" content="@ancaconstantinDMD" />
-```
-(Create author Twitter handles if they do not exist, or use `@perioskoup`.)
-
-### M7 — BlogPost page uses `document.querySelector` for meta manipulation — fragile and order-dependent
-
-`BlogPost.tsx` lines 762-810 use DOM manipulation to patch meta tags after React renders. This approach:
-1. Has a flash where the homepage title briefly appears before being updated
-2. Fails entirely for crawlers that do not execute JavaScript
-3. Depends on the meta tags existing in index.html in the exact expected form
-4. Does not update on navigation between two different blog posts (React does not remount the component, so the useEffect may not re-run correctly)
-
-The `return` cleanup function resets canonical back to `https://perioskoup.com/` on unmount — meaning if a user navigates from a blog post to another blog post via client-side navigation, the canonical briefly reverts to the homepage before the new article's useEffect fires.
-
-**Fix:** Replace with `react-helmet-async` Helmet component as described in C1.
-
-### M8 — Missing `dateModified` in BlogPosting JSON-LD
-
-The BlogPost component injects a `BlogPosting` schema but the `dateModified` field is absent. Google uses `dateModified` for freshness signals.
-
-Current schema (from BlogPost.tsx):
-```json
-{
-  "@type": "BlogPosting",
-  "headline": "...",
-  "datePublished": "2025-11-12"
-  // dateModified missing
-}
-```
-
-**Fix:** Add `"dateModified"` equal to `datePublished` initially, then update when content is revised.
-
-### M9 — `noindex` should be added to /waitlist and /privacy and /terms
-
-These pages provide conversion or legal content but should not dilute crawl budget or compete for keyword rankings. Standard practice:
-
-```html
-<!-- In Privacy.tsx, Terms.tsx Helmet -->
-<meta name="robots" content="noindex, follow" />
-```
-
-For Waitlist, consider `noindex` during beta since it will change significantly at launch. For Privacy and Terms, `noindex` is strongly recommended — these pages should not appear in SERPs.
-
----
-
-## Low Priority Issues (P3)
-
-### L1 — Internal link audit
-
-**Navigation coverage (Navbar):** Features, For Dentists, About, Blog, Waitlist — good. Missing: Pricing, Contact.
-
-**Footer coverage:** Features, For Dentists, Pricing, Waitlist, About, Blog, Contact, Privacy, Terms — comprehensive.
-
-**Homepage internal links:** Waitlist (x2), For Dentists (x1), Features (x1) — adequate but could add a link to Blog.
-
-**Missing cross-links:**
-- Features page does not link to individual blog posts about features
-- About page does not link to Blog or For Dentists
-- Blog post pages link back to /waitlist in the CTA but do not cross-link to related articles
-- For Dentists page does not link to Pricing
-
-**Recommendation:** Add 2-3 contextual internal links per page, especially from blog posts to features and from features to relevant blog content. This builds topical authority clusters.
-
-### L2 — Blog listing page uses H2 for post titles inside a semantic section that already has H1
-
-In `Blog.tsx`, the featured posts render post titles with `<h2>` elements but the "All Articles" section below renders post titles with `<h3>` elements. This is inconsistent. The "All Articles" section `<h2 className="display-sm">All Articles</h2>` is correct, but every article title below it should consistently be `<h3>` (currently the featured posts use `<h2>` for the article titles while the regular posts use `<h3>`).
-
-The H1 "Insights on dental health, AI, and care." is correctly placed at the top.
-
-**Fix:** Change all featured post card headings from `<h2>` to `<h3>` in Blog.tsx.
-
-### L3 — Privacy and Terms H2 headings use Dongle font at 24px — too small for accessibility/crawlability
-
-The Privacy and Terms pages render section headings as `<h2>` with `fontSize: 24` — which is correct hierarchy but visually small. More importantly, the sections are numbered (`1. Introduction`, `2. Data We Collect`) which is fine, but the heading numbering format is not standard for schema purposes.
-
-### L4 — robots.txt missing `Cohere-AI`, `Bytespider`, and `meta-externalagent`
-
-Current robots.txt covers: GPTBot, ChatGPT-User, Google-Extended, anthropic-ai, ClaudeBot, PerplexityBot. Missing explicit entries for several other major AI crawlers:
-
-```
-User-agent: Cohere-AI
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: meta-externalagent
-Allow: /
-
-User-agent: Diffbot
-Allow: /
-
-User-agent: omgili
-Allow: /
-```
-
-### L5 — llms.txt is accurate and well-structured — minor additions recommended
-
-The `/llms.txt` file is excellent: accurate business facts, clear wellness/non-medical positioning, content permissions, and key page links. Minor additions that would strengthen it:
-
-- Add the EFP source URL directly: `Source: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/`
-- Add pricing model explicitly: `Business model: B2B2C — dental practices pay (€39-199/mo), patients free`
-- Add launch date: `Target launch: March 2026`
-- Add blog URLs for major articles
-
-### L6 — No `preload` for Largest Contentful Paint images
-
-The hero background image is loaded as a CSS `background-image` with no preload hint. On mobile, this delays the LCP significantly. The fonts load via Google Fonts without `preload` hints.
-
-**Fix — add to index.html `<head>`:**
-```html
-<link rel="preload" as="image" href="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/hero-bg-soft_c6281481.png" />
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gabarito:wght@400;500;600;700&display=swap" />
-```
-
-### L7 — Font loading strategy causes render blocking
-
-Google Fonts is loaded synchronously with `<link rel="stylesheet">`. While preconnect is present, the font CSS is still render-blocking on slow connections.
-
-**Fix:** Add `font-display: swap` via the `&display=swap` parameter (already present in the URL — good), but consider self-hosting the fonts in the Vite build to eliminate the third-party dependency and remove the render-blocking entirely.
-
-### L8 — Oversized dependency bundle for a landing page
-
-The `package.json` includes a large number of Radix UI primitives and libraries that are not used in the rendered pages: `@radix-ui/react-accordion`, `recharts`, `framer-motion`, `react-day-picker`, `embla-carousel-react`, `input-otp`, `vaul`, etc. Many of these appear to be scaffolding dependencies that were never removed.
-
-**Impact on CWV:** A large JavaScript bundle delays Time to Interactive (TTI) and First Input Delay (FID/INP). The SPA nature means all of React, wouter, and every page component loads on first visit.
-
-**Recommended actions:**
-1. Run `npx vite-bundle-visualizer` to identify the largest contributors
-2. Remove unused Radix UI packages (accordion, day-picker, embla-carousel etc. are not referenced in any page)
-3. Consider lazy-loading page components with `React.lazy()` and `Suspense`
-
-Example lazy loading in App.tsx:
 ```tsx
-const Features = React.lazy(() => import('./pages/Features'));
-const Blog = React.lazy(() => import('./pages/Blog'));
-// etc.
+// In each page's Helmet (after og:image)
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="[Page-specific alt text]" />
 ```
 
-### L9 — Missing `rel="noopener noreferrer"` on some external links
+**Fix Privacy and Terms pages (add og:image):**
 
-The footer EFP award link correctly has `rel="noopener noreferrer"`. The hero EFP badge and about page award links also correctly include this. Consistent — no action needed here beyond confirming all external links maintain this pattern.
+```tsx
+// Privacy.tsx and Terms.tsx — add inside Helmet
+<meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+<meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+```
 
-### L10 — Vercel deployment domain mismatch
+---
 
-The site is live at `official-perioskoup.vercel.app` but all canonical URLs reference `perioskoup.com`. This means the Vercel subdomain is accessible and indexable at a separate origin with incorrect canonicals pointing to a domain that may not be fully resolving yet.
+## 5. Twitter / X Cards
 
-**Action required:** Confirm `perioskoup.com` is connected as a custom domain in Vercel settings. If it is connected, add a Vercel redirect rule to redirect `official-perioskoup.vercel.app` → `perioskoup.com` to prevent duplicate content indexing of the Vercel subdomain.
+### Findings
 
-In `vercel.json`:
+- All primary pages: `twitter:card="summary_large_image"` — PASS
+- `twitter:site="@perioskoup"` is present in index.html fallback — PASS
+- `twitter:creator="@perioskoup"` is set correctly on blog posts — PASS
+- Privacy page: missing `twitter:card` tag — FAIL
+- Terms page: missing `twitter:card` tag — FAIL
+- BlogPost pages: `twitter:image` uses relative URL (see OG section) — FAIL
+
+### Fix
+
+Same as OG fix above; add twitter card tags to Privacy.tsx and Terms.tsx.
+
+---
+
+## 6. JSON-LD Structured Data
+
+### Findings: Global (index.html @graph)
+
+A comprehensive `@graph` block in `index.html` covers:
+- `WebSite` schema with `@id` — PASS
+- `Organization` schema with `@id`, `foundingDate`, `founders`, `award`, `sameAs` — PASS
+- `Person / Physician` schema for Dr. Anca Constantin with `@id`, `medicalSpecialty`, `award` — PASS
+- `SoftwareApplication` with `applicationCategory: HealthApplication`, `offers` — PASS
+
+**Issue:** `WebSite` schema is missing a `potentialAction` / `SearchAction` for Google Sitelinks Searchbox eligibility. Low priority but a missed opportunity.
+
+```json
+// Add to WebSite schema in index.html
+"potentialAction": {
+  "@type": "SearchAction",
+  "target": {
+    "@type": "EntryPoint",
+    "urlTemplate": "https://perioskoup.com/blog?q={search_term_string}"
+  },
+  "query-input": "required name=search_term_string"
+}
+```
+
+### Findings: Per-Page Schemas
+
+| Page | Schema Types | Status |
+|------|-------------|--------|
+| Home | FAQPage (5 questions) | PASS |
+| Features | FAQPage (3 questions) | PASS |
+| For Dentists | FAQPage (6 questions) | PASS |
+| About | Person (Dr. Anca), FAQPage (4 questions) | PASS |
+| Blog | ItemList (6 posts), FAQPage (2 questions) | PASS |
+| Pricing | FAQPage (3 questions), SoftwareApplication with Offers | PASS |
+| Waitlist | FAQPage (3 questions) | PASS |
+| Contact | Organization, FAQPage (3 questions) | PASS — but see duplicate issue |
+| BlogPost | BlogPosting, BreadcrumbList, FAQPage (per-article) | MOSTLY PASS — see issues |
+
+**BlogPosting schema issues:**
+
+1. `datePublished` and `dateModified` use the raw date string (e.g., `"2025-11-12"`) — this is valid ISO 8601 date format (date-only). However, best practice is to include time: `"2025-11-12T00:00:00Z"`. Low risk.
+
+2. `image` field in BlogPosting uses `OG_IMAGE` constant which resolves to `"/images/og-image.jpg"` (relative). Schema.org requires absolute URLs in `image`.
+
+```tsx
+// BlogPost.tsx (line ~795)
+// BEFORE:
+const OG_IMAGE = "/images/og-image.jpg";
+// ...
+"image": OG_IMAGE,
+
+// AFTER:
+const OG_IMAGE_ABSOLUTE = "https://perioskoup.com/images/og-image.jpg";
+// ...
+"image": OG_IMAGE_ABSOLUTE,
+```
+
+3. `Organization` schema appears in both `Contact.tsx` (as a full object) and `index.html` (in @graph). This creates duplicate, potentially conflicting Organization entities. The Contact.tsx version is less complete (missing `logo`, `award`, `contactPoint`). Remove the Organization from Contact.tsx and rely on the @graph in index.html.
+
+```tsx
+// Contact.tsx — REMOVE organizationJsonLd object and its <script> tag
+// The @graph Organization in index.html already covers this.
+// Keep only contactFaqJsonLd.
+```
+
+4. `Person` schema appears in both `About.tsx` and `index.html`. Same duplication issue. The About.tsx version is slightly different (adds `"memberOf"` field). Either consolidate into index.html's @graph or ensure the `@id` references are consistent (they are — both use `https://perioskoup.com/#anca-constantin`). Because they share `@id`, Google merges them — this is acceptable but could cause confusion. Best practice: remove the duplicates and keep only the @graph.
+
+---
+
+## 7. robots.txt
+
+### Findings
+
+**Status: EXCELLENT**
+
+The robots.txt explicitly allows all AI crawlers:
+- GPTBot, ChatGPT-User — PASS
+- Google-Extended — PASS
+- anthropic-ai, ClaudeBot — PASS
+- PerplexityBot, Cohere-AI, Bytespider — PASS
+- meta-externalagent, Diffbot, omgili, GoogleOther — PASS
+- CCBot, Applebot-Extended, YouBot — PASS
+
+The sitemap reference points to `https://perioskoup.com/sitemap.xml` — correct canonical domain, not the Vercel preview URL. PASS.
+
+The `Llms-txt` and `Llms-full-txt` custom directives are non-standard but forward-compatible — useful for any future parsers. PASS.
+
+**One missing crawler:** `Gemini-AI` (Google's AI assistant) is not explicitly listed. While Google-Extended covers Gemini training data, Gemini's live search grounding uses a separate agent. Consider adding:
+
+```
+User-agent: Gemini-AI
+Allow: /
+```
+
+---
+
+## 8. sitemap.xml
+
+### Findings
+
+All 10 core pages and 6 blog slugs are listed. The domain is correct (`perioskoup.com`). `lastmod` dates are current. `hreflang` alternate links are included inside each `<url>` block.
+
+**Issues:**
+
+1. **Noindex pages in sitemap:** `/waitlist` and `/privacy` have `<meta name="robots" content="noindex">` in their Helmet — but both appear in the sitemap. Google's guidance: do not include noindex pages in sitemaps. It creates a conflicting signal and wastes crawl budget.
+
+2. **Terms page in sitemap** also has `noindex` — same issue.
+
+3. **Sitemap hreflang only has `en` and `x-default`.** There is no Romanian (`ro`) hreflang. Since the primary market is Romania and the content is in English, this is acceptable — but if a Romanian-language page is added later, the sitemap will need updating.
+
+4. **No `sitemap.xml` reference in index.html** `<head>`. The robots.txt references the sitemap, which is sufficient. But adding `<link rel="sitemap" type="application/xml" href="/sitemap.xml">` in index.html provides an additional signal.
+
+### Fix
+
+```xml
+<!-- Remove these three URLs from sitemap.xml: -->
+<!-- https://perioskoup.com/waitlist -->
+<!-- https://perioskoup.com/privacy -->
+<!-- https://perioskoup.com/terms -->
+
+<!-- OR — more strategic option: remove noindex from /waitlist 
+     since it IS a valuable conversion page and you want Google 
+     to show it for "perioskoup waitlist" branded searches -->
+```
+
+**Recommendation:** Remove noindex from `/waitlist`. It is a high-conversion page with unique structured data (FAQPage). The concern about indexing a waitlist form is misplaced — Google indexes landing pages with forms regularly.
+
+```tsx
+// Waitlist.tsx (line 76) — REMOVE this line:
+<meta name="robots" content="noindex, follow" />
+// Keep canonical. The page should be indexable.
+```
+
+---
+
+## 9. llms.txt and llms-full.txt
+
+### Findings
+
+**llms.txt:** Accurate, well-structured, complete. Covers all key facts, founder bios, business model, regulatory disclaimer, blog posts, and contact info. PASS.
+
+**llms-full.txt — CRITICAL STALE CONTENT:**
+
+The "How It Works" section in `llms-full.txt` describes a different product workflow than what is live on the actual Home page:
+
+```
+# llms-full.txt says (STALE):
+Step 01: Scan — Sync intraoral data instantly from your existing scanner.
+Step 02: Analyze — AI maps risk zones & translates perio charts into habits.
+Step 03: Engage — Patients receive actionable nudges on their device.
+
+# Actual Home.tsx says:
+Step 01: Visit Your Dentist
+Step 02: Get Your Plan  
+Step 03: Build Daily Habits
+```
+
+This is a meaningful discrepancy. LLMs and AI crawlers reading llms-full.txt will describe Perioskoup as a scanner-sync tool, which is no longer accurate to the live messaging.
+
+### Fix
+
+```
+# Update llms-full.txt, lines 63-66:
+
+### How It Works
+
+Step 01: Visit Your Dentist — Your dentist examines and sets a personalised care plan using Perioskoup.
+Step 02: Get Your Plan — AI translates clinical recommendations into daily habits with smart reminders and tracking.
+Step 03: Build Daily Habits — Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.
+```
+
+Also update the `noscript` fallback in `index.html` (lines 250-254) which still uses the old "Scan / Analyze / Engage" language.
+
+---
+
+## 10. hreflang Tags
+
+### Findings
+
+**Per-page Helmet hreflang:** Only `hrefLang="en"` is set — no `hrefLang="x-default"`. The `x-default` tag is required when there is only one language version to signal the default fallback.
+
+Pages audited:
+- Home.tsx: `<link rel="alternate" hrefLang="en" href="https://perioskoup.com/" />` — missing `x-default`
+- Features.tsx, ForDentists.tsx: same pattern, same issue
+- About.tsx, Blog.tsx, Pricing.tsx, Waitlist.tsx, Contact.tsx: same missing `x-default`
+- BlogPost.tsx: **no hreflang at all** — FAIL
+
+**index.html fallback** correctly has both `en` and `x-default` tags, but these apply only before JS loads (or when Helmet doesn't override).
+
+**sitemap.xml** correctly includes both `en` and `x-default` within each `<url>` block — this partially mitigates the issue.
+
+### Fix
+
+```tsx
+// Add to every page's Helmet block (example for Home.tsx):
+<link rel="alternate" hrefLang="en" href="https://perioskoup.com/" />
+<link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/" />
+
+// Add to BlogPost.tsx Helmet:
+<link rel="alternate" hrefLang="en" href={`https://perioskoup.com/blog/${article.slug}`} />
+<link rel="alternate" hrefLang="x-default" href={`https://perioskoup.com/blog/${article.slug}`} />
+```
+
+---
+
+## 11. Heading Hierarchy
+
+### Home (`/`)
+- H1: "Between visits, we take over." — PASS (one H1, keyword-adjacent)
+- H2: "Everything your smile needs. In one place." — PASS
+- H3s: Feature card titles (AI-Powered Guidance, Habit Tracking, etc.) — PASS
+- H2: "What is an AI dental companion?" — PASS (keyword-rich)
+- H2: "From Chair to Chat." — PASS
+- H3s: Step titles (Visit Your Dentist, Get Your Plan, Build Daily Habits) — PASS
+- **No H1 keyword match:** The H1 "Between visits, we take over" does not include the target keyword "AI dental companion". The keyword appears in H2 and in the meta title/description, but not H1.
+
+### Features (`/features`)
+- H1: "AI dental companion features — everything between your visits." — PASS (keyword in H1)
+- H2: "What's inside Perioskoup" — PASS
+- H3s: Feature card titles — PASS
+- H2: "Ready to get started?" — PASS
+- Hierarchy: PASS
+
+### For Dentists (`/for-dentists`)
+- H1: "Your patients, better prepared." — PASS
+- H2: "The problem is clear." — PASS
+- H2: "Everything you need in one place." — PASS
+- H3s: Clinical tool titles — PASS
+- H2: "How it fits your practice." — PASS
+- H3s: Before/During/After steps — PASS
+- H2: "Not another PMS plugin." — PASS
+- H2: "Be a founding clinic." — PASS
+- Hierarchy: PASS
+
+### About (`/about`)
+- H1: "Born in a dental chair. Built for every patient." — PASS
+- H2: "Close the gap between visits." — PASS
+- H2: "Why now?" — PASS
+- H2: "Built by clinicians, for clinicians." — PASS
+- H3s: Team member names — PASS
+- H2: "Want to be part of the story?" — PASS
+- Hierarchy: PASS
+
+### Blog (`/blog`)
+- H1: "Insights on dental health, AI, and care." — PASS
+- H3s on featured cards: Post titles — WARN: Featured blog post titles are rendered as H3 inside card divs. There is no H2 section heading between H1 and the H3 cards. The "All Articles" heading is H2. **Skip from H1 to H3 without H2 is a hierarchy violation.**
+- H2: "All Articles" — PASS
+- H3s: Article titles in list — PASS
+- H2: "Stay informed." — PASS
+
+```tsx
+// Blog.tsx — Add an H2 above the featured posts grid:
+// Before the featured posts section, add:
+<h2 className="display-sm reveal" style={{ marginBottom: "32px" }}>Featured Articles</h2>
+```
+
+### BlogPost (`/blog/[slug]`)
+- H1: `{article.title}` — PASS (unique per article)
+- H2, H3: Generated from article body markdown parser — the parser at line 682 renders `##` as H2 and `###` as H3. This is correct.
+- **No H1 → H2 skip detected** assuming articles use H2 as first subheading level. PASS.
+
+### Pricing (`/pricing`)
+- H1: "Simple, transparent pricing." — PASS
+- H3s inside plan cards: Plan names (Patient, Clinic) — WARN: Plan names are H3 with no H2 parent. Minor.
+- H2: "Common questions" — PASS
+- H3s: FAQ question items — PASS
+
+### Pricing FAQ H3 items are correctly inside an H2 parent. PASS overall.
+
+---
+
+## 12. Internal Link Audit
+
+### Findings
+
+**Good internal linking:**
+- Navbar links to all main pages (Features, For Dentists, Pricing, Waitlist, About, Blog, Contact)
+- Footer covers all pages including Privacy, Terms
+- Blog list page links to all 6 blog posts via `<Link href={/blog/${post.slug}}>`
+- Every page has a waitlist CTA linking to `/waitlist`
+- BlogPost has "Back to all articles" → `/blog` and "More Articles" → `/blog`
+
+**Missing internal links:**
+
+1. **Home page has no link to Blog.** The blog is a key SEO asset (6 articles, multiple schema types). There is no "Read our blog" or "Latest articles" section on the homepage. This is a missed internal linking opportunity.
+
+2. **Blog posts do not link to relevant product pages from within article body.** The "why-patients-forget-instructions" article discusses the 80% forgetting stat — a perfect internal link to `/features` or `/for-dentists`. None of the article bodies contain contextual internal links to product pages. Only the footer CTA links to `/waitlist`.
+
+3. **No cross-linking between blog posts.** Articles do not reference related articles. A "Related articles" section would improve time-on-site and topical authority signals.
+
+4. **ForDentists page has no link to Features page from within body.** It links to Features via CTA buttons but not in the body text.
+
+5. **About page links to /contact and /waitlist in CTA — good.** But no link to /blog (the team's writing). Missing opportunity to demonstrate E-E-A-T.
+
+### Fixes
+
+```tsx
+// Home.tsx — Add a blog preview section before Footer:
+<section style={{ background: "#050C10", padding: "80px 0" }}>
+  <div className="container">
+    <h2>From our knowledge hub</h2>
+    {/* Show 2-3 latest blog post previews with Link href="/blog/[slug]" */}
+    <Link href="/blog">View all articles →</Link>
+  </div>
+</section>
+```
+
+---
+
+## 13. Bundle Size and Core Web Vitals
+
+### Build Output Analysis
+
+| Asset | Size (bytes) | Size (KB) | Status |
+|-------|------------|-----------|--------|
+| `index-gZg-EZEb.js` (main bundle) | 347,238 | 339 KB | WARN |
+| `index-Dkz-7AUb.css` | 105,143 | 103 KB | WARN |
+| `vendor-CNPUEJO5.js` | 17,468 | 17 KB | PASS |
+| `BlogPost-DMrek5VA.js` | 65,728 | 64 KB | WARN |
+| `About-vXb7QcBR.js` | ~19 KB | 19 KB | PASS |
+| `Blog-DzelSJjD.js` | ~13 KB | 13 KB | PASS |
+| `Features-CZZVSkUU.js` | ~11 KB | 11 KB | PASS |
+| `ForDentists-BDPErE2E.js` | ~20 KB | 20 KB | PASS |
+
+**Total initial bundle (main JS + CSS + vendor):** ~459 KB uncompressed. With Brotli compression (Vercel default), expect ~120-150 KB transferred.
+
+**Key concerns:**
+
+1. **Main bundle (index.js) at 339 KB is large.** The Home page is not lazy-loaded (it is the entry point). Everything in `index.js` loads on every page visit including the Home component, all shared components (Navbar, Footer, PhoneMockup, etc.), and Radix UI/shadcn dependencies. This directly impacts LCP and INP on the homepage.
+
+2. **BlogPost.tsx at 64 KB is the heaviest page chunk.** This is because all 6 article bodies are inlined as large string literals in the component. This is the correct approach for a static SPA (no CMS), but it means every user who visits any blog post downloads all 6 articles.
+
+3. **CSS at 103 KB** is substantial. Tailwind CSS v4 purging should be verified.
+
+4. **The `useReveal` hook is copy-pasted into 7 page files** rather than being extracted into a shared module. This adds ~800 bytes of dead code per page in the combined bundle. Not critical, but indicates technical debt.
+
+### Fixes
+
+```tsx
+// 1. Extract useReveal into a shared hook file:
+// Create: client/src/hooks/useReveal.ts
+export function useReveal() {
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = document.querySelectorAll(".reveal, .reveal-scale");
+    if (prefersReducedMotion) { els.forEach((el) => el.classList.add("visible")); return; }
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
+      { threshold: 0.1 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+```
+
+```tsx
+// 2. Consider splitting blog article bodies into individual chunks:
+// Instead of one ARTICLES object, lazy-import per article:
+const articleData = await import(`./articles/${slug}.ts`);
+// This reduces BlogPost.js from 64 KB to ~10 KB + 10 KB per article loaded on demand.
+```
+
+```bash
+# 3. Verify Tailwind purge is working correctly:
+pnpm build && wc -c dist/public/assets/index-*.css
+# If CSS > 50 KB, check tailwind.config for content globs
+```
+
+---
+
+## 14. Duplicate and Thin Content
+
+### Findings
+
+1. **Home page has two overlapping subheadlines in Features section:**
+   - Line 257: "Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and secure patient-clinic messaging into a single dental companion app."
+   - Line 260: "Perioskoup connects patients and clinicians with AI-powered tools that make daily dental care simple, consistent, and effective."
+   Both appear in the same `<div>` block. One is redundant.
+
+2. **For Dentists page — the same Dr. Anca quote ("Perioskoup was born out of two big challenges...") appears verbatim on both the Home page and the For Dentists page.** This is a minor duplicate content signal but weakens the distinctiveness of each page.
+
+3. **About page uses the same Dr. Anca quote** as Home and ForDentists — three identical blockquotes across three pages.
+
+4. **Home page "How It Works" section** has two `<p>` tags with near-duplicate descriptions:
+   - "Perioskoup connects your dental appointment to your daily routine in three steps..."
+   - "The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps."
+
+5. **Privacy and Terms pages are thin.** Each has 7 short paragraph sections totaling under 800 words each. This is acceptable for legal pages (which are noindex), but if Privacy is ever indexed (currently noindex), it would be thin.
+
+6. **"Building the Bridge" blog post** bio section likely overlaps heavily with About page content. Low risk since blog posts have unique H1/meta.
+
+### Fixes
+
+```tsx
+// Home.tsx — remove duplicate features subheadline (keep the more specific one):
+// DELETE line ~260:
+<p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
+  Perioskoup connects patients and clinicians with AI-powered tools...
+</p>
+
+// Home.tsx — HOW IT WORKS — remove duplicate description (keep first):
+// DELETE line ~322:
+<p className="body-lg" style={{ maxWidth: 540, margin: "0 auto" }}>
+  The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
+</p>
+
+// Use a different quote on ForDentists and About — differentiate the social proof.
+// ForDentists could use the Weinert 2025 research citation as the pull quote instead.
+```
+
+---
+
+## 15. Blog Articles — Unique OG Images
+
+### Findings
+
+All 6 blog posts share the same OG image: `/images/og-image.jpg`. This is a missed opportunity for social sharing differentiation. When "What Is Periodontal Disease?" and "Perioskoup Wins EFP Award" are shared on social media, they produce identical preview cards — only the text differs.
+
+Additionally, the og:image in BlogPost.tsx uses a relative path (already flagged in Section 4), which means NO image renders on social shares currently.
+
+### Recommended Blog OG Image Strategy
+
+Create article-specific OG images (1200x630 px):
+
+```
+/images/blog-og-periodontal-disease.jpg  — diagram/infographic style
+/images/blog-og-efp-award.jpg            — ceremony photo (already exists as efp-award.webp)
+/images/blog-og-ai-dental-monitoring.jpg — tech visual
+/images/blog-og-3-minute-routine.jpg     — lifestyle/habits visual
+/images/blog-og-why-patients-forget.jpg  — brain/memory metaphor visual
+/images/blog-og-perioskoup-story.jpg     — team/founder photo
+```
+
+Add `ogImage` field to each article in `ARTICLES`:
+
+```tsx
+// BlogPost.tsx — add ogImage to Article interface
+interface Article {
+  // ... existing fields ...
+  ogImage?: string;
+}
+
+// Per article:
+"what-is-periodontal-disease": {
+  // ...
+  ogImage: "https://perioskoup.com/images/blog-og-periodontal-disease.jpg",
+}
+
+// In Helmet:
+<meta property="og:image" content={article.ogImage || "https://perioskoup.com/images/og-image.jpg"} />
+```
+
+---
+
+## 16. RSS Feed Issues
+
+### Findings
+
+The RSS feed `feed.xml` has a relative URL for the channel image:
+
+```xml
+<image>
+  <url>/images/logomark-dark.png</url>  <!-- RELATIVE URL - invalid in RSS -->
+```
+
+RSS `<image>/<url>` must be an absolute URL. Feed readers and aggregators will fail to load this image.
+
+### Fix
+
+```xml
+<!-- feed.xml, line 13 -->
+<url>https://perioskoup.com/images/logomark-dark.png</url>
+```
+
+---
+
+## 17. manifest.json Issues
+
+### Findings
+
+The PWA manifest only lists one icon (SVG, `sizes: "any"`). This is not sufficient for all browsers:
+
 ```json
 {
-  "redirects": [
+  "icons": [
     {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "official-perioskoup.vercel.app" }],
-      "destination": "https://perioskoup.com/$1",
-      "permanent": true
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+```
+
+The `icon-192.png` and `icon-512.png` files exist in `/public/` but are not referenced in the manifest. Chrome requires at minimum a 192px and 512px PNG for PWA install prompts.
+
+Also: `"purpose": "any maskable"` is incorrect — `any` and `maskable` should be separate icon entries or use `"any maskable"` only if the icon is designed for masked display (safe zone padding required).
+
+### Fix
+
+```json
+// manifest.json
+{
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
@@ -486,206 +732,76 @@ In `vercel.json`:
 
 ---
 
-## Per-Page Audit Summary
+## Priority Fix List
 
-| Page | H1 Present | H1 Keyword | Unique Title (HTML) | Unique Meta Desc (HTML) | Correct Canonical | OG Unique | JSON-LD |
-|------|------|------|------|------|------|------|------|
-| Home `/` | YES | Weak | YES | YES | YES | YES | FAQPage, WebSite, Org, SoftwareApp, Person |
-| Features `/features` | YES | Weak | NO* | NO* | NO* | NO* | FAQPage (via React) |
-| For Dentists `/for-dentists` | YES | Weak | NO* | NO* | NO* | NO* | FAQPage (via React) |
-| About `/about` | YES | None | NO* | NO* | NO* | NO* | Person (via React) |
-| Blog `/blog` | YES | None | NO* | NO* | NO* | NO* | None |
-| Blog Post | YES | YES | via DOM patch | via DOM patch | via DOM patch | via DOM patch | BlogPosting, BreadcrumbList |
-| Pricing `/pricing` | YES | None | NO* | NO* | NO* | NO* | FAQPage, Product (via React) |
-| Waitlist `/waitlist` | YES | None | NO* | NO* | NO* | NO* | None |
-| Contact `/contact` | YES | None | NO* | NO* | NO* | NO* | LocalBusiness (via React) |
-| Privacy `/privacy` | YES | None | NO* | NO* | NO* | NO* | None |
-| Terms `/terms` | YES | None | NO* | NO* | NO* | NO* | None |
-
-*) "NO*" = these values are present in the rendered DOM after JavaScript executes but the static HTML served to crawlers contains the homepage values instead.
-
----
-
-## Robots.txt Assessment
-
-**Score: 8/10 — Good**
-
-Strengths:
-- `Allow: /` for all crawlers by default
-- `/api/*` correctly disallowed
-- Explicit allow entries for GPTBot, ChatGPT-User, Google-Extended, anthropic-ai, ClaudeBot, PerplexityBot — excellent AI crawler coverage
-- Sitemap referenced correctly
-
-Weaknesses:
-- Missing Cohere-AI, Bytespider, meta-externalagent (see L4)
-- No `Disallow` for 404 page or utility routes
+| Priority | Issue | File | Impact |
+|----------|-------|------|--------|
+| P0 | BlogPost og:image uses relative URL — no image on social shares | `BlogPost.tsx:830,835` | HIGH: all blog social shares broken |
+| P0 | BlogPost JSON-LD `image` field uses relative URL | `BlogPost.tsx:~795` | HIGH: rich results validation failure |
+| P0 | llms-full.txt How It Works is stale (wrong product steps) | `client/public/llms-full.txt:63-66` | HIGH: AI systems describe wrong product |
+| P1 | Features meta description at 186 chars (26 over limit) | `Features.tsx:67` | MED: significant SERP truncation |
+| P1 | Home meta description at 162 chars (2 over limit) | `Home.tsx:77` | MED: minor SERP truncation |
+| P1 | ForDentists meta description at 165 chars (5 over limit) | `ForDentists.tsx:73` | MED: SERP truncation |
+| P1 | Features title at 75 chars (truncates at ~60) | `Features.tsx:66` | MED: SERP truncation |
+| P1 | Waitlist noindex but in sitemap — conflicting signals | `sitemap.xml` + `Waitlist.tsx:76` | MED: crawl budget waste |
+| P1 | Privacy + Terms noindex but in sitemap | `sitemap.xml` | LOW: crawl budget |
+| P1 | RSS feed image URL is relative (invalid) | `feed.xml:13` | MED: RSS aggregators broken |
+| P2 | All pages share one OG image — no social differentiation | All pages | MED: lower social CTR |
+| P2 | Privacy and Terms missing og:image and twitter:card | `Privacy.tsx`, `Terms.tsx` | LOW (noindex pages) |
+| P2 | BlogPost pages missing hreflang tags | `BlogPost.tsx` | LOW |
+| P2 | Pages missing x-default hreflang (only en present) | All page `.tsx` files | LOW |
+| P2 | Blog page H1→H3 skip (no H2 above featured posts) | `Blog.tsx` | LOW |
+| P2 | Home page no link to Blog | `Home.tsx` | MED: missed internal linking |
+| P2 | Blog posts no contextual internal links to product pages | `BlogPost.tsx` | MED: topical authority |
+| P2 | Duplicate Dr. Anca quote on 3 pages | Home, ForDentists, About | LOW |
+| P2 | Duplicate content in Home Features section (two overlapping subheads) | `Home.tsx:257-261` | LOW |
+| P3 | manifest.json missing PNG icon sizes | `manifest.json` | LOW: PWA install |
+| P3 | Organization JSON-LD duplicated in Contact.tsx and index.html | `Contact.tsx` | LOW |
+| P3 | Person JSON-LD duplicated in About.tsx and index.html | `About.tsx` | LOW |
+| P3 | WebSite schema missing SearchAction | `index.html` | LOW: Sitelinks feature |
+| P3 | Main JS bundle 339 KB — consider code splitting optimization | App.tsx, build config | MED: CWV/LCP |
+| P3 | useReveal hook duplicated in 7 files | All pages with animation | LOW: code quality |
+| P3 | Terms title at 29 chars — no brand keywords | `Terms.tsx:28` | INFO |
+| P3 | Gemini-AI bot not in robots.txt | `robots.txt` | INFO |
 
 ---
 
-## Sitemap Assessment
-
-**Score: 7/10 — Good with gaps**
-
-Strengths:
-- All 10 core pages listed with realistic priorities
-- All 6 blog posts listed with correct slugs and dates
-- Blog posts have accurate `lastmod` dates that match content dates
-- Sitemap domain matches canonical domain (perioskoup.com)
-- Correct XML structure with xhtml namespace for hreflang
-
-Weaknesses:
-- hreflang `xhtml:link` tags only present on homepage entry, absent from all other 9 core pages and all 6 blog posts (see H7)
-- `/404` is not listed (correct, this is by design)
-- changefreq values are reasonable but `yearly` for all blog posts may reduce crawl frequency — consider `monthly` for the most recent 3 posts
-
----
-
-## JSON-LD Structured Data Assessment
-
-**Score: 6.5/10**
-
-Present and correct:
-- `@graph` pattern in index.html with `WebSite`, `Organization`, `Person`, and `SoftwareApplication` — excellent
-- `SearchAction` on WebSite for sitelinks search box — good
-- `BreadcrumbList` generated by the Breadcrumb component on all secondary pages
-- `BlogPosting` with rich author, date, and FAQ data on individual blog posts
-- `FAQPage` on Home, Features, ForDentists, Pricing — covers all likely FAQ queries
-- `Product` with `Offer` on Pricing page
-- `LocalBusiness` on Contact page
-
-Issues:
-- `SoftwareApplication` missing `offers`, `featureList`, `screenshot` (see M4)
-- `BlogPosting` missing `dateModified` (see M8)
-- No `Blog` schema on the blog listing page (see H6)
-- `FAQPage` schema is runtime-injected via React and not present in static HTML crawlers receive
-- `Person` schema on About page duplicates the `Person` already declared in index.html — should use `@id` reference only: `{ "@id": "https://perioskoup.com/#anca-constantin" }` rather than re-declaring the full object
-
----
-
-## Heading Hierarchy Audit
-
-| Page | H1 Count | H2 Count | H3 Count | Issues |
-|------|------|------|------|------|
-| Home | 1 ("Between visits, we take over.") | 5 | 4 | H1 missing target keyword |
-| Features | 1 ("Built for the full dental journey.") | 1 | 9 | Correct |
-| For Dentists | 1 ("Your patients, better prepared.") | 2 | 4 | Correct |
-| About | 1 ("Born in a dental chair...") | 3 | 4 | Correct |
-| Blog | 1 ("Insights on dental health, AI, and care.") | 3 | 5 | Featured post titles use H2, regular post titles use H3 — inconsistent (see L2) |
-| Blog Post | 1 (article title) | Multiple | Multiple | Markdown-rendered, hierarchy depends on content |
-| Pricing | 1 ("Simple, transparent pricing.") | 1 | 5 | Correct |
-| Waitlist | 1 ("Join the founding waitlist.") | 0 | 0 | Missing H2/H3 substructure |
-| Contact | 1 ("Let's talk dental health.") | 0 | 1 | Missing H2 |
-| Privacy | 1 ("Privacy Policy") | 7 | 0 | Correct for legal page |
-| Terms | 1 ("Terms of Service") | 8 | 0 | Correct for legal page |
-
-All pages have exactly one H1. No heading level is skipped. Minor issue: Contact and Waitlist pages lack H2 headings, reducing semantic structure for those pages.
-
----
-
-## Internal Link Audit
-
-Total internal links across all pages (excluding Navbar and Footer which are consistent across all pages):
-
-- Home → /waitlist (x2), /for-dentists (x1), /features (x1)
-- Features → /waitlist (x2), /for-dentists (x1)
-- For Dentists → /waitlist (x3), /features (x1), /contact (x1)
-- About → /waitlist (x1), /contact (x1)
-- Blog → /blog/:slug (x6 — all posts)
-- Blog Post → /blog (x1 breadcrumb), /waitlist (x1 CTA)
-- Pricing → /waitlist (x2)
-- Waitlist → / (back link only)
-- Contact → none (only form)
-
-Missing cross-links:
-1. Blog → Features (no link to the product from editorial content)
-2. Blog → For Dentists (dentist-focused posts should link to the clinician page)
-3. Features → Blog (no editorial support for feature claims)
-4. Home → Blog (no editorial hub link from homepage)
-5. About → Features (no product discovery from team story)
-
-Recommendation: Add these 5 link paths as in-context links within body copy, not just navigation. Anchor text should use keyword-rich phrases ("dental habit tracking features", "AI dental companion for clinicians").
-
----
-
-## Duplicate / Thin Content Assessment
-
-**Blog content:** The six blog posts contain substantial, original long-form content (5-8 minute reads with unique angles). No duplicate content detected between posts.
-
-**Thin content risk:** The Waitlist page contains minimal text content — primarily a form. If it is indexed (currently it is, with `robots: index, follow`), it could be flagged as thin. Recommend either adding more unique content to the Waitlist page or adding `noindex` (see M9).
-
-**The Pricing page** mentions "Coming soon" for clinic pricing — this is thin on transactional information. Since the pricing section is intentionally blurred (beta overlay), this is acceptable short-term but should be replaced with real pricing copy at launch.
-
----
-
-## CWV (Core Web Vitals) Risk Assessment
-
-**Estimated risk: MEDIUM-HIGH**
-
-The following factors present CWV risk without direct measurement:
-
-1. **LCP:** Hero section loads a CDN background image as CSS `background-image` — this is not discoverable by the preload scanner, meaning it will load late. The LCP element on mobile is likely the hero text or image. No preload hint exists for the hero image (see L6).
-
-2. **INP (Interaction to Next Paint):** Multiple pages use synchronous IntersectionObserver hooks that run on every scroll event. The `useReveal` function is duplicated in 7 page components instead of being a shared module — a minor code smell but not a performance issue.
-
-3. **CLS:** CSS animations using `transform` and CSS custom properties (Ken Burns, orb animations) are generally CLS-safe. The ticker animation and parallax hero background should not cause layout shifts. Low risk.
-
-4. **Bundle size concern:** The `package.json` includes 30+ Radix UI packages, framer-motion, recharts, react-day-picker, embla-carousel, and other libraries not seen in any page component. If these are being tree-shaken by Vite, the impact is minimal. If not, the initial JS bundle could be 500KB+ which would severely impact TTI and INP on mobile. Recommend running a bundle analysis.
-
-5. **Google Fonts render blocking:** Despite `preconnect` hints, Google Fonts stylesheet is synchronously loaded. On slow connections this can delay First Contentful Paint by 100-300ms.
-
----
-
-## Summary Scorecard
+## Scores by Category
 
 | Category | Score | Notes |
-|------|------|------|
-| Title Tags | 2/10 | All pages serve homepage title in static HTML |
-| Meta Descriptions | 2/10 | All pages serve homepage description in static HTML |
-| Canonical URLs | 1/10 | All secondary pages canonicalize to homepage |
-| OG Tags | 3/10 | Only fixed via JS after hydration, not in static HTML |
-| Twitter Cards | 4/10 | Same static values, description too short |
-| JSON-LD (homepage) | 8/10 | Well-structured @graph with all key types |
-| JSON-LD (per-page) | 5/10 | Present but runtime-only; some types missing fields |
-| robots.txt | 8/10 | Excellent AI crawler coverage, minor omissions |
-| sitemap.xml | 7/10 | Complete pages and blog posts, missing per-page hreflang |
-| llms.txt | 8/10 | Accurate and comprehensive |
-| hreflang | 5/10 | Present in HTML and sitemap but only for homepage |
-| Heading hierarchy | 8/10 | Correct H1 on every page, minor Blog inconsistency |
-| Internal links | 6/10 | Navigation complete, missing editorial cross-links |
-| Bundle / CWV | 5/10 | LCP image not preloaded, large unused dependency set |
-| Content quality | 7/10 | Blog content is substantive; some thin pages |
-| **Overall** | **4.5/10** | Critical SPA meta tag architecture flaw dominates score |
+|----------|-------|-------|
+| Title Tags | 7/10 | 2 over-length, 1 too short |
+| Meta Descriptions | 5/10 | 3 over 160 chars, 2 under-length |
+| Canonical URLs | 10/10 | All correct, unique, correct domain |
+| OG Tags | 5/10 | Relative URL bug on blog, all pages share one image, 2 pages missing |
+| Twitter Cards | 7/10 | 2 pages missing, blog posts have relative URL bug |
+| JSON-LD Schemas | 7/10 | Comprehensive coverage but duplicates, relative URL in BlogPosting |
+| robots.txt | 9/10 | Excellent AI coverage, one minor omission |
+| sitemap.xml | 7/10 | All pages listed but 3 noindex pages included |
+| llms.txt / llms-full.txt | 6/10 | llms.txt accurate; llms-full.txt has stale How It Works content |
+| hreflang | 6/10 | Missing x-default on all pages, missing from BlogPost entirely |
+| Heading Hierarchy | 8/10 | One H1→H3 skip on Blog page, Home H1 lacks primary keyword |
+| Internal Links | 6/10 | Good nav coverage but missing blog→product links, Home→Blog link |
+| Bundle Size / CWV | 6/10 | 339 KB main bundle, 64 KB BlogPost chunk, CSS 103 KB |
+| Duplicate Content | 7/10 | Same quote on 3 pages, two minor duplicate paragraphs on Home |
+| Blog OG Images | 2/10 | Relative URL bug + all 6 posts share single image |
+| RSS Feed | 4/10 | Relative image URL breaks feed aggregators |
+| PWA Manifest | 5/10 | Missing PNG icon sizes |
+
+**OVERALL: 6.5 / 10**
 
 ---
 
-## Prioritised Fix Roadmap
+## Quick Wins (Can Fix in Under 30 Minutes)
 
-### Week 1 (P0 — Critical)
-1. Install `react-helmet-async` and add per-page `<Helmet>` to all 11 pages — fixes title, description, canonical, OG, and Twitter in-browser
-2. Add `prerender` plugin to Vite config for static HTML generation — fixes for crawlers
-3. Update homepage title to include "AI dental companion" keyword
+1. Fix BlogPost.tsx line 830, 835: change `/images/og-image.jpg` to `https://perioskoup.com/images/og-image.jpg`
+2. Fix BlogPost.tsx line ~795: change `OG_IMAGE` constant to use absolute URL
+3. Update llms-full.txt lines 63-66: replace "Scan/Analyze/Engage" with actual steps
+4. Fix feed.xml line 13: make image URL absolute
+5. Trim Home meta description by 3 chars (drop "real-time ")
+6. Remove noindex from Waitlist.tsx (it's a high-value conversion page)
+7. Remove /waitlist, /privacy, /terms from sitemap.xml (they are noindex)
+8. Add og:image and twitter:card to Privacy.tsx and Terms.tsx
 
-### Week 2 (P1 — High)
-4. Add hreflang `xhtml:link` to all non-home sitemap entries
-5. Fix geo.region from GB to RO
-6. Add `noindex` to Privacy, Terms, and Waitlist
-7. Expand Twitter card description to 140+ characters on all pages
+All 8 fixes touch 5 files. Estimated time: 20 minutes.
 
-### Week 3 (P2 — Medium)
-8. Add `dateModified` to all BlogPosting schemas
-9. Add Blog listing JSON-LD (Blog type with blogPost array)
-10. Expand SoftwareApplication schema with offers and featureList
-11. Add 5 missing editorial internal link paths
-12. Add LCP image preload hint for hero background
-
-### Week 4 (P3 — Low)
-13. Remove unused Radix UI packages from package.json
-14. Add React.lazy() code splitting for all page components
-15. Add missing AI crawler entries to robots.txt
-16. Add self-hosted font option to eliminate Google Fonts render blocking
-17. Confirm perioskoup.com Vercel custom domain and add Vercel subdomain redirect
-18. Fix Blog.tsx featured post headings from H2 to H3
-
----
-
-*Audit performed on 2026-03-06 against source code at `/Users/moziplaybook/Projects/official-perioskoup` and live site at `https://official-perioskoup.vercel.app`.*

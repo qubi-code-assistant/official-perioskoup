@@ -34,7 +34,7 @@ export default function ParallaxHeroBg() {
     <div
       ref={bgRef}
       aria-hidden="true"
-      className="pointer-events-none"
+      className="pointer-events-none dot-grid-bg"
       style={{
         position: "absolute",
         inset: "-20% 0",

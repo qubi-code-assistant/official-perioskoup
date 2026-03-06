@@ -23,7 +23,7 @@ const SECTIONS = [
 
 export default function Terms() {
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Terms of Service | Perioskoup</title>
         <meta name="description" content="Terms governing the use of the Perioskoup dental companion application, including wellness disclaimer and data responsibilities." />
