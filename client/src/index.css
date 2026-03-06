@@ -252,10 +252,10 @@
   to   { transform: translateX(-50%); }
 }
 
-/* Pulse ring on wave circles */
+/* Pulse ring on wave circles — GPU-composited via pseudo-element scale+opacity */
 @keyframes pulse-ring {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(192, 229, 122, 0.25); }
-  50%       { box-shadow: 0 0 0 16px rgba(192, 229, 122, 0); }
+  0%, 100% { transform: scale(0); opacity: 0.5; }
+  50%       { transform: scale(1); opacity: 0; }
 }
 
 /* Glow pulse — filter:drop-shadow is GPU-composited, not text-shadow */
@@ -309,12 +309,12 @@
   100% { transform: translateY(-400px) scale(0.3); opacity: 0; }
 }
 
-/* CTA section: horizontal scan line */
+/* CTA section: horizontal scan line — GPU-composited via translateY instead of top */
 @keyframes scan-line {
-  0%   { top: 100%; opacity: 0; }
+  0%   { transform: translateY(100vh); opacity: 0; }
   5%   { opacity: 0.15; }
   95%  { opacity: 0.15; }
-  100% { top: -2%; opacity: 0; }
+  100% { transform: translateY(-2vh); opacity: 0; }
 }
 
 /* Page entry fade — for route transitions */
@@ -456,10 +456,11 @@
 
 .cta-scan-line {
   position: absolute;
-  left: 0; right: 0;
+  top: 0; left: 0; right: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(192,229,122,0.2), transparent);
   animation: scan-line 8s linear infinite;
+  will-change: transform, opacity;
   pointer-events: none;
 }
 
@@ -887,8 +888,22 @@
   }
   .ticker-track:hover { animation-play-state: paused; }
 
-  /* Wave circle (How It Works) */
-  .circle-pulse { animation: pulse-ring 3.5s ease-in-out infinite; }
+  /* Wave circle (How It Works) — pulse via ::after pseudo-element (GPU-composited) */
+  .circle-pulse {
+    position: relative;
+  }
+  .circle-pulse::after {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    border: 2px solid rgba(192, 229, 122, 0.25);
+    transform: scale(0);
+    opacity: 0.5;
+    animation: pulse-ring 3.5s ease-in-out infinite;
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
 
   /* Phone float */
   .phone-float { animation: float 5.5s ease-in-out infinite; }
@@ -950,10 +965,11 @@
 
   .hero-scan-line {
     position: absolute;
-    left: 0; right: 0;
+    top: 0; left: 0; right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(192,229,122,0.15), transparent);
     animation: hero-scan 6s ease-in-out infinite;
+    will-change: transform, opacity;
   }
 
   .hero-ring {
@@ -985,11 +1001,12 @@
   .hero-wave-svg  { animation: hero-wave-drift 12s ease-in-out infinite; }
   .hero-wave-svg-2 { animation: hero-wave-drift 16s ease-in-out infinite reverse; }
 
+  /* hero-scan — GPU-composited via translateY instead of top */
   @keyframes hero-scan {
-    0%   { top: 0%; opacity: 0; }
+    0%   { transform: translateY(0%); opacity: 0; }
     10%  { opacity: 1; }
     90%  { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
+    100% { transform: translateY(100%); opacity: 0; }
   }
 
   @keyframes hero-ring-pulse {
@@ -1076,6 +1093,7 @@
   .hero-ring-2,
   .ticker-track,
   .circle-pulse,
+  .circle-pulse::after,
   .phone-float,
   .text-glow,
   .cta-grid,

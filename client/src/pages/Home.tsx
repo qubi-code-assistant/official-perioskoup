@@ -17,7 +17,7 @@ import PhoneMockup from "@/components/PhoneMockup";
 
 // Local Asset URLs
 const ASSETS = {
-  heroBg:       "/images/hero-bg.jpg",
+  heroBg:       "/images/hero-bg.webp",
   featuresBg:   "/images/features-bg-v2.webp",
   ctaBg:        "/images/cta-bg-v2.webp",
   anca:         "/images/anca-headshot.jpg",
@@ -206,7 +206,7 @@ export default function Home() {
       {/* HERO */}
       <section id="main-content" style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(48px, 8vw, 80px)", overflow: "hidden" }}>
         {/* Hero LCP image — outside wrapper so overflow:hidden doesn't block LCP detection */}
-        <img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" fetchPriority="high" decoding="async" width={1280} height={714} className="hero-lcp-img ken-burns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
+        <img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" fetchPriority="high" width={1280} height={714} className="hero-lcp-img ken-burns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
         {/* Animated background overlays */}
         <div className="animated-bg-wrapper">
           <div className="bg-overlay" style={{ background: "linear-gradient(105deg, rgba(10,23,30,0.88) 0%, rgba(10,23,30,0.7) 50%, rgba(10,23,30,0.4) 100%)" }} />
