@@ -29,7 +29,7 @@ export default function WaitlistPage() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto relative">
           <div className="max-w-2xl mx-auto">
-            <div data-gsap="fade-up" className="text-center mb-12">
+            <div className="text-center mb-12 hero-enter">
               <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-4">
                 Early Access
               </span>
@@ -43,7 +43,7 @@ export default function WaitlistPage() {
             </div>
 
             {/* Trust signals */}
-            <div data-gsap="fade-up" className="flex flex-wrap items-center justify-center gap-6 mb-12">
+            <div className="flex flex-wrap items-center justify-center gap-6 mb-12 hero-enter hero-enter-delay-1">
               {[
                 '30+ clinics already joined',
                 'No credit card required',
@@ -69,7 +69,7 @@ export default function WaitlistPage() {
               ))}
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="hero-enter hero-enter-delay-2">
               <WaitlistForm />
             </div>
 

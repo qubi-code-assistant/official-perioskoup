@@ -42,10 +42,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <Navigation />
-        <ScrollReveal>
-          <main id="main">{children}</main>
-        </ScrollReveal>
+        <main id="main">{children}</main>
         <Footer />
+        <ScrollReveal />
       </body>
     </html>
   )

@@ -112,7 +112,7 @@ export default function FeaturesPage() {
       <section className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
         {/* Ambient glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="max-w-[1200px] mx-auto text-center relative" data-gsap="fade-up">
+        <div className="max-w-[1200px] mx-auto text-center relative hero-enter hero-enter-delay-1">
           <p className="perio-label mb-6 font-body">
             Platform Overview
           </p>
@@ -142,7 +142,7 @@ export default function FeaturesPage() {
           <div className="max-w-[1200px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Text side */}
-              <div className={index % 2 !== 0 ? 'lg:order-2' : ''} data-gsap="fade-up">
+              <div className={`${index % 2 !== 0 ? 'lg:order-2' : ''} reveal`}>
                 <p className="perio-label mb-4 font-body">
                   {feature.label}
                 </p>
@@ -160,7 +160,7 @@ export default function FeaturesPage() {
               </div>
 
               {/* Visual side */}
-              <div className={index % 2 !== 0 ? 'lg:order-1' : ''} data-gsap="fade-up">
+              <div className={`${index % 2 !== 0 ? 'lg:order-1' : ''} reveal`}>
                 <div className="titanium-card p-8 flex items-center justify-center aspect-[4/3] relative overflow-hidden">
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-lime-400/8 via-navy-700/10 to-transparent pointer-events-none" />
@@ -180,7 +180,7 @@ export default function FeaturesPage() {
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20 relative">
         {/* Ambient glow */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="max-w-[1200px] mx-auto text-center relative" data-gsap="fade-up">
+        <div className="max-w-[1200px] mx-auto text-center relative reveal">
           <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.8] text-lime-50 mb-6">
             Ready to See It in Action?
           </h2>
@@ -202,7 +202,7 @@ export default function FeaturesPage() {
         {/* Ambient glow */}
         <div className="absolute top-1/3 right-0 translate-x-1/4 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-16" data-gsap="fade-up">
+          <div className="text-center mb-16 reveal">
             <p className="perio-label mb-4 font-body">
               FAQ
             </p>
@@ -211,12 +211,11 @@ export default function FeaturesPage() {
             </h2>
           </div>
 
-          <div className="max-w-3xl mx-auto space-y-6" data-gsap-stagger>
+          <div className="max-w-3xl mx-auto space-y-6 reveal-stagger">
             {FAQS.map((faq) => (
               <div
                 key={faq.question}
-                className="titanium-card p-8"
-                data-gsap="stagger-item"
+                className="titanium-card p-8 reveal-item"
               >
                 <h3 className="font-heading text-[clamp(1.75rem,3vw,2.5rem)] text-lime-50 mb-3 leading-[0.85]">
                   {faq.question}

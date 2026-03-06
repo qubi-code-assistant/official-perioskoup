@@ -15,7 +15,6 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "gray-matter": "^4.0.3",
-    "gsap": "^3.14.2",
     "next": "16.1.6",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.3",

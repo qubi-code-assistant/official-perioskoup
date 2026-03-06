@@ -28,7 +28,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-6 md:px-12 lg:px-20">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
-        <div data-gsap="fade-up" className="max-w-3xl mx-auto text-center relative">
+        <div className="max-w-3xl mx-auto text-center relative hero-enter">
           <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-4">
             Get in Touch
           </span>
@@ -46,12 +46,12 @@ export default function ContactPage() {
       <section className="pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Form */}
-          <div data-gsap="fade-up" className="lg:col-span-3">
+          <div className="lg:col-span-3 reveal">
             <ContactForm />
           </div>
 
           {/* Contact info */}
-          <div data-gsap="fade-up" className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 reveal">
             <div className="titanium-card p-8">
               <h2 className="font-heading text-[2.5rem] text-lime-50 mb-6 leading-none">
                 Other Ways to Reach Us

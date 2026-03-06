@@ -98,27 +98,94 @@ body {
   color: #0a171e;
 }
 
-/* GSAP animation bootstrap — hidden until JS reveals them */
-@media (prefers-reduced-motion: no-preference) {
-  [data-gsap] {
-    opacity: 0;
-  }
+/* ── Scroll reveal system ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Fallback: if GSAP hasn't revealed after 3s, show content */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes gsap-fallback {
-    to { opacity: 1; }
-  }
-  [data-gsap] {
-    animation: gsap-fallback 0s 3s forwards;
-  }
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
-/* For reduced-motion users, never hide */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger children */
+.reveal-stagger > .reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-stagger.visible > .reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger.visible > .reveal-item:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(2) { transition-delay: 100ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(3) { transition-delay: 200ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(4) { transition-delay: 300ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(5) { transition-delay: 400ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(6) { transition-delay: 500ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(7) { transition-delay: 600ms; }
+.reveal-stagger.visible > .reveal-item:nth-child(8) { transition-delay: 700ms; }
+
+/* Hero entrance — animate on load, no scroll needed */
+.hero-enter {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: heroEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-enter-delay-1 { animation-delay: 0.1s; }
+.hero-enter-delay-2 { animation-delay: 0.2s; }
+.hero-enter-delay-3 { animation-delay: 0.3s; }
+.hero-enter-delay-4 { animation-delay: 0.5s; }
+
+@keyframes heroEnter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Reduced motion: show everything immediately */
 @media (prefers-reduced-motion: reduce) {
-  [data-gsap] {
+  .reveal, .reveal-scale, .reveal-left, .reveal-right,
+  .reveal-stagger > .reveal-item, .hero-enter {
     opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
 

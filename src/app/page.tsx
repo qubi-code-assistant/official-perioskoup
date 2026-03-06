@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { createMetadata } from '@/lib/metadata'
-import HomeAnimations from './HomeAnimations'
+import ClinicCounter from '@/components/ClinicCounter'
 import InlineWaitlistForm from '@/components/InlineWaitlistForm'
 
 export const metadata = createMetadata({
@@ -173,10 +173,9 @@ const TRUST_BADGES = [
 
 export default function Home() {
   return (
-    <HomeAnimations>
+    <>
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section
-        data-hero-section
         className="relative min-h-screen flex items-center pt-24 md:pt-20 pb-16 px-6 md:px-12 lg:px-20 overflow-hidden"
       >
         {/* Ambient background glow */}
@@ -187,8 +186,7 @@ export default function Home() {
           <div className="lg:col-span-5">
             {/* Badge */}
             <div
-              data-gsap="hero-text"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-navy-700/50 text-navy-300 mb-8 backdrop-blur-md bg-navy-950/40"
+              className="hero-enter inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-navy-700/50 text-navy-300 mb-8 backdrop-blur-md bg-navy-950/40"
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-lime-400">
                 <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
@@ -197,13 +195,13 @@ export default function Home() {
             </div>
 
             {/* Headline — Dongle at massive scale */}
-            <h1 data-gsap="hero-text" className="font-heading text-[clamp(3.5rem,10vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-50 mb-6">
+            <h1 className="hero-enter hero-enter-delay-1 font-heading text-[clamp(3.5rem,10vw,10rem)] leading-[0.8] tracking-[-0.04em] text-lime-50 mb-6">
               Precision<br />
               <span className="text-lime-400/90">Perio.</span>
             </h1>
 
             {/* Quote */}
-            <div data-gsap="hero-text" className="flex flex-col gap-2 mb-10 max-w-md pl-4 border-l-2 border-lime-400/20">
+            <div className="hero-enter hero-enter-delay-2 flex flex-col gap-2 mb-10 max-w-md pl-4 border-l-2 border-lime-400/20">
               <p className="text-lg md:text-xl text-navy-300 leading-relaxed">
                 &ldquo;Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes.&rdquo;
               </p>
@@ -211,7 +209,7 @@ export default function Home() {
             </div>
 
             {/* CTA */}
-            <div data-gsap="hero-text" className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="hero-enter hero-enter-delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Link
                 href="/waitlist"
                 className="group flex items-center gap-3 bg-lime-400 hover:bg-lime-300 text-navy-950 px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)]"
@@ -228,7 +226,7 @@ export default function Home() {
           </div>
 
           {/* Right: Massive phone mockup */}
-          <div data-gsap="hero-phone" className="lg:col-span-7 relative flex justify-center lg:justify-end">
+          <div className="hero-enter hero-enter-delay-4 lg:col-span-7 relative flex justify-center lg:justify-end">
             <div className="relative w-[240px] sm:w-[320px] md:w-[400px] lg:w-[600px] xl:w-[720px] -rotate-[6deg] lg:translate-x-24 xl:translate-x-32">
               {/* Phone bezel */}
               <div className="bg-[#1d3449] rounded-[3rem] p-2 shadow-[0_20px_60px_rgba(0,0,0,0.5)] ring-1 ring-lime-400/10">
@@ -262,7 +260,7 @@ export default function Home() {
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
           {/* Section header */}
-          <div data-gsap="fade-up" className="text-center mb-20 md:mb-28">
+          <div className="reveal text-center mb-20 md:mb-28">
             <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4 block">The new standard</span>
             <h2 className="font-heading text-[clamp(2.5rem,7vw,6rem)] leading-[0.85] tracking-tight text-lime-50">
               A Tale of Two Clinics
@@ -273,7 +271,7 @@ export default function Home() {
           </div>
 
           {/* Comparison grid */}
-          <div data-gsap-stagger className="relative grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 md:gap-y-20">
+          <div className="reveal-stagger relative grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 md:gap-y-20">
             {/* Central timeline (desktop) — thicker */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[3px] -ml-[1.5px] bg-gradient-to-b from-navy-700/30 via-lime-400/40 to-lime-400 glow-lime z-0" />
 
@@ -289,7 +287,7 @@ export default function Home() {
             {COMPARISON_ROWS.map((row, i) => (
               <div key={i} className="contents">
                 {/* Problem card */}
-                <div data-gsap="stagger-item" className="flex flex-col items-end md:pr-12">
+                <div className="reveal-item flex flex-col items-end md:pr-12">
                   <div className="md:hidden text-navy-500 text-xs uppercase tracking-wider font-semibold mb-2">The Standard</div>
                   <div className="bg-red-500/5 border border-white/5 border-l-2 border-l-red-400/30 p-8 rounded-[2rem] w-full transition-all duration-300 hover:bg-navy-800/60">
                     <div className="flex items-start gap-4">
@@ -307,7 +305,7 @@ export default function Home() {
                 </div>
 
                 {/* Solution card */}
-                <div data-gsap="stagger-item" className="flex flex-col items-start md:pl-12">
+                <div className="reveal-item flex flex-col items-start md:pl-12">
                   <div className="md:hidden text-lime-400 text-xs uppercase tracking-wider font-semibold mb-2 mt-4">With Perioskoup</div>
                   <div className="bg-navy-800 border border-lime-400/30 border-l-2 border-l-lime-400 p-8 rounded-[2rem] w-full shadow-[0_0_30px_-10px_rgba(192,229,122,0.1)] transition-transform duration-300 hover:-translate-y-1">
                     <div className="flex items-start gap-4">
@@ -328,7 +326,7 @@ export default function Home() {
           </div>
 
           {/* CTA */}
-          <div data-gsap="fade-up" className="mt-20 flex flex-col items-center text-center">
+          <div className="reveal mt-20 flex flex-col items-center text-center">
             <p className="text-navy-400 uppercase tracking-[0.2em] text-sm mb-6">Ready to upgrade?</p>
             <Link
               href="/features"
@@ -348,7 +346,7 @@ export default function Home() {
       {/* ═══════════════════ BENTO FEATURES ═══════════════════ */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
-          <header data-gsap="fade-up" className="mb-12">
+          <header className="reveal mb-12">
             <h2 className="font-heading text-[clamp(3rem,8vw,7.5rem)] leading-[0.8] tracking-tight text-lime-50">
               Precision Features
             </h2>
@@ -358,9 +356,9 @@ export default function Home() {
           </header>
 
           {/* Bento grid — 3-column */}
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1: AI Companion — spans 2 cols + 2 rows */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[400px] md:min-h-[520px] md:col-span-2 md:row-span-2 shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+            <div className="reveal-item titanium-card overflow-hidden relative flex flex-col min-h-[400px] md:min-h-[520px] md:col-span-2 md:row-span-2 shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
               <div className="absolute bottom-0 left-0 p-8 z-20 w-full bg-gradient-to-t from-navy-800 via-navy-800/90 to-transparent pt-20">
                 <h3 className="font-heading text-[2.5rem] leading-none text-lime-50 mb-1">AI Companion</h3>
@@ -421,7 +419,7 @@ export default function Home() {
             </div>
 
             {/* Card 2: Habit Tracking — horizontal bars for 1-col fit */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden flex flex-col min-h-[280px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+            <div className="reveal-item titanium-card overflow-hidden flex flex-col min-h-[280px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="flex-1 p-8 flex flex-col justify-center gap-5">
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-lime-400 uppercase tracking-wider font-semibold w-12 shrink-0">Brush</span>
@@ -452,7 +450,7 @@ export default function Home() {
             </div>
 
             {/* Card 3: Dentist Dashboard — spans 2 cols */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[280px] md:min-h-[300px] md:col-span-2 shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+            <div className="reveal-item titanium-card overflow-hidden relative flex flex-col min-h-[280px] md:min-h-[300px] md:col-span-2 shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="absolute inset-0 flex items-center justify-center opacity-80">
                 <svg className="w-full h-full" fill="none" viewBox="0 0 500 150" preserveAspectRatio="none">
                   <defs>
@@ -484,7 +482,7 @@ export default function Home() {
             </div>
 
             {/* Card 4: Smart Reminders */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden flex flex-col justify-between min-h-[280px] md:min-h-[300px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+            <div className="reveal-item titanium-card overflow-hidden flex flex-col justify-between min-h-[280px] md:min-h-[300px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="flex-1 flex flex-col items-center justify-center relative p-8">
                 <div className="absolute w-32 h-32 bg-lime-400/5 rounded-full animate-ping opacity-20" />
                 <div className="relative">
@@ -524,7 +522,7 @@ export default function Home() {
       <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div data-gsap="fade-up" className="relative z-10 flex flex-col items-center max-w-4xl mx-auto space-y-16">
+        <div className="reveal relative z-10 flex flex-col items-center max-w-4xl mx-auto space-y-16">
           {/* EFP badge */}
           <div className="flex flex-col items-center gap-4 opacity-60 hover:opacity-100 transition-opacity duration-500 cursor-default">
             <div className="h-20 w-20 border border-navy-700/40 rounded-full flex items-center justify-center">
@@ -546,13 +544,7 @@ export default function Home() {
               </span>
               <span className="text-xs tracking-[0.15em] uppercase text-navy-400 font-medium">Founding Waitlist</span>
             </div>
-            <h2
-              data-clinic-counter
-              data-gsap
-              className="font-heading text-[clamp(5rem,14vw,12rem)] leading-[0.8] tracking-[-0.04em] text-lime-400"
-            >
-              30 Clinics
-            </h2>
+            <ClinicCounter className="font-heading text-[clamp(5rem,14vw,12rem)] leading-[0.8] tracking-[-0.04em] text-lime-400" />
             <p className="text-navy-300 text-xl max-w-md mt-6 leading-relaxed">
               Already transforming patient engagement across Europe&rsquo;s top periodontal practices.
             </p>
@@ -608,13 +600,12 @@ export default function Home() {
 
       {/* ═══════════════════ WORKFLOW — "From Chair to Chat" ═══════════════════ */}
       <section
-        data-steps-section
         className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden"
       >
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="relative max-w-[1200px] mx-auto z-10">
-          <div data-gsap="fade-up" className="text-center mb-20 md:mb-28">
+          <div className="reveal text-center mb-20 md:mb-28">
             <span className="inline-block py-1 px-3 rounded-full border border-navy-700/40 text-navy-400 text-xs uppercase tracking-[0.15em] font-medium mb-4">
               Seamless Integration
             </span>
@@ -627,11 +618,10 @@ export default function Home() {
           </div>
 
           {/* Steps */}
-          <div data-gsap-stagger className="relative grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
+          <div className="reveal-stagger relative grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
             {/* SVG curved connector (desktop) */}
             <div
-              data-gsap="step-line"
-              className="hidden md:block absolute top-0 left-0 right-0 h-[320px] pointer-events-none"
+              className="reveal hidden md:block absolute top-0 left-0 right-0 h-[320px] pointer-events-none"
             >
               <svg className="w-full h-full" viewBox="0 0 1200 320" fill="none" preserveAspectRatio="none">
                 <defs>
@@ -649,7 +639,7 @@ export default function Home() {
             </div>
 
             {STEPS.map((step, i) => (
-              <div key={step.number} data-gsap="stagger-item" className={`flex flex-col items-center text-center ${i === 1 ? 'md:mt-20' : ''}`}>
+              <div key={step.number} className={`reveal-item flex flex-col items-center text-center ${i === 1 ? 'md:mt-20' : ''}`}>
                 <div className="relative mb-8">
                   <div className={`${i === 1 ? 'w-44 h-44 md:w-48 md:h-48' : 'w-40 h-40 md:w-44 md:h-44'} rounded-full bg-navy-800 border border-navy-700/40 flex items-center justify-center relative transition-transform duration-500 hover:scale-105`}>
                     <div className="absolute inset-3 rounded-full border border-navy-700/30" />
@@ -665,7 +655,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div data-gsap="fade-up" className="mt-20 md:mt-28 flex justify-center">
+          <div className="reveal mt-20 md:mt-28 flex justify-center">
             <Link
               href="/features"
               className="group flex items-center gap-3 border border-navy-700/40 hover:border-lime-400 text-lime-50 px-8 py-4 rounded-full transition-all duration-300 hover:bg-navy-800/50"
@@ -684,7 +674,7 @@ export default function Home() {
       {/* ═══════════════════ KNOWLEDGE HUB / BLOG PREVIEW ═══════════════════ */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto">
-          <div data-gsap="fade-up" className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="reveal mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-2">Knowledge Hub</span>
               <h2 className="font-heading text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-lime-50">
@@ -703,12 +693,11 @@ export default function Home() {
           </div>
 
           {/* Blog grid — featured layout */}
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Featured post */}
             <Link
               href={BLOG_POSTS[0].slug}
-              data-gsap="stagger-item"
-              className="titanium-card group md:col-span-2 md:row-span-2 relative overflow-hidden flex flex-col justify-end min-h-[400px] md:min-h-0"
+              className="reveal-item titanium-card group md:col-span-2 md:row-span-2 relative overflow-hidden flex flex-col justify-end min-h-[400px] md:min-h-0"
             >
               {/* Abstract background */}
               <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-900/80 to-navy-800/40" />
@@ -751,8 +740,7 @@ export default function Home() {
               <Link
                 key={post.slug}
                 href={post.slug}
-                data-gsap="stagger-item"
-                className="titanium-card group p-6 md:p-8 flex flex-col justify-between"
+                className="reveal-item titanium-card group p-6 md:p-8 flex flex-col justify-between"
               >
                 <div>
                   <span className="text-lime-400 text-xs uppercase tracking-[0.15em] font-semibold">{post.category}</span>
@@ -794,7 +782,7 @@ export default function Home() {
       <section className="relative py-24 md:py-40 px-6 md:px-12 lg:px-20 bg-[#050c10] overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-lime-400/5 blur-[120px] rounded-full pointer-events-none" />
 
-        <div data-gsap="fade-up" className="relative max-w-2xl mx-auto text-center z-10">
+        <div className="reveal relative max-w-2xl mx-auto text-center z-10">
           <span className="text-lime-400 text-sm md:text-base font-semibold tracking-[0.05em] uppercase mb-4 block opacity-80">
             Membership
           </span>
@@ -819,6 +807,6 @@ export default function Home() {
           </p>
         </div>
       </section>
-    </HomeAnimations>
+    </>
   )
 }

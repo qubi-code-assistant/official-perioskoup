@@ -27,7 +27,7 @@ export default function PrivacyPage() {
       <section className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto relative">
-          <div data-gsap="fade-up">
+          <div className="hero-enter">
             <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-4">
               Legal
             </span>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           </div>
 
           <div className="space-y-10">
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Our Commitment to Privacy
               </h2>
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Data We Collect
               </h2>
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
               </ul>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 How We Use Your Data
               </h2>
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Data Protection
               </h2>
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Your Rights
               </h2>
@@ -108,7 +108,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Contact
               </h2>
@@ -124,7 +124,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up" className="pt-8 border-t border-white/5">
+            <div className="reveal pt-8 border-t border-white/5">
               <p className="text-navy-500 text-sm">
                 This privacy policy will be updated with comprehensive terms
                 before our public launch. The full policy will cover cookies,

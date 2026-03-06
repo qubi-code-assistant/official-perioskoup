@@ -92,7 +92,7 @@ export default function AboutPage() {
         {/* Ambient glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div data-gsap="fade-up" className="relative z-10 max-w-[1200px] mx-auto text-center">
+        <div className="hero-enter relative z-10 max-w-[1200px] mx-auto text-center">
           <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
             Our Mission
           </p>
@@ -113,7 +113,7 @@ export default function AboutPage() {
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <div data-gsap="fade-up" className="text-center mb-16">
+          <div className="reveal text-center mb-16">
             <p className="perio-label mb-4">
               The People
             </p>
@@ -121,12 +121,11 @@ export default function AboutPage() {
               Meet the Team
             </h2>
           </div>
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-8">
             {team.map((member) => (
               <div
                 key={member.name}
-                data-gsap="stagger-item"
-                className="titanium-card p-8 flex flex-col"
+                className="reveal-item titanium-card p-8 flex flex-col"
               >
                 <div className="overflow-hidden rounded-2xl">
                   <Image
@@ -173,7 +172,7 @@ export default function AboutPage() {
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
-          <div data-gsap="fade-up" className="text-center mb-16">
+          <div className="reveal text-center mb-16">
             <p className="perio-label mb-4">
               What We Stand For
             </p>
@@ -181,12 +180,11 @@ export default function AboutPage() {
               Our Values
             </h2>
           </div>
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value) => (
               <div
                 key={value.title}
-                data-gsap="stagger-item"
-                className="titanium-card p-8"
+                className="reveal-item titanium-card p-8"
               >
                 <div className="mb-5">
                   {value.icon}
@@ -209,7 +207,7 @@ export default function AboutPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-lime-400/8 rounded-full blur-[80px] pointer-events-none" />
 
-        <div data-gsap="fade-up" className="relative z-10 max-w-[1200px] mx-auto text-center">
+        <div className="reveal-scale relative z-10 max-w-[1200px] mx-auto text-center">
           <div className="inline-block py-1.5 px-4 rounded-full border border-lime-400/20 bg-lime-400/5 mb-8">
             <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold">
               Recognition

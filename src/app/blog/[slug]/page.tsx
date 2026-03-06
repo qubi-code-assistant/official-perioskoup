@@ -159,7 +159,7 @@ export default async function BlogPostPage({ params }: Props) {
             {/* Main Content */}
             <div>
               {/* Header */}
-              <header data-gsap="fade-up" className="mb-12">
+              <header className="hero-enter mb-12">
                 <div className="flex items-center gap-3 mb-6">
                   <Link
                     href={`/blog?category=${frontmatter.category}`}

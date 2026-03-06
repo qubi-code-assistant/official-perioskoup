@@ -27,7 +27,7 @@ export default function TermsPage() {
       <section className="relative pt-32 md:pt-40 pb-24 md:pb-40 px-6 md:px-12 lg:px-20">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto relative">
-          <div data-gsap="fade-up">
+          <div className="hero-enter">
             <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-4">
               Legal
             </span>
@@ -40,7 +40,7 @@ export default function TermsPage() {
           </div>
 
           <div className="space-y-10">
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Overview
               </h2>
@@ -52,7 +52,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Nature of the Service
               </h2>
@@ -65,7 +65,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 User Accounts
               </h2>
@@ -76,7 +76,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Acceptable Use
               </h2>
@@ -97,7 +97,7 @@ export default function TermsPage() {
               </ul>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Intellectual Property
               </h2>
@@ -108,7 +108,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Limitation of Liability
               </h2>
@@ -119,7 +119,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Changes to Terms
               </h2>
@@ -129,7 +129,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up">
+            <div className="reveal">
               <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] text-lime-50 mb-3 leading-[0.85]">
                 Contact
               </h2>
@@ -145,7 +145,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div data-gsap="fade-up" className="pt-8 border-t border-white/5">
+            <div className="reveal pt-8 border-t border-white/5">
               <p className="text-navy-500 text-sm">
                 These terms of service will be expanded with comprehensive legal
                 language before our public launch, including detailed sections on

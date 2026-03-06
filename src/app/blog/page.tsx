@@ -52,7 +52,7 @@ export default async function BlogPage({
       {/* Hero */}
       <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-6 md:px-12 lg:px-20">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
-        <div data-gsap="fade-up" className="max-w-[1200px] mx-auto relative">
+        <div className="max-w-[1200px] mx-auto relative hero-enter">
           <span className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold block mb-4">Knowledge Hub</span>
           <h1 className="font-heading text-[clamp(4rem,10vw,7rem)] leading-[0.8] text-lime-50">
             Clinical<br /><span className="text-navy-400">Intelligence.</span>
@@ -101,13 +101,12 @@ export default async function BlogPage({
               No posts found in this category yet.
             </p>
           ) : (
-            <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-stagger">
               {paginatedPosts.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  data-gsap="stagger-item"
-                  className="titanium-card group p-8 flex flex-col justify-between"
+                  className="titanium-card group p-8 flex flex-col justify-between reveal-item"
                 >
                   <div>
                     <div className="flex items-center gap-3 mb-4">

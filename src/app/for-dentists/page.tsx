@@ -80,25 +80,22 @@ export default function ForDentists() {
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto w-full text-center relative">
           <p
-            data-gsap="fade-up"
-            className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6"
+            className="hero-enter text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6"
           >
             For Dental Practices
           </p>
           <h1
-            data-gsap="fade-up"
-            className="font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.8] text-lime-50 mb-8 max-w-5xl mx-auto"
+            className="hero-enter hero-enter-delay-1 font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.8] text-lime-50 mb-8 max-w-5xl mx-auto"
           >
             How Much Time Are You Losing?
           </h1>
           <p
-            data-gsap="fade-up"
-            className="text-navy-300 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10"
+            className="hero-enter hero-enter-delay-2 text-navy-300 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10"
           >
             The average dental practice spends 15+ minutes per patient re-educating on oral care
             routines. Perioskoup keeps patients engaged between visits, so they arrive prepared.
           </p>
-          <div data-gsap="fade-up">
+          <div className="hero-enter hero-enter-delay-3">
             <Link
               href="/waitlist"
               className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"
@@ -114,7 +111,7 @@ export default function ForDentists() {
         {/* Ambient glow */}
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto relative">
-          <div data-gsap="fade-up" className="text-center mb-16">
+          <div className="reveal text-center mb-16">
             <p className="perio-label mb-4">
               The Impact
             </p>
@@ -123,12 +120,11 @@ export default function ForDentists() {
             </h2>
           </div>
 
-          <div data-gsap-stagger className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          <div className="reveal-stagger grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                data-gsap="stagger-item"
-                className="titanium-card p-8 text-center"
+                className="reveal-item titanium-card p-8 text-center"
               >
                 <p className="font-heading text-[clamp(2.5rem,8vw,7rem)] text-lime-400 leading-none mb-2">
                   {stat.value}
@@ -145,7 +141,7 @@ export default function ForDentists() {
         {/* Ambient glow */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto relative">
-          <div data-gsap="fade-up" className="text-center mb-16">
+          <div className="reveal text-center mb-16">
             <p className="perio-label mb-4">
               Why Perioskoup
             </p>
@@ -154,12 +150,11 @@ export default function ForDentists() {
             </h2>
           </div>
 
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {BENEFITS.map((benefit) => (
               <div
                 key={benefit.title}
-                data-gsap="stagger-item"
-                className="titanium-card p-8"
+                className="reveal-item titanium-card p-8"
               >
                 <div className="w-14 h-14 rounded-2xl bg-lime-400/10 text-lime-400 flex items-center justify-center mb-6">
                   {benefit.icon}
@@ -179,7 +174,7 @@ export default function ForDentists() {
         {/* Ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto relative">
-          <div data-gsap="fade-up" className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+          <div className="reveal flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
             <div className="flex items-center gap-3">
               <svg
                 viewBox="0 0 24 24"
@@ -233,15 +228,14 @@ export default function ForDentists() {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto text-center relative">
           <h2
-            data-gsap="fade-up"
-            className="font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.8] text-lime-50 mb-6"
+            className="reveal font-heading text-[clamp(3rem,8vw,8rem)] leading-[0.8] text-lime-50 mb-6"
           >
             Ready to Transform Your Practice?
           </h2>
-          <p data-gsap="fade-up" className="text-navy-300 text-lg leading-relaxed mb-10">
+          <p className="reveal text-navy-300 text-lg leading-relaxed mb-10">
             Join 30+ clinics already on the waitlist. Free for early adopters.
           </p>
-          <div data-gsap="fade-up">
+          <div className="reveal">
             <Link
               href="/waitlist"
               className="inline-block bg-lime-400 text-navy-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all"

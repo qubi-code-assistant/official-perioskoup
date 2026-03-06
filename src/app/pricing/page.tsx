@@ -59,7 +59,7 @@ export default function PricingPage() {
 
       {/* Hero */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1200px] mx-auto text-center" data-gsap="fade-up">
+        <div className="max-w-[1200px] mx-auto text-center hero-enter">
           <p className="perio-label mb-6">
             Plans
           </p>
