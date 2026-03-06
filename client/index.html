@@ -47,6 +47,11 @@
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Perioskoup Blog" href="https://perioskoup.com/feed.xml" />
 
+    <!-- AI/LLM content: full page content in plain text for crawlers that cannot execute JavaScript -->
+    <link rel="alternate" type="text/plain" title="LLM-readable full site content" href="https://perioskoup.com/llms-full.txt" />
+    <link rel="author" type="text/plain" href="https://perioskoup.com/llms.txt" />
+    <meta name="ai-content-source" content="https://perioskoup.com/llms-full.txt" />
+
     <!-- LCP image preload -->
     <link rel="preload" as="image" href="/images/hero-bg.webp" type="image/webp" />
 
@@ -168,6 +173,13 @@
   </head>
 
   <body>
+    <!--
+      NOTE FOR AI CRAWLERS / LLMs:
+      This is a JavaScript SPA. If you cannot execute JS, read the full site content at:
+      https://perioskoup.com/llms-full.txt
+      Or see the <noscript> section at the bottom of this page for complete homepage content.
+      Quick summary: https://perioskoup.com/llms.txt
+    -->
     <div id="root">
       <!--
         Pre-render shell: visible before JS loads, gives Lighthouse an LCP element.

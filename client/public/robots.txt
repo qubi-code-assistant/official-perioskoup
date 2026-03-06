@@ -36,3 +36,8 @@ User-agent: omgili
 Allow: /
 
 Sitemap: https://perioskoup.com/sitemap.xml
+
+# AI/LLM content — this is a JavaScript SPA; full content in plain text:
+# llms.txt standard (https://llmstxt.org/)
+Llms-txt: https://perioskoup.com/llms.txt
+Llms-full-txt: https://perioskoup.com/llms-full.txt
