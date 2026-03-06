@@ -35,9 +35,16 @@ export default function Navbar() {
 
   useEffect(() => { setMenuOpen(false); }, [location]);
 
+  // Lock background scroll while drawer is open.
+  // Set overflow:hidden on <html> (not body) to avoid creating a
+  // containing block that breaks the drawer's position:fixed sizing.
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (menuOpen) {
+      document.documentElement.style.overflow = 'hidden';
+      return () => {
+        document.documentElement.style.overflow = '';
+      };
+    }
   }, [menuOpen]);
 
   // A05: Focus trap + initial focus + Escape close for mobile drawer (WCAG 2.1.2 / 2.4.3)
@@ -156,7 +163,7 @@ export default function Navbar() {
 
 
 
-      {/* Mobile drawer -- CSS keyframe slide-in with staggered link reveals */}
+      {/* Mobile drawer -- full-screen overlay with staggered link reveals */}
       {/* A05: ref={drawerRef} enables the focus trap implemented in useEffect above */}
       {menuOpen && (
         <div
@@ -168,49 +175,97 @@ export default function Navbar() {
           className="mobile-drawer"
           style={{
             position: 'fixed',
-            inset: 0,
-            zIndex: 40,
-            background: 'rgba(10,23,30,0.97)',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '100dvh',
+            zIndex: 55,
+            display: 'flex',
+            flexDirection: 'column',
+            background: 'rgba(10,23,30,0.98)',
             backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
           }}
         >
-          <div className="container" style={{ paddingTop: '96px', display: 'flex', flexDirection: 'column', gap: '0' }}>
-            {NAV_LINKS.map(({ href, label }, i) => (
-              <Link
-                key={href}
-                href={href}
-                aria-current={location === href ? 'page' : undefined}
-              >
-                <div
-                  className="mobile-drawer-link"
-                  style={{
-                    fontFamily: 'Dongle, sans-serif',
-                    fontWeight: 700,
-                    fontSize: 'clamp(36px, 10vw, 48px)',
-                    color: location === href ? '#C0E57A' : '#F5F9EA',
-                    letterSpacing: '-0.04em',
-                    padding: '16px 0',
-                    borderBottom: '1px solid rgba(255,255,255,0.06)',
-                    textDecoration: 'none',
-                    animationDelay: `${0.05 + i * 0.06}s`,
-                  }}
-                >
-                  {label}
-                </div>
-              </Link>
-            ))}
-            <div
-              className="mobile-drawer-link"
+          {/* Drawer header with close button — fixed at top */}
+          <div
+            className="container"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              height: '64px',
+              flexShrink: 0,
+            }}
+          >
+            <LogoFull height={28} color="#C0E57A" />
+            <button
+              onClick={() => setMenuOpen(false)}
               style={{
-                marginTop: '32px',
-                animationDelay: `${0.05 + NAV_LINKS.length * 0.06}s`,
+                background: 'rgba(255,255,255,0.07)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '8px',
+                color: '#FFFFFF',
+                width: '44px',
+                height: '44px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
+              aria-label="Close menu"
+              type="button"
             >
-              <Link href="/waitlist" aria-label="Join the waitlist">
-                <span className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', padding: '16px 24px' }}>
-                  Join the Waitlist
-                </span>
-              </Link>
+              <X size={17} />
+            </button>
+          </div>
+
+          {/* Nav links — scrollable area */}
+          <div
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            <div className="container" style={{ paddingTop: '24px', paddingBottom: '48px', display: 'flex', flexDirection: 'column', gap: '0' }}>
+              {NAV_LINKS.map(({ href, label }, i) => (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={location === href ? 'page' : undefined}
+                >
+                  <div
+                    className="mobile-drawer-link"
+                    style={{
+                      fontFamily: 'Dongle, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 'clamp(36px, 10vw, 48px)',
+                      color: location === href ? '#C0E57A' : '#F5F9EA',
+                      letterSpacing: '-0.04em',
+                      padding: '16px 0',
+                      borderBottom: '1px solid rgba(255,255,255,0.06)',
+                      textDecoration: 'none',
+                      animationDelay: `${0.05 + i * 0.06}s`,
+                    }}
+                  >
+                    {label}
+                  </div>
+                </Link>
+              ))}
+              <div
+                className="mobile-drawer-link"
+                style={{
+                  marginTop: '32px',
+                  animationDelay: `${0.05 + NAV_LINKS.length * 0.06}s`,
+                }}
+              >
+                <Link href="/waitlist" aria-label="Join the waitlist">
+                  <span className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', padding: '16px 24px' }}>
+                    Join the Waitlist
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

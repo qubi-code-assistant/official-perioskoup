@@ -99,7 +99,7 @@ export default function Home() {
 
               {/* Product subhead */}
               <p className="reveal body-lg" style={{ maxWidth: 520, marginBottom: 32, transitionDelay: "0.15s", color: "rgba(245,249,234,0.8)" }}>
-                Perioskoup is a free AI dental companion app - personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+                Perioskoup is an AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
               </p>
 
               {/* Dr. Anca quote */}
@@ -108,7 +108,7 @@ export default function Home() {
                   "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
                 </p>
                 <footer style={{ marginTop: 10, fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>
-                  - Dr. Anca Constantin, Periodontist &amp; CDO, Perioskoup
+                  - Dr. Anca Constantin, Periodontist &amp; CEO, Perioskoup
                 </footer>
               </blockquote>
 
@@ -123,25 +123,6 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Social proof micro-bar */}
-              <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginBottom: 32, transitionDelay: "0.35s" }}>
-                30+ founding clinics · EFP Award Winner 2025 · Free for patients
-              </p>
-
-              {/* Stats row */}
-              <div className="reveal flex flex-wrap gap-6 lg:gap-10" style={{ transitionDelay: "0.4s" }}>
-                {[
-                  { label: "of mHealth studies show improved oral health", value: "87%", source: "Toniazzo et al. 2019, JCP", href: "https://doi.org/10.1111/jcpe.13064" },
-                  { label: "of care instructions forgotten within 48h", value: "80%", source: "Kessels 2003, BMJ", href: "https://doi.org/10.1136/bmj.326.7395.920" },
-                  { label: "EFP Innovation Award", value: "Winner", source: "", href: "" },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <div style={{ fontFamily: "Dongle, sans-serif", fontSize: 44, color: "#C0E57A", lineHeight: 1 }}>{s.value}</div>
-                    <div style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginTop: 4 }}>{s.label}</div>
-                    {s.source && <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 10, color: "#8C9C8C", marginTop: 2, display: "block", textDecoration: "none" }}>{s.source}</a>}
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Right: phone mockup
@@ -365,7 +346,7 @@ export default function Home() {
               <img src={ASSETS.anca} alt="Dr. Anca Laura Constantin" loading="lazy" decoding="async" width={44} height={44} style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
               <div style={{ textAlign: "left" }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & Chief Dental Officer, Perioskoup</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & CEO, Perioskoup</p>
               </div>
             </div>
           </div>

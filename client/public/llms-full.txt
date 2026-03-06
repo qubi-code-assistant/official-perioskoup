@@ -71,7 +71,7 @@ Step 03: Build Daily Habits — Follow your plan at home with AI support, progre
 
 Perioskoup was founded by a periodontist, a full-stack engineer, and an AI specialist — united by a single mission.
 
-Dr. Anca Laura Constantin — Co-founder & Chief Dental Officer
+Dr. Anca Laura Constantin — Co-founder & CEO
 Periodontist · Bucharest, Romania
 "I see patients every day who don't know how to maintain their oral health between visits. Perioskoup is the companion I always wished I could give them."
 
@@ -226,7 +226,7 @@ Key statistics:
 
 ### Team
 
-Dr. Anca Laura Constantin — Periodontist & Co-founder, CDO
+Dr. Anca Laura Constantin — Periodontist & Co-founder, CEO
 DMD, PhD in Periodontology
 Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill — it was the communication gap between chair and home.
 

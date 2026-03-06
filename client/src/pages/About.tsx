@@ -31,7 +31,7 @@ export default function About() {
     "jobTitle": "Periodontist",
     "medicalSpecialty": "Periodontology",
     "memberOf": { "@type": "Organization", "name": "European Federation of Periodontology", "url": "https://www.efp.org" },
-    "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, co-founder and Chief Dental Officer of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national societies.",
+    "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, co-founder and CEO of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national societies.",
     "image": "https://perioskoup.com/images/anca-headshot.jpg",
     "worksFor": { "@type": "Organization", "@id": "https://perioskoup.com/#organization" },
     "award": "EFP Digital Innovation Award 2025, 3rd Prize, European Federation of Periodontology",
@@ -51,7 +51,7 @@ export default function About() {
         "name": "Who is Dr. Anca Laura Constantin?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, specialising in Periodontology. She is the co-founder and Chief Dental Officer of Perioskoup and won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies."
+          "text": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, specialising in Periodontology. She is the co-founder and CEO of Perioskoup and won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies."
         }
       },
       {
@@ -59,7 +59,7 @@ export default function About() {
         "name": "Who founded Perioskoup?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically, the challenge of maintaining patient engagement between dental appointments."
+          "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically, the challenge of maintaining patient engagement between dental appointments."
         }
       },
       {
@@ -223,7 +223,7 @@ export default function About() {
               </blockquote>
               <div style={{ marginTop: 12, paddingLeft: 20 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CDO</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CEO</p>
               </div>
             </div>
           </div>
@@ -265,7 +265,7 @@ export default function About() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[900px] mx-auto">
             {[
-              { img: ANCA_IMG, name: "Dr. Anca Laura Constantin", role: "Periodontist & Co-founder, CDO", creds: "DMD, PhD in Periodontology", bio: "Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill - it was the communication gap between chair and home.", linkedin: "https://www.linkedin.com/in/anca-constantin-99800633b/" },
+              { img: ANCA_IMG, name: "Dr. Anca Laura Constantin", role: "Periodontist & Co-founder, CEO", creds: "DMD, PhD in Periodontology", bio: "Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill - it was the communication gap between chair and home.", linkedin: "https://www.linkedin.com/in/anca-constantin-99800633b/" },
               { img: EDI_IMG, name: "Eduard Ciugulea", role: "CGO & Co-Founder", creds: "Full-stack engineer & growth strategist", bio: "Eduard brings the technical architecture and growth strategy that transforms Anca's clinical vision into a scalable product built for both patients and clinics.", linkedin: "https://www.linkedin.com/in/eduard-ciugulea/" },
               { img: PETRICA_IMG, name: "Petrica Nancu", role: "CTO & Head of AI", creds: "AI & machine learning specialist", bio: "Petrica leads the AI engine powering Perioskoup's clinical intelligence - transforming raw periodontal data into actionable nudges that keep patients engaged.", linkedin: "https://www.linkedin.com/in/petrica-nancu-b16468241/" },
             ].map((f, i) => (

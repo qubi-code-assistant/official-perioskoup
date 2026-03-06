@@ -441,7 +441,7 @@ Every one of those conversations confirmed that we are building something genuin
 
 ## The Road to Vienna
 
-Perioskoup was founded in 2025 by three people: Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice - specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
+Perioskoup was founded in 2025 by three people: Dr. Anca Laura Constantin (Periodontist & CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice - specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
 
 The first version of the app was built in three months. The EFP submission was prepared in parallel with ongoing development. Winning the award at our first major international submission was beyond what we had expected.
 
@@ -461,7 +461,7 @@ We are just getting started.
       "Vienna, May 2025": "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards 2025, selected from 20 submissions across 17 national periodontal societies. It was the team's first major international submission.",
       "What the EFP Said": "The European Federation of Periodontology described Perioskoup as 'an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health.' The jury included leading European periodontists.",
       "What This Means to Us": "The EFP award validates that the gap between clinical treatment and daily patient behaviour is a real and recognised problem, and that Perioskoup's approach to bridging it has credibility within the European periodontology community.",
-      "The Road to Vienna": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The first version was built in three months, with the EFP submission prepared in parallel.",
+      "The Road to Vienna": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist & CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The first version was built in three months, with the EFP submission prepared in parallel.",
       "What's Next": "Perioskoup is currently in private beta with founding clinics across Romania and the UK, with priority onboarding for periodontology practices. The consumer app will launch on iOS and Android with a founding member waitlist.",
     },
     faqs: [
@@ -653,7 +653,7 @@ The bridge between the chair and the home. That's what we're building.
     `,
     answerCapsules: {
       "The Appointment That Started Everything": "Perioskoup was born from a clinical observation: patients who received excellent periodontal treatment still experienced disease recurrence because they lacked support for daily home care between appointments. The gap between the dental chair and daily life was the core problem.",
-      "The Team": "Perioskoup was founded by three people with complementary expertise: Dr. Anca Laura Constantin (periodontist and CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The combination of clinical, engineering, and AI expertise shaped the product.",
+      "The Team": "Perioskoup was founded by three people with complementary expertise: Dr. Anca Laura Constantin (periodontist and CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The combination of clinical, engineering, and AI expertise shaped the product.",
       "The Problem We Were Actually Solving": "The real problem was not a lack of dental information but a lack of personalised, ongoing support. Patients needed daily guidance adapted to their specific condition, delivered at the right time, with feedback loops that reinforced good habits.",
       "What We Built": "Perioskoup consists of a patient-facing app (personalised daily programmes, reminders, tracking, education) and a clinician dashboard (programme setup, engagement monitoring, targeted guidance). The clinician stays in control; AI personalises delivery.",
       "The EFP Award": "Winning 3rd Prize at the EFP Digital Innovation Awards 2025 validated the approach and opened conversations with periodontists across Europe who confirmed the same clinical challenge.",
@@ -661,7 +661,7 @@ The bridge between the chair and the home. That's what we're building.
     },
     faqs: [
       { q: "What is Perioskoup?", a: "Perioskoup is a dental companion app that bridges the gap between dental appointments. It translates clinical recommendations into personalised daily programmes with reminders, tracking, and educational content for patients, while giving clinicians engagement data." },
-      { q: "Who founded Perioskoup?", a: "Perioskoup was founded by Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice." },
+      { q: "Who founded Perioskoup?", a: "Perioskoup was founded by Dr. Anca Laura Constantin (Periodontist & CEO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice." },
       { q: "Is Perioskoup available yet?", a: "Perioskoup is currently in private beta with founding clinics in Romania and the UK. A patient waitlist is open, with founding members receiving priority access and founding pricing when the app launches on iOS and Android." },
     ],
   },

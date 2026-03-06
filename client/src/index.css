@@ -191,7 +191,7 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* overflow-x: hidden removed — horizontal overflow is now fixed at the source via responsive grids */
+    overflow-x: clip; /* clip (not hidden) prevents mobile drawer translateX(100%) from widening viewport while preserving scroll behaviour */
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Dongle', sans-serif;
@@ -327,10 +327,10 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile drawer slide-in from right */
-@keyframes drawer-slide-in {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+/* Mobile drawer — instant show, no translateX to avoid viewport-widening */
+@keyframes drawer-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Mobile nav link staggered reveal */
@@ -489,11 +489,10 @@
    MOBILE DRAWER
    ================================================================ */
 .mobile-drawer {
-  animation: drawer-slide-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: drawer-fade-in 0.22s ease both;
 }
 .mobile-drawer-link {
-  opacity: 0;
-  animation: mobile-link-in 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: mobile-link-in 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ================================================================

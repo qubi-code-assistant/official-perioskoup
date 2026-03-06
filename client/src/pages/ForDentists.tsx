@@ -163,7 +163,7 @@ export default function ForDentists() {
               </blockquote>
               <div style={{ marginTop: 12, paddingLeft: 20 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CDO</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CEO</p>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", marginTop: 4 }}>EFP Digital Innovation Award Winner 2025</p>
               </div>
             </div>
