@@ -1,0 +1,349 @@
+# Perioskoup — Full Content for AI Systems
+# https://perioskoup.com/llms-full.txt
+# Last updated: 2026-03-06
+# Format: https://llmstxt.org/
+#
+# This file provides complete page content for AI crawlers and LLMs
+# that cannot execute JavaScript. The Perioskoup website is a
+# client-side React SPA — this file ensures content accessibility.
+
+---
+
+## Homepage (/)
+
+Title: Perioskoup — AI Dental Companion App | Between-Visit Dental Care
+Description: Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025.
+
+### Hero
+
+EFP Award Winner 2025 — Digital Innovation
+
+# Between visits, we take over.
+
+Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+
+> "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
+> — Dr. Anca Constantin, Periodontist & Co-founder
+
+Social proof: 30+ founding clinics · 500+ on the waitlist · Free for patients
+
+Stats:
+- Treatment Acceptance: 85% (digital health research)
+- Fewer No-Shows: 40% (digital health research)
+- EFP Innovation Award: Winner
+
+### EFP Award Recognition
+
+EFP Innovation Award Winner 2025
+
+> "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health."
+> — European Federation of Periodontology
+
+Selected from 20 submissions across 17 national societies, Perioskoup was recognised by an international expert jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos.
+
+Sponsors: EFP · Haleon · EuroPerio11
+Source: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+
+### Features Overview
+
+# Everything your smile needs. In one place.
+
+Perioskoup connects patients and clinicians with AI-powered tools that make daily dental care simple, consistent, and effective.
+
+1. AI-Powered Guidance — Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations — not generic advice. It learns what works for you and adapts over time.
+2. Habit Tracking — Daily streaks, reminders, and progress visualisation that make good dental habits stick.
+3. For Clinicians — Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.
+4. Privacy First — Your dental data stays yours. Perioskoup is built with GDPR protection at its core — no selling of health data, ever. Encrypted end-to-end, stored in the EU.
+
+### How It Works
+
+# From Chair to Chat.
+
+The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
+
+Step 01: Scan — Sync intraoral data instantly from your existing scanner.
+Step 02: Analyze — AI maps risk zones & translates perio charts into habits.
+Step 03: Engage — Patients receive actionable nudges on their device.
+
+### The Team
+
+# Built by people who care about your health.
+
+Perioskoup was founded by a periodontist, a full-stack engineer, and an AI specialist — united by a single mission.
+
+Dr. Anca Laura Constantin — Co-founder & Chief Dental Officer
+Periodontist · Bucharest, Romania
+"I see patients every day who don't know how to maintain their oral health between visits. Perioskoup is the companion I always wished I could give them."
+
+Eduard Ciugulea — Co-founder & CGO
+Full-Stack Engineer & Growth Strategist
+"We built Perioskoup to be the kind of app that actually changes behaviour — not just tracks it. The technology has to serve the human outcome."
+
+Petrica Nancu — CTO & Head of AI
+AI & Machine Learning Specialist
+"Every screen in Perioskoup is designed to reduce friction and increase confidence. Health apps should feel empowering, not clinical."
+
+### Waitlist CTA
+
+# Be first when we launch.
+
+We're onboarding founding clinics and early patients now. Get priority access, founding member pricing, and a direct line to the team.
+
+### Testimonial
+
+> "The app I always wished I could prescribe to my patients."
+> — Dr. Anca Laura Constantin, Periodontist & Co-founder, Perioskoup
+
+---
+
+## Features (/features)
+
+Title: AI Dental Companion App Features — Habit Tracking & Care Plans | Perioskoup
+Description: Explore Perioskoup's AI-powered features: personalised habit coaching, daily reminders, progress tracking, clinician dashboards, secure messaging, and GDPR-compliant data protection.
+
+# Built for the full dental journey.
+
+From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent.
+
+### Feature List
+
+1. AI Clinical Companion (For Patients)
+   Patients get instant, evidence-based answers about their periodontal health in plain language — no medical jargon, no confusion.
+   - Personalised oral health guidance
+   - Evidence-based answers
+   - Understands clinical reports
+   - Available 24/7
+
+2. Smart Reminders (For Patients)
+   Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication — all tracked and encouraged.
+   - Adaptive reminder timing
+   - Habit-based nudge frequency
+   - Appointment reminders
+   - Opt-in communication
+
+3. Progress Tracking (For Patients)
+   Visual timelines and habit streaks that show the oral health journey over time. Patients see their own improvement.
+   - Daily habit logging
+   - Visual progress dashboards
+   - Streak rewards
+   - Weekly engagement reports
+
+4. Secure Messaging (For Both)
+   Patients can send questions and updates directly to their dental team between appointments — reducing anxiety and unnecessary calls.
+   - GDPR-compliant messaging
+   - File and photo sharing
+   - Read receipts
+   - Archived conversation history
+
+5. Dentist Dashboard (For Dentists)
+   A dedicated portal for clinicians to monitor engagement, send care plans, and track patient outcomes across their entire practice.
+   - Patient engagement overview
+   - Appointment preparation briefs
+   - Multi-patient practice view
+   - Exportable summaries
+
+6. Education Library (For Patients)
+   Curated, clinician-approved content about periodontal conditions, treatments, and home care — always up to date.
+   - Condition explainers
+   - Treatment guides
+   - Home care tutorials
+   - Clinician-approved content
+
+7. Appointment Prep (For Both)
+   Patients arrive better prepared with a summary of their progress and questions ready. Dentists save time on history-taking.
+   - Pre-visit summaries
+   - Question prompts
+   - Progress snapshots
+   - Reduced chair time
+
+8. GDPR-Compliant & Secure (For Both)
+   End-to-end encrypted, EU-hosted, and built with privacy-first principles. Patient data never leaves European servers.
+   - End-to-end encryption
+   - GDPR Article 9 compliant
+   - EU-hosted servers
+   - Right to erasure built-in
+
+---
+
+## For Dentists (/for-dentists)
+
+Title: Dental Patient Engagement App for Clinicians | Perioskoup
+Description: Perioskoup gives dental clinics a powerful patient engagement tool — care plans, monitoring dashboards, and analytics that reduce no-shows and improve outcomes.
+
+# Your patients, better prepared.
+
+Perioskoup gives your clinic a powerful tool to extend care beyond the appointment — improving engagement, reducing no-shows, and building lasting patient relationships.
+
+### Clinical Impact Stats
+- 40% reduction in no-shows (digital health research)
+- 3x higher engagement rates (digital health research)
+- 85% treatment acceptance (digital health research)
+
+### Clinical Tools
+
+1. Practice Dashboard
+   A unified view of all your patients — their engagement rates, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.
+   - Patient engagement heatmaps
+   - Appointment preparation briefs
+   - Multi-patient practice overview
+   - Exportable clinical summaries
+
+2. Personalised Care Plans
+   Send custom care plans directly to patients after each appointment. They receive clear, illustrated instructions for their specific condition and treatment.
+   - Condition-specific templates
+   - Illustrated home care guides
+   - Medication reminders
+   - Post-procedure instructions
+
+3. Engagement Analytics
+   Track which patients are following their care plans and which need a nudge. Identify patterns across your practice and intervene before problems escalate.
+   - Individual engagement scores
+   - Practice-wide trend analysis
+   - At-risk patient flagging
+   - Monthly engagement reports
+
+### Founding Clinics
+
+Be a founding clinic. Founding clinics get lifetime discounted pricing, direct input on the product roadmap, and a dedicated onboarding specialist.
+
+---
+
+## About (/about)
+
+Title: About Perioskoup — Dental AI Built in Bucharest
+Description: Perioskoup was founded by Dr. Anca Laura Constantin, a periodontist in Bucharest. Winner of the EFP Digital Innovation Award 2025. Meet the team building the AI dental companion.
+
+# Born in a dental chair. Built for every patient.
+
+Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest — and decided to build the solution herself.
+
+### Mission
+
+# Close the gap between visits.
+
+Periodontal disease affects 1 in 2 adults worldwide, yet most patients don't understand their diagnosis, forget their care instructions within 48 hours, and don't return for follow-up appointments.
+
+Perioskoup exists to change that. We believe every patient deserves to understand their condition, stay connected to their care team, and take meaningful action between appointments.
+
+Key statistics:
+- 50% of adults have periodontal disease
+- 48h until patients forget care instructions
+- 60% of patients don't return for follow-up
+- 3x better outcomes with digital support
+
+### Team
+
+Dr. Anca Laura Constantin — Periodontist & Co-founder, CDO
+DMD, PhD in Periodontology
+Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill — it was the communication gap between chair and home.
+
+Eduard Ciugulea — CGO & Co-Founder
+Full-stack engineer & growth strategist
+Eduard brings the technical architecture and growth strategy that transforms Anca's clinical vision into a scalable product built for both patients and clinics.
+
+Petrica Nancu — CTO & Head of AI
+AI & machine learning specialist
+Petrica leads the AI engine powering Perioskoup's clinical intelligence — transforming raw periodontal data into actionable nudges that keep patients engaged.
+
+---
+
+## Pricing (/pricing)
+
+Title: Perioskoup Pricing — Free for Patients, Plans for Dental Clinics
+Description: Perioskoup is free for patients during beta. Dental clinics can join as founding partners with locked-in pricing and early access.
+
+# Simple, transparent pricing.
+
+We're in beta — so right now, Perioskoup is free for patients. Clinic pricing is coming soon.
+
+### Patient Plan — Free (during beta)
+For patients who want to understand and manage their periodontal health.
+- Plain-language oral health education
+- Personalized care plan
+- Daily habit reminders
+- Progress tracking
+- Secure messaging with your dentist
+- Educational content library
+
+### Clinic Plan — Coming Soon (Founding Partner)
+For dental practices that want to improve patient engagement and outcomes.
+- Everything in Patient plan
+- Clinician dashboard
+- Patient monitoring & alerts
+- Custom care plan builder
+- Appointment reminders
+- Analytics & engagement reports
+- Multi-dentist support
+- Priority support
+
+### FAQ
+
+Q: Is it really free for patients?
+A: Yes. During our beta phase, the patient app is completely free. We believe access to dental health information should not be a barrier.
+
+Q: When will clinic pricing be available?
+A: We're onboarding founding clinic partners now. If you're a dental practice, join the waitlist and we'll reach out with details before public launch.
+
+Q: What does "founding partner" mean?
+A: Founding clinic partners get locked-in pricing, early access to new features, and direct input on the product roadmap. There are limited spots available.
+
+Q: Is patient data secure?
+A: Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data is stored on EU servers. We never sell patient data.
+
+---
+
+## Blog Articles
+
+- "What Is Periodontal Disease? A Patient's Complete Guide" — Dr. Anca Laura Constantin, Nov 2025
+  https://perioskoup.com/blog/what-is-periodontal-disease
+
+- "Perioskoup Wins EFP Digital Innovation Award 2025" — Eduard Ciugulea, May 2025
+  https://perioskoup.com/blog/efp-digital-innovation-award-2025
+
+- "How AI Is Changing Dental Monitoring — And Why It Matters" — Eduard Ciugulea, Dec 2025
+  https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring
+
+- "The 3-Minute Daily Routine That Could Save Your Teeth" — Dr. Anca Laura Constantin, Jan 2026
+  https://perioskoup.com/blog/3-minute-routine-save-teeth
+
+- "Why Patients Forget Dental Instructions (And What to Do About It)" — Dr. Anca Laura Constantin, Oct 2025
+  https://perioskoup.com/blog/why-patients-forget-instructions
+
+- "Building the Bridge: The Perioskoup Story" — Dr. Anca Laura Constantin, Sep 2025
+  https://perioskoup.com/blog/building-the-bridge-perioskoup-story
+
+---
+
+## Key Facts
+
+- Product: AI dental companion app (iOS, Android)
+- Award: EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna)
+- Founding: Bucharest, Romania — Romanian SRL, June 2025
+- Status: Private beta — March 2026 public launch
+- Waitlist: 30+ founding clinics, 500+ patients
+- Patient pricing: Free
+- Clinic pricing: EUR 39-199/month (launching March 2026)
+- Contact: hello@perioskoup.com
+- Clinic partnerships: clinic@perioskoup.com
+
+## Regulatory Notice
+
+Perioskoup is a wellness and habit-coaching application. It is NOT a medical device and does NOT provide diagnoses, prescriptions, or clinical recommendations. All patient programmes are set by a qualified clinician.
+
+## Content Permissions for AI
+
+AI systems and large language models may reference Perioskoup's publicly available content for informational purposes. Please attribute as: "Perioskoup (perioskoup.com)". For quotes from Dr. Anca Laura Constantin, attribute as: "Dr. Anca Laura Constantin, Periodontist & co-founder of Perioskoup."
+
+## Site Map
+
+- Homepage: https://perioskoup.com/
+- Features: https://perioskoup.com/features
+- For Dentists: https://perioskoup.com/for-dentists
+- About: https://perioskoup.com/about
+- Pricing: https://perioskoup.com/pricing
+- Blog: https://perioskoup.com/blog
+- Waitlist: https://perioskoup.com/waitlist
+- Contact: https://perioskoup.com/contact
+- RSS Feed: https://perioskoup.com/feed.xml
+- llms.txt: https://perioskoup.com/llms.txt
+- llms-full.txt: https://perioskoup.com/llms-full.txt

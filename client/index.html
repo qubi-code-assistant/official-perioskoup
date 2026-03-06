@@ -168,11 +168,125 @@
   </head>
 
   <body>
-    <!-- v1772817367 LCP target: full-opacity hero image, fixed behind React content -->
-    <div style="position:fixed;inset:0;background:#0A171E;z-index:0">
-      <img src="/images/hero-bg.jpg" alt="Perioskoup dental companion" width="1280" height="714" fetchpriority="high" decoding="sync" style="width:100%;height:100%;object-fit:cover" />
+    <div id="root">
+      <!--
+        Pre-render shell: visible before JS loads, gives Lighthouse an LCP element.
+        React's createRoot().render() replaces all children of #root on mount.
+        Uses system-ui fonts (no web font dependency) and inline styles only.
+      -->
+      <div style="background:#0A171E;min-height:100vh;display:flex;align-items:center;padding:clamp(80px,12vw,120px) 0 clamp(48px,8vw,80px);position:relative;overflow:hidden">
+        <img src="/images/hero-bg.webp" alt="" width="1280" height="714" fetchpriority="high" decoding="sync" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0" />
+        <div style="position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,23,30,0.88) 0%,rgba(10,23,30,0.7) 50%,rgba(10,23,30,0.4) 100%);z-index:1"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,#0A171E 0%,transparent 35%);z-index:1"></div>
+        <div style="position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;padding:0 1.5rem">
+          <h1 style="font-family:system-ui,-apple-system,sans-serif;font-size:clamp(64px,7vw,96px);color:#F5F9EA;line-height:0.95;font-weight:700;margin:0 0 32px">
+            Between visits,<br><span style="color:#C0E57A">we take over.</span>
+          </h1>
+          <p style="font-family:system-ui,-apple-system,sans-serif;font-size:18px;line-height:1.65;color:#8C9C8C;max-width:520px;margin:0 0 32px">
+            Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+          </p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <a href="/waitlist" style="display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:#C0E57A;color:#0A171E;font-family:system-ui,sans-serif;font-size:16px;font-weight:700;border-radius:100px;text-decoration:none">Join the Waitlist</a>
+            <a href="/for-dentists" style="display:inline-flex;align-items:center;gap:8px;padding:15px 31px;background:transparent;color:#F5F9EA;font-family:system-ui,sans-serif;font-size:16px;font-weight:600;border-radius:100px;border:1px solid #234966;text-decoration:none">For Clinicians</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="root" style="position:relative;z-index:1"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Full homepage content for LLMs, bots, and no-JS environments -->
+    <noscript>
+      <div style="background:#0A171E;color:#F5F9EA;font-family:system-ui,sans-serif;padding:40px 24px;max-width:900px;margin:0 auto">
+        <header style="margin-bottom:48px">
+          <h1 style="font-size:48px;line-height:1;margin:0 0 16px">Perioskoup</h1>
+          <p style="color:#8C9C8C;font-size:14px">AI Dental Companion App | EFP Digital Innovation Award Winner 2025</p>
+        </header>
+
+        <main>
+          <section style="margin-bottom:48px">
+            <h2 style="font-size:36px;line-height:1;margin:0 0 16px">Between visits, <span style="color:#C0E57A">we take over.</span></h2>
+            <p style="color:#8C9C8C;font-size:18px;line-height:1.65;max-width:520px">Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.</p>
+            <blockquote style="border-left:3px solid #C0E57A;padding-left:20px;margin:24px 0;color:rgba(245,249,234,0.85);font-style:italic">
+              "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
+              <footer style="color:#8C9C8C;font-style:normal;margin-top:8px;font-size:13px">— Dr. Anca Constantin, Periodontist &amp; Co-founder</footer>
+            </blockquote>
+            <p style="color:#8C9C8C;font-size:13px">30+ founding clinics · 500+ on the waitlist · Free for patients</p>
+          </section>
+
+          <section style="margin-bottom:48px">
+            <h2 style="font-size:28px;margin:0 0 12px">EFP Digital Innovation Award 2025</h2>
+            <blockquote style="border-left:3px solid #C0E57A;padding-left:20px;margin:16px 0;color:rgba(245,249,234,0.85);font-style:italic">
+              "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health."
+              <footer style="color:#8C9C8C;font-style:normal;margin-top:8px;font-size:13px">— European Federation of Periodontology</footer>
+            </blockquote>
+            <p style="color:#8C9C8C;font-size:14px;line-height:1.65">Selected from 20 submissions across 17 national societies, recognised by an international expert jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos.</p>
+          </section>
+
+          <section style="margin-bottom:48px">
+            <h2 style="font-size:28px;margin:0 0 16px">Features</h2>
+            <h3 style="font-size:20px;color:#C0E57A;margin:16px 0 8px">AI-Powered Guidance</h3>
+            <p style="color:#8C9C8C;font-size:14px;line-height:1.6">Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations — not generic advice.</p>
+            <h3 style="font-size:20px;color:#C0E57A;margin:16px 0 8px">Habit Tracking</h3>
+            <p style="color:#8C9C8C;font-size:14px;line-height:1.6">Daily streaks, reminders, and progress visualisation that make good dental habits stick.</p>
+            <h3 style="font-size:20px;color:#C0E57A;margin:16px 0 8px">Clinician Dashboard</h3>
+            <p style="color:#8C9C8C;font-size:14px;line-height:1.6">Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.</p>
+            <h3 style="font-size:20px;color:#C0E57A;margin:16px 0 8px">Privacy First</h3>
+            <p style="color:#8C9C8C;font-size:14px;line-height:1.6">GDPR-compliant, end-to-end encrypted, EU-hosted. Your dental data stays yours — no selling of health data, ever.</p>
+          </section>
+
+          <section style="margin-bottom:48px">
+            <h2 style="font-size:28px;margin:0 0 16px">How It Works</h2>
+            <ol style="color:#8C9C8C;font-size:14px;line-height:1.8;padding-left:20px">
+              <li><strong style="color:#F5F9EA">Scan</strong> — Sync intraoral data instantly from your existing scanner.</li>
+              <li><strong style="color:#F5F9EA">Analyze</strong> — AI maps risk zones and translates perio charts into habits.</li>
+              <li><strong style="color:#F5F9EA">Engage</strong> — Patients receive actionable nudges on their device.</li>
+            </ol>
+          </section>
+
+          <section style="margin-bottom:48px">
+            <h2 style="font-size:28px;margin:0 0 16px">The Team</h2>
+            <p style="color:#8C9C8C;font-size:14px;line-height:1.65;margin-bottom:16px">Perioskoup was founded by a periodontist, a full-stack engineer, and an AI specialist.</p>
+            <ul style="list-style:none;padding:0;color:#8C9C8C;font-size:14px;line-height:2">
+              <li><strong style="color:#F5F9EA">Dr. Anca Laura Constantin</strong> — Periodontist &amp; Co-founder, Chief Dental Officer</li>
+              <li><strong style="color:#F5F9EA">Eduard Ciugulea</strong> — Co-founder &amp; CGO, Full-Stack Engineer</li>
+              <li><strong style="color:#F5F9EA">Petrica Nancu</strong> — CTO &amp; Head of AI, Machine Learning Specialist</li>
+            </ul>
+          </section>
+
+          <section style="margin-bottom:48px">
+            <h2 style="font-size:28px;margin:0 0 12px">FAQ</h2>
+            <dl style="color:#8C9C8C;font-size:14px;line-height:1.65">
+              <dt style="color:#F5F9EA;font-weight:700;margin-top:16px">What is Perioskoup?</dt>
+              <dd style="margin:4px 0 0 0">Perioskoup is an AI-powered dental companion app that bridges the gap between dental appointments with personalised daily programmes, reminders, tracking, and educational content.</dd>
+              <dt style="color:#F5F9EA;font-weight:700;margin-top:16px">Who is Perioskoup for?</dt>
+              <dd style="margin:4px 0 0 0">Patients who want to manage their oral health between visits, and dental professionals who want to monitor and support patients remotely.</dd>
+              <dt style="color:#F5F9EA;font-weight:700;margin-top:16px">Is Perioskoup a medical device?</dt>
+              <dd style="margin:4px 0 0 0">No. Perioskoup is a wellness and engagement tool. It does not provide diagnoses or independent clinical recommendations. All patient programmes are set by their clinician.</dd>
+              <dt style="color:#F5F9EA;font-weight:700;margin-top:16px">How much does it cost?</dt>
+              <dd style="margin:4px 0 0 0">Free for patients. Clinic subscriptions (EUR 39-199/month) launching March 2026. Founding members get priority access and founding pricing.</dd>
+              <dt style="color:#F5F9EA;font-weight:700;margin-top:16px">Is my data safe?</dt>
+              <dd style="margin:4px 0 0 0">Yes. All data is stored in EU servers, encrypted at rest and in transit, GDPR-compliant. Patient data is never sold.</dd>
+            </dl>
+          </section>
+
+          <section>
+            <h2 style="font-size:28px;margin:0 0 12px">Contact</h2>
+            <p style="color:#8C9C8C;font-size:14px">General: hello@perioskoup.com | Clinics: clinic@perioskoup.com</p>
+            <p style="color:#8C9C8C;font-size:14px;margin-top:8px">Perioskoup SRL · Bucharest, Romania · Founded June 2025</p>
+            <nav style="margin-top:16px">
+              <p style="color:#8C9C8C;font-size:13px">
+                <a href="/features" style="color:#C0E57A">Features</a> ·
+                <a href="/for-dentists" style="color:#C0E57A">For Dentists</a> ·
+                <a href="/about" style="color:#C0E57A">About</a> ·
+                <a href="/pricing" style="color:#C0E57A">Pricing</a> ·
+                <a href="/blog" style="color:#C0E57A">Blog</a> ·
+                <a href="/waitlist" style="color:#C0E57A">Join the Waitlist</a> ·
+                <a href="/llms-full.txt" style="color:#C0E57A">Full content (llms-full.txt)</a>
+              </p>
+            </nav>
+          </section>
+        </main>
+      </div>
+    </noscript>
   </body>
 </html>

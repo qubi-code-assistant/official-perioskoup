@@ -2,6 +2,8 @@
 # https://perioskoup.com/llms.txt
 # Last updated: 2026-03-06
 # Format: https://llmstxt.org/
+#
+# For complete page content, see: https://perioskoup.com/llms-full.txt
 
 ## About Perioskoup
 
