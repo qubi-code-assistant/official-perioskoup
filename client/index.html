@@ -169,10 +169,10 @@
 
   <body>
     <!-- v1772817367 LCP target: full-opacity hero image, fixed behind React content -->
-    <div style="position:fixed;inset:0;background:#0A171E;z-index:-1">
+    <div style="position:fixed;inset:0;background:#0A171E;z-index:0">
       <img src="/images/hero-bg.jpg" alt="Perioskoup dental companion" width="1280" height="714" fetchpriority="high" decoding="sync" style="width:100%;height:100%;object-fit:cover" />
     </div>
-    <div id="root"></div>
+    <div id="root" style="position:relative;z-index:1"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
