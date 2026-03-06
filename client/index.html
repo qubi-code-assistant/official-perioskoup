@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://perioskoup.com/" />
     <meta property="og:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
     <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
-    <meta property="og:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Perioskoup — Between visits, we take over. AI-powered dental companion." />
@@ -35,7 +35,7 @@
     <meta name="twitter:site" content="@perioskoup" />
     <meta name="twitter:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
     <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
-    <meta name="twitter:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <meta name="twitter:image:alt" content="Perioskoup — Between visits, we take over. AI-powered dental companion." />
 
     <!-- Favicon -->
@@ -50,14 +50,9 @@
     <!-- LCP image preload -->
     <link rel="preload" as="image" href="/images/hero-bg.jpg" />
 
-    <!-- CDN preconnect (images served from CloudFront) -->
-    <link rel="preconnect" href="https://d2xsxph8kpxj0f.cloudfront.net" crossorigin />
-
-    <!-- Google Fonts: Dongle (display) + Gabarito (body/UI) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gabarito:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gabarito:wght@400;700&display=swap" /></noscript>
+    <!-- Self-hosted fonts: Dongle (display) + Gabarito (body/UI) -->
+    <link rel="preload" href="/fonts/dongle-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/gabarito-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Global @graph JSON-LD: WebSite + Organization + Person + SoftwareApplication -->
     <script type="application/ld+json">
@@ -89,7 +84,7 @@
           "logo": {
             "@type": "ImageObject",
             "@id": "https://perioskoup.com/#logo",
-            "url": "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/Logomark-dark_9f94fde1.png",
+            "url": "/images/logo.svg",
             "width": 1080,
             "height": 1080
           },
@@ -124,7 +119,7 @@
           "familyName": "Constantin",
           "jobTitle": "Periodontist",
           "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, and co-founder and Chief Dental Officer of Perioskoup. She won the EFP Digital Innovation Award 2025 for her work on AI-assisted periodontal patient engagement.",
-          "image": "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg",
+          "image": "/images/anca-headshot.jpg",
           "worksFor": { "@id": "https://perioskoup.com/#organization" },
           "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
           "knowsAbout": [

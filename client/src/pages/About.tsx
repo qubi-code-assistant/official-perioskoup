@@ -14,7 +14,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
-const PETRICA_IMG = "/images/petrica.jpg";
+const PETRICA_IMG = "/images/petrica.webp";
 const AWARD_IMG = "/images/efp-award.webp";
 
 function useReveal() {

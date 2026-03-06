@@ -237,7 +237,7 @@ export default function Blog() {
                     {post.excerpt}
                   </p>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingTop: "16px", borderTop: "1px solid #234966" }}>
-                    <img src={post.authorImg} alt={post.author} style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+                    <img src={post.authorImg} alt={post.author} width={32} height={32} style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
                     <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600 }}>{post.author}</span>
                     <span style={{ marginLeft: "auto", fontFamily: "Gabarito, sans-serif", fontSize: "12px", color: "#8C9C8C" }}>{post.readTime}</span>
                   </div>
@@ -277,7 +277,7 @@ export default function Blog() {
                     </p>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0 sm:ml-auto">
-                    <img src={post.authorImg} alt={post.author} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
+                    <img src={post.authorImg} alt={post.author} width={36} height={36} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
                     <div style={{ textAlign: "right" }}>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600, margin: 0 }}>{post.author.split(" ")[0]}</p>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "12px", color: "#C0E57A", margin: 0 }}>{post.readTime}</p>

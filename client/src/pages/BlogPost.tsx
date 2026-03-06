@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 
-const APP_START_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/app_start_92056ad9.png";
+const OG_IMAGE = "/images/og-image.png";
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
 
@@ -809,7 +809,7 @@ export default function BlogPost() {
     "datePublished": article.date,
     "dateModified": article.date,
     "url": `https://perioskoup.com/blog/${article.slug}`,
-    "image": APP_START_IMG,
+    "image": OG_IMAGE,
     "mainEntityOfPage": { "@type": "WebPage", "@id": `https://perioskoup.com/blog/${article.slug}` }
   };
 
@@ -846,12 +846,12 @@ export default function BlogPost() {
         <meta property="og:description" content={article.metaDescription} />
         <meta property="og:url" content={`https://perioskoup.com/blog/${article.slug}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
+        <meta property="og:image" content="/images/og-image.png" />
         <meta property="article:published_time" content={`${article.date}T00:00:00Z`} />
         <meta property="article:author" content={article.author} />
         <meta name="twitter:title" content={article.metaTitle} />
         <meta name="twitter:description" content={article.metaDescription} />
-        <meta name="twitter:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
+        <meta name="twitter:image" content="/images/og-image.png" />
         <meta name="twitter:creator" content="@perioskoup" />
       </Helmet>
       {/* JSON-LD */}
