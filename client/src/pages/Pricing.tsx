@@ -1,0 +1,167 @@
+/**
+ * PERIOSKOUP — PRICING PAGE
+ * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
+ * Fonts: Dongle (display) + Gabarito (body/UI)
+ */
+import { useEffect } from "react";
+import { Link } from "wouter";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import Breadcrumb from "@/components/Breadcrumb";
+
+function useReveal() {
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll(".reveal, .reveal-scale").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+const PLANS = [
+  {
+    name: "Patient",
+    price: "Free",
+    period: "during beta",
+    description: "For patients who want to understand and manage their periodontal health.",
+    features: ["AI-powered diagnosis explanations", "Personalized care plan", "Daily habit reminders", "Progress tracking", "Secure messaging with your dentist", "Educational content library"],
+    cta: "Join Waitlist",
+    href: "/waitlist",
+    highlighted: false,
+  },
+  {
+    name: "Clinic",
+    price: "Coming soon",
+    period: "",
+    description: "For dental practices that want to improve patient engagement and outcomes.",
+    features: ["Everything in Patient", "Clinician dashboard", "Patient monitoring & alerts", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports", "Multi-dentist support", "Priority support"],
+    cta: "Join Founding Waitlist",
+    href: "/waitlist",
+    highlighted: true,
+  },
+];
+
+export default function Pricing() {
+  useReveal();
+
+  const pricingFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How much does Perioskoup cost?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is currently free for patients during the beta period. Clinic pricing will be announced closer to the public launch. Founding members who join the waitlist receive founding pricing and priority access." } },
+      { "@type": "Question", "name": "Is there a free trial for dental practices?", "acceptedAnswer": { "@type": "Answer", "text": "Founding clinics that join during the beta period receive complimentary access. Contact the team through the waitlist for details on the founding clinic programme." } },
+      { "@type": "Question", "name": "What is included in the Patient plan?", "acceptedAnswer": { "@type": "Answer", "text": "The Patient plan includes AI-powered diagnosis explanations, personalised care plans, daily habit reminders, progress tracking, secure messaging with your dentist, and access to the educational content library." } },
+    ]
+  };
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Perioskoup",
+    "description": "AI-powered dental companion app for personalised periodontal care between appointments.",
+    "brand": { "@type": "Organization", "name": "Perioskoup" },
+    "offers": [
+      { "@type": "Offer", "name": "Patient Plan", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/PreOrder", "description": "Free during beta. Includes AI-powered care plans, reminders, progress tracking, and educational content." },
+      { "@type": "Offer", "name": "Clinic Plan", "availability": "https://schema.org/PreOrder", "description": "Coming soon. Includes clinician dashboard, patient monitoring, analytics, and multi-dentist support." }
+    ]
+  };
+
+  return (
+    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
+      <Navbar />
+      <ParallaxHeroBg />
+
+      {/* Hero */}
+      <section style={{ paddingTop: 140, paddingBottom: 80, textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Pricing" }]} />
+          <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Pricing</span>
+          <h1 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(56px, 7vw, 88px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20, marginTop: 16, transitionDelay: "0.08s" }}>
+            Simple, transparent<br />
+            <span style={{ color: "#C0E57A" }}>pricing.</span>
+          </h1>
+          <p className="body-lg reveal" style={{ maxWidth: 480, margin: "0 auto", transitionDelay: "0.16s" }}>
+            We're in beta — so right now, Perioskoup is free for patients. Clinic pricing is coming soon.
+          </p>
+        </div>
+      </section>
+
+      {/* Beta notice + Plans */}
+      <section style={{ background: "#050C10", padding: "80px 0" }}>
+        <div className="container">
+          {/* Beta notice */}
+          <div className="reveal-scale" style={{ background: "rgba(192,229,122,0.06)", border: "1px solid rgba(192,229,122,0.2)", borderRadius: 16, padding: "20px 28px", display: "flex", alignItems: "center", gap: 16, maxWidth: 700, margin: "0 auto 48px" }}>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(192,229,122,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </div>
+            <div>
+              <p style={{ fontFamily: "Gabarito, sans-serif", fontWeight: 700, fontSize: 15, color: "#F5F9EA", marginBottom: 4 }}>We're currently in private beta</p>
+              <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C" }}>Founding clinic partners get locked-in pricing and direct input on the product roadmap.</p>
+            </div>
+          </div>
+
+          {/* Plans */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, maxWidth: 800, margin: "0 auto" }}>
+            {PLANS.map((plan, i) => (
+              <div key={plan.name} className="card reveal" style={{ padding: 40, transitionDelay: `${i * 0.08}s`, position: "relative", overflow: "hidden", ...(plan.highlighted ? { border: "1px solid rgba(192,229,122,0.25)" } : {}) }}>
+                {plan.highlighted && (
+                  <div style={{ position: "absolute", top: 0, right: 0, background: "#C0E57A", color: "#0A171E", fontFamily: "Gabarito, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "6px 16px", borderBottomLeftRadius: 12 }}>
+                    Founding Partner
+                  </div>
+                )}
+                <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, fontWeight: 700, color: "#F5F9EA", marginBottom: 8 }}>{plan.name}</h3>
+                <div style={{ marginBottom: 16 }}>
+                  <span style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 40, color: plan.highlighted ? "#C0E57A" : "#F5F9EA" }}>{plan.price}</span>
+                  {plan.period && <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", marginLeft: 8 }}>{plan.period}</span>}
+                </div>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, lineHeight: 1.6, color: "#8C9C8C", marginBottom: 28 }}>{plan.description}</p>
+                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 10 }}>
+                  {plan.features.map((feat) => (
+                    <li key={feat} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "rgba(245,249,234,0.65)" }}>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={plan.href} className={plan.highlighted ? "btn-primary" : "btn-ghost"} style={{ width: "100%", justifyContent: "center", display: "flex" }}>
+                  {plan.cta}
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{ padding: "120px 0" }}>
+        <div className="container" style={{ maxWidth: 640 }}>
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>FAQ</span>
+            <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, transitionDelay: "0.08s" }}>Common questions</h2>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {[
+              { q: "Is it really free for patients?", a: "Yes. During our beta phase, the patient app is completely free. We believe access to dental health information should not be a barrier." },
+              { q: "When will clinic pricing be available?", a: "We're onboarding founding clinic partners now. If you're a dental practice, join the waitlist and we'll reach out with details before public launch." },
+              { q: 'What does "founding partner" mean?', a: "Founding clinic partners get locked-in pricing, early access to new features, and direct input on the product roadmap. There are limited spots available." },
+              { q: "Is patient data secure?", a: "Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data is stored on EU servers. We never sell patient data." },
+            ].map((item, i) => (
+              <div key={item.q} className="reveal" style={{ padding: "24px 0", borderBottom: i < 3 ? "1px solid #234966" : "none", transitionDelay: `${i * 0.06}s` }}>
+                <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 24, fontWeight: 700, color: "#F5F9EA", marginBottom: 10 }}>{item.q}</h3>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C" }}>{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

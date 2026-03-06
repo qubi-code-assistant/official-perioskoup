@@ -1,0 +1,14 @@
+HOW IT WORKS REFERENCE SCREENSHOT ANALYSIS:
+- Dark navy background (#0A171E range)
+- "SEAMLESS INTEGRATION" label tag at top
+- "From Chair to Chat." headline - "to Chat." in lime green
+- Subtitle: "The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps."
+- Three large circles in a wave pattern:
+  - Circle 1 (Scan) - top left, large dark circle with 4-square grid icon, "01" badge top-right
+  - Circle 2 (Analyze) - center, slightly lower (wave dip), larger circle with sparkle icon, "02" badge top-right
+  - Circle 3 (Engage) - top right, same level as #1, circle with phone icon, "03" badge top-right
+- A thin lime/green curved line connects all three circles in a wave/sine pattern
+- Below each circle: title in white (Dongle font), description in muted grey
+- Circles are dark blue-grey (#1D3449 range) with subtle border
+- The middle circle is noticeably larger and positioned lower, creating the wave effect
+- Badges are small lime green circles with dark text

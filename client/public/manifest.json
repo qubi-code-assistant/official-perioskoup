@@ -1,0 +1,22 @@
+{
+  "name": "Perioskoup — Your Personal Dental Companion",
+  "short_name": "Perioskoup",
+  "description": "AI-powered dental companion app. Bridges the gap between dental visits with personalised daily habits for patients and clinicians.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A171E",
+  "theme_color": "#0A171E",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical", "lifestyle"],
+  "lang": "en-GB",
+  "dir": "ltr",
+  "scope": "/"
+}

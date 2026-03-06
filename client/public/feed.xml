@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Perioskoup Blog — Dental Health &amp; AI Insights</title>
+    <link>https://perioskoup.com/blog</link>
+    <description>Evidence-based articles on periodontal health, dental AI, and patient care from the Perioskoup team.</description>
+    <language>en-GB</language>
+    <managingEditor>hello@perioskoup.com (Perioskoup Team)</managingEditor>
+    <webMaster>hello@perioskoup.com (Perioskoup Team)</webMaster>
+    <lastBuildDate>Thu, 06 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://perioskoup.com/feed.xml" rel="self" type="application/rss+xml" />
+    <image>
+      <url>https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/Logomark-dark_9f94fde1.png</url>
+      <title>Perioskoup Blog</title>
+      <link>https://perioskoup.com/blog</link>
+    </image>
+
+    <item>
+      <title>What Is Periodontal Disease? A Patient's Complete Guide</title>
+      <link>https://perioskoup.com/blog/what-is-periodontal-disease</link>
+      <description>Periodontal disease affects more than half of adults over 30, yet most people have never heard the word 'periodontist'. Here's everything you need to know.</description>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dr. Anca Laura Constantin</dc:creator>
+      <category>Patient Education</category>
+      <guid isPermaLink="true">https://perioskoup.com/blog/what-is-periodontal-disease</guid>
+    </item>
+
+    <item>
+      <title>Perioskoup Wins EFP Digital Innovation Award 2025</title>
+      <link>https://perioskoup.com/blog/efp-digital-innovation-award-2025</link>
+      <description>At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards — selected from 20 submissions across 17 national societies.</description>
+      <pubDate>Sat, 17 May 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Eduard Ciugulea</dc:creator>
+      <category>Company News</category>
+      <guid isPermaLink="true">https://perioskoup.com/blog/efp-digital-innovation-award-2025</guid>
+    </item>
+
+    <item>
+      <title>How AI Is Changing Dental Monitoring — And Why It Matters</title>
+      <link>https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring</link>
+      <description>From pattern recognition in X-rays to personalised habit coaching, AI is beginning to close the gap between clinical visits.</description>
+      <pubDate>Wed, 03 Dec 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Eduard Ciugulea</dc:creator>
+      <category>Technology</category>
+      <guid isPermaLink="true">https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring</guid>
+    </item>
+
+    <item>
+      <title>The 3-Minute Daily Routine That Could Save Your Teeth</title>
+      <link>https://perioskoup.com/blog/3-minute-routine-save-teeth</link>
+      <description>Most people spend more time choosing what to watch on Netflix than caring for their teeth. Here's a clinically-backed 3-minute routine that actually works.</description>
+      <pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate>
+      <dc:creator>Dr. Anca Laura Constantin</dc:creator>
+      <category>Patient Habits</category>
+      <guid isPermaLink="true">https://perioskoup.com/blog/3-minute-routine-save-teeth</guid>
+    </item>
+
+    <item>
+      <title>Why Patients Forget Dental Instructions (And What to Do About It)</title>
+      <link>https://perioskoup.com/blog/why-patients-forget-instructions</link>
+      <description>Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why — and how technology is changing this.</description>
+      <pubDate>Sun, 05 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dr. Anca Laura Constantin</dc:creator>
+      <category>Clinical Insight</category>
+      <guid isPermaLink="true">https://perioskoup.com/blog/why-patients-forget-instructions</guid>
+    </item>
+
+    <item>
+      <title>Building the Bridge: The Perioskoup Story</title>
+      <link>https://perioskoup.com/blog/building-the-bridge-perioskoup-story</link>
+      <description>How a periodontist, a developer, and a product designer decided to build the dental companion they always wished existed.</description>
+      <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
+      <dc:creator>Dr. Anca Laura Constantin</dc:creator>
+      <category>Founder Story</category>
+      <guid isPermaLink="true">https://perioskoup.com/blog/building-the-bridge-perioskoup-story</guid>
+    </item>
+
+  </channel>
+</rss>
