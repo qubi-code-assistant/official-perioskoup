@@ -70,7 +70,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" aria-label="Perioskoup home">
             <div style={{ textDecoration: 'none', cursor: 'pointer' }}>
               <LogoFull height={28} color="#C0E57A" />
             </div>

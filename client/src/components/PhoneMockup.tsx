@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from "react";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/Logomark-dark_ca2bbedd.png";
+const LOGO_URL = "/images/logo.svg";
 
 export default function PhoneMockup() {
   const [time, setTime] = useState("");

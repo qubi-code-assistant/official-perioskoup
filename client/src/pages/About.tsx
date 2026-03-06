@@ -12,10 +12,10 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 
-const ANCA_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg";
-const EDI_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/edi_32419062.jpeg";
-const PETRICA_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/petrica_0ca5e5b8.png";
-const AWARD_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/award_ceremony_2ad896fb.webp";
+const ANCA_IMG = "/images/anca-headshot.jpg";
+const EDI_IMG = "/images/eduard-headshot.jpg";
+const PETRICA_IMG = "/images/petrica.jpg";
+const AWARD_IMG = "/images/efp-award.webp";
 
 function useReveal() {
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function About() {
     "familyName": "Constantin",
     "jobTitle": "Periodontist",
     "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, co-founder and Chief Dental Officer of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national societies.",
-    "image": "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg",
+    "image": "/images/anca-headshot.jpg",
     "worksFor": { "@id": "https://perioskoup.com/#organization" },
     "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
     "knowsAbout": ["Periodontal Disease", "Periodontology", "AI in Dental Care", "Patient Engagement"],

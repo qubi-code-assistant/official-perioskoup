@@ -17,14 +17,14 @@ import PhoneMockup from "@/components/PhoneMockup";
 
 // CDN Asset URLs
 const ASSETS = {
-  heroBg:       "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/hero-bg-soft_c6281481.png",
+  heroBg:       "/images/hero-bg.jpg",
   featuresBg:   "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/features-bg-v2-5ETotP3adykJihiSPWkmmf.webp",
   ctaBg:        "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/cta-bg-v2-M8rfLwmvVHFL7TkFfUUwrU.webp",
   appStart:     "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/app_start_92056ad9.png",
-  anca:         "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg",
-  edi:          "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/edi_32419062.jpeg",
-  petrica:      "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/petrica_0ca5e5b8.png",
-  award:        "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/award_ceremony_2ad896fb.webp",
+  anca:         "/images/anca-headshot.jpg",
+  edi:          "/images/eduard-headshot.jpg",
+  petrica:      "/images/petrica.jpg",
+  award:        "/images/efp-award.webp",
   howItWorks:   "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/howitworks-rings-bg-37ba3jS33MFasF6UgDif2G.webp",
 };
 
@@ -206,9 +206,10 @@ export default function Home() {
 
       {/* HERO */}
       <section id="main-content" style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(48px, 8vw, 80px)", overflow: "hidden" }}>
-        {/* Animated background */}
+        {/* Hero LCP image — outside wrapper so overflow:hidden doesn't block LCP detection */}
+        <img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" fetchPriority="high" decoding="async" className="hero-lcp-img ken-burns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
+        {/* Animated background overlays */}
         <div className="animated-bg-wrapper">
-          <div className="animated-bg-img ken-burns" style={{ backgroundImage: `url(${ASSETS.heroBg})` }} />
           <div className="bg-overlay" style={{ background: "linear-gradient(105deg, rgba(10,23,30,0.88) 0%, rgba(10,23,30,0.7) 50%, rgba(10,23,30,0.4) 100%)" }} />
           <div className="bg-overlay" style={{ background: "linear-gradient(to top, #0A171E 0%, transparent 35%)" }} />
         </div>
@@ -229,7 +230,7 @@ export default function Home() {
               </div>
 
               {/* Headline */}
-              <h1 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(64px, 7vw, 96px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 32, transitionDelay: "0.1s" }}>
+              <h1 className="reveal visible" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(64px, 7vw, 96px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 32, transitionDelay: "0.1s" }}>
                 Between visits,<br />
                 <span style={{ color: "#C0E57A" }}>we take over.</span>
               </h1>
@@ -318,7 +319,7 @@ export default function Home() {
           <div className="reveal" style={{ borderRadius: 24, overflow: "hidden", border: "1px solid #234966", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             {/* Left: ceremony photo */}
             <div style={{ position: "relative", minHeight: 420, overflow: "hidden" }}>
-              <img src={ASSETS.award} alt="EFP Digital Innovation Award ceremony — Perioskoup" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              <img src={ASSETS.award} alt="EFP Digital Innovation Award ceremony — Perioskoup" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, #1D3449 100%)" }} />
             </div>
             {/* Right: content */}
@@ -486,7 +487,7 @@ export default function Home() {
             ].map((f, i) => (
               <div key={f.name} className="card reveal" style={{ transitionDelay: `${i * 0.12}s`, padding: 0, overflow: "hidden" }}>
                 <div style={{ position: "relative", height: 280, overflow: "hidden" }}>
-                  <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }} />
+                  <img src={f.img} alt={f.name} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #1D3449 0%, rgba(29,52,73,0.3) 60%, transparent 100%)" }} />
                 </div>
                 <div style={{ padding: 24 }}>
@@ -563,7 +564,7 @@ export default function Home() {
               "The app I always wished I could prescribe to my patients."
             </blockquote>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
-              <img src={ASSETS.anca} alt="Dr. Anca Laura Constantin" style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
+              <img src={ASSETS.anca} alt="Dr. Anca Laura Constantin" loading="lazy" decoding="async" style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
               <div style={{ textAlign: "left" }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & Co-founder, Perioskoup</p>

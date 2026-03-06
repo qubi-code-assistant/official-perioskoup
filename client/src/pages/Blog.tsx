@@ -12,8 +12,8 @@ import Breadcrumb from "@/components/Breadcrumb";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 
-const ANCA_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg";
-const EDI_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/edi_32419062.jpeg";
+const ANCA_IMG = "/images/anca-headshot.jpg";
+const EDI_IMG = "/images/eduard-headshot.jpg";
 
 function useReveal() {
   useEffect(() => {
