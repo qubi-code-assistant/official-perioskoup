@@ -31,7 +31,7 @@ function useReveal() {
 
 export default function Waitlist() {
   useReveal();
-  const [role, setRole] = useState<"patient" | "dentist">("dentist");
+  const [role, setRole] = useState<"patient" | "dentist">("patient");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -58,6 +58,16 @@ export default function Waitlist() {
     }
   }
 
+  const waitlistFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What happens after I join the waitlist?", "acceptedAnswer": { "@type": "Answer", "text": "After joining, you'll receive a confirmation email. We onboard in batches — founding clinics and early patients get priority access. You'll hear from us before the March 2026 public launch." } },
+      { "@type": "Question", "name": "Is the waitlist free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Joining the Perioskoup waitlist is completely free and comes with no obligations. Patients will always have free access to the app. Founding clinics receive locked-in pricing." } },
+      { "@type": "Question", "name": "When will I get access?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup's public launch is planned for March 2026. Founding waitlist members receive priority access before the public launch date." } },
+    ]
+  };
+
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
@@ -71,7 +81,12 @@ export default function Waitlist() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Join the Perioskoup Waitlist" />
         <meta name="twitter:description" content="Get priority access to the AI dental companion launching March 2026. 500+ patients and 30+ clinics already on the list." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/waitlist" />
       </Helmet>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(waitlistFaqJsonLd) }} />
       <Navbar />
 
       <section id="main-content" style={{ paddingTop: 140, paddingBottom: 120, position: "relative", overflow: "hidden" }}>

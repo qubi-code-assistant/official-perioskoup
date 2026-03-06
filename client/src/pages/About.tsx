@@ -39,15 +39,17 @@ export default function About() {
 
   const personJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
+    "@type": ["Person", "Physician"],
     "@id": "https://perioskoup.com/#anca-constantin",
     "name": "Dr. Anca Laura Constantin",
     "honorificPrefix": "Dr.",
     "givenName": "Anca Laura",
     "familyName": "Constantin",
     "jobTitle": "Periodontist",
+    "medicalSpecialty": "Periodontology",
+    "memberOf": { "@type": "Organization", "name": "European Federation of Periodontology", "url": "https://www.efp.org" },
     "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, co-founder and Chief Dental Officer of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national societies.",
-    "image": "/images/anca-headshot.jpg",
+    "image": "https://perioskoup.com/images/anca-headshot.jpg",
     "worksFor": { "@id": "https://perioskoup.com/#organization" },
     "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
     "knowsAbout": ["Periodontal Disease", "Periodontology", "AI in Dental Care", "Patient Engagement"],
@@ -107,6 +109,10 @@ export default function About() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="About Perioskoup — Dental AI Built in Bucharest" />
         <meta name="twitter:description" content="A periodontist, an engineer, and an AI specialist walk into a dental chair... and build the companion they always wished existed. EFP Award 2025." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/about" />
       </Helmet>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
@@ -127,6 +133,12 @@ export default function About() {
           <p className="body-lg reveal" style={{ fontSize: 19, maxWidth: 600, transitionDelay: "0.16s" }}>
             Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest — and decided to build the solution herself.
           </p>
+          <div className="reveal" style={{ marginTop: 32, transitionDelay: "0.24s" }}>
+            <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "12px 28px" }}>
+              Join the Waitlist
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -178,6 +190,9 @@ export default function About() {
                 Close the gap<br />
                 <span style={{ color: "#C0E57A" }}>between visits.</span>
               </h2>
+              <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, marginTop: 8 }}>
+                Periodontal disease affects 1 in 2 adults worldwide. Most patients forget care instructions within 48 hours. Perioskoup bridges this gap with personalised AI-powered dental support between appointments.
+              </p>
               <p className="body-lg reveal" style={{ marginBottom: 20, transitionDelay: "0.16s" }}>
                 Periodontal disease affects 1 in 2 adults worldwide, yet most patients don't understand their diagnosis, forget their care instructions within 48 hours, and don't return for follow-up appointments.
               </p>
@@ -204,6 +219,46 @@ export default function About() {
         </div>
       </section>
 
+      {/* Dr. Anca Quote */}
+      <section style={{ background: "#050C10", padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
+            <img src={ANCA_IMG} alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+            <div style={{ flex: 1, minWidth: 280 }}>
+              <blockquote style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, margin: 0 }}>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, fontStyle: "italic", color: "rgba(245,249,234,0.85)", lineHeight: 1.65 }}>
+                  "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
+                </p>
+              </blockquote>
+              <div style={{ marginTop: 12, paddingLeft: 20 }}>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CDO</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Now */}
+      <section style={{ padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20 }}>
+            Why now?
+          </h2>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, marginTop: 8 }}>
+            Three things changed at the same time — making the AI dental companion possible for the first time.
+          </p>
+          <div className="reveal" style={{ transitionDelay: "0.08s" }}>
+            <p className="body-lg" style={{ marginBottom: 16 }}>
+              Three things changed. AI became capable of personalising recommendations at scale. Smartphones became the primary health interface. And patients began expecting continuous digital support between appointments.
+            </p>
+            <p className="body-lg">
+              Perioskoup exists at the intersection of these shifts — an AI dental companion built for a world where care doesn't end when the appointment does.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Team */}
       <section style={{ background: "#050C10", padding: "120px 0" }}>
         <div className="container">
@@ -213,6 +268,9 @@ export default function About() {
               Built by clinicians,<br />
               <span style={{ color: "#C0E57A" }}>for clinicians.</span>
             </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              The Perioskoup founding team combines clinical periodontology, full-stack engineering, and AI expertise — united by the mission to improve dental outcomes through technology.
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[900px] mx-auto">
             {[
@@ -243,6 +301,9 @@ export default function About() {
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20 }}>
             Want to be part of the story?
           </h2>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+            Perioskoup is onboarding founding clinics and early patients ahead of the March 2026 public launch. Join the waitlist for priority access.
+          </p>
           <p className="body-lg reveal" style={{ maxWidth: 400, margin: "0 auto 32px", transitionDelay: "0.08s" }}>
             Join the founding waitlist or reach out to the team directly.
           </p>

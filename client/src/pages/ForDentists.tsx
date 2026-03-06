@@ -78,12 +78,16 @@ export default function ForDentists() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
         <meta name="twitter:description" content="Give your dental practice a clinician dashboard, personalised care plans, and engagement analytics. Join 30+ founding clinics on the Perioskoup waitlist." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/for-dentists" />
       </Helmet>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistsFaqJsonLd) }} />
       <Navbar />
 
-      {/* Hero */}
+      {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
       <section id="main-content" style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
@@ -94,10 +98,22 @@ export default function ForDentists() {
             Your patients,<br />
             <span style={{ color: "#C0E57A" }}>better prepared.</span>
           </h1>
-          <p className="body-lg reveal" style={{ maxWidth: 520, marginBottom: 40, transitionDelay: "0.16s" }}>
+          <p className="body-lg reveal" style={{ maxWidth: 520, marginBottom: 28, transitionDelay: "0.16s" }}>
             Perioskoup gives your clinic a powerful tool to extend care beyond the appointment — improving engagement, reducing no-shows, and building lasting patient relationships.
           </p>
-          <div className="reveal" style={{ display: "flex", gap: 12, flexWrap: "wrap", transitionDelay: "0.24s" }}>
+
+          {/* EFP Award badge + founding clinic count */}
+          <div className="reveal" style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginBottom: 24, transitionDelay: "0.20s" }}>
+            <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
+              className="efp-badge-hover"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none" }}>
+              <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" }}>EFP Award Winner 2025</span>
+              <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500 }}>Digital Innovation</span>
+            </a>
+            <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>30+ founding clinics on the waitlist</span>
+          </div>
+
+          <div className="reveal" style={{ display: "flex", gap: 12, flexWrap: "wrap", transitionDelay: "0.28s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "14px 32px" }}>
               Join as a Founding Clinic
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -109,7 +125,24 @@ export default function ForDentists() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* ── 2. PROBLEM-FIRST ────────────────────────────────────────────────── */}
+      <section style={{ background: "#0A171E", padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <div className="reveal" style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 24 }}>
+            <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(36px, 4vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 16 }}>
+              The problem is clear.
+            </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, lineHeight: 1.7, color: "#8C9C8C", marginBottom: 12 }}>
+              Patients forget 80% of care instructions within 48 hours. Perioskoup translates your clinical recommendations into daily habits they actually follow.
+            </p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "rgba(140,156,140,0.7)" }}>
+              Perioskoup is the AI dental companion that extends your care beyond the appointment — bridging the gap between what you recommend and what patients actually do at home.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. STATS ────────────────────────────────────────────────────────── */}
       <section style={{ background: "#050C10", padding: "64px 0" }}>
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#234966] rounded-2xl overflow-hidden">
@@ -131,7 +164,28 @@ export default function ForDentists() {
         </div>
       </section>
 
-      {/* Clinical Tools */}
+      {/* ── 4. DR. ANCA QUOTE ───────────────────────────────────────────────── */}
+      <section style={{ padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
+            <img src="/images/anca-headshot.jpg" alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+            <div style={{ flex: 1, minWidth: 280 }}>
+              <blockquote style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, margin: 0 }}>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, fontStyle: "italic", color: "rgba(245,249,234,0.85)", lineHeight: 1.65 }}>
+                  "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
+                </p>
+              </blockquote>
+              <div style={{ marginTop: 12, paddingLeft: 20 }}>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CDO</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", marginTop: 4 }}>EFP Digital Innovation Award Winner 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. CLINICAL TOOLS ───────────────────────────────────────────────── */}
       <section style={{ padding: "120px 0" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 56 }}>
@@ -166,7 +220,55 @@ export default function ForDentists() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ── 6. HOW IT FITS YOUR WORKFLOW ────────────────────────────────────── */}
+      <section style={{ background: "#050C10", padding: "100px 0" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Workflow</span>
+            <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, transitionDelay: "0.08s" }}>
+              How it fits<br />
+              <span style={{ color: "#C0E57A" }}>your practice.</span>
+            </h2>
+            <p className="body-lg reveal" style={{ maxWidth: 520, margin: "16px auto 0", transitionDelay: "0.16s" }}>
+              Perioskoup slots into your existing appointment flow — no hardware, no software migration, no training days.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5" style={{ maxWidth: 900, margin: "0 auto" }}>
+            {[
+              { step: "Before", title: "Pre-Visit Prep", desc: "Patients arrive better prepared. You receive a summary of their engagement, habits, and questions — reducing chair time on history-taking." },
+              { step: "During", title: "Set the Plan", desc: "After the appointment, set a personalised care plan in under 2 minutes. Perioskoup translates it into daily habits with reminders and tracking." },
+              { step: "After", title: "Between Visits", desc: "Patients follow their plan at home with AI guidance. You monitor engagement and intervene early if someone falls off track." },
+            ].map((item, i) => (
+              <div key={item.step} className="card reveal" style={{ padding: 32, transitionDelay: `${i * 0.08}s` }}>
+                <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#C0E57A", marginBottom: 12, display: "block" }}>{item.step}</span>
+                <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, color: "#F5F9EA", marginBottom: 10 }}>{item.title}</h3>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, lineHeight: 1.65, color: "#8C9C8C" }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. COMPETITIVE POSITIONING ──────────────────────────────────────── */}
+      <section style={{ padding: "100px 0" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24 }}>
+            Not another PMS plugin.
+          </h2>
+          <p className="body-lg reveal" style={{ marginBottom: 20, transitionDelay: "0.08s" }}>
+            Practice management systems track appointments. Patient portals send reminders. But neither helps a patient build the daily habits that prevent disease recurrence.
+          </p>
+          <p className="body-lg reveal" style={{ marginBottom: 32, transitionDelay: "0.16s" }}>
+            Perioskoup is for the behavioural side — translating your clinical recommendations into a personalised daily programme. It's the AI dental companion for what happens between visits.
+          </p>
+          <div className="reveal" style={{ padding: 24, background: "rgba(192,229,122,0.06)", border: "1px solid rgba(192,229,122,0.15)", borderRadius: 16, transitionDelay: "0.24s" }}>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, fontWeight: 600, color: "#C0E57A", marginBottom: 8 }}>Founding clinic spots are limited.</p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C" }}>Public launch: March 2026. Founding clinics get locked-in pricing, direct product input, and dedicated onboarding.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. CTA ──────────────────────────────────────────────────────────── */}
       <section style={{ background: "#050C10", padding: "120px 0", textAlign: "center" }}>
         <div className="container">
           <div className="reveal" style={{ marginBottom: 16 }}>

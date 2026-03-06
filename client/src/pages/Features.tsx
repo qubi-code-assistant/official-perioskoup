@@ -72,6 +72,10 @@ export default function Features() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="AI Dental App Features — Habit Tracking & Care Plans | Perioskoup" />
         <meta name="twitter:description" content="Personalised habit tracking, smart reminders, clinician dashboard, and GDPR-compliant secure messaging — all in one AI dental companion." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/features" />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresFaqJsonLd) }} />
       <Navbar />
@@ -84,8 +88,8 @@ export default function Features() {
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />
           <span className="label-tag reveal" style={{ marginBottom: "24px", display: "inline-flex" }}>Features</span>
           <h1 className="display-lg reveal" style={{ marginTop: "16px", marginBottom: "24px", transitionDelay: "0.1s" }}>
-            Built for the full<br />
-            <span className="text-gradient">dental journey.</span>
+            AI dental companion features —<br />
+            <span className="text-gradient">everything between your visits.</span>
           </h1>
           <p className="body-lg reveal" style={{ maxWidth: "520px", margin: "0 auto 40px", transitionDelay: "0.2s" }}>
             From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent.
@@ -104,6 +108,12 @@ export default function Features() {
       {/* Feature grid */}
       <section className="section" style={{ background: "#050C10", paddingTop: "80px" }}>
         <div className="container">
+          <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 12, textAlign: "center" }}>
+            What's inside <span style={{ color: "#C0E57A" }}>Perioskoup</span>
+          </h2>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 48px" }}>
+            Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and secure patient-clinic messaging into a single AI dental companion app.
+          </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "20px" }}>
             {FEATURES.map((f, i) => {
               const tagStyle = TAG_COLORS[f.tag] || TAG_COLORS.Patients;
@@ -138,6 +148,9 @@ export default function Features() {
       <section className="section-sm" style={{ background: "#0A171E", textAlign: "center" }}>
         <div className="container">
           <h2 className="display-md reveal" style={{ marginBottom: "20px" }}>Ready to get started?</h2>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+            Join 30+ founding clinics and 500+ patients on the Perioskoup waitlist. Free for patients, founding pricing for clinics.
+          </p>
           <p className="body-lg reveal" style={{ marginBottom: "36px", maxWidth: "480px", margin: "0 auto 36px", transitionDelay: "0.1s" }}>
             Join the founding waitlist and be among the first to experience Perioskoup.
           </p>

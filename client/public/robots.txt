@@ -35,6 +35,18 @@ Allow: /
 User-agent: omgili
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
 Sitemap: https://perioskoup.com/sitemap.xml
 
 # AI/LLM content — this is a JavaScript SPA; full content in plain text:

@@ -56,6 +56,16 @@ export default function Contact() {
     }
   }
 
+  const contactFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I contact Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "You can reach Perioskoup via email at hello@perioskoup.com for general enquiries or clinic@perioskoup.com for dental practice partnerships. You can also use the contact form on this page. We respond within 24 hours." } },
+      { "@type": "Question", "name": "When does Perioskoup launch?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup's public launch is planned for March 2026. Founding clinics and early patients on the waitlist receive priority access before the public launch." } },
+      { "@type": "Question", "name": "Is Perioskoup available in my country?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is based in Bucharest, Romania and is initially launching across Europe. The platform is designed for dental clinics and patients in the EU, UK, and beyond. Contact us for availability in your region." } },
+    ]
+  };
+
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -94,9 +104,14 @@ export default function Contact() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Contact Perioskoup" />
         <meta name="twitter:description" content="Reach the Perioskoup team for press, clinic partnerships, investor enquiries, or product questions. We respond within 24 hours." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/contact" />
       </Helmet>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactFaqJsonLd) }} />
       <Navbar />
 
       {/* Hero */}
@@ -112,6 +127,9 @@ export default function Contact() {
           </h1>
           <p className="body-lg reveal" style={{ maxWidth: 480, transitionDelay: "0.16s" }}>
             Whether you're a patient, a dentist, an investor, or just curious — we'd love to hear from you.
+          </p>
+          <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", marginTop: 12, transitionDelay: "0.24s" }}>
+            Perioskoup is the AI dental companion bridging clinic and home.
           </p>
         </div>
       </section>

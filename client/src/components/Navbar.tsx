@@ -12,8 +12,10 @@ import { LogoFull } from './Logo';
 const NAV_LINKS = [
   { href: '/features', label: 'Features' },
   { href: '/for-dentists', label: 'For Dentists' },
+  { href: '/pricing', label: 'Pricing' },
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {

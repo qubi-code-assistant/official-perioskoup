@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://perioskoup.com/" />
     <meta property="og:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
     <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
-    <meta property="og:image" content="/images/og-image.jpg" />
+    <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Perioskoup — Between visits, we take over. AI-powered dental companion." />
@@ -35,11 +35,13 @@
     <meta name="twitter:site" content="@perioskoup" />
     <meta name="twitter:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
     <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
-    <meta name="twitter:image" content="/images/og-image.jpg" />
+    <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
     <meta name="twitter:image:alt" content="Perioskoup — Between visits, we take over. AI-powered dental companion." />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0A171E" />
@@ -70,15 +72,7 @@
           "url": "https://perioskoup.com/",
           "name": "Perioskoup",
           "description": "AI-powered dental companion app bridging the gap between dental visits.",
-          "publisher": { "@id": "https://perioskoup.com/#organization" },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://perioskoup.com/blog?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
+          "publisher": { "@id": "https://perioskoup.com/#organization" }
         },
         {
           "@type": "Organization",
@@ -89,7 +83,7 @@
           "logo": {
             "@type": "ImageObject",
             "@id": "https://perioskoup.com/#logo",
-            "url": "/images/logo.svg",
+            "url": "https://perioskoup.com/images/logo.svg",
             "width": 1080,
             "height": 1080
           },
@@ -108,6 +102,9 @@
           "award": "EFP Digital Innovation Award 2025 — 3rd Prize",
           "description": "Perioskoup is an AI-powered dental companion app that bridges the gap between dental visits with personalised oral health habits for patients and a monitoring dashboard for clinicians.",
           "email": "hello@perioskoup.com",
+          "contactPoint": [
+            { "@type": "ContactPoint", "contactType": "customer support", "email": "support@perioskoup.com" }
+          ],
           "sameAs": [
             "https://www.linkedin.com/company/perioskoup",
             "https://www.instagram.com/perioskoup",
@@ -116,15 +113,17 @@
           ]
         },
         {
-          "@type": "Person",
+          "@type": ["Person", "Physician"],
           "@id": "https://perioskoup.com/#anca-constantin",
           "name": "Dr. Anca Laura Constantin",
           "honorificPrefix": "Dr.",
           "givenName": "Anca Laura",
           "familyName": "Constantin",
           "jobTitle": "Periodontist",
+          "medicalSpecialty": "Periodontology",
+          "memberOf": { "@type": "Organization", "name": "European Federation of Periodontology", "url": "https://www.efp.org" },
           "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, and co-founder and Chief Dental Officer of Perioskoup. She won the EFP Digital Innovation Award 2025 for her work on AI-assisted periodontal patient engagement.",
-          "image": "/images/anca-headshot.jpg",
+          "image": "https://perioskoup.com/images/anca-headshot.jpg",
           "worksFor": { "@id": "https://perioskoup.com/#organization" },
           "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
           "knowsAbout": [

@@ -127,6 +127,10 @@ export default function Blog() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Dental Health &amp; AI Blog | Perioskoup" />
         <meta name="twitter:description" content="Evidence-based articles on periodontal health, AI in dental care, and daily oral habits from a practising periodontist. EFP Award 2025 winners." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/blog" />
       </Helmet>
 
       {/* Blog ItemList + FAQPage structured data */}
@@ -244,6 +248,24 @@ export default function Blog() {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Waitlist CTA */}
+      <section style={{ padding: "60px 0", background: "#050C10" }}>
+        <div className="container" style={{ maxWidth: 600, textAlign: "center" }}>
+          <div className="reveal" style={{ padding: "40px 32px", background: "rgba(29,52,73,0.5)", border: "1px solid rgba(192,229,122,0.15)", borderRadius: 20, backdropFilter: "blur(12px)" }}>
+            <p style={{ fontFamily: "Dongle, sans-serif", fontSize: 32, color: "#F5F9EA", lineHeight: 1, marginBottom: 12 }}>
+              Interested in what we're building?
+            </p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, color: "#8C9C8C", marginBottom: 24 }}>
+              Join 500+ patients and 30+ founding clinics on the Perioskoup waitlist. The AI dental companion launching March 2026.
+            </p>
+            <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "14px 28px" }}>
+              Join the Waitlist
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </Link>
           </div>
         </div>
       </section>

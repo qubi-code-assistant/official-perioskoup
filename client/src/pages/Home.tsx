@@ -198,6 +198,10 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
         <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/" />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
       <div className="noise-overlay" />
@@ -315,7 +319,7 @@ export default function Home() {
       {/* EFP AWARD CARD */}
       <section style={{ background: "#0A171E", padding: "80px 0" }}>
         <div className="container">
-          <div className="reveal" style={{ borderRadius: 24, overflow: "hidden", border: "1px solid #234966", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <div className="reveal grid grid-cols-1 md:grid-cols-2" style={{ borderRadius: 24, overflow: "hidden", border: "1px solid #234966" }}>
             {/* Left: ceremony photo */}
             <div style={{ position: "relative", minHeight: 420, overflow: "hidden" }}>
               <img src={ASSETS.award} alt="EFP Digital Innovation Award ceremony — Perioskoup" loading="lazy" decoding="async" width={800} height={446} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
@@ -366,20 +370,23 @@ export default function Home() {
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 20 }}>
               Everything your smile<br />needs. <span style={{ color: "#C0E57A" }}>In one place.</span>
             </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and secure patient-clinic messaging into a single dental companion app.
+            </p>
             <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
               Perioskoup connects patients and clinicians with AI-powered tools that make daily dental care simple, consistent, and effective.
             </p>
           </div>
 
           {/* Bento grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               { span: 2, title: "AI-Powered Guidance", desc: "Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations — not generic advice. It learns what works for you and adapts over time.", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
               { span: 1, title: "Habit Tracking", desc: "Daily streaks, reminders, and progress visualisation that make good dental habits stick.", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
               { span: 1, title: "For Clinicians", desc: "Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
               { span: 2, title: "Privacy First", desc: "Your dental data stays yours. Perioskoup is built with GDPR protection at its core — no selling of health data, ever. Encrypted end-to-end, stored in the EU.", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
             ].map((f, i) => (
-              <div key={f.title} className="card reveal" style={{ gridColumn: `span ${f.span}`, transitionDelay: `${i * 0.08}s`, background: "rgba(29,52,73,0.75)", backdropFilter: "blur(12px)" }}>
+              <div key={f.title} className={`card reveal ${f.span === 2 ? "md:col-span-2" : ""}`} style={{ transitionDelay: `${i * 0.08}s`, background: "rgba(29,52,73,0.75)", backdropFilter: "blur(12px)" }}>
                 <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(192,229,122,0.1)", border: "1px solid rgba(192,229,122,0.25)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d={f.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
@@ -395,6 +402,26 @@ export default function Home() {
         </div>
       </section>
 
+      {/* WHAT IS AN AI DENTAL COMPANION */}
+      <section style={{ background: "#0A171E", padding: "100px 0" }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <div className="reveal" style={{ textAlign: "center" }}>
+            <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24 }}>
+              What is an AI dental companion?
+            </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              An AI dental companion translates clinical recommendations into personalised daily habits. It bridges the gap between what your dentist recommends and what you actually do at home.
+            </p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 18, color: "rgba(245,249,234,0.8)", lineHeight: 1.7, maxWidth: 640, margin: "0 auto 16px" }}>
+              Not a chatbot. Not a practice management system. Not a fitness tracker for teeth.
+            </p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
+              An AI dental companion translates clinical recommendations into personalised daily habits — with smart reminders, progress tracking, and a direct line to your dental team. Perioskoup is the first.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section style={{ position: "relative", padding: "120px 0", overflow: "hidden", background: "#0A171E" }}>
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
@@ -403,6 +430,9 @@ export default function Home() {
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(52px, 6vw, 80px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 20 }}>
               From Chair <span style={{ color: "#C0E57A" }}>to Chat.</span>
             </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              Perioskoup connects your dental appointment to your daily routine in three steps: your dentist sets a personalised plan, AI translates it into habits, and you build consistency between visits.
+            </p>
             <p className="body-lg" style={{ maxWidth: 540, margin: "0 auto" }}>
               The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
             </p>
@@ -410,26 +440,26 @@ export default function Home() {
 
           {/* Wave circles layout */}
           <div style={{ position: "relative", maxWidth: 900, margin: "0 auto", paddingTop: 40, paddingBottom: 40 }}>
-            <svg viewBox="0 0 900 200" fill="none" style={{ position: "absolute", top: 40, left: 0, width: "100%", height: 200, zIndex: 1 }}>
+            <svg viewBox="0 0 900 200" fill="none" className="hidden md:block" style={{ position: "absolute", top: 40, left: 0, width: "100%", height: 200, zIndex: 1 }}>
               <path d="M 120 80 C 250 80, 300 160, 450 160 C 600 160, 650 80, 780 80" stroke="rgba(192,229,122,0.35)" strokeWidth="1.5" fill="none" />
             </svg>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 0, position: "relative", zIndex: 2 }}>
+            <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 0, position: "relative", zIndex: 2 }}>
               {[
                 {
-                  step: "01", title: "Scan", desc: "Sync intraoral data instantly from your existing scanner.", offsetY: 0,
+                  step: "01", title: "Visit Your Dentist", desc: "Your dentist examines, diagnoses, and sets a personalised care plan using Perioskoup.", offsetY: 0,
                   icon: <><rect x="4" y="4" width="7" height="7" rx="1.5" fill="#C0E57A"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="#C0E57A"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="#C0E57A"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="#C0E57A"/></>,
                 },
                 {
-                  step: "02", title: "Analyze", desc: "AI maps risk zones & translates perio charts into habits.", offsetY: 80,
+                  step: "02", title: "Get Your Plan", desc: "AI translates clinical recommendations into daily habits with smart reminders and tracking.", offsetY: 80,
                   icon: <><path d="M12 2l2 5L19 9l-5 2-2 5-2-5L5 9l5-2 2-5z" fill="#C0E57A"/><path d="M18 14l1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5 1.5-3z" fill="#C0E57A" opacity="0.6"/></>,
                 },
                 {
-                  step: "03", title: "Engage", desc: "Patients receive actionable nudges on their device.", offsetY: 0,
+                  step: "03", title: "Build Daily Habits", desc: "Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.", offsetY: 0,
                   icon: <><rect x="5" y="1" width="14" height="22" rx="3" stroke="#C0E57A" strokeWidth="1.8" fill="none"/><rect x="10" y="18" width="4" height="2" rx="1" fill="#C0E57A"/></>,
                 },
               ].map((item, i) => (
-                <div key={item.step} className="reveal" style={{ transitionDelay: `${i * 0.15}s`, textAlign: "center", paddingTop: item.offsetY }}>
+                <div key={item.step} className={`reveal ${item.offsetY ? "md:pt-20" : ""}`} style={{ transitionDelay: `${i * 0.15}s`, textAlign: "center" }}>
                   <div style={{ position: "relative", display: "inline-block", marginBottom: 32 }}>
                     <div style={{
                       position: "absolute", top: "50%", left: "50%",
@@ -473,12 +503,15 @@ export default function Home() {
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 20 }}>
               Built by people who<br />care about <span style={{ color: "#C0E57A" }}>your health.</span>
             </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              Perioskoup was founded by Dr. Anca Laura Constantin (Periodontist), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI) in Bucharest, Romania.
+            </p>
             <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
               Perioskoup was founded by a periodontist, a full-stack engineer, and an AI specialist — united by a single mission.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { img: ASSETS.anca, name: "Dr. Anca Laura Constantin", role: "Co-founder & Chief Dental Officer", cred: "Periodontist · Bucharest, Romania", quote: "I see patients every day who don't know how to maintain their oral health between visits. Perioskoup is the companion I always wished I could give them." },
               { img: ASSETS.edi, name: "Eduard Ciugulea", role: "Co-founder & CGO", cred: "Full-Stack Engineer & Growth Strategist", quote: "We built Perioskoup to be the kind of app that actually changes behaviour — not just tracks it. The technology has to serve the human outcome." },
@@ -535,6 +568,9 @@ export default function Home() {
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(48px, 5vw, 72px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 24 }}>
               Be first when<br /><span style={{ color: "#C0E57A" }}>we launch.</span>
             </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              Perioskoup is currently in private beta with a public launch planned for March 2026. Founding waitlist members receive priority access and founding pricing.
+            </p>
             <p className="body-lg" style={{ marginBottom: 48, maxWidth: 480, margin: "0 auto 48px" }}>
               We're onboarding founding clinics and early patients now. Get priority access, founding member pricing, and a direct line to the team.
             </p>

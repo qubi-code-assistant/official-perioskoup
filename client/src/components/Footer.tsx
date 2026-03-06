@@ -47,7 +47,7 @@ export default function Footer() {
               lineHeight: 1.7,
               maxWidth: '200px',
             }}>
-              Your personal dental companion. Bridging the gap between clinic and home.
+              Your AI dental companion. Bridging the gap between clinic and home.
             </p>
             <div style={{ marginTop: '18px' }}>
               <a

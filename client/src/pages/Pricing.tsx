@@ -67,7 +67,8 @@ export default function Pricing() {
 
   const productJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "SoftwareApplication",
+    "applicationCategory": "HealthApplication",
     "name": "Perioskoup",
     "description": "AI-powered dental companion app for personalised periodontal care between appointments.",
     "brand": { "@type": "Organization", "name": "Perioskoup" },
@@ -89,6 +90,10 @@ export default function Pricing() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup Pricing — Free for Patients, Plans for Clinics" />
         <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans from €39/mo launching March 2026. Join 30+ founding clinics on the waitlist." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <link rel="alternate" hrefLang="en" href="https://perioskoup.com/pricing" />
       </Helmet>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqJsonLd) }} />
@@ -109,6 +114,15 @@ export default function Pricing() {
           <p className="body-lg reveal" style={{ maxWidth: 480, margin: "0 auto", transitionDelay: "0.16s" }}>
             We're in beta — so right now, Perioskoup is free for patients. Clinic pricing is coming soon.
           </p>
+          <div className="reveal" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap", marginTop: 24, transitionDelay: "0.24s" }}>
+            <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
+              className="efp-badge-hover"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none" }}>
+              <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>EFP Award Winner 2025</span>
+              <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500 }}>Digital Innovation</span>
+            </a>
+            <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>30+ founding clinics</span>
+          </div>
         </div>
       </section>
 
@@ -122,7 +136,7 @@ export default function Pricing() {
             </div>
             <div>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontWeight: 700, fontSize: 15, color: "#F5F9EA", marginBottom: 4 }}>We're currently in private beta</p>
-              <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C" }}>Founding clinic partners get locked-in pricing and direct input on the product roadmap.</p>
+              <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C" }}>Founding clinic partners of this AI dental companion get locked-in pricing and direct input on the product roadmap.</p>
             </div>
           </div>
 
@@ -165,6 +179,9 @@ export default function Pricing() {
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>FAQ</span>
             <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, transitionDelay: "0.08s" }}>Common questions</h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+              Everything you need to know about Perioskoup pricing, the founding partner programme, and what's included in each plan.
+            </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {[

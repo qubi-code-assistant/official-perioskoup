@@ -139,6 +139,92 @@ Four locations fixed:
 
 ---
 
+---
+
+## ForDentists.tsx — Section Overhaul (2026-03-06, second pass)
+
+### 19. EFP Award trust bar added to hero (after subtitle, before CTA buttons)
+- **Added:** Linked EFP award pill badge ("EFP Award Winner 2025 / Digital Innovation") pointing to the EFP announcement, plus "30+ founding clinics on the waitlist" social proof text.
+- **Reason:** The audit identified the EFP award was absent from the ForDentists page hero — the strongest trust signal on the site was missing at the highest-intent page's first decision point.
+
+### 20. Problem-first section added (between hero and stats)
+- **Added:** New `<section>` with lime left-border callout block containing "The problem is clear." heading, the 80%-forgotten-in-48h problem statement, and the "between visits" product positioning paragraph.
+- **Reason:** The audit flagged the ForDentists page as jumping straight into product features without establishing the clinical problem Perioskoup solves. Problem-first framing converts more sceptical clinician audiences.
+
+### 21. Dr. Anca quote section added (between stats and Clinical Tools)
+- **Added:** New `<section>` with Dr. Anca's headshot image, her founding quote as a blockquote, and her correct title attribution: "Periodontist & Co-founder, CDO" plus EFP award credential line.
+- **Reason:** Her voice is the primary trust signal for a clinician audience. Placing it after the stats section — where credibility must be established before feature claims land — is the highest-impact position. Title is correct per audit finding #6.
+
+### 22. "How It Fits Your Workflow" section added (after Clinical Tools)
+- **Added:** Three-column workflow card grid ("Before / During / After") under a "Workflow" label tag. Cards cover Pre-Visit Prep, Set the Plan, and Between Visits use cases.
+- **Reason:** The audit identified no workflow explainer on the ForDentists page. Dentists need to understand integration effort before committing. The "Between Visits" card directly reinforces the site's primary positioning pillar.
+
+### 23. Competitive positioning section added (after Workflow, before CTA)
+- **Added:** "Not another PMS plugin." heading with two body paragraphs differentiating Perioskoup from practice management systems and patient portals, plus a founding-clinic urgency callout box.
+- **Reason:** The audit's competitive positioning audit identified a missing objection-handling layer. Dentists evaluating this product will compare it to existing PMS/portal tools — this section pre-empts that objection.
+
+### Section order after overhaul
+1. Hero (existing, with EFP badge added inside)
+2. Problem-first section (new)
+3. Stats section (existing, unchanged)
+4. Dr. Anca quote (new)
+5. Clinical Tools (existing, unchanged)
+6. Workflow (new)
+7. Competitive positioning (new)
+8. CTA section (existing, unchanged)
+9. Footer (existing)
+
+### Files modified in this pass
+| File | Changes |
+|---|---|
+| `client/src/pages/ForDentists.tsx` | EFP trust bar in hero; 4 new sections added between existing sections; CTA transition-delay updated from 0.24s to 0.28s to account for badge row above it |
+
+---
+
+---
+
+## AI Answer Capsules — Static Pages (2026-03-06, third pass)
+
+**Task:** Add answer capsules (2–3 sentence factual summaries) after every H2 on static pages for AI engine extraction.
+**Style:** `<p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, ... }}>` — muted paragraph, centered or left-aligned per section layout.
+**Exclusions:** Blog pages (already have capsules), existing H2 text untouched, no layout/design changes.
+
+### Home.tsx — 4 capsules added
+
+| H2 | Capsule first words | Alignment |
+|---|---|---|
+| "Everything your smile needs. In one place." | "Perioskoup combines AI-powered guidance..." | Centered |
+| "From Chair to Chat." | "Perioskoup connects your dental appointment..." | Centered |
+| "Built by people who care about your health." | "Perioskoup was founded by Dr. Anca Laura Constantin..." | Centered |
+| "Be first when we launch." | "Perioskoup is currently in private beta..." | Centered |
+
+### About.tsx — 3 capsules added
+
+| H2 | Capsule first words | Alignment |
+|---|---|---|
+| "Close the gap between visits." | "Periodontal disease affects 1 in 2 adults worldwide..." | Left (marginTop: 8, no auto margin) |
+| "Built by clinicians, for clinicians." | "The Perioskoup founding team combines..." | Centered |
+| "Want to be part of the story?" | "Perioskoup is onboarding founding clinics..." | Centered |
+
+### Pricing.tsx — 1 capsule added
+
+| H2 | Capsule first words | Alignment |
+|---|---|---|
+| "Common questions" | "Everything you need to know about Perioskoup pricing..." | Centered |
+
+### Features.tsx — 1 capsule added
+
+| H2 | Capsule first words | Alignment |
+|---|---|---|
+| "Ready to get started?" | "Join 30+ founding clinics and 500+ patients..." | Centered |
+
+**Note:** The H2 "What's inside Perioskoup" in Features.tsx already had a capsule paragraph — skipped per instructions.
+
+**Total capsules added:** 9 across 4 files.
+**Files modified:** `Home.tsx`, `About.tsx`, `Pricing.tsx`, `Features.tsx`.
+
+---
+
 ## Not Fixed (Out of Scope for This Agent)
 
 The following issues were identified in the audits but are outside this agent's content scope:

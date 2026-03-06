@@ -25,7 +25,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       "@type": "ListItem",
       position: i + 1,
       name: item.label,
-      ...(item.href ? { item: `https://perioskoup.com${item.href}` } : {}),
+      item: item.href ? `https://perioskoup.com${item.href}` : `https://perioskoup.com${typeof window !== 'undefined' ? window.location.pathname : '/'}`,
     })),
   };
 
