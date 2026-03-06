@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createMetadata } from '@/lib/metadata'
 import { breadcrumbSchema } from '@/lib/schema'
 
@@ -59,7 +60,7 @@ export default function PricingPage() {
       {/* Hero */}
       <section className="py-24 md:py-40 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1200px] mx-auto text-center" data-gsap="fade-up">
-          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
+          <p className="perio-label mb-6">
             Plans
           </p>
           <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.8] text-lime-50">
@@ -150,20 +151,34 @@ export default function PricingPage() {
             ))}
           </div>
 
-          {/* Beta Overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-            <h2 className="font-heading text-[clamp(5rem,10vw,8rem)] leading-[0.8] text-lime-400">
-              We&apos;re in Beta
-            </h2>
-            <p className="mt-6 text-lg md:text-xl text-navy-300 max-w-lg">
-              Join our founding clinics for lifetime early-adopter pricing
-            </p>
-            <a
-              href="/waitlist"
-              className="mt-10 inline-block bg-lime-400 text-navy-950 px-10 py-4 rounded-full text-lg font-semibold hover:bg-lime-300 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.3)] transition-all duration-200"
-            >
-              Join the Waitlist
-            </a>
+          {/* Beta Overlay — card style */}
+          <div className="absolute inset-0 flex items-center justify-center px-6">
+            <div className="relative bg-gradient-to-b from-navy-800/90 to-navy-900/90 border border-lime-400/20 rounded-[2rem] p-10 md:p-14 max-w-lg w-full text-center perio-glow backdrop-blur-sm">
+              {/* Beta badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-lime-400/30 bg-lime-400/10 mb-6">
+                <span className="w-2 h-2 rounded-full bg-lime-400 animate-pulse-live" />
+                <span className="text-lime-400 text-xs uppercase tracking-[0.15em] font-semibold">Beta</span>
+              </div>
+
+              <h2 className="font-heading text-[clamp(3rem,6vw,5rem)] leading-[0.8] text-lime-400 mb-4">
+                We&apos;re in Beta
+              </h2>
+              <p className="text-lg md:text-xl text-navy-300 max-w-sm mx-auto mb-8 leading-relaxed">
+                Founding clinic pricing is locked in for life
+              </p>
+              <Link
+                href="/waitlist"
+                className="perio-btn-primary justify-center w-full sm:w-auto"
+              >
+                Join the Waitlist
+              </Link>
+              <p className="text-navy-500 text-xs mt-6 flex items-center justify-center gap-2">
+                <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                No credit card required
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -114,7 +114,7 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <div data-gsap="fade-up" className="text-center mb-16">
-            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+            <p className="perio-label mb-4">
               The People
             </p>
             <h2 className="font-heading text-[clamp(3rem,8vw,6rem)] leading-[0.85] tracking-tight text-lime-50">
@@ -134,7 +134,7 @@ export default function AboutPage() {
                     alt={`${member.name}, ${member.role} at Perioskoup`}
                     width={400}
                     height={533}
-                    className="rounded-2xl object-cover w-full aspect-[3/4] grayscale hover:grayscale-0 transition-all duration-500"
+                    className="rounded-2xl object-cover w-full aspect-[3/4] grayscale hover:grayscale-0 transition-all duration-500 border-2 border-lime-400/20 shadow-[0_0_30px_-5px_rgba(192,229,122,0.15)]"
                   />
                 </div>
                 <h3 className="font-heading text-[clamp(1.5rem,3vw,2.25rem)] leading-[0.85] text-lime-50 mt-6">
@@ -174,7 +174,7 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-[1200px] mx-auto">
           <div data-gsap="fade-up" className="text-center mb-16">
-            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+            <p className="perio-label mb-4">
               What We Stand For
             </p>
             <h2 className="font-heading text-[clamp(3rem,8vw,6rem)] leading-[0.85] tracking-tight text-lime-50">

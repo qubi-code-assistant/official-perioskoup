@@ -115,7 +115,7 @@ export default function ForDentists() {
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto relative">
           <div data-gsap="fade-up" className="text-center mb-16">
-            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+            <p className="perio-label mb-4">
               The Impact
             </p>
             <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.85] text-lime-50">
@@ -146,7 +146,7 @@ export default function ForDentists() {
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto relative">
           <div data-gsap="fade-up" className="text-center mb-16">
-            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4">
+            <p className="perio-label mb-4">
               Why Perioskoup
             </p>
             <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.85] text-lime-50">

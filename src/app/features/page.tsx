@@ -113,7 +113,7 @@ export default function FeaturesPage() {
         {/* Ambient glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto text-center relative" data-gsap="fade-up">
-          <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-6 font-body">
+          <p className="perio-label mb-6 font-body">
             Platform Overview
           </p>
           <h1 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.8] text-lime-50">
@@ -143,7 +143,7 @@ export default function FeaturesPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Text side */}
               <div className={index % 2 !== 0 ? 'lg:order-2' : ''} data-gsap="fade-up">
-                <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4 font-body">
+                <p className="perio-label mb-4 font-body">
                   {feature.label}
                 </p>
                 <h2 className="font-heading text-[clamp(2.5rem,5vw,3.5rem)] text-lime-50 leading-[0.85] mb-6">
@@ -203,7 +203,7 @@ export default function FeaturesPage() {
         <div className="absolute top-1/3 right-0 translate-x-1/4 w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16" data-gsap="fade-up">
-            <p className="text-lime-400 text-xs uppercase tracking-[0.2em] font-semibold mb-4 font-body">
+            <p className="perio-label mb-4 font-body">
               FAQ
             </p>
             <h2 className="font-heading text-[clamp(4rem,8vw,6rem)] leading-[0.8] text-lime-50">

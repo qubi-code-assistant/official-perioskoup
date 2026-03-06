@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -47,7 +49,7 @@ export default function Navigation() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-navy-950/80 backdrop-blur-md border-b border-navy-800'
+          ? 'perio-nav-blur'
           : 'bg-transparent'
       }`}
     >
@@ -60,6 +62,7 @@ export default function Navigation() {
             height={32}
             priority
           />
+          <span className="text-lime-50 text-lg font-heading leading-none hidden sm:block">Perioskoup</span>
         </Link>
 
         {/* Desktop nav */}
@@ -68,14 +71,18 @@ export default function Navigation() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-navy-300 hover:text-lime-50 transition-colors text-sm font-medium tracking-wide"
+              className={`transition-colors text-sm font-medium tracking-wide ${
+                pathname === link.href
+                  ? 'text-lime-400'
+                  : 'text-navy-300 hover:text-lime-50'
+              }`}
             >
               {link.label}
             </Link>
           ))}
           <Link
             href="/waitlist"
-            className="bg-lime-400 text-navy-950 px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-lime-300 transition-all duration-200 hover:scale-105 shadow-[0_0_20px_rgba(192,229,122,0.2)]"
+            className="perio-btn-primary !py-2.5 !px-6 !text-sm"
           >
             Join Waitlist
           </Link>
@@ -120,7 +127,11 @@ export default function Navigation() {
               href={link.href}
               onClick={() => setIsOpen(false)}
               tabIndex={isOpen ? 0 : -1}
-              className="text-lime-50 text-2xl font-heading tracking-wide hover:text-lime-400 transition-colors"
+              className={`text-2xl font-heading tracking-wide transition-colors ${
+                pathname === link.href
+                  ? 'text-lime-400'
+                  : 'text-lime-50 hover:text-lime-400'
+              }`}
             >
               {link.label}
             </Link>

@@ -118,6 +118,30 @@ const BLOG_POSTS = [
   },
 ]
 
+const FOUNDERS = [
+  {
+    name: 'Dr. Anca Constantin',
+    role: 'Periodontist & CEO',
+    creds: 'DMD, PhD in Periodontology',
+    quote: 'We built Perioskoup to bridge the gap between clinical precision and patient psychology.',
+    photo: '/team/team-anca.webp',
+  },
+  {
+    name: 'Eduard Ciugulea',
+    role: 'CGO & Technical Co-Founder',
+    creds: 'Full-Stack Engineer & Growth',
+    quote: 'Technology should amplify the dentist, not replace them.',
+    photo: '/team/team-eduard.webp',
+  },
+  {
+    name: 'Petrica Nancu',
+    role: 'CTO & Head of AI',
+    creds: 'AI & Machine Learning',
+    quote: 'The best AI is the one patients never notice — it just works.',
+    photo: '/team/team-petrica.webp',
+  },
+]
+
 const TRUST_BADGES = [
   {
     label: 'HIPAA Compliant',
@@ -333,10 +357,10 @@ export default function Home() {
             </p>
           </header>
 
-          {/* Bento grid — 2-column */}
-          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Card 1: AI Companion */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[400px] md:min-h-[520px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+          {/* Bento grid — 3-column */}
+          <div data-gsap-stagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1: AI Companion — spans 2 cols + 2 rows */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[400px] md:min-h-[520px] md:col-span-2 md:row-span-2 shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-lime-400/5 rounded-full blur-[100px] pointer-events-none" />
               <div className="absolute bottom-0 left-0 p-8 z-20 w-full bg-gradient-to-t from-navy-800 via-navy-800/90 to-transparent pt-20">
                 <h3 className="font-heading text-[2.5rem] leading-none text-lime-50 mb-1">AI Companion</h3>
@@ -396,28 +420,29 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card 2: Habit Tracking */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden flex flex-col min-h-[400px] md:min-h-[520px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
-              <div className="flex-1 p-8 flex flex-col justify-center items-center gap-8">
-                <div className="flex items-end gap-6 h-64 w-full justify-center px-4">
-                  <div className="flex flex-col items-center gap-3 w-14">
-                    <div className="relative w-full bg-navy-900 rounded-t-xl h-48 overflow-hidden">
-                      <div className="absolute bottom-0 left-0 w-full bg-navy-600/40 h-[45%] rounded-t-xl" />
-                    </div>
-                    <span className="text-xs text-navy-400 uppercase tracking-wider">Floss</span>
+            {/* Card 2: Habit Tracking — horizontal bars for 1-col fit */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden flex flex-col min-h-[280px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+              <div className="flex-1 p-8 flex flex-col justify-center gap-5">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-lime-400 uppercase tracking-wider font-semibold w-12 shrink-0">Brush</span>
+                  <div className="flex-1 h-3 bg-navy-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-lime-400 rounded-full shadow-[0_0_10px_rgba(192,229,122,0.3)]" style={{ width: '82%' }} />
                   </div>
-                  <div className="flex flex-col items-center gap-3 w-14">
-                    <div className="relative w-full bg-navy-900 rounded-t-xl h-64 overflow-hidden shadow-[0_0_15px_rgba(192,229,122,0.15)]">
-                      <div className="absolute bottom-0 left-0 w-full bg-lime-400 h-[82%] rounded-t-xl" />
-                    </div>
-                    <span className="text-xs text-lime-400 uppercase tracking-wider font-semibold">Brush</span>
+                  <span className="text-xs text-lime-400 font-semibold w-8 text-right">82%</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-navy-400 uppercase tracking-wider w-12 shrink-0">Floss</span>
+                  <div className="flex-1 h-3 bg-navy-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-navy-600/60 rounded-full" style={{ width: '45%' }} />
                   </div>
-                  <div className="flex flex-col items-center gap-3 w-14">
-                    <div className="relative w-full bg-navy-900 rounded-t-xl h-48 overflow-hidden">
-                      <div className="absolute bottom-0 left-0 w-full bg-navy-600/40 h-[60%] rounded-t-xl" />
-                    </div>
-                    <span className="text-xs text-navy-400 uppercase tracking-wider">Rinse</span>
+                  <span className="text-xs text-navy-400 w-8 text-right">45%</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-navy-400 uppercase tracking-wider w-12 shrink-0">Rinse</span>
+                  <div className="flex-1 h-3 bg-navy-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-navy-600/60 rounded-full" style={{ width: '60%' }} />
                   </div>
+                  <span className="text-xs text-navy-400 w-8 text-right">60%</span>
                 </div>
               </div>
               <div className="p-8 pt-0">
@@ -426,8 +451,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card 3: Dentist Dashboard */}
-            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[280px] md:min-h-[300px] shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
+            {/* Card 3: Dentist Dashboard — spans 2 cols */}
+            <div data-gsap="stagger-item" className="titanium-card overflow-hidden relative flex flex-col min-h-[280px] md:min-h-[300px] md:col-span-2 shadow-[0_0_60px_-20px_rgba(192,229,122,0.08)]">
               <div className="absolute inset-0 flex items-center justify-center opacity-80">
                 <svg className="w-full h-full" fill="none" viewBox="0 0 500 150" preserveAspectRatio="none">
                   <defs>
@@ -536,29 +561,35 @@ export default function Home() {
           {/* Divider */}
           <div className="w-px h-24 bg-gradient-to-b from-transparent via-navy-800 to-transparent" />
 
-          {/* Profile card */}
-          <div className="flex flex-col md:flex-row items-center gap-8 bg-navy-800/40 border border-white/5 rounded-[2rem] p-8 md:pr-12 hover:bg-navy-800/60 transition-colors duration-300">
-            <div className="relative">
-              <Image
-                src="/team/team-anca.webp"
-                alt="Dr. Anca Constantin"
-                width={96}
-                height={96}
-                className="w-24 h-24 rounded-full object-cover border-2 border-lime-400/20"
-              />
-              <div className="absolute -bottom-1 -right-1 bg-navy-950 rounded-full p-1 border border-navy-800">
-                <svg aria-hidden="true" className="w-5 h-5 text-lime-400 bg-navy-800 rounded-full p-0.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
+          {/* The Team label */}
+          <p className="perio-label text-center">The Team</p>
+
+          {/* 3-founder grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
+            {FOUNDERS.map((founder) => (
+              <div key={founder.name} className="flex flex-col items-center text-center">
+                <div className="relative mb-4">
+                  <Image
+                    src={founder.photo}
+                    alt={founder.name}
+                    width={112}
+                    height={112}
+                    className="w-28 h-28 rounded-full object-cover border-2 border-lime-400/30 shadow-[0_0_30px_-5px_rgba(192,229,122,0.2)]"
+                  />
+                  <div className="absolute -bottom-1 -right-1 bg-navy-950 rounded-full p-1 border border-navy-800">
+                    <svg aria-hidden="true" className="w-5 h-5 text-lime-400 bg-navy-800 rounded-full p-0.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </div>
+                </div>
+                <h4 className="font-heading text-[2rem] leading-none text-lime-50 mb-1">{founder.name}</h4>
+                <p className="text-lime-400 text-xs uppercase tracking-[0.1em] font-medium mb-1">{founder.role}</p>
+                <p className="text-navy-500 text-xs mb-3">{founder.creds}</p>
+                <p className="text-navy-400 text-sm max-w-[220px]">
+                  &ldquo;{founder.quote}&rdquo;
+                </p>
               </div>
-            </div>
-            <div className="flex flex-col text-center md:text-left">
-              <h4 className="font-heading text-[2.5rem] leading-none text-lime-50 mb-1">Dr. Anca Constantin</h4>
-              <p className="text-lime-400 text-sm uppercase tracking-[0.1em] font-medium mb-2">DMD, PhD in Periodontology</p>
-              <p className="text-navy-400 text-sm max-w-xs">
-                &ldquo;We built Perioskoup to bridge the gap between clinical precision and patient psychology.&rdquo;
-              </p>
-            </div>
+            ))}
           </div>
 
           {/* Trust row — pill styling with distinct icons */}
