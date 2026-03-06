@@ -1,8 +1,7 @@
 /**
  * PERIOSKOUP FOOTER
  * Design: Deep dark footer with brand colors
- * Colors: #050C10 bg, #C0E57A lime, #F5F9EA text, #8C9C8C muted
- * Fonts: Dongle (logo), Gabarito (body/links)
+ * Animation: JS onMouseEnter/Leave replaced with CSS .footer-link class.
  */
 import { Link } from 'wouter';
 import { LogoFull } from './Logo';
@@ -55,6 +54,7 @@ export default function Footer() {
                 href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="efp-badge-hover"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -78,35 +78,24 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* Link columns — CSS .footer-link hover, no JS mutations */}
           {Object.entries(FOOTER_LINKS).map(([category, links]) => (
             <div key={category}>
-              <p style={{
+              <h3 style={{
                 fontFamily: 'Gabarito, sans-serif',
                 fontSize: '11px',
                 fontWeight: 600,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
-                color: '#234966',
+                color: '#8C9C8C',
                 marginBottom: '16px',
               }}>
                 {category}
-              </p>
+              </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {links.map(({ label, href }) => (
                   <Link key={href} href={href}>
-                    <span
-                      style={{
-                        fontFamily: 'Gabarito, sans-serif',
-                        fontSize: '14px',
-                        color: '#8C9C8C',
-                        textDecoration: 'none',
-                        transition: 'color 0.2s ease',
-                        display: 'block',
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#F5F9EA'; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#8C9C8C'; }}
-                    >
+                    <span className="footer-link">
                       {label}
                     </span>
                   </Link>
@@ -126,11 +115,11 @@ export default function Footer() {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-          <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#234966' }}>
-            © {new Date().getFullYear()} Perioskoup. All rights reserved.
+          <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#8C9C8C' }}>
+            &copy; {new Date().getFullYear()} Perioskoup. All rights reserved.
           </p>
-          <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#234966' }}>
-            Built in Bucharest, Romania 🇷🇴
+          <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#8C9C8C' }}>
+            Built in Bucharest, Romania
           </p>
         </div>
       </div>

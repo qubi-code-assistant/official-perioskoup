@@ -1,10 +1,14 @@
 /**
  * PERIOSKOUP HOME PAGE
  * Design: Clinical Precision, Human Warmth — Dark Tech-Medical Premium
- * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
- * Fonts: Dongle (display) + Gabarito (body/UI)
+ * Animation fixes:
+ *   - Phone mockup: reveal-scale outer div, phone-float inner div (fix transform conflict)
+ *   - Counter: prefers-reduced-motion guard
+ *   - EFP badge: CSS hover class
+ *   - useReveal: prefers-reduced-motion guard
  */
 
+import { Helmet } from "react-helmet-async";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -24,12 +28,24 @@ const ASSETS = {
   howItWorks:   "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/howitworks-rings-bg-37ba3jS33MFasF6UgDif2G.webp",
 };
 
-/* ── Scroll reveal hook ───────────────────────────────────── */
+/* Scroll reveal hook — respects prefers-reduced-motion */
 function useReveal() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const els = document.querySelectorAll(".reveal, .reveal-scale");
+
+    if (prefersReducedMotion) {
+      els.forEach((el) => el.classList.add("visible"));
+      return;
+    }
+
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          io.unobserve(e.target);
+        }
+      }),
       { threshold: 0.12 }
     );
     els.forEach((el) => io.observe(el));
@@ -37,14 +53,23 @@ function useReveal() {
   }, []);
 }
 
-/* ── Animated counter ─────────────────────────────────────── */
+/* Animated counter — respects prefers-reduced-motion */
 function Counter({ to, suffix = "", duration = 2000 }: { to: number; suffix?: string; duration?: number }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Respect reduced motion — show final value immediately
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setCount(to);
+      return;
+    }
+
     const io = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !started.current) {
         started.current = true;
@@ -63,27 +88,37 @@ function Counter({ to, suffix = "", duration = 2000 }: { to: number; suffix?: st
     io.observe(el);
     return () => io.disconnect();
   }, [to, duration]);
+
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
-/* ── Waitlist form ────────────────────────────────────────── */
+/* Waitlist form */
 function WaitlistForm({ compact = false }: { compact?: boolean }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email) {
+      setEmailError("Email address is required.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+    setEmailError("");
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <div className="text-center py-8">
+      <div role="status" aria-live="polite" aria-atomic="true" className="text-center py-8">
         <div style={{ width: 56, height: 56, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", background: "rgba(192,229,122,0.12)", border: "1px solid rgba(192,229,122,0.35)" }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </div>
         <p style={{ fontFamily: "Dongle, sans-serif", fontSize: "36px", color: "#C0E57A", lineHeight: 1 }}>You're on the list.</p>
         <p className="body-md" style={{ marginTop: 8 }}>We'll reach out when your spot opens up.</p>
@@ -92,21 +127,42 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      {!compact && <input className="p-input" type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />}
-      <input className="p-input" type="email" placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} required />
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }} noValidate>
       {!compact && (
-        <select className="p-select" value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="">I am a...</option>
-          <option value="patient">Patient</option>
-          <option value="dentist">Dentist / Periodontist</option>
-          <option value="clinic">Clinic Owner</option>
-          <option value="other">Other</option>
-        </select>
+        <>
+          <label htmlFor="home-waitlist-name" className="sr-only">Your name</label>
+          <input id="home-waitlist-name" className="p-input" type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+        </>
+      )}
+      <label htmlFor="home-waitlist-email" className="sr-only">Email address</label>
+      <input
+        id="home-waitlist-email"
+        className="p-input"
+        type="email"
+        placeholder="Your email address"
+        value={email}
+        onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(""); }}
+        required
+        aria-required="true"
+        aria-invalid={!!emailError}
+        aria-describedby={emailError ? "home-email-error" : undefined}
+      />
+      {emailError && <span id="home-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A" }}>{emailError}</span>}
+      {!compact && (
+        <>
+          <label htmlFor="home-waitlist-role" className="sr-only">I am a...</label>
+          <select id="home-waitlist-role" className="p-select" value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="">I am a...</option>
+            <option value="patient">Patient</option>
+            <option value="dentist">Dentist / Periodontist</option>
+            <option value="clinic">Clinic Owner</option>
+            <option value="other">Other</option>
+          </select>
+        </>
       )}
       <button type="submit" className="btn-primary w-full" style={{ justifyContent: "center", fontSize: 16, padding: "16px 28px" }}>
         Join the Waitlist
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
       </button>
       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", textAlign: "center" }}>No spam. Unsubscribe anytime. GDPR compliant.</p>
     </form>
@@ -133,14 +189,23 @@ export default function Home() {
 
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <Helmet>
+        <title>Perioskoup — AI Dental Companion App | Between-Visit Dental Care</title>
+        <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025." />
+        <link rel="canonical" href="https://perioskoup.com/" />
+        <meta property="og:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
+        <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
+        <meta property="og:url" content="https://perioskoup.com/" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
+        <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
+      </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
       <div className="noise-overlay" />
       <Navbar />
 
-      {/* ═══════════════════════════════════════════════════════
-          HERO — Soft bioluminescent bg with Ken Burns animation
-          ═══════════════════════════════════════════════════════ */}
-      <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: 100, paddingBottom: 80, overflow: "hidden" }}>
+      {/* HERO */}
+      <section id="main-content" style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(48px, 8vw, 80px)", overflow: "hidden" }}>
         {/* Animated background */}
         <div className="animated-bg-wrapper">
           <div className="animated-bg-img ken-burns" style={{ backgroundImage: `url(${ASSETS.heroBg})` }} />
@@ -149,13 +214,14 @@ export default function Home() {
         </div>
 
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 64, alignItems: "center" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-16 items-center">
             {/* Left: text content */}
             <div>
-              {/* EFP badge */}
+              {/* EFP badge — CSS hover via .efp-badge-hover */}
               <div className="reveal" style={{ marginBottom: 28 }}>
                 <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none", transition: "background 0.2s ease", whiteSpace: "nowrap" as const }}>
+                  className="efp-badge-hover"
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none", whiteSpace: "nowrap" as const }}>
                   <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const, whiteSpace: "nowrap" as const }}>EFP Award Winner 2025</span>
                   <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500, whiteSpace: "nowrap" as const }}>Digital Innovation</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ color: "#C0E57A", flexShrink: 0 }}><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -168,7 +234,12 @@ export default function Home() {
                 <span style={{ color: "#C0E57A" }}>we take over.</span>
               </h1>
 
-              {/* Dr. Anca quote with lime left border */}
+              {/* Product subhead */}
+              <p className="reveal body-lg" style={{ maxWidth: 520, marginBottom: 32, transitionDelay: "0.15s", color: "rgba(245,249,234,0.8)" }}>
+                Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+              </p>
+
+              {/* Dr. Anca quote */}
               <blockquote className="reveal" style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, marginBottom: 40, transitionDelay: "0.2s" }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, fontStyle: "italic", color: "rgba(245,249,234,0.85)", lineHeight: 1.65, maxWidth: 480 }}>
                   "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
@@ -189,35 +260,45 @@ export default function Home() {
                 </Link>
               </div>
 
+              {/* Social proof micro-bar */}
+              <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginBottom: 32, transitionDelay: "0.35s" }}>
+                30+ founding clinics · 500+ on the waitlist · Free for patients
+              </p>
+
               {/* Stats row */}
-              <div className="reveal" style={{ display: "flex", gap: 40, transitionDelay: "0.4s" }}>
+              <div className="reveal flex flex-wrap gap-6 lg:gap-10" style={{ transitionDelay: "0.4s" }}>
                 {[
-                  { label: "Treatment Acceptance", value: "85%", animated: false },
-                  { label: "Fewer No-Shows", value: "40%", animated: false },
-                  { label: "EFP Innovation Award", value: "Winner", animated: false },
+                  { label: "Treatment Acceptance", value: "85%", source: "digital health research" },
+                  { label: "Fewer No-Shows", value: "40%", source: "digital health research" },
+                  { label: "EFP Innovation Award", value: "Winner", source: "" },
                 ].map((s) => (
                   <div key={s.label}>
                     <div style={{ fontFamily: "Dongle, sans-serif", fontSize: 44, color: "#C0E57A", lineHeight: 1 }}>{s.value}</div>
                     <div style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginTop: 4 }}>{s.label}</div>
+                    {s.source && <div style={{ fontFamily: "Gabarito, sans-serif", fontSize: 10, color: "#6B7F7B", marginTop: 2 }}>{s.source}</div>}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right: coded phone mockup */}
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <div className="phone-float reveal-scale" style={{ transitionDelay: "0.2s" }}>
-                <PhoneMockup />
+            {/* Right: phone mockup
+                FIX: reveal-scale on outer div, phone-float on inner div.
+                Previously both classes were on the same element, which caused
+                the CSS animation (float) to override the CSS transition (reveal-scale)
+                on the transform property — the scale-in never fired. */}
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} aria-hidden="true">
+              <div className="reveal-scale" style={{ transitionDelay: "0.2s" }}>
+                <div className="phone-float">
+                  <PhoneMockup />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          TICKER
-          ═══════════════════════════════════════════════════════ */}
-      <div style={{ background: "#C0E57A", padding: "14px 0", overflow: "hidden" }}>
+      {/* TICKER */}
+      <div style={{ background: "#C0E57A", padding: "14px 0", overflow: "hidden" }} aria-hidden="true">
         <div className="ticker-track">
           {[...Array(2)].map((_, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center" }}>
@@ -231,9 +312,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════
-          EFP AWARD CARD
-          ═══════════════════════════════════════════════════════ */}
+      {/* EFP AWARD CARD */}
       <section style={{ background: "#0A171E", padding: "80px 0" }}>
         <div className="container">
           <div className="reveal" style={{ borderRadius: 24, overflow: "hidden", border: "1px solid #234966", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
@@ -265,16 +344,16 @@ export default function Home() {
               </div>
               <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer" className="btn-text">
                 Read the EFP announcement
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <span className="btn-text-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </span>
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          FEATURES — drift-x animated background
-          ═══════════════════════════════════════════════════════ */}
+      {/* FEATURES */}
       <section style={{ position: "relative", background: "#050C10", padding: "120px 0", overflow: "hidden" }}>
         <div className="animated-bg-wrapper">
           <div className="animated-bg-img drift-x" style={{ backgroundImage: `url(${ASSETS.featuresBg})`, opacity: 0.35 }} />
@@ -311,14 +390,12 @@ export default function Home() {
           </div>
 
           <div className="text-center reveal" style={{ marginTop: 48 }}>
-            <Link href="/features" className="btn-ghost">See all features →</Link>
+            <Link href="/features" className="btn-ghost">See all features &rarr;</Link>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          HOW IT WORKS — "From Chair to Chat." wave circles
-          ═══════════════════════════════════════════════════════ */}
+      {/* HOW IT WORKS */}
       <section style={{ position: "relative", padding: "120px 0", overflow: "hidden", background: "#0A171E" }}>
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div className="text-center reveal" style={{ marginBottom: 80 }}>
@@ -333,7 +410,6 @@ export default function Home() {
 
           {/* Wave circles layout */}
           <div style={{ position: "relative", maxWidth: 900, margin: "0 auto", paddingTop: 40, paddingBottom: 40 }}>
-            {/* SVG connecting wave line */}
             <svg viewBox="0 0 900 200" fill="none" style={{ position: "absolute", top: 40, left: 0, width: "100%", height: 200, zIndex: 1 }}>
               <path d="M 120 80 C 250 80, 300 160, 450 160 C 600 160, 650 80, 780 80" stroke="rgba(192,229,122,0.35)" strokeWidth="1.5" fill="none" />
             </svg>
@@ -354,9 +430,7 @@ export default function Home() {
                 },
               ].map((item, i) => (
                 <div key={item.step} className="reveal" style={{ transitionDelay: `${i * 0.15}s`, textAlign: "center", paddingTop: item.offsetY }}>
-                  {/* Circle with badge */}
                   <div style={{ position: "relative", display: "inline-block", marginBottom: 32 }}>
-                    {/* Subtle radial glow behind circle */}
                     <div style={{
                       position: "absolute", top: "50%", left: "50%",
                       transform: "translate(-50%, -50%)",
@@ -372,7 +446,6 @@ export default function Home() {
                     }}>
                       <svg width="48" height="48" viewBox="0 0 24 24" fill="none">{item.icon}</svg>
                     </div>
-                    {/* Step badge */}
                     <div style={{
                       position: "absolute", top: -4, right: -4,
                       width: 32, height: 32, borderRadius: "50%",
@@ -392,9 +465,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          FOUNDERS / TEAM
-          ═══════════════════════════════════════════════════════ */}
+      {/* FOUNDERS / TEAM */}
       <section style={{ background: "#050C10", padding: "120px 0" }}>
         <div className="container">
           <div className="text-center reveal" style={{ marginBottom: 72 }}>
@@ -403,7 +474,7 @@ export default function Home() {
               Built by people who<br />care about <span style={{ color: "#C0E57A" }}>your health.</span>
             </h2>
             <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
-              Perioskoup was founded by a periodontist, a full-stack engineer, and a product designer — united by a single mission.
+              Perioskoup was founded by a periodontist, a full-stack engineer, and an AI specialist — united by a single mission.
             </p>
           </div>
 
@@ -430,21 +501,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          CTA — CSS-driven animated background (orbs + grid + particles)
-          ═══════════════════════════════════════════════════════ */}
+      {/* CTA */}
       <section style={{ position: "relative", background: "#0A171E", padding: "120px 0", overflow: "hidden" }}>
-        {/* Animated background canvas — no image, pure CSS */}
         <div className="cta-bg-canvas">
-          {/* Floating gradient orbs */}
           <div className="cta-orb cta-orb--1" />
           <div className="cta-orb cta-orb--2" />
           <div className="cta-orb cta-orb--3" />
           <div className="cta-orb cta-orb--4" />
           <div className="cta-orb cta-orb--5" />
-          {/* Subtle grid overlay */}
           <div className="cta-grid" />
-          {/* Rising particles */}
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={`p-${i}`}
@@ -460,9 +525,7 @@ export default function Home() {
               }}
             />
           ))}
-          {/* Horizontal scan line */}
           <div className="cta-scan-line" />
-          {/* Vignette edges */}
           <div className="cta-vignette" />
         </div>
 
@@ -491,9 +554,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          SOCIAL PROOF / QUOTE
-          ═══════════════════════════════════════════════════════ */}
+      {/* SOCIAL PROOF / QUOTE */}
       <section style={{ background: "#050C10", padding: "80px 0" }}>
         <div className="container">
           <div className="reveal" style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>

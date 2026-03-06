@@ -4,6 +4,7 @@
  * Fonts: Dongle (display), Gabarito (body)
  */
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -14,11 +15,17 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const elements = document.querySelectorAll(".reveal, .reveal-scale");
+    if (prefersReducedMotion) {
+      elements.forEach((el) => el.classList.add("visible"));
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal, .reveal-scale").forEach((el) => io.observe(el));
+    elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 }
@@ -55,11 +62,22 @@ export default function Features() {
 
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <Helmet>
+        <title>AI Dental Companion App Features — Habit Tracking & Care Plans | Perioskoup</title>
+        <meta name="description" content="Explore Perioskoup's AI dental companion features: personalised habit tracking, smart reminders, progress dashboards, secure patient-clinician messaging, and GDPR-compliant data storage." />
+        <link rel="canonical" href="https://perioskoup.com/features" />
+        <meta property="og:title" content="AI Dental App Features — Habit Tracking & Care Plans | Perioskoup" />
+        <meta property="og:description" content="AI-powered habit tracking, smart reminders, clinician dashboard, and secure messaging for dental patients and practices." />
+        <meta property="og:url" content="https://perioskoup.com/features" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="AI Dental App Features — Habit Tracking & Care Plans | Perioskoup" />
+        <meta name="twitter:description" content="Personalised habit tracking, smart reminders, clinician dashboard, and GDPR-compliant secure messaging — all in one AI dental companion." />
+      </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresFaqJsonLd) }} />
       <Navbar />
 
       {/* Hero */}
-      <section className="section" style={{ minHeight: "55vh", display: "flex", alignItems: "center", paddingTop: "120px", position: "relative", zIndex: 1, overflow: "hidden" }}>
+      <section id="main-content" className="section" style={{ minHeight: "55vh", display: "flex", alignItems: "center", paddingTop: "120px", position: "relative", zIndex: 1, overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container section-content" style={{ textAlign: "center", position: "relative", zIndex: 2 }}>
@@ -125,7 +143,7 @@ export default function Features() {
           </p>
           <div className="reveal" style={{ transitionDelay: "0.2s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: "16px", padding: "16px 36px" }}>
-              Get Early Access →
+              Join the Waitlist →
             </Link>
           </div>
         </div>

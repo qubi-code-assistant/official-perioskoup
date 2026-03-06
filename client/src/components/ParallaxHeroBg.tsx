@@ -1,13 +1,23 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Subtle dot-grid pattern background with gentle parallax.
- * Positioned absolute within the hero section — does NOT follow scroll globally.
+ * Dot-grid pattern background with gentle parallax.
+ * Positioned absolute within the hero section.
+ *
+ * Animation improvements:
+ *   - Opacity increased from 0.35 to 0.55 (was nearly invisible)
+ *   - Dot color opacity increased from 0.12 to 0.18 (brighter dots)
+ *   - Slow dot-grid-breathe animation for subtle depth
+ *   - prefers-reduced-motion guard skips scroll listener and freezes
  */
 export default function ParallaxHeroBg() {
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Respect reduced motion — skip parallax entirely
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     const handleScroll = () => {
       if (!bgRef.current) return;
       const rect = bgRef.current.parentElement?.getBoundingClientRect();
@@ -30,10 +40,9 @@ export default function ParallaxHeroBg() {
         position: "absolute",
         inset: "-20% 0",
         zIndex: 0,
-        opacity: 0.35,
-        backgroundImage: `radial-gradient(circle, rgba(192,229,122,0.12) 1px, transparent 1px)`,
+        backgroundImage: `radial-gradient(circle, rgba(192,229,122,0.18) 1px, transparent 1px)`,
         backgroundSize: "32px 32px",
-        willChange: "transform",
+        animation: "dot-grid-breathe 8s ease-in-out infinite",
       }}
     />
   );

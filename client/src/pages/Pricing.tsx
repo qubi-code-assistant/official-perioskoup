@@ -3,6 +3,7 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
+import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
@@ -13,11 +14,17 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const elements = document.querySelectorAll(".reveal, .reveal-scale");
+    if (prefersReducedMotion) {
+      elements.forEach((el) => el.classList.add("visible"));
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal, .reveal-scale").forEach((el) => io.observe(el));
+    elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 }
@@ -28,8 +35,8 @@ const PLANS = [
     price: "Free",
     period: "during beta",
     description: "For patients who want to understand and manage their periodontal health.",
-    features: ["AI-powered diagnosis explanations", "Personalized care plan", "Daily habit reminders", "Progress tracking", "Secure messaging with your dentist", "Educational content library"],
-    cta: "Join Waitlist",
+    features: ["Plain-language oral health education", "Personalized care plan", "Daily habit reminders", "Progress tracking", "Secure messaging with your dentist", "Educational content library"],
+    cta: "Join the Waitlist",
     href: "/waitlist",
     highlighted: false,
   },
@@ -39,7 +46,7 @@ const PLANS = [
     period: "",
     description: "For dental practices that want to improve patient engagement and outcomes.",
     features: ["Everything in Patient", "Clinician dashboard", "Patient monitoring & alerts", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports", "Multi-dentist support", "Priority support"],
-    cta: "Join Founding Waitlist",
+    cta: "Apply as a Founding Clinic",
     href: "/waitlist",
     highlighted: true,
   },
@@ -54,7 +61,7 @@ export default function Pricing() {
     "mainEntity": [
       { "@type": "Question", "name": "How much does Perioskoup cost?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is currently free for patients during the beta period. Clinic pricing will be announced closer to the public launch. Founding members who join the waitlist receive founding pricing and priority access." } },
       { "@type": "Question", "name": "Is there a free trial for dental practices?", "acceptedAnswer": { "@type": "Answer", "text": "Founding clinics that join during the beta period receive complimentary access. Contact the team through the waitlist for details on the founding clinic programme." } },
-      { "@type": "Question", "name": "What is included in the Patient plan?", "acceptedAnswer": { "@type": "Answer", "text": "The Patient plan includes AI-powered diagnosis explanations, personalised care plans, daily habit reminders, progress tracking, secure messaging with your dentist, and access to the educational content library." } },
+      { "@type": "Question", "name": "What is included in the Patient plan?", "acceptedAnswer": { "@type": "Answer", "text": "The Patient plan includes plain-language oral health education, personalised care plans, daily habit reminders, progress tracking, secure messaging with your dentist, and access to the educational content library." } },
     ]
   };
 
@@ -71,13 +78,25 @@ export default function Pricing() {
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+      <Helmet>
+        <title>Perioskoup Pricing — Free for Patients, Plans for Dental Clinics</title>
+        <meta name="description" content="Perioskoup is free for patients during beta. Dental clinic plans launching March 2026. Join the founding waitlist for priority access and founding pricing." />
+        <link rel="canonical" href="https://perioskoup.com/pricing" />
+        <meta property="og:title" content="Perioskoup Pricing — Free for Patients, Plans for Dental Clinics" />
+        <meta property="og:description" content="Perioskoup is free for patients during beta. Clinic plans launching March 2026 from €39/mo. Join the founding waitlist for priority access." />
+        <meta property="og:url" content="https://perioskoup.com/pricing" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Perioskoup Pricing — Free for Patients, Plans for Clinics" />
+        <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans from €39/mo launching March 2026. Join 30+ founding clinics on the waitlist." />
+      </Helmet>
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: 140, paddingBottom: 80, textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: 140, paddingBottom: 80, textAlign: "center", position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
@@ -108,9 +127,9 @@ export default function Pricing() {
           </div>
 
           {/* Plans */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, maxWidth: 800, margin: "0 auto" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-[800px] mx-auto">
             {PLANS.map((plan, i) => (
-              <div key={plan.name} className="card reveal" style={{ padding: 40, transitionDelay: `${i * 0.08}s`, position: "relative", overflow: "hidden", ...(plan.highlighted ? { border: "1px solid rgba(192,229,122,0.25)" } : {}) }}>
+              <div key={plan.name} className="card reveal p-6 sm:p-10" style={{ transitionDelay: `${i * 0.08}s`, position: "relative", overflow: "hidden", ...(plan.highlighted ? { border: "1px solid rgba(192,229,122,0.25)" } : {}) }}>
                 {plan.highlighted && (
                   <div style={{ position: "absolute", top: 0, right: 0, background: "#C0E57A", color: "#0A171E", fontFamily: "Gabarito, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "6px 16px", borderBottomLeftRadius: 12 }}>
                     Founding Partner

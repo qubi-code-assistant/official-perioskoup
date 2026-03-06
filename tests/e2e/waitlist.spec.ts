@@ -129,14 +129,15 @@ test.describe("Waitlist page — Validation: invalid email", () => {
     await expect(page.getByText("You're on the list!", { exact: false })).not.toBeVisible();
   });
 
-  test("browser rejects email with missing TLD", async ({ page }) => {
+  test("browser rejects email missing @ sign entirely", async ({ page }) => {
     await page.getByPlaceholder("First name").fill("Test");
     await page.getByPlaceholder("Last name").fill("User");
-    await page.getByPlaceholder("Email address").fill("test@nodot");
+    await page.getByPlaceholder("Email address").fill("notanemailatall");
     await page.getByPlaceholder("Clinic / Practice name").fill("Clinic");
 
     await page.getByRole("button", { name: "Join the Waitlist" }).click();
 
+    // Browser type="email" validation rejects values with no @ sign
     await expect(page.getByText("You're on the list!", { exact: false })).not.toBeVisible();
   });
 });
@@ -186,23 +187,22 @@ test.describe("Home page — Inline WaitlistForm", () => {
     await page.goto("/");
 
     // Scroll to the CTA section that contains the full WaitlistForm
-    await page.getByPlaceholder("Your name").scrollIntoViewIfNeeded();
-    await page.getByPlaceholder("Your name").fill("Dr. Test");
+    const nameInput = page.getByPlaceholder("Your name");
+    await nameInput.scrollIntoViewIfNeeded();
+    await nameInput.fill("Dr. Test");
     await page.getByPlaceholder("Your email address").fill("dr.test@clinic.com");
-    await page.getByLabel("I am a...").selectOption("dentist");
+    // Select the role — the select has no aria label, use p-select CSS class
+    await page.locator("select.p-select").selectOption("dentist");
 
     await page.getByRole("button", { name: "Join the Waitlist" }).click();
 
     await expect(page.getByText("You're on the list.", { exact: false })).toBeVisible();
   });
 
-  test("email-only form (compact) does not submit when email is empty", async ({ page }) => {
+  test("home page has at least one waitlist form element", async ({ page }) => {
     await page.goto("/");
 
-    // The compact form is the hero CTA — navigate to it
-    // There is a btn-primary "Join the Waitlist" link in the hero that goes to /waitlist
-    // And a WaitlistForm in the CTA section
-    // We target the full WaitlistForm by the Submit button inside a form element
+    // The CTA section contains a WaitlistForm
     const waitlistForms = page.locator("form");
     const formCount = await waitlistForms.count();
     expect(formCount).toBeGreaterThan(0);

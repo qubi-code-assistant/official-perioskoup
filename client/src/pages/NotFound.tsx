@@ -7,7 +7,6 @@ import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
-import HeroGlow from "@/components/HeroGlow";
 
 export default function NotFound() {
   return (
@@ -15,7 +14,7 @@ export default function NotFound() {
       <Navbar />
       <ParallaxHeroBg />
 
-      <section style={{ paddingTop: 180, paddingBottom: 120, textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: 180, paddingBottom: 120, textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div className="container" style={{ maxWidth: 560, position: "relative", zIndex: 2 }}>
           <div style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: "clamp(120px, 15vw, 200px)", color: "#C0E57A", lineHeight: 0.9, marginBottom: 16, opacity: 0.2 }}>
             404

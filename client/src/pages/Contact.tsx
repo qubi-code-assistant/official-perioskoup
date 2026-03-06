@@ -3,6 +3,7 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
+import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,11 +13,17 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const elements = document.querySelectorAll(".reveal, .reveal-scale");
+    if (prefersReducedMotion) {
+      elements.forEach((el) => el.classList.add("visible"));
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal, .reveal-scale").forEach((el) => io.observe(el));
+    elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 }
@@ -24,16 +31,37 @@ function useReveal() {
 export default function Contact() {
   useReveal();
   const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSent(true);
+  function validate(form: HTMLFormElement): Record<string, string> {
+    const errs: Record<string, string> = {};
+    const firstName = (form.elements.namedItem("contact-first-name") as HTMLInputElement)?.value.trim();
+    const email = (form.elements.namedItem("contact-email") as HTMLInputElement)?.value.trim();
+    const role = (form.elements.namedItem("contact-role") as HTMLSelectElement)?.value;
+    const message = (form.elements.namedItem("contact-message") as HTMLTextAreaElement)?.value.trim();
+    if (!firstName) errs["contact-first-name"] = "First name is required.";
+    if (!email) errs["contact-email"] = "Email address is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs["contact-email"] = "Please enter a valid email address.";
+    if (!role) errs["contact-role"] = "Please select your role.";
+    if (!message) errs["contact-message"] = "Message is required.";
+    return errs;
   }
 
-  const localBusinessJsonLd = {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const errs = validate(e.currentTarget);
+    setErrors(errs);
+    if (Object.keys(errs).length === 0) {
+      setSent(true);
+    }
+  }
+
+  const organizationJsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "Organization",
+    "@id": "https://perioskoup.com/#organization",
     "name": "Perioskoup",
+    "legalName": "Perioskoup SRL",
     "description": "AI-powered dental companion app for personalised periodontal care between appointments.",
     "url": "https://perioskoup.com",
     "email": "hello@perioskoup.com",
@@ -42,21 +70,37 @@ export default function Contact() {
       "addressLocality": "Bucharest",
       "addressCountry": "RO"
     },
-    "foundingDate": "2025",
-    "founder": [
-      { "@type": "Person", "name": "Dr. Anca Laura Constantin", "jobTitle": "CEO & Periodontist" },
+    "foundingDate": "2025-06",
+    "founders": [
+      { "@id": "https://perioskoup.com/#anca-constantin" },
       { "@type": "Person", "name": "Eduard Ciugulea", "jobTitle": "Co-founder & CGO" },
       { "@type": "Person", "name": "Petrica Nancu", "jobTitle": "CTO & Head of AI" }
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/company/perioskoup",
+      "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
     ]
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }} />
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+      <Helmet>
+        <title>Contact Perioskoup — Dental AI Enquiries</title>
+        <meta name="description" content="Reach the Perioskoup team for press, clinic partnerships, investor enquiries, or product questions. We respond within 24 hours." />
+        <link rel="canonical" href="https://perioskoup.com/contact" />
+        <meta property="og:title" content="Contact Perioskoup — Dental AI Enquiries" />
+        <meta property="og:description" content="Get in touch with the Perioskoup team for press, clinic partnerships, or general enquiries. Based in Bucharest, serving clinics across Europe." />
+        <meta property="og:url" content="https://perioskoup.com/contact" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Contact Perioskoup" />
+        <meta name="twitter:description" content="Reach the Perioskoup team for press, clinic partnerships, investor enquiries, or product questions. We respond within 24 hours." />
+      </Helmet>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
@@ -75,7 +119,7 @@ export default function Contact() {
       {/* Content */}
       <section style={{ background: "#050C10", padding: "80px 0" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-[60px] items-start">
             {/* Left: info */}
             <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
               {[
@@ -85,7 +129,7 @@ export default function Contact() {
               ].map((item) => (
                 <div key={item.label} className="reveal" style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d={item.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={item.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </div>
                   <div>
                     <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#8C9C8C", marginBottom: 4 }}>{item.label}</p>
@@ -99,33 +143,35 @@ export default function Contact() {
             {/* Right: form */}
             <div className="card reveal" style={{ padding: 40 }}>
               {sent ? (
-                <div style={{ textAlign: "center", padding: "40px 0" }}>
+                <div role="status" aria-live="polite" aria-atomic="true" style={{ textAlign: "center", padding: "40px 0" }}>
                   <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(192,229,122,0.12)", border: "1px solid rgba(192,229,122,0.25)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </div>
-                  <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 32, fontWeight: 700, color: "#F5F9EA", marginBottom: 8 }}>Message sent!</h3>
+                  <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: 32, fontWeight: 700, color: "#F5F9EA", marginBottom: 8 }}>Message sent!</h2>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, color: "#8C9C8C" }}>We'll get back to you within 24 hours.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, fontWeight: 700, color: "#F5F9EA", marginBottom: 8 }}>Send a message</h3>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, fontWeight: 700, color: "#F5F9EA", marginBottom: 8 }}>Send a message</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>First name</label>
-                      <input type="text" placeholder="Anca" className="p-input" required />
+                      <label htmlFor="contact-first-name" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>First name</label>
+                      <input id="contact-first-name" type="text" placeholder="Anca" className="p-input" required aria-required="true" aria-invalid={!!errors["contact-first-name"]} aria-describedby={errors["contact-first-name"] ? "contact-first-name-error" : undefined} />
+                      {errors["contact-first-name"] && <span id="contact-first-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-first-name"]}</span>}
                     </div>
                     <div>
-                      <label style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Last name</label>
-                      <input type="text" placeholder="Constantin" className="p-input" required />
+                      <label htmlFor="contact-last-name" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Last name</label>
+                      <input id="contact-last-name" type="text" placeholder="Constantin" className="p-input" required aria-required="true" />
                     </div>
                   </div>
                   <div>
-                    <label style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Email</label>
-                    <input type="email" placeholder="you@example.com" className="p-input" required />
+                    <label htmlFor="contact-email" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Email</label>
+                    <input id="contact-email" type="email" placeholder="you@example.com" className="p-input" required aria-required="true" aria-invalid={!!errors["contact-email"]} aria-describedby={errors["contact-email"] ? "contact-email-error" : undefined} />
+                    {errors["contact-email"] && <span id="contact-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-email"]}</span>}
                   </div>
                   <div>
-                    <label style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>I am a...</label>
-                    <select className="p-select" required>
+                    <label htmlFor="contact-role" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>I am a...</label>
+                    <select id="contact-role" className="p-select" required aria-required="true" aria-invalid={!!errors["contact-role"]} aria-describedby={errors["contact-role"] ? "contact-role-error" : undefined}>
                       <option value="">Select your role</option>
                       <option value="patient">Patient</option>
                       <option value="dentist">Dentist / Periodontist</option>
@@ -134,14 +180,16 @@ export default function Contact() {
                       <option value="press">Press / Media</option>
                       <option value="other">Other</option>
                     </select>
+                    {errors["contact-role"] && <span id="contact-role-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-role"]}</span>}
                   </div>
                   <div>
-                    <label style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Message</label>
-                    <textarea placeholder="Tell us what's on your mind..." className="p-input" rows={4} required style={{ resize: "vertical" }} />
+                    <label htmlFor="contact-message" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Message</label>
+                    <textarea id="contact-message" placeholder="Tell us what's on your mind..." className="p-input" rows={4} required aria-required="true" aria-invalid={!!errors["contact-message"]} aria-describedby={errors["contact-message"] ? "contact-message-error" : undefined} style={{ resize: "vertical" }} />
+                    {errors["contact-message"] && <span id="contact-message-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-message"]}</span>}
                   </div>
                   <button type="submit" className="btn-primary" style={{ justifyContent: "center" }}>
                     Send Message
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </button>
                 </form>
               )}

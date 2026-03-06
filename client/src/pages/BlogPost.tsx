@@ -8,6 +8,7 @@
 
 import { useEffect } from "react";
 import type { ReactElement } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -232,7 +233,7 @@ It's important to be equally clear about the limitations.
 
 AI cannot diagnose. In the context of a consumer-facing dental app, AI can provide information, flag potential concerns, and recommend professional consultation — but it cannot replace clinical examination and diagnosis by a qualified dental professional. This is both a regulatory reality and a clinical one.
 
-AI cannot replace the therapeutic relationship between a patient and their clinician. Trust, empathy, and clinical judgment are human qualities that AI augments, not replaces.
+AI cannot replace the patient-clinician relationship. Trust, empathy, and clinical judgment are human qualities that AI augments, not replaces.
 
 AI is only as good as its data. A model trained on biased or incomplete data will produce biased or incomplete outputs. In healthcare, this is not just a technical problem — it is an ethical one.
 
@@ -441,7 +442,7 @@ Every one of those conversations confirmed that we are building something genuin
 
 ## The Road to Vienna
 
-Perioskoup was founded in 2024 by three people: Dr. Anca Laura Constantin (Periodontist, CEO), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
+Perioskoup was founded in 2024 by three people: Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically from the frustration of watching patients with manageable conditions deteriorate between appointments because they lacked the tools to maintain their care at home.
 
 The first version of the app was built in three months. The EFP submission was prepared in parallel with ongoing development. Winning the award at our first major international submission was beyond what we had expected.
 
@@ -461,7 +462,7 @@ We are just getting started.
       "Vienna, May 2025": "At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards 2025, selected from 20 submissions across 17 national periodontal societies. It was the team's first major international submission.",
       "What the EFP Said": "The European Federation of Periodontology described Perioskoup as 'an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health.' The jury included leading European periodontists.",
       "What This Means to Us": "The EFP award validates that the gap between clinical treatment and daily patient behaviour is a real and recognised problem, and that Perioskoup's approach to bridging it has credibility within the European periodontology community.",
-      "The Road to Vienna": "Perioskoup was founded in 2024 by Dr. Anca Laura Constantin (Periodontist, CEO), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The first version was built in three months, with the EFP submission prepared in parallel.",
+      "The Road to Vienna": "Perioskoup was founded in 2024 by Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The first version was built in three months, with the EFP submission prepared in parallel.",
       "What's Next": "Perioskoup is currently in private beta with founding clinics across Romania and the UK, with priority onboarding for periodontology practices. The consumer app will launch on iOS and Android with a founding member waitlist.",
     },
     faqs: [
@@ -513,7 +514,7 @@ This creates a frustrating cycle for clinicians. We invest significant time and 
 
 ## What the Research Says About Better Approaches
 
-The evidence on improving patient adherence to health instructions is clear:
+The evidence on improving patient engagement with health instructions is clear:
 
 **Written materials improve retention** — but only if they are personalised, jargon-free, and given at the right moment. Generic leaflets have minimal impact.
 
@@ -523,7 +524,7 @@ The evidence on improving patient adherence to health instructions is clear:
 
 **Accountability mechanisms** — knowing that someone will check on your progress — significantly improve engagement. This is the basis of health coaching, and it is why patients with a dedicated hygienist who follows up between appointments tend to have better outcomes.
 
-**Technology-mediated reminders** — smartphone notifications, in particular — have been shown in multiple studies to improve medication adherence and health behaviour engagement.
+**Technology-mediated reminders** — smartphone notifications, in particular — have been shown in multiple studies to improve habit consistency and health behaviour engagement.
 
 ## The Role of Technology
 
@@ -572,7 +573,7 @@ The forgetting curve is not a patient failure. It is a design failure. And like 
     slug: "building-the-bridge-perioskoup-story",
     title: "Building the Bridge: The Perioskoup Story",
     metaTitle: "The Perioskoup Story | Building the Bridge",
-    metaDescription: "How a periodontist, a developer, and a product designer decided to build the dental companion they always wished existed. The Perioskoup origin story.",
+    metaDescription: "How a periodontist, a full-stack engineer, and an AI specialist decided to build the dental companion they always wished existed. The Perioskoup origin story.",
     category: "Founder Story",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
@@ -599,7 +600,7 @@ I had known Eduard Ciugulea for several years through mutual friends. He had a b
 
 "You're describing a habit formation challenge," he said. "The clinical knowledge exists. The patient motivation exists. What's missing is the infrastructure to connect them."
 
-We brought in Petrica Nancu, a product designer with experience in health and wellness applications, a few months later. The three of us spent the first several weeks not building anything — just mapping the problem.
+We brought in Petrica Nancu, an AI specialist with experience in health and wellness applications, a few months later. The three of us spent the first several weeks not building anything — just mapping the problem.
 
 ## The Problem We Were Actually Solving
 
@@ -653,7 +654,7 @@ The bridge between the chair and the home. That's what we're building.
     `,
     answerCapsules: {
       "The Appointment That Started Everything": "Perioskoup was born from a clinical observation: patients who received excellent periodontal treatment still experienced disease recurrence because they lacked support for daily home care between appointments. The gap between the dental chair and daily life was the core problem.",
-      "The Team": "Perioskoup was founded by three people with complementary expertise: Dr. Anca Laura Constantin (periodontist and CEO), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The combination of clinical, engineering, and AI expertise shaped the product.",
+      "The Team": "Perioskoup was founded by three people with complementary expertise: Dr. Anca Laura Constantin (periodontist and CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The combination of clinical, engineering, and AI expertise shaped the product.",
       "The Problem We Were Actually Solving": "The real problem was not a lack of dental information but a lack of personalised, ongoing support. Patients needed daily guidance adapted to their specific condition, delivered at the right time, with feedback loops that reinforced good habits.",
       "What We Built": "Perioskoup consists of a patient-facing app (personalised daily programmes, reminders, tracking, education) and a clinician dashboard (programme setup, engagement monitoring, targeted guidance). The clinician stays in control; AI personalises delivery.",
       "The EFP Award": "Winning 3rd Prize at the EFP Digital Innovation Awards 2025 validated the approach and opened conversations with periodontists across Europe who confirmed the same clinical challenge.",
@@ -661,7 +662,7 @@ The bridge between the chair and the home. That's what we're building.
     },
     faqs: [
       { q: "What is Perioskoup?", a: "Perioskoup is a dental companion app that bridges the gap between dental appointments. It translates clinical recommendations into personalised daily programmes with reminders, tracking, and educational content for patients, while giving clinicians engagement data." },
-      { q: "Who founded Perioskoup?", a: "Perioskoup was founded by Dr. Anca Laura Constantin (periodontist and CEO), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice." },
+      { q: "Who founded Perioskoup?", a: "Perioskoup was founded by Dr. Anca Laura Constantin (Periodontist & CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice." },
       { q: "Is Perioskoup available yet?", a: "Perioskoup is currently in private beta with founding clinics in Romania and the UK. A patient waitlist is open, with founding members receiving priority access and founding pricing when the app launches on iOS and Android." },
     ],
   },
@@ -669,12 +670,17 @@ The bridge between the chair and the home. That's what we're building.
 
 function useReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll(".reveal, .reveal-scale");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const elements = document.querySelectorAll(".reveal, .reveal-scale");
+    if (prefersReducedMotion) {
+      elements.forEach((el) => el.classList.add("visible"));
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
       { threshold: 0.1 }
     );
-    els.forEach((el) => io.observe(el));
+    elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 }
@@ -758,57 +764,7 @@ export default function BlogPost() {
   const article = ARTICLES[slug];
   useReveal();
 
-  // Inject per-page meta: title, description, canonical, og:title, og:url, og:description
-  useEffect(() => {
-    if (article) {
-      const url = `https://perioskoup.com/blog/${article.slug}`;
-      document.title = article.metaTitle;
-      const desc = document.querySelector('meta[name="description"]');
-      if (desc) desc.setAttribute("content", article.metaDescription);
-      // Fix canonical
-      let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-      if (canonical) canonical.href = url;
-      // Fix og:title
-      let ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute("content", article.metaTitle);
-      // Fix og:url
-      let ogUrl = document.querySelector('meta[property="og:url"]');
-      if (ogUrl) ogUrl.setAttribute("content", url);
-      // Fix og:description
-      let ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.setAttribute("content", article.metaDescription);
-      // Fix og:type to article
-      let ogType = document.querySelector('meta[property="og:type"]');
-      if (ogType) ogType.setAttribute("content", "article");
-      // Fix og:image — keep the branded OG image for all articles
-      const OG_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png";
-      let ogImg = document.querySelector('meta[property="og:image"]');
-      if (ogImg) ogImg.setAttribute("content", OG_IMAGE);
-      let ogImgAlt = document.querySelector('meta[property="og:image:alt"]');
-      if (ogImgAlt) ogImgAlt.setAttribute("content", article.metaTitle);
-      // Fix twitter:title
-      let twTitle = document.querySelector('meta[name="twitter:title"]');
-      if (twTitle) twTitle.setAttribute("content", article.metaTitle);
-      // Fix twitter:description
-      let twDesc = document.querySelector('meta[name="twitter:description"]');
-      if (twDesc) twDesc.setAttribute("content", article.metaDescription);
-      // Fix twitter:image
-      let twImg = document.querySelector('meta[name="twitter:image"]');
-      if (twImg) twImg.setAttribute("content", OG_IMAGE);
-    }
-    return () => {
-      // Reset on unmount
-      document.title = "Perioskoup — Your Personal Dental Companion";
-      const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-      if (canonical) canonical.href = "https://perioskoup.com/";
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute("content", "Perioskoup — Your Personal Dental Companion");
-      const ogUrl = document.querySelector('meta[property="og:url"]');
-      if (ogUrl) ogUrl.setAttribute("content", "https://perioskoup.com/");
-      const ogType = document.querySelector('meta[property="og:type"]');
-      if (ogType) ogType.setAttribute("content", "website");
-    };
-  }, [article]);
+  // Meta tags handled by react-helmet-async Helmet component below
 
   if (!article) {
     return (
@@ -823,23 +779,35 @@ export default function BlogPost() {
     );
   }
 
+  const authorSchema = article.author === "Dr. Anca Laura Constantin"
+    ? {
+        "@type": "Person",
+        "@id": "https://perioskoup.com/#anca-constantin",
+        "name": article.author,
+        "jobTitle": article.authorRole,
+        "worksFor": { "@id": "https://perioskoup.com/#organization" },
+        "sameAs": [
+          "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
+        ]
+      }
+    : {
+        "@type": "Person",
+        "name": article.author,
+        "jobTitle": article.authorRole,
+        "worksFor": { "@id": "https://perioskoup.com/#organization" }
+      };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": article.title,
     "description": article.metaDescription,
-    "author": {
-      "@type": "Person",
-      "name": article.author,
-      "jobTitle": article.authorRole,
-      "worksFor": { "@type": "Organization", "name": "Perioskoup" }
-    },
+    "author": authorSchema,
     "publisher": {
-      "@type": "Organization",
-      "name": "Perioskoup",
-      "url": "https://perioskoup.com"
+      "@id": "https://perioskoup.com/#organization"
     },
     "datePublished": article.date,
+    "dateModified": article.date,
     "url": `https://perioskoup.com/blog/${article.slug}`,
     "image": APP_START_IMG,
     "mainEntityOfPage": { "@type": "WebPage", "@id": `https://perioskoup.com/blog/${article.slug}` }
@@ -870,6 +838,22 @@ export default function BlogPost() {
 
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <Helmet>
+        <title>{article.metaTitle}</title>
+        <meta name="description" content={article.metaDescription} />
+        <link rel="canonical" href={`https://perioskoup.com/blog/${article.slug}`} />
+        <meta property="og:title" content={article.metaTitle} />
+        <meta property="og:description" content={article.metaDescription} />
+        <meta property="og:url" content={`https://perioskoup.com/blog/${article.slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
+        <meta property="article:published_time" content={`${article.date}T00:00:00Z`} />
+        <meta property="article:author" content={article.author} />
+        <meta name="twitter:title" content={article.metaTitle} />
+        <meta name="twitter:description" content={article.metaDescription} />
+        <meta name="twitter:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
+        <meta name="twitter:creator" content="@perioskoup" />
+      </Helmet>
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
@@ -878,7 +862,7 @@ export default function BlogPost() {
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: "120px", paddingBottom: "64px", background: "#0A171E", borderBottom: "1px solid #234966", position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: "120px", paddingBottom: "64px", background: "#0A171E", borderBottom: "1px solid #234966", position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ maxWidth: "800px" }}>
@@ -906,7 +890,7 @@ export default function BlogPost() {
 
           {/* Author + meta */}
           <div className="reveal" style={{ transitionDelay: "0.2s", display: "flex", alignItems: "center", gap: "16px", paddingTop: "24px", borderTop: "1px solid #234966" }}>
-            <img src={article.authorImg} alt={article.author} style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+            <img src={article.authorImg} alt={article.author} loading="lazy" width={48} height={48} style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
             <div>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", fontWeight: 700, color: "#F5F9EA" }}>{article.author}</p>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#8C9C8C" }}>{article.authorRole}</p>

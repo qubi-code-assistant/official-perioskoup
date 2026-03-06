@@ -4,6 +4,7 @@
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -13,11 +14,17 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 function useReveal() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const elements = document.querySelectorAll(".reveal, .reveal-scale");
+    if (prefersReducedMotion) {
+      elements.forEach((el) => el.classList.add("visible"));
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal, .reveal-scale").forEach((el) => io.observe(el));
+    elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 }
@@ -60,12 +67,24 @@ export default function ForDentists() {
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+      <Helmet>
+        <title>Dental Patient Engagement App for Clinicians | Perioskoup</title>
+        <meta name="description" content="Perioskoup gives dental practices a clinician dashboard, personalised care plans, and engagement analytics to extend care beyond the appointment and reduce no-shows." />
+        <link rel="canonical" href="https://perioskoup.com/for-dentists" />
+        <meta property="og:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
+        <meta property="og:description" content="Clinician dashboard, personalised care plans, and patient engagement analytics for dental practices. Extend care beyond the appointment." />
+        <meta property="og:url" content="https://perioskoup.com/for-dentists" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
+        <meta name="twitter:description" content="Give your dental practice a clinician dashboard, personalised care plans, and engagement analytics. Join 30+ founding clinics on the Perioskoup waitlist." />
+      </Helmet>
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistsFaqJsonLd) }} />
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
@@ -93,7 +112,7 @@ export default function ForDentists() {
       {/* Stats */}
       <section style={{ background: "#050C10", padding: "64px 0" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: "#234966", borderRadius: 20, overflow: "hidden" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#234966] rounded-2xl overflow-hidden">
             {[
               { value: "40%", label: "Reduction in no-shows", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
               { value: "3×", label: "Higher engagement rates", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
@@ -105,6 +124,7 @@ export default function ForDentists() {
                 </div>
                 <div style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 48, color: "#C0E57A", lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>{s.label}</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "rgba(140,156,140,0.55)", marginTop: 4 }}>digital health research</p>
               </div>
             ))}
           </div>
@@ -131,7 +151,7 @@ export default function ForDentists() {
                 <div style={{ flex: 1 }}>
                   <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, fontWeight: 700, color: "#F5F9EA", marginBottom: 10 }}>{f.title}</h3>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C", marginBottom: 16 }}>{f.desc}</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {f.bullets.map((b) => (
                       <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 3 }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>

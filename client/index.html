@@ -1,39 +1,40 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta -->
-    <title>Perioskoup — Your Personal Dental Companion</title>
+    <!-- Primary Meta (homepage defaults — overridden per-page by react-helmet-async) -->
+    <title>Perioskoup — AI Dental Companion App | Between-Visit Dental Care</title>
     <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. Winner of the EFP Digital Innovation Award 2025." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://perioskoup.com/" />
 
     <!-- Geo & Language -->
-    <meta name="geo.region" content="GB" />
-    <meta name="geo.placename" content="London, United Kingdom" />
-    <link rel="alternate" hreflang="en-GB" href="https://perioskoup.com/" />
+    <meta name="geo.region" content="RO" />
+    <meta name="geo.placename" content="Bucharest, Romania" />
+    <meta name="geo.position" content="44.4268;26.1025" />
+    <meta name="ICBM" content="44.4268, 26.1025" />
     <link rel="alternate" hreflang="en" href="https://perioskoup.com/" />
     <link rel="alternate" hreflang="x-default" href="https://perioskoup.com/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://perioskoup.com/" />
-    <meta property="og:title" content="Perioskoup — Your Personal Dental Companion" />
+    <meta property="og:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
     <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
     <meta property="og:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Perioskoup — Between visits, we take over. AI-powered dental companion." />
     <meta property="og:site_name" content="Perioskoup" />
-    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale" content="en" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@perioskoup" />
-    <meta name="twitter:title" content="Perioskoup — Your Personal Dental Companion" />
-    <meta name="twitter:description" content="AI-powered dental companion app. EFP Innovation Award Winner 2025." />
+    <meta name="twitter:title" content="Perioskoup — AI Dental Companion App | Between-Visit Dental Care" />
+    <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
     <meta name="twitter:image" content="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/og-image-XvtYEDVZMACucdvxk9BYR8.png" />
     <meta name="twitter:image:alt" content="Perioskoup — Between visits, we take over. AI-powered dental companion." />
 
@@ -46,12 +47,18 @@
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Perioskoup Blog" href="https://perioskoup.com/feed.xml" />
 
+    <!-- LCP image preload -->
+    <link rel="preload" as="image" href="https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/hero-bg-soft_c6281481.png" />
+
+    <!-- CDN preconnect (images served from CloudFront) -->
+    <link rel="preconnect" href="https://d2xsxph8kpxj0f.cloudfront.net" crossorigin />
+
     <!-- Google Fonts: Dongle (display) + Gabarito (body/UI) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gabarito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gabarito:wght@400;700&display=swap" rel="stylesheet" />
 
-    <!-- WebSite + Organization JSON-LD -->
+    <!-- Global @graph JSON-LD: WebSite + Organization + Person + SoftwareApplication -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -76,51 +83,88 @@
           "@type": "Organization",
           "@id": "https://perioskoup.com/#organization",
           "name": "Perioskoup",
+          "legalName": "Perioskoup SRL",
           "url": "https://perioskoup.com/",
           "logo": {
             "@type": "ImageObject",
+            "@id": "https://perioskoup.com/#logo",
             "url": "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/Logomark-dark_9f94fde1.png",
             "width": 1080,
             "height": 1080
           },
-          "foundingDate": "2025",
+          "image": { "@id": "https://perioskoup.com/#logo" },
+          "foundingDate": "2025-06",
           "foundingLocation": {
             "@type": "Place",
             "addressLocality": "Bucharest",
             "addressCountry": "RO"
           },
           "founders": [
-            { "@type": "Person", "name": "Anca Laura Constantin" },
-            { "@type": "Person", "name": "Eduard Ciugulea" },
-            { "@type": "Person", "name": "Petrica Nancu" }
+            { "@id": "https://perioskoup.com/#anca-constantin" },
+            { "@type": "Person", "name": "Eduard Ciugulea", "jobTitle": "Co-founder & CGO" },
+            { "@type": "Person", "name": "Petrica Nancu", "jobTitle": "CTO & Head of AI" }
           ],
           "award": "EFP Digital Innovation Award 2025 — 3rd Prize",
+          "description": "Perioskoup is an AI-powered dental companion app that bridges the gap between dental visits with personalised oral health habits for patients and a monitoring dashboard for clinicians.",
+          "email": "hello@perioskoup.com",
           "sameAs": [
             "https://www.linkedin.com/company/perioskoup",
             "https://www.instagram.com/perioskoup",
-            "https://www.tiktok.com/@perioskoup"
+            "https://www.tiktok.com/@perioskoup",
+            "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
           ]
         },
         {
           "@type": "Person",
           "@id": "https://perioskoup.com/#anca-constantin",
           "name": "Dr. Anca Laura Constantin",
+          "honorificPrefix": "Dr.",
+          "givenName": "Anca Laura",
+          "familyName": "Constantin",
           "jobTitle": "Periodontist",
-          "worksFor": {"@id": "https://perioskoup.com/#organization"},
-          "award": "EFP Digital Innovation Award 2025",
+          "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, and co-founder and Chief Dental Officer of Perioskoup. She won the EFP Digital Innovation Award 2025 for her work on AI-assisted periodontal patient engagement.",
+          "image": "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722wdGgxhu/anca_e45bcd41.jpeg",
+          "worksFor": { "@id": "https://perioskoup.com/#organization" },
+          "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
+          "knowsAbout": [
+            "Periodontal Disease",
+            "Periodontology",
+            "AI in Dental Care",
+            "Patient Engagement",
+            "Oral Health Technology"
+          ],
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Periodontist",
+            "occupationLocation": {
+              "@type": "City",
+              "name": "Bucharest"
+            }
+          },
           "sameAs": [
             "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
           ]
         },
         {
           "@type": "SoftwareApplication",
+          "@id": "https://perioskoup.com/#app",
           "name": "Perioskoup",
           "operatingSystem": "iOS, Android",
           "applicationCategory": "HealthApplication",
-          "description": "AI-powered dental companion app that bridges the gap between dental visits with personalized daily habits for patients.",
+          "applicationSubCategory": "Dental Health",
+          "description": "AI-powered dental companion app that bridges the gap between dental visits with personalised daily habits for patients and a clinician monitoring dashboard.",
           "url": "https://perioskoup.com/",
           "author": { "@id": "https://perioskoup.com/#organization" },
-          "award": "EFP Digital Innovation Award 2025"
+          "award": "EFP Digital Innovation Award 2025",
+          "featureList": "AI habit coaching, periodontal habit tracking, dental patient engagement, clinician dashboard, GDPR-compliant messaging",
+          "countriesSupported": "RO, GB, EU",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/PreOrder",
+            "description": "Free during beta for patients."
+          }
         }
       ]
     }

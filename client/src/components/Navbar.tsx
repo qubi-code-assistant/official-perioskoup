@@ -1,6 +1,8 @@
 /* =============================================================
    PERIOSKOUP — NAVBAR
    Apple-style: frosted glass on scroll, minimal links, pill CTA
+   Animation: JS hover mutations replaced with CSS .nav-link-item class.
+   Mobile drawer uses CSS keyframe slide-in + staggered link reveals.
    ============================================================= */
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'wouter';
@@ -30,6 +32,16 @@ export default function Navbar() {
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
+  // Close mobile nav when Escape is pressed (A08)
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
   }, [menuOpen]);
 
   return (
@@ -64,26 +76,11 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop nav — CSS hover via .nav-link-item, no JS style mutations */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }} className="hide-mobile">
             {NAV_LINKS.map(({ href, label }) => (
               <Link key={href} href={href}>
-                <span
-                  style={{
-                    fontFamily: 'Gabarito, sans-serif',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    color: location === href ? '#C0E57A' : 'rgba(245,249,234,0.65)',
-                    padding: '8px 14px',
-                    borderRadius: '8px',
-                    display: 'block',
-                    transition: 'color 0.2s ease',
-                    textDecoration: 'none',
-                    letterSpacing: '-0.01em',
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#F5F9EA'; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = location === href ? '#C0E57A' : 'rgba(245,249,234,0.65)'; }}
-                >
+                <span className={`nav-link-item${location === href ? ' active' : ''}`}>
                   {label}
                 </span>
               </Link>
@@ -104,14 +101,17 @@ export default function Navbar() {
                 border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '8px',
                 color: '#FFFFFF',
-                width: '38px',
-                height: '38px',
+                width: '44px',
+                height: '44px',
                 display: 'none',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
               className="show-mobile-flex"
-              aria-label="Toggle menu"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+              type="button"
             >
               {menuOpen ? <X size={17} /> : <Menu size={17} />}
             </button>
@@ -129,9 +129,14 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — CSS keyframe slide-in with staggered link reveals */}
       {menuOpen && (
         <div
+          id="mobile-nav"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+          className="mobile-drawer"
           style={{
             position: 'fixed',
             inset: 0,
@@ -141,25 +146,33 @@ export default function Navbar() {
           }}
         >
           <div className="container" style={{ paddingTop: '96px', display: 'flex', flexDirection: 'column', gap: '0' }}>
-            {NAV_LINKS.map(({ href, label }) => (
+            {NAV_LINKS.map(({ href, label }, i) => (
               <Link key={href} href={href}>
                 <div
+                  className="mobile-drawer-link"
                   style={{
                     fontFamily: 'Dongle, sans-serif',
                     fontWeight: 700,
                     fontSize: '48px',
-                    color: '#F5F9EA',
+                    color: location === href ? '#C0E57A' : '#F5F9EA',
                     letterSpacing: '-0.04em',
                     padding: '16px 0',
                     borderBottom: '1px solid rgba(255,255,255,0.06)',
                     textDecoration: 'none',
+                    animationDelay: `${0.05 + i * 0.06}s`,
                   }}
                 >
                   {label}
                 </div>
               </Link>
             ))}
-            <div style={{ marginTop: '32px' }}>
+            <div
+              className="mobile-drawer-link"
+              style={{
+                marginTop: '32px',
+                animationDelay: `${0.05 + NAV_LINKS.length * 0.06}s`,
+              }}
+            >
               <Link href="/waitlist">
                 <span className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', padding: '16px 24px' }}>
                   Join the Waitlist

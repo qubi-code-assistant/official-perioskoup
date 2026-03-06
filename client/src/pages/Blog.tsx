@@ -1,9 +1,9 @@
 /*
  * PERIOSKOUP — BLOG PAGE
  * Design: Clinical Precision, Human Warmth — Dark Tech-Medical Premium
- * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
- * Fonts: Dongle (display) + Gabarito (body/UI)
+ * Animation: JS onMouseEnter/Leave replaced with CSS .blog-card-hover and .blog-row-hover.
  */
+import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
@@ -17,11 +17,25 @@ const EDI_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/99161099/Petc9UtExvVA722w
 
 function useReveal() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const elements = document.querySelectorAll(".reveal, .reveal-scale");
+
+    if (prefersReducedMotion) {
+      elements.forEach((el) => el.classList.add("visible"));
+      return;
+    }
+
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }),
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          io.unobserve(e.target);
+        }
+      }),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal, .reveal-scale").forEach((el) => io.observe(el));
+    elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 }
@@ -102,11 +116,69 @@ export default function Blog() {
   useReveal();
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+      <Helmet>
+        <title>Dental Health &amp; AI Blog — Periodontal Care Insights | Perioskoup</title>
+        <meta name="description" content="Evidence-based articles on periodontal health, dental AI, and patient care from Dr. Anca Constantin (Periodontist, EFP Award 2025) and the Perioskoup team." />
+        <link rel="canonical" href="https://perioskoup.com/blog" />
+        <meta property="og:title" content="Dental Health &amp; AI Blog — Periodontal Care Insights | Perioskoup" />
+        <meta property="og:description" content="Articles on periodontal disease, AI in dental care, and daily oral health habits. Written by Dr. Anca Laura Constantin and the Perioskoup team." />
+        <meta property="og:url" content="https://perioskoup.com/blog" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Dental Health &amp; AI Blog | Perioskoup" />
+        <meta name="twitter:description" content="Evidence-based articles on periodontal health, AI in dental care, and daily oral habits from a practising periodontist. EFP Award 2025 winners." />
+      </Helmet>
+
+      {/* Blog ItemList + FAQPage structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Perioskoup Blog — Dental Health & AI Insights",
+            "description": "Evidence-based articles on periodontal health, dental AI, and patient care from the Perioskoup team.",
+            "url": "https://perioskoup.com/blog",
+            "itemListElement": POSTS.map((p, i) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "url": `https://perioskoup.com/blog/${p.slug}`,
+              "name": p.title,
+            })),
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What topics does the Perioskoup blog cover?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The Perioskoup blog covers periodontal disease education, AI in dental care, daily oral health habits, clinical insights from Dr. Anca Laura Constantin (Periodontist, EFP Award 2025), and company news.",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "Who writes the Perioskoup blog?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Articles are written by Dr. Anca Laura Constantin (Periodontist, EFP Digital Innovation Award 2025 winner) and Eduard Ciugulea (Co-founder & CGO). Clinical articles are authored by Dr. Anca and reflect her experience as a practising periodontist.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: "140px", paddingBottom: "80px", position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: "140px", paddingBottom: "80px", position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
@@ -124,7 +196,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Featured posts */}
+      {/* Featured posts — CSS .blog-card-hover, no JS style mutations */}
       <section style={{ paddingBottom: "80px" }}>
         <div className="container">
           <div
@@ -138,21 +210,19 @@ export default function Blog() {
             {FEATURED.map((post, i) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                 <div
+                  className="blog-card-hover"
                   style={{
                     background: "#1D3449",
                     border: "1px solid #234966",
                     borderRadius: "16px",
                     padding: "40px",
                     cursor: "pointer",
-                    transition: "transform 0.3s ease, border-color 0.3s ease",
                     transitionDelay: `${i * 80}ms`,
                     display: "flex",
                     flexDirection: "column",
                     gap: "16px",
                     height: "100%",
                   }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "#C0E57A"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "#234966"; }}
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span className="label-tag">{post.category}</span>
@@ -160,9 +230,9 @@ export default function Blog() {
                       <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: 700, color: "#F5F9EA", lineHeight: 1.05, margin: 0 }}>
+                  <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: 700, color: "#F5F9EA", lineHeight: 1.05, margin: 0 }}>
                     {post.title}
-                  </h2>
+                  </h3>
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", color: "#8C9C8C", lineHeight: 1.65, flex: 1 }}>
                     {post.excerpt}
                   </p>
@@ -178,7 +248,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* All articles */}
+      {/* All articles — CSS .blog-row-hover, no JS style mutations */}
       <section style={{ paddingBottom: "120px", borderTop: "1px solid #234966", paddingTop: "80px" }}>
         <div className="container">
           <h2 className="display-sm reveal" style={{ marginBottom: "48px" }}>All Articles</h2>
@@ -186,19 +256,13 @@ export default function Blog() {
             {REGULAR.map((post, i) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                 <div
-                  className="reveal"
+                  className="reveal blog-row-hover flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "24px",
                     padding: "28px 0",
                     borderBottom: "1px solid #234966",
                     cursor: "pointer",
-                    transition: "background 0.2s ease",
                     transitionDelay: `${i * 60}ms`,
                   }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(29,52,73,0.3)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
@@ -212,7 +276,7 @@ export default function Blog() {
                       {post.excerpt}
                     </p>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
+                  <div className="flex items-center gap-3 flex-shrink-0 sm:ml-auto">
                     <img src={post.authorImg} alt={post.author} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
                     <div style={{ textAlign: "right" }}>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600, margin: 0 }}>{post.author.split(" ")[0]}</p>
@@ -229,7 +293,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
+      {/* Newsletter CTA — input uses .p-input class for consistent focus animation */}
       <section style={{ background: "#050C10", padding: "80px 0", borderTop: "1px solid #234966" }}>
         <div className="container" style={{ maxWidth: "560px", textAlign: "center" }}>
           <div className="reveal" style={{ marginBottom: "16px" }}>
@@ -240,23 +304,16 @@ export default function Blog() {
             Get the latest articles on periodontal health and dental AI delivered to your inbox. No spam, ever.
           </p>
           <div className="reveal" style={{ display: "flex", gap: "8px", transitionDelay: "0.24s", flexWrap: "wrap", justifyContent: "center" }}>
+            <label htmlFor="newsletter-email" className="sr-only">Email address</label>
             <input
+              id="newsletter-email"
               type="email"
               placeholder="Your email address"
-              style={{
-                flex: "1",
-                minWidth: "220px",
-                background: "#1D3449",
-                border: "1px solid #234966",
-                borderRadius: "8px",
-                padding: "12px 16px",
-                fontFamily: "Gabarito, sans-serif",
-                fontSize: "15px",
-                color: "#F5F9EA",
-                outline: "none",
-              }}
+              className="p-input"
+              style={{ flex: "1", minWidth: "220px" }}
+              aria-required="true"
             />
-            <button className="btn-primary">Subscribe</button>
+            <button className="btn-primary" aria-label="Subscribe to newsletter">Subscribe</button>
           </div>
         </div>
       </section>

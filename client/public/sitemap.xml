@@ -8,7 +8,6 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://perioskoup.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/"/>
   </url>
@@ -18,6 +17,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/features"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/features"/>
   </url>
 
   <url>
@@ -25,6 +26,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/for-dentists"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/for-dentists"/>
   </url>
 
   <url>
@@ -32,6 +35,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/about"/>
   </url>
 
   <url>
@@ -39,6 +44,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/pricing"/>
   </url>
 
   <url>
@@ -46,6 +53,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog"/>
   </url>
 
   <url>
@@ -53,6 +62,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/waitlist"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/waitlist"/>
   </url>
 
   <url>
@@ -60,6 +71,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/contact"/>
   </url>
 
   <url>
@@ -67,6 +80,8 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/privacy"/>
   </url>
 
   <url>
@@ -74,14 +89,18 @@
     <lastmod>2026-03-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/terms"/>
   </url>
 
   <!-- Blog posts -->
   <url>
     <loc>https://perioskoup.com/blog/what-is-periodontal-disease</loc>
     <lastmod>2025-11-12</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/what-is-periodontal-disease"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/what-is-periodontal-disease"/>
   </url>
 
   <url>
@@ -89,20 +108,26 @@
     <lastmod>2025-05-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/efp-digital-innovation-award-2025"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/efp-digital-innovation-award-2025"/>
   </url>
 
   <url>
     <loc>https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring</loc>
     <lastmod>2025-12-03</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring"/>
   </url>
 
   <url>
     <loc>https://perioskoup.com/blog/3-minute-routine-save-teeth</loc>
     <lastmod>2026-01-08</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/3-minute-routine-save-teeth"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/3-minute-routine-save-teeth"/>
   </url>
 
   <url>
@@ -110,6 +135,8 @@
     <lastmod>2025-10-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/why-patients-forget-instructions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/why-patients-forget-instructions"/>
   </url>
 
   <url>
@@ -117,6 +144,8 @@
     <lastmod>2025-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/building-the-bridge-perioskoup-story"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/building-the-bridge-perioskoup-story"/>
   </url>
 
 </urlset>

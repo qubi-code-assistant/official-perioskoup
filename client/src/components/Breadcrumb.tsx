@@ -70,12 +70,12 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                 <Link
                   href={item.href}
                   style={{
-                    color: "#6B7F7B",
+                    color: "#8C9C8C",
                     textDecoration: "none",
                     transition: "color 0.2s ease",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "#C0E57A")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7F7B")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "#8C9C8C")}
                 >
                   {item.label}
                 </Link>

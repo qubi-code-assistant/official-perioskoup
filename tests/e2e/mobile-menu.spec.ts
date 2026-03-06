@@ -20,7 +20,7 @@ test.describe("Mobile menu — visibility", () => {
     await page.setViewportSize(DESKTOP_VIEWPORT);
     await page.goto("/");
 
-    const menuButton = page.getByRole("button", { name: "Toggle menu" });
+    const menuButton = page.getByRole("button", { name: "Open menu" });
     await expect(menuButton).not.toBeVisible();
   });
 
@@ -28,7 +28,7 @@ test.describe("Mobile menu — visibility", () => {
     await page.setViewportSize(MOBILE_VIEWPORT);
     await page.goto("/");
 
-    const menuButton = page.getByRole("button", { name: "Toggle menu" });
+    const menuButton = page.getByRole("button", { name: "Open menu" });
     await expect(menuButton).toBeVisible();
   });
 
@@ -51,59 +51,71 @@ test.describe("Mobile menu — open/close toggle", () => {
   });
 
   test("clicking hamburger opens the mobile drawer", async ({ page }) => {
-    const menuButton = page.getByRole("button", { name: "Toggle menu" });
+    const menuButton = page.getByRole("button", { name: "Open menu" });
 
-    // Drawer should not be visible initially
-    await expect(page.getByRole("link", { name: "Features" }).nth(1)).not.toBeVisible();
+    // Drawer dialog should not be present before opening
+    const drawerBefore = page.getByRole("dialog", { name: "Navigation menu" });
+    await expect(drawerBefore).not.toBeVisible();
 
     await menuButton.click();
 
-    // Drawer links should now be visible
-    await expect(page.getByText("Features").last()).toBeVisible();
-    await expect(page.getByText("For Dentists").last()).toBeVisible();
-    await expect(page.getByText("About").last()).toBeVisible();
-    await expect(page.getByText("Blog").last()).toBeVisible();
+    // The drawer dialog should now be visible
+    const drawer = page.getByRole("dialog", { name: "Navigation menu" });
+    await expect(drawer).toBeVisible();
+
+    // All nav links visible inside the drawer
+    await expect(drawer.getByRole("link", { name: "Features" })).toBeVisible();
+    await expect(drawer.getByRole("link", { name: "For Dentists" })).toBeVisible();
+    await expect(drawer.getByRole("link", { name: "About" })).toBeVisible();
+    await expect(drawer.getByRole("link", { name: "Blog" })).toBeVisible();
   });
 
   test("clicking hamburger again closes the mobile drawer", async ({ page }) => {
-    const menuButton = page.getByRole("button", { name: "Toggle menu" });
+    const openButton = page.getByRole("button", { name: "Open menu" });
+    await openButton.click();
 
-    await menuButton.click();
-    await expect(page.getByText("Features").last()).toBeVisible();
+    const drawer = page.getByRole("dialog", { name: "Navigation menu" });
+    await expect(drawer).toBeVisible();
 
-    await menuButton.click();
+    // After opening the button label changes to "Close menu"
+    const closeButton = page.getByRole("button", { name: "Close menu" });
+    await closeButton.click();
+
     // Drawer should be gone from DOM (conditional rendering, not just hidden)
-    await expect(page.getByText("Features").last()).not.toBeVisible();
+    await expect(drawer).not.toBeVisible();
   });
 
-  test("X icon replaces hamburger icon when menu is open", async ({ page }) => {
-    const menuButton = page.getByRole("button", { name: "Toggle menu" });
-    await menuButton.click();
+  test("button aria-label changes between Open and Close when toggled", async ({ page }) => {
+    const openButton = page.getByRole("button", { name: "Open menu" });
+    await expect(openButton).toBeVisible();
 
-    // After opening, the button still exists and the icon is now an X
-    // Lucide X component is rendered — verify the button is still present
-    await expect(menuButton).toBeVisible();
+    await openButton.click();
+    // Now label should be "Close menu"
+    await expect(page.getByRole("button", { name: "Close menu" })).toBeVisible();
 
-    // Closing again
-    await menuButton.click();
-    await expect(menuButton).toBeVisible();
+    await page.getByRole("button", { name: "Close menu" }).click();
+    // Back to "Open menu"
+    await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
   });
 
   test("mobile menu shows all 4 nav links", async ({ page }) => {
-    await page.getByRole("button", { name: "Toggle menu" }).click();
+    await page.getByRole("button", { name: "Open menu" }).click();
+
+    const drawer = page.getByRole("dialog", { name: "Navigation menu" });
+    await expect(drawer).toBeVisible();
 
     // All 4 nav items should appear in the drawer
-    // Using last() since desktop spans also exist in DOM (CSS-hidden)
     const links = ["Features", "For Dentists", "About", "Blog"];
     for (const label of links) {
-      await expect(page.getByText(label).last()).toBeVisible();
+      await expect(drawer.getByRole("link", { name: label })).toBeVisible();
     }
   });
 
   test("mobile menu shows Join the Waitlist CTA button", async ({ page }) => {
-    await page.getByRole("button", { name: "Toggle menu" }).click();
+    await page.getByRole("button", { name: "Open menu" }).click();
 
-    await expect(page.getByText("Join the Waitlist").last()).toBeVisible();
+    const drawer = page.getByRole("dialog", { name: "Navigation menu" });
+    await expect(drawer.getByRole("link", { name: /Join.*Waitlist/i })).toBeVisible();
   });
 });
 
@@ -114,32 +126,33 @@ test.describe("Mobile menu — closes on navigation", () => {
   });
 
   test("menu closes automatically after navigating to a page", async ({ page }) => {
-    await page.getByRole("button", { name: "Toggle menu" }).click();
-    await expect(page.getByText("Features").last()).toBeVisible();
+    await page.getByRole("button", { name: "Open menu" }).click();
 
-    // Click a nav link inside the drawer
-    // Using last() to target the drawer link vs the hidden desktop one
-    await page.getByText("About").last().click();
+    const drawer = page.getByRole("dialog", { name: "Navigation menu" });
+    await expect(drawer).toBeVisible();
+
+    // Click the About link inside the drawer
+    await drawer.getByRole("link", { name: "About" }).click();
 
     await expect(page).toHaveURL("/about");
 
     // Drawer should be closed (menuOpen resets on location change via useEffect)
-    // Wait for the About heading to confirm navigation completed
-    await expect(page.getByText("Born in a dental chair.", { exact: false })).toBeVisible();
+    await expect(page.getByText("Born in a dental chair.", { exact: false }).first()).toBeVisible();
 
-    // Hamburger should be back (not X), no drawer visible
-    await expect(page.getByRole("button", { name: "Toggle menu" })).toBeVisible();
-    // Verify no drawer content is visible
-    await expect(page.getByText("For Dentists").last()).not.toBeVisible();
+    // Hamburger should show "Open menu" label again (menu is closed)
+    await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
+    // Drawer dialog should not be present
+    await expect(page.getByRole("dialog", { name: "Navigation menu" })).not.toBeVisible();
   });
 
   test("clicking Join the Waitlist CTA in mobile menu navigates to /waitlist", async ({ page }) => {
-    await page.getByRole("button", { name: "Toggle menu" }).click();
+    await page.getByRole("button", { name: "Open menu" }).click();
 
-    await page.getByText("Join the Waitlist").last().click();
+    const drawer = page.getByRole("dialog", { name: "Navigation menu" });
+    await drawer.getByRole("link", { name: /Join.*Waitlist/i }).click();
 
     await expect(page).toHaveURL("/waitlist");
-    await expect(page.getByText("founding waitlist", { exact: false })).toBeVisible();
+    await expect(page.getByText("founding waitlist", { exact: false }).first()).toBeVisible();
   });
 });
 
@@ -148,7 +161,7 @@ test.describe("Mobile menu — body scroll lock", () => {
     await page.setViewportSize(MOBILE_VIEWPORT);
     await page.goto("/");
 
-    await page.getByRole("button", { name: "Toggle menu" }).click();
+    await page.getByRole("button", { name: "Open menu" }).click();
 
     const overflow = await page.evaluate(() => document.body.style.overflow);
     expect(overflow).toBe("hidden");
@@ -158,8 +171,8 @@ test.describe("Mobile menu — body scroll lock", () => {
     await page.setViewportSize(MOBILE_VIEWPORT);
     await page.goto("/");
 
-    await page.getByRole("button", { name: "Toggle menu" }).click();
-    await page.getByRole("button", { name: "Toggle menu" }).click();
+    await page.getByRole("button", { name: "Open menu" }).click();
+    await page.getByRole("button", { name: "Close menu" }).click();
 
     const overflow = await page.evaluate(() => document.body.style.overflow);
     expect(overflow).toBe("");

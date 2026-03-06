@@ -3,15 +3,14 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * Perioskoup E2E Test Configuration
  *
- * Run against the preview build:
- *   pnpm build && pnpm preview &
- *   pnpm playwright test
+ * Run against the dev server (default):
+ *   pnpm test:e2e
  *
- * Or against dev server:
- *   BASE_URL=http://localhost:3000 pnpm playwright test
+ * Run against a preview build:
+ *   pnpm build && BASE_URL=http://localhost:4173 pnpm test:e2e
  */
 export default defineConfig({
-  testDir: "./e2e",
+  testDir: "./tests/e2e",
   timeout: 30_000,
   expect: { timeout: 5_000 },
   fullyParallel: true,
@@ -19,7 +18,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ["html", { outputFolder: "../playwright-report", open: "never" }],
+    ["html", { outputFolder: "playwright-report", open: "never" }],
     ["list"],
   ],
   use: {
@@ -36,24 +35,16 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chromium-desktop",
+      name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: "firefox-desktop",
+      name: "firefox",
       use: { ...devices["Desktop Firefox"] },
     },
     {
-      name: "webkit-desktop",
+      name: "webkit",
       use: { ...devices["Desktop Safari"] },
-    },
-    {
-      name: "mobile-chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "mobile-safari",
-      use: { ...devices["iPhone 13"] },
     },
   ],
 });

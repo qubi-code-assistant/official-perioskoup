@@ -16,11 +16,13 @@ const UNKNOWN_ROUTES = [
   "/this-page-does-not-exist",
   "/foo/bar/baz",
   "/about/team/member",
-  "/blog/nonexistent-article-slug-xyz",
   "/pricing/enterprise",
   "/admin",
   "/dashboard",
 ];
+
+// Blog slugs are handled by the /blog/:slug route — BlogPost renders its own
+// "Article not found" UI rather than the global 404 page. Tested separately below.
 
 test.describe("404 page — unknown routes", () => {
   for (const route of UNKNOWN_ROUTES) {
@@ -112,8 +114,10 @@ test.describe("404 page — does not show content from other pages", () => {
   test("404 page does not show home page hero content", async ({ page }) => {
     await page.goto("/nonexistent-xyz");
 
+    // Home page hero text must not appear
     await expect(page.getByText("Between visits,", { exact: false })).not.toBeVisible();
-    await expect(page.getByText("Features", { exact: false }).first()).not.toBeVisible();
+    // Home-specific "AI dental companion" text must not appear
+    await expect(page.getByText("AI dental companion", { exact: false })).not.toBeVisible();
   });
 });
 

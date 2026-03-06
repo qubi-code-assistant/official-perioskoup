@@ -45,7 +45,7 @@ const ROUTES = [
   },
   {
     path: "/waitlist",
-    heading: "Join the",
+    heading: "founding waitlist",
     description: "Waitlist page hero heading",
   },
   {
@@ -68,8 +68,9 @@ test.describe("Route navigation — direct URL access", () => {
       // Page must not be the 404 screen
       await expect(page.getByText("Page not found.")).not.toBeVisible();
 
-      // Expected heading text is present
-      await expect(page.getByText(route.heading, { exact: false })).toBeVisible();
+      // Expected heading text is present — use .first() to handle strict mode
+      // violations when screen-reader nav announcements also contain partial matches
+      await expect(page.getByText(route.heading, { exact: false }).first()).toBeVisible();
     });
   }
 });
@@ -114,7 +115,7 @@ test.describe("Route navigation — Navbar link clicks", () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.getByRole("link", { name: "Join Waitlist" }).first().click();
     await expect(page).toHaveURL("/waitlist");
-    await expect(page.getByText("Join the", { exact: false })).toBeVisible();
+    await expect(page.getByText("founding waitlist", { exact: false }).first()).toBeVisible();
   });
 
   test("clicking Logo navigates back to home from any page", async ({ page }) => {
@@ -130,12 +131,18 @@ test.describe("Route navigation — Navbar link clicks", () => {
 
 test.describe("SPA routing — no full page reload between transitions", () => {
   test("navigating between pages does not trigger a full page reload", async ({ page }) => {
-    await page.goto("/");
     await page.setViewportSize({ width: 1280, height: 800 });
 
-    // Track whether the page reloaded by listening for DOMContentLoaded
+    // Count load events BEFORE navigating to establish a baseline
     let reloadCount = 0;
     page.on("load", () => { reloadCount += 1; });
+
+    await page.goto("/");
+    // Wait for the initial page to settle (this counts as load #1 via goto)
+    await expect(page.getByText("Between visits,", { exact: false }).first()).toBeVisible();
+
+    // Reset count after initial navigation so we only count extra reloads
+    reloadCount = 0;
 
     await page.getByRole("link", { name: "Features" }).first().click();
     await expect(page).toHaveURL("/features");
@@ -143,9 +150,8 @@ test.describe("SPA routing — no full page reload between transitions", () => {
     await page.getByRole("link", { name: "Blog" }).first().click();
     await expect(page).toHaveURL("/blog");
 
-    // A full page reload increments load events — SPA navigation should not
-    // We started on "/", so the initial load is 1. SPA transitions = 0 additional.
-    expect(reloadCount).toBe(1);
+    // SPA transitions should produce ZERO additional full page loads
+    expect(reloadCount).toBe(0);
   });
 });
 

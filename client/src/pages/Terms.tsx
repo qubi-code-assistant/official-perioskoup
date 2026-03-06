@@ -3,6 +3,7 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
@@ -23,9 +24,21 @@ const SECTIONS = [
 export default function Terms() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <Helmet>
+        <title>Terms of Service — Perioskoup</title>
+        <meta name="description" content="Terms governing the use of the Perioskoup dental companion application, including wellness disclaimer and data responsibilities." />
+        <meta name="robots" content="noindex, follow" />
+        <link rel="canonical" href="https://perioskoup.com/terms" />
+        <meta property="og:title" content="Terms of Service | Perioskoup" />
+        <meta property="og:description" content="Terms governing the use of the Perioskoup dental companion application." />
+        <meta property="og:url" content="https://perioskoup.com/terms" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Terms of Service | Perioskoup" />
+        <meta name="twitter:description" content="Terms governing the use of the Perioskoup dental companion application, including wellness disclaimer and data responsibilities." />
+      </Helmet>
       <Navbar />
 
-      <section style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>

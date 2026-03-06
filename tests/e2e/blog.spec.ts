@@ -132,9 +132,9 @@ test.describe("Blog post pages — all 6 articles load", () => {
     test(`/blog/${article.slug} renders article title`, async ({ page }) => {
       await page.goto(`/blog/${article.slug}`);
 
-      // The article title should appear in the hero
+      // Use role heading to avoid strict mode violation with screen-reader status divs
       await expect(
-        page.getByText(article.title, { exact: false })
+        page.getByRole("heading", { name: article.title, exact: false }).first()
       ).toBeVisible();
 
       // The category badge should be visible
@@ -149,14 +149,15 @@ test.describe("Blog post pages — all 6 articles load", () => {
 });
 
 test.describe("Blog post page — navigation", () => {
-  test("Back to Blog link navigates to /blog", async ({ page }) => {
+  test("'Back to all articles' link navigates to /blog", async ({ page }) => {
     await page.goto("/blog/what-is-periodontal-disease");
 
     await expect(
-      page.getByText("What Is Periodontal Disease?", { exact: false })
+      page.getByRole("heading", { name: "What Is Periodontal Disease?", exact: false }).first()
     ).toBeVisible();
 
-    await page.getByRole("link", { name: "Back to Blog" }).click();
+    // The link text in BlogPost is "Back to all articles"
+    await page.getByRole("link", { name: /Back to all articles/i }).click();
 
     await expect(page).toHaveURL("/blog");
     await expect(page.getByText("Insights on dental health,", { exact: false })).toBeVisible();
@@ -171,11 +172,12 @@ test.describe("Blog post page — navigation", () => {
     await expect(page).toHaveURL("/waitlist");
   });
 
-  test("breadcrumb on blog post shows Blog > article title", async ({ page }) => {
+  test("blog post hero has a Blog link (custom breadcrumb nav)", async ({ page }) => {
     await page.goto("/blog/efp-digital-innovation-award-2025");
 
-    const breadcrumb = page.getByRole("navigation", { name: "Breadcrumb" });
-    await expect(breadcrumb.getByRole("link", { name: "Blog" })).toBeVisible();
+    // BlogPost uses a custom inline nav with a Blog link, not the Breadcrumb component
+    const blogLink = page.locator('a[href="/blog"]').first();
+    await expect(blogLink).toBeVisible();
   });
 });
 

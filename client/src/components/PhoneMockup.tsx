@@ -1,7 +1,6 @@
 /**
  * PhoneMockup — Coded iPhone 15 Pro frame with Perioskoup "Select your role" screen
- * Design: Matches the actual app start screen
- * Fixes: wider phone (340px), status icons beside notch, wider buttons
+ * Animation: Logo image uses .img-load/.loaded for fade-in on load.
  */
 
 import { useState, useEffect } from "react";
@@ -57,7 +56,7 @@ export default function PhoneMockup() {
             flexDirection: "column",
           }}
         >
-          {/* Status bar — time and icons sit BESIDE the Dynamic Island */}
+          {/* Status bar */}
           <div
             style={{
               display: "flex",
@@ -70,7 +69,6 @@ export default function PhoneMockup() {
               height: 52,
             }}
           >
-            {/* Time — left of notch */}
             <span
               style={{
                 fontFamily: "system-ui, -apple-system, sans-serif",
@@ -84,7 +82,7 @@ export default function PhoneMockup() {
               {time}
             </span>
 
-            {/* Dynamic Island — centered, compact */}
+            {/* Dynamic Island */}
             <div
               style={{
                 position: "absolute",
@@ -99,23 +97,20 @@ export default function PhoneMockup() {
               }}
             />
 
-            {/* Right icons — right of notch */}
+            {/* Right icons */}
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              {/* Signal bars */}
               <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
                 <rect x="0" y="9" width="3" height="3" rx="0.5" fill="#F5F9EA" />
                 <rect x="4" y="6" width="3" height="6" rx="0.5" fill="#F5F9EA" />
                 <rect x="8" y="3" width="3" height="9" rx="0.5" fill="#F5F9EA" />
                 <rect x="12" y="0" width="3" height="12" rx="0.5" fill="#F5F9EA" />
               </svg>
-              {/* WiFi */}
               <svg width="14" height="11" viewBox="0 0 24 18" fill="none">
                 <path d="M1 5C5.5 0.5 18.5 0.5 23 5" stroke="#F5F9EA" strokeWidth="2" strokeLinecap="round" />
                 <path d="M5 9.5C8.5 6 15.5 6 19 9.5" stroke="#F5F9EA" strokeWidth="2" strokeLinecap="round" />
                 <path d="M9 14C10.5 12.5 13.5 12.5 15 14" stroke="#F5F9EA" strokeWidth="2" strokeLinecap="round" />
                 <circle cx="12" cy="17" r="1.5" fill="#F5F9EA" />
               </svg>
-              {/* Battery */}
               <div style={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <div
                   style={{
@@ -126,28 +121,14 @@ export default function PhoneMockup() {
                     padding: 1.5,
                   }}
                 >
-                  <div
-                    style={{
-                      width: "78%",
-                      height: "100%",
-                      background: "#C0E57A",
-                      borderRadius: 1.5,
-                    }}
-                  />
+                  <div style={{ width: "78%", height: "100%", background: "#C0E57A", borderRadius: 1.5 }} />
                 </div>
-                <div
-                  style={{
-                    width: 2,
-                    height: 5,
-                    background: "rgba(245,249,234,0.5)",
-                    borderRadius: "0 1px 1px 0",
-                  }}
-                />
+                <div style={{ width: 2, height: 5, background: "rgba(245,249,234,0.5)", borderRadius: "0 1px 1px 0" }} />
               </div>
             </div>
           </div>
 
-          {/* App content — centered vertically */}
+          {/* App content */}
           <div
             style={{
               flex: 1,
@@ -159,10 +140,12 @@ export default function PhoneMockup() {
               marginTop: -8,
             }}
           >
-            {/* Real Perioskoup logo */}
+            {/* Logo — fades in once loaded */}
             <img
               src={LOGO_URL}
               alt="Perioskoup logo"
+              className="img-load"
+              onLoad={(e) => e.currentTarget.classList.add("loaded")}
               style={{
                 width: 108,
                 height: 108,
@@ -172,7 +155,6 @@ export default function PhoneMockup() {
               }}
             />
 
-            {/* App title */}
             <div
               style={{
                 fontFamily: "Dongle, sans-serif",
@@ -200,7 +182,6 @@ export default function PhoneMockup() {
               Dental Companion
             </div>
 
-            {/* "Select your role" label */}
             <div
               style={{
                 fontFamily: "Gabarito, sans-serif",
@@ -213,7 +194,7 @@ export default function PhoneMockup() {
               Select your role
             </div>
 
-            {/* Patient button — wider */}
+            {/* Patient button */}
             <div
               style={{
                 width: "82%",
@@ -232,19 +213,12 @@ export default function PhoneMockup() {
                 <circle cx="12" cy="8" r="4" stroke="#C0E57A" strokeWidth="1.8" />
                 <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="#C0E57A" strokeWidth="1.8" strokeLinecap="round" />
               </svg>
-              <span
-                style={{
-                  fontFamily: "Gabarito, sans-serif",
-                  fontSize: 16,
-                  fontWeight: 600,
-                  color: "#C0E57A",
-                }}
-              >
+              <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, fontWeight: 600, color: "#C0E57A" }}>
                 Patient
               </span>
             </div>
 
-            {/* Dentist button — wider */}
+            {/* Dentist button */}
             <div
               style={{
                 width: "82%",
@@ -263,14 +237,7 @@ export default function PhoneMockup() {
                 <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="#C0E57A" strokeWidth="1.8" strokeLinecap="round" />
                 <path d="M17 11h4M19 9v4" stroke="#C0E57A" strokeWidth="1.8" strokeLinecap="round" />
               </svg>
-              <span
-                style={{
-                  fontFamily: "Gabarito, sans-serif",
-                  fontSize: 16,
-                  fontWeight: 600,
-                  color: "#C0E57A",
-                }}
-              >
+              <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, fontWeight: 600, color: "#C0E57A" }}>
                 Dentist
               </span>
             </div>
@@ -286,65 +253,18 @@ export default function PhoneMockup() {
               paddingTop: 16,
             }}
           >
-            <div
-              style={{
-                width: 130,
-                height: 5,
-                background: "rgba(245,249,234,0.25)",
-                borderRadius: 3,
-              }}
-            />
+            <div style={{ width: 130, height: 5, background: "rgba(245,249,234,0.25)", borderRadius: 3 }} />
           </div>
         </div>
       </div>
 
       {/* Side button (power) */}
-      <div
-        style={{
-          position: "absolute",
-          right: -5,
-          top: 140,
-          width: 3,
-          height: 60,
-          background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)",
-          borderRadius: "0 2px 2px 0",
-        }}
-      />
+      <div style={{ position: "absolute", right: -5, top: 140, width: 3, height: 60, background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)", borderRadius: "0 2px 2px 0" }} />
 
       {/* Volume buttons */}
-      <div
-        style={{
-          position: "absolute",
-          left: -5,
-          top: 118,
-          width: 3,
-          height: 28,
-          background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)",
-          borderRadius: "2px 0 0 2px",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          left: -5,
-          top: 158,
-          width: 3,
-          height: 52,
-          background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)",
-          borderRadius: "2px 0 0 2px",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          left: -5,
-          top: 220,
-          width: 3,
-          height: 52,
-          background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)",
-          borderRadius: "2px 0 0 2px",
-        }}
-      />
+      <div style={{ position: "absolute", left: -5, top: 118, width: 3, height: 28, background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)", borderRadius: "2px 0 0 2px" }} />
+      <div style={{ position: "absolute", left: -5, top: 158, width: 3, height: 52, background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)", borderRadius: "2px 0 0 2px" }} />
+      <div style={{ position: "absolute", left: -5, top: 220, width: 3, height: 52, background: "linear-gradient(180deg, #3A3A3E, #2A2A2E)", borderRadius: "2px 0 0 2px" }} />
     </div>
   );
 }

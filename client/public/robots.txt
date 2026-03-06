@@ -20,4 +20,19 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Cohere-AI
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: omgili
+Allow: /
+
 Sitemap: https://perioskoup.com/sitemap.xml

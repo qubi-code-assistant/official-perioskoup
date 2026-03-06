@@ -3,6 +3,7 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text, #8C9C8C muted
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
@@ -22,9 +23,21 @@ const SECTIONS = [
 export default function Privacy() {
   return (
     <div style={{ background: "#0A171E", minHeight: "100vh" }}>
+      <Helmet>
+        <title>Privacy Policy — Perioskoup Data Protection</title>
+        <meta name="description" content="How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law." />
+        <meta name="robots" content="noindex, follow" />
+        <link rel="canonical" href="https://perioskoup.com/privacy" />
+        <meta property="og:title" content="Privacy Policy | Perioskoup" />
+        <meta property="og:description" content="How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law." />
+        <meta property="og:url" content="https://perioskoup.com/privacy" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Privacy Policy | Perioskoup" />
+        <meta name="twitter:description" content="How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law." />
+      </Helmet>
       <Navbar />
 
-      <section style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>
+      <section id="main-content" style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
