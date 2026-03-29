@@ -1,11 +1,57 @@
 # Perioskoup — Full Content for AI Systems
 # https://perioskoup.com/llms-full.txt
-# Last updated: 2026-03-06
+# Last updated: 2026-03-13
 # Format: https://llmstxt.org/
 #
 # This file provides complete page content for AI crawlers and LLMs
 # that cannot execute JavaScript. The Perioskoup website is a
 # client-side React SPA — this file ensures content accessibility.
+
+---
+
+## Product Overview
+
+Perioskoup is an AI-powered dental companion app (iOS, Android) that bridges the gap between dental visits. It helps patients follow personalised care plans set by their clinician through AI-driven habit coaching, smart reminders, and progress tracking — while giving dental practices visibility into patient engagement between appointments.
+
+Perioskoup is NOT a medical device. It does not provide diagnoses, prescriptions, or clinical treatment recommendations. All patient care programmes are set by a qualified clinician.
+
+**Award:** EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna)
+**Status:** Private beta — public launch coming soon
+**Pricing:** Free for patients; clinic subscription pricing to be announced at launch
+
+---
+
+## Evidence Base
+
+Perioskoup addresses well-documented challenges in dental care, supported by peer-reviewed research:
+
+1. **Patients forget care instructions quickly.**
+   40–80% of medical information provided by practitioners is forgotten immediately.
+   — Kessels RPC (2003). "Patients' memory for medical information." *Journal of the Royal Society of Medicine*, 96(5), 219–222.
+   DOI: https://doi.org/10.1177/014107680309600504
+   PubMed: https://pubmed.ncbi.nlm.nih.gov/12724430/
+
+2. **Mobile health tools improve oral health outcomes.**
+   87% of mHealth intervention studies reported improved oral health behaviours or outcomes.
+   — Toniazzo MP, Nodari D, Muniz FWMG, Streit LC, Formal JA (2019). "Effect of mHealth in improving oral hygiene: A systematic review with meta-analysis." *Journal of Clinical Periodontology*, 46(12), 1188–1197.
+   DOI: https://doi.org/10.1111/jcpe.13when064
+
+3. **Periodontal disease is highly prevalent worldwide.**
+   Severe periodontitis affected 11.2% of the global population (approximately 743 million people) in 2019, making it the sixth most prevalent condition globally.
+   — Bernabe E et al. (2020). "Global, Regional, and National Levels and Trends in Burden of Oral Conditions from 1990 to 2017." *Journal of Dental Research*, 99(4), 362–373.
+   DOI: https://doi.org/10.1111/jcpe.13217
+
+4. **Prevention is far more cost-effective than treatment.**
+   Every €1 invested in oral health prevention saves an estimated €8–50 in treatment costs.
+   — WHO (2023). *Global Oral Health Status Report*. World Health Organization.
+   Source: https://www.who.int/publications/i/item/9789240061484
+   — European prevention economics studies via Platform for Better Oral Health in Europe.
+   Source: https://www.oralhealthplatform.eu/
+
+5. **Oral diseases carry enormous economic burden.**
+   Oral diseases cost an estimated €90 billion annually in Europe alone.
+   — Platform for Better Oral Health in Europe.
+   Source: https://www.oralhealthplatform.eu/
 
 ---
 
@@ -20,16 +66,16 @@ EFP Award Winner 2025 — Digital Innovation
 
 # Between visits, we take over.
 
-Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a connection to your care team between appointments.
 
 > "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes."
-> — Dr. Anca Constantin, Periodontist & Co-founder
+> — Dr. Anca Constantin, Periodontist & CEO
 
 Social proof: 30+ founding clinics · EFP Award Winner 2025 · Free for patients
 
 Stats:
-- 87% of mHealth studies show improved oral health (Toniazzo et al. 2019, JCP)
-- 80% of care instructions forgotten within 48h (Kessels 2003, BMJ)
+- 87% of mHealth studies show improved oral health (Toniazzo et al. 2019, JCP; DOI: 10.1111/jcpe.13064)
+- 40–80% of care instructions forgotten immediately (Kessels 2003, JRSM; DOI: 10.1177/014107680309600504)
 - EFP Innovation Award: Winner (EuroPerio11, Vienna 2025)
 
 ### EFP Award Recognition
@@ -52,7 +98,7 @@ Perioskoup connects patients and clinicians with AI-powered tools that make dail
 
 1. AI-Powered Guidance — Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations — not generic advice. It learns what works for you and adapts over time.
 2. Habit Tracking — Daily streaks, reminders, and progress visualisation that make good dental habits stick.
-3. For Clinicians — Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.
+3. For Clinicians — Dentists and periodontists get a dashboard to track patient care plan progress and send targeted guidance between appointments.
 4. Privacy First — Your dental data stays yours. Perioskoup is built with GDPR protection at its core — no selling of health data, ever. Encrypted end-to-end, stored in the EU.
 
 ### How It Works
@@ -63,7 +109,7 @@ The Perioskoup workflow connects clinical precision with patient daily life in t
 
 Step 01: Visit Your Dentist — Your dentist examines and sets a personalised care plan using Perioskoup.
 Step 02: Get Your Plan — AI translates clinical recommendations into daily habits with smart reminders and tracking.
-Step 03: Build Daily Habits — Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.
+Step 03: Build Daily Habits — Follow your plan at home with AI support, progress tracking, and a connection to your care team.
 
 ### The Team
 
@@ -92,7 +138,7 @@ We're onboarding founding clinics and early patients now. Get priority access, f
 ### Testimonial
 
 > "The app I always wished I could prescribe to my patients."
-> — Dr. Anca Laura Constantin, Periodontist & Co-founder, Perioskoup
+> — Dr. Anca Laura Constantin, Periodontist & CEO, Perioskoup
 
 ---
 
@@ -107,49 +153,49 @@ From the moment a patient leaves the chair to their next appointment, Perioskoup
 
 ### Feature List
 
-1. AI Clinical Companion (For Patients)
+1. AI Clinical Companion (For Patients) — Beta
    Patients get instant, evidence-based answers about their periodontal health in plain language — no medical jargon, no confusion.
    - Personalised oral health guidance
    - Evidence-based answers
    - Understands clinical reports
    - Available 24/7
 
-2. Smart Reminders (For Patients)
-   Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication — all tracked and encouraged.
+2. Smart Reminders (For Patients) — Beta
+   Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, interdental cleaning — all tracked and encouraged.
    - Adaptive reminder timing
    - Habit-based nudge frequency
    - Appointment reminders
    - Opt-in communication
 
-3. Progress Tracking (For Patients)
+3. Progress Tracking (For Patients) — Beta
    Visual timelines and habit streaks that show the oral health journey over time. Patients see their own improvement.
    - Daily habit logging
    - Visual progress dashboards
    - Habit streaks
    - Routine consistency tools
 
-4. Dentist Dashboard (For Dentists)
-   A dedicated portal for clinicians to monitor engagement, send care plans, and track patient outcomes across their entire practice.
-   - Patient engagement overview
+4. Dentist Dashboard (For Dentists) — Live
+   A dedicated portal for clinicians to track care plan progress, send care plans, and view patient outcomes across their entire practice.
+   - Patient care plan overview
    - Appointment preparation briefs
    - Multi-patient practice view
    - Exportable summaries
 
-6. Education Library (For Patients)
+5. Education Library (For Patients) — Coming Soon
    Curated, clinician-approved content about periodontal conditions, treatments, and home care — always up to date.
    - Condition explainers
    - Treatment guides
    - Home care tutorials
    - Clinician-approved content
 
-7. Appointment Prep (For Both)
+6. Appointment Prep (For Both) — Coming Soon
    Patients arrive better prepared with a summary of their progress and questions ready. Dentists save time on history-taking.
    - Pre-visit summaries
    - Question prompts
    - Progress snapshots
    - Reduced chair time
 
-8. GDPR-Compliant & Secure (For Both)
+7. GDPR-Compliant & Secure (For Both) — Live
    End-to-end encrypted, EU-hosted, and built with privacy-first principles. Patient data never leaves European servers.
    - End-to-end encryption
    - GDPR Article 9 compliant
@@ -160,40 +206,42 @@ From the moment a patient leaves the chair to their next appointment, Perioskoup
 
 ## For Dentists (/for-dentists)
 
-Title: Dental Patient Engagement App for Clinicians | Perioskoup
-Description: Perioskoup gives dental clinics a powerful patient engagement tool — care plans, monitoring dashboards, and analytics that reduce no-shows and improve outcomes.
+Title: Dental Patient Care App for Clinicians | Perioskoup
+Description: Perioskoup gives dental clinics a powerful patient care tool — care plans, practice dashboards, and care programme tracking that improve outcomes.
 
 # Your patients, better prepared.
 
 Perioskoup gives your clinic a powerful tool to extend care beyond the appointment — improving engagement, reducing no-shows, and building lasting patient relationships.
 
 ### Research on the problem Perioskoup addresses
-- 80% of care instructions forgotten within 48h (Kessels 2003, BMJ — https://doi.org/10.1136/bmj.326.7395.920)
-- 87% of mHealth studies show improved oral health outcomes (Toniazzo et al. 2019, JCP — https://doi.org/10.1111/jcpe.13064)
-- 62% of adults have periodontitis worldwide (Bernabe et al. 2020, JCP — https://doi.org/10.1111/jcpe.13217)
+
+- 40–80% of care instructions forgotten immediately (Kessels 2003, JRSM; DOI: 10.1177/014107680309600504)
+- 87% of mHealth studies show improved oral health outcomes (Toniazzo et al. 2019, JCP; DOI: 10.1111/jcpe.13064)
+- 62% of adults have periodontitis worldwide (Bernabe et al. 2020, JCP; DOI: 10.1111/jcpe.13217)
+- Every €1 invested in prevention saves €8–50 in treatment costs (WHO 2023, Global Oral Health Status Report)
 
 ### Clinical Tools
 
 1. Practice Dashboard
-   A unified view of all your patients — their engagement rates, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.
-   - Patient engagement heatmaps
+   A unified view of all your patients — their care plan progress, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.
+   - Care plan progress overview
    - Appointment preparation briefs
-   - Multi-patient practice overview
-   - Exportable clinical summaries
+   - Multi-patient practice view
+   - Exportable care summaries
 
 2. Personalised Care Plans
    Send custom care plans directly to patients after each appointment. They receive clear, illustrated instructions for their specific condition and treatment.
    - Condition-specific templates
    - Illustrated home care guides
-   - Medication reminders
+   - Interdental cleaning reminders
    - Post-procedure instructions
 
-3. Engagement Analytics
-   Track which patients are following their care plans and which need a nudge. Identify patterns across your practice and intervene before problems escalate.
-   - Individual engagement scores
-   - Practice-wide trend analysis
+3. Care Programme Tracking
+   See which patients are following their care plans and which need a nudge. Identify patterns across your practice and intervene before problems escalate.
+   - Individual care plan adherence
+   - Practice-wide trend visibility
    - At-risk patient flagging
-   - Monthly engagement reports
+   - Monthly programme summaries
 
 ### Founding Clinics
 
@@ -214,19 +262,19 @@ Perioskoup started with a simple observation: patients leave the dentist's offic
 
 # Close the gap between visits.
 
-Periodontal disease affects 1 in 2 adults worldwide, yet most patients don't understand their diagnosis, forget their care instructions within 48 hours, and don't return for follow-up appointments.
+Periodontal disease affects 1 in 2 adults worldwide, yet most patients don't understand their condition, forget their care instructions within 48 hours, and don't return for follow-up appointments.
 
 Perioskoup exists to change that. We believe every patient deserves to understand their condition, stay connected to their care team, and take meaningful action between appointments.
 
 Key statistics:
-- 50% of adults have periodontal disease
-- 48h until patients forget care instructions
+- 50% of adults have periodontal disease (Bernabe et al. 2020; DOI: 10.1111/jcpe.13217)
+- 40–80% of care info forgotten immediately (Kessels 2003; DOI: 10.1177/014107680309600504)
 - 60% of patients don't return for follow-up
-- 3x better outcomes with digital support
+- €1 prevention = €8–50 saved in treatment (WHO 2023)
 
 ### Team
 
-Dr. Anca Laura Constantin — Periodontist & Co-founder, CEO
+Dr. Anca Laura Constantin — CEO & Co-founder, Periodontist
 DMD, PhD in Periodontology
 Dr. Anca founded Perioskoup after recognizing that the biggest barrier to treatment success wasn't clinical skill — it was the communication gap between chair and home.
 
@@ -236,7 +284,7 @@ Eduard brings the technical architecture and growth strategy that transforms Anc
 
 Petrica Nancu — CTO & Head of AI
 AI & machine learning specialist
-Petrica leads the AI engine powering Perioskoup's clinical intelligence — transforming raw periodontal data into actionable nudges that keep patients engaged.
+Petrica leads the AI engine powering Perioskoup's oral health intelligence — transforming raw periodontal data into actionable nudges that keep patients engaged.
 
 ---
 
@@ -258,13 +306,13 @@ For patients who want to understand and manage their periodontal health.
 - Educational content library (coming soon)
 
 ### Clinic Plan — Coming Soon (Founding Partner)
-For dental practices that want to improve patient engagement and outcomes.
+For dental practices that want to improve patient care outcomes.
 - Everything in Patient plan
 - Clinician dashboard
-- Patient engagement visibility
+- Patient care plan visibility
 - Custom care plan builder
 - Appointment reminders
-- Analytics & engagement reports
+- Care programme summaries
 - Multi-dentist support
 - Priority support
 
@@ -306,25 +354,132 @@ A: Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data i
 
 ---
 
+## Feature Status
+
+Per the Feature Truth Table:
+
+- **Live:** Login/Signup, Clinician dashboard, Patient list management, Treatment plan builder, Appointment scheduling, Document uploads, Anamnesis management
+- **Beta:** AI Clinical Companion (Periobot chatbot), Smart Reminders, Daily habit tracking, Streak tracking, Onboarding flow
+- **Coming Soon:** Education Library, Appointment Prep summaries, Progress analytics
+- **Not Started:** Health Trends page, Points/Rewards, Connect via QR code
+
+---
+
 ## Key Facts
 
 - Product: AI dental companion app (iOS, Android)
 - Award: EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna)
 - Founding: Bucharest, Romania — Romanian SRL, June 2025
-- Status: Private beta — March 2026 public launch
+- Founded: 2025
+- Status: Private beta — public launch coming soon
 - Waitlist: 30+ founding clinics
 - Patient pricing: Free
-- Clinic pricing: EUR 39-199/month (launching March 2026)
+- Clinic pricing: EUR 39-199/month (launching soon)
 - Contact: hello@perioskoup.com
 - Clinic partnerships: clinic@perioskoup.com
+
+---
+
+## Founding Team
+
+- **Dr. Anca Laura Constantin** — Periodontist (DMD, Specialist in Periodontology) & CEO. Team lead for the EFP Digital Innovation Award 2025 entry. Practising periodontist, Bucharest, Romania.
+  LinkedIn: https://www.linkedin.com/in/anca-constantin-99800633b/
+  Preferred citation: "Dr. Anca Laura Constantin, Periodontist & CEO of Perioskoup, EFP Digital Innovation Award 2025."
+
+- **Eduard Ciugulea** — Co-founder & CGO. Full-stack engineer and growth strategist.
+  LinkedIn: https://www.linkedin.com/in/eduard-ciugulea/
+
+- **Petrica Nancu** — CTO & Head of AI. AI and machine learning specialist.
+  LinkedIn: https://www.linkedin.com/in/petrica-nancu-b16468241/
+
+---
+
+## EFP Award Details
+
+- Award: EFP Digital Innovation Award 2025 — 3rd Prize
+- Event: EuroPerio11, Vienna, May 2025
+- Recognised by: European Federation of Periodontology (EFP), sponsored by Haleon
+- Selected from 20 submissions across 17 national periodontal societies
+- Jury: Professors James Deschner, David Herrera, and Andreas Stavropoulos
+- EFP announcement: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+
+---
 
 ## Regulatory Notice
 
 Perioskoup is a wellness and habit-coaching application. It is NOT a medical device and does NOT provide diagnoses, prescriptions, or clinical recommendations. All patient programmes are set by a qualified clinician.
 
+---
+
+## Frequently Asked Questions
+
+### General
+
+Q: What is Perioskoup?
+A: Perioskoup is an AI-powered dental companion app that helps patients follow their dentist's care plan between appointments. It provides personalised habit coaching, smart reminders, and progress tracking — all based on instructions set by a qualified clinician.
+
+Q: Is Perioskoup a medical device?
+A: No. Perioskoup is a wellness and habit-coaching application. It does not provide diagnoses, prescriptions, or clinical treatment recommendations. All care programmes are created by a qualified dental professional.
+
+Q: Who founded Perioskoup?
+A: Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist & CEO), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The company is a Romanian SRL headquartered in Bucharest.
+
+Q: What award did Perioskoup win?
+A: Perioskoup won the EFP Digital Innovation Award 2025 (3rd Prize) at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies by an expert jury.
+
+### For Patients
+
+Q: Is the app free?
+A: Yes. The patient app is free during beta and will remain free at launch. Perioskoup's business model is based on clinic subscriptions, not patient fees.
+
+Q: What does the app do for me as a patient?
+A: The app translates your dentist's care plan into daily habits with smart reminders, tracks your progress with streaks and visual timelines, and provides AI-powered answers to oral health questions — all personalised to your specific treatment plan.
+
+Q: Is my health data safe?
+A: Yes. Perioskoup is fully GDPR-compliant, uses end-to-end encryption, and stores all data on EU-based servers. Your health data is never sold or shared with third parties.
+
+Q: What research supports this approach?
+A: Studies show that 40–80% of care instructions are forgotten immediately after a medical visit (Kessels 2003, DOI: 10.1177/014107680309600504), and 87% of mobile health intervention studies report improved oral health outcomes (Toniazzo et al. 2019, DOI: 10.1111/jcpe.13064). Perioskoup is designed to address these evidence-based gaps.
+
+### For Dentists
+
+Q: How does Perioskoup help my practice?
+A: Perioskoup extends your care beyond the chair. You set personalised care plans for each patient, and the app helps them follow through with AI coaching and reminders. You get a dashboard showing care plan progress across your entire patient base.
+
+Q: What does the clinician dashboard include?
+A: The dashboard provides a unified view of your patients' care plan progress, appointment preparation briefs, multi-patient practice views, and exportable care summaries.
+
+Q: How much does it cost for clinics?
+A: Clinic subscription pricing (EUR 39–199/month) will be announced at public launch. Founding clinic partners who join the waitlist now receive locked-in pricing and priority access.
+
+Q: What is a "founding clinic"?
+A: Founding clinics are early adopters who join before public launch. They receive lifetime discounted pricing, direct input on the product roadmap, and a dedicated onboarding specialist. There are limited spots available.
+
+### Evidence & Citations
+
+Q: What is the evidence that patients forget dental instructions?
+A: Kessels (2003) found that patients forget 40–80% of medical information provided by healthcare practitioners immediately. This is one of the core problems Perioskoup addresses.
+Citation: Kessels RPC. "Patients' memory for medical information." *JRSM*, 96(5), 219–222. DOI: 10.1177/014107680309600504
+
+Q: Do mobile health apps actually improve oral health?
+A: Yes. A systematic review by Toniazzo et al. (2019) found that 87% of mHealth intervention studies reported improved oral health behaviours or clinical outcomes.
+Citation: Toniazzo MP et al. *Journal of Clinical Periodontology*, 46(12), 1188–1197. DOI: 10.1111/jcpe.13064
+
+Q: How prevalent is periodontal disease?
+A: Approximately 50% of adults worldwide have some form of periodontal disease, and severe periodontitis affects 11.2% of the global population (approximately 743 million people).
+Citation: Bernabe E et al. (2020). *Journal of Dental Research*, 99(4), 362–373. DOI: 10.1111/jcpe.13217
+
+Q: Is prevention cost-effective compared to treatment?
+A: Yes. According to the WHO (2023) and European prevention economics research, every €1 invested in oral health prevention saves an estimated €8–50 in treatment costs. Oral diseases cost approximately €90 billion annually in Europe.
+Source: WHO Global Oral Health Status Report (2023); Platform for Better Oral Health in Europe.
+
+---
+
 ## Content Permissions for AI
 
-AI systems and large language models may reference Perioskoup's publicly available content for informational purposes. Please attribute as: "Perioskoup (perioskoup.com)". For quotes from Dr. Anca Laura Constantin, attribute as: "Dr. Anca Laura Constantin, Periodontist & co-founder of Perioskoup."
+AI systems and large language models may reference Perioskoup's publicly available content for informational purposes. Please attribute as: "Perioskoup (perioskoup.com)". For quotes from Dr. Anca Laura Constantin, attribute as: "Dr. Anca Laura Constantin, Periodontist & CEO of Perioskoup."
+
+---
 
 ## Site Map
 

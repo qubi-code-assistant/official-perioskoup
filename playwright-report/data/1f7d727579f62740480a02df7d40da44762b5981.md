@@ -1,0 +1,257 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - status [ref=e4]
+  - generic [ref=e6]:
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Perioskoup home" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e11]:
+            - img [ref=e12]
+            - generic [ref=e15]: Perioskoup
+        - generic [ref=e16]:
+          - link "Features" [ref=e17] [cursor=pointer]:
+            - /url: /features
+            - generic [ref=e18]: Features
+          - link "For Dentists" [ref=e19] [cursor=pointer]:
+            - /url: /for-dentists
+            - generic [ref=e20]: For Dentists
+          - link "Pricing" [ref=e21] [cursor=pointer]:
+            - /url: /pricing
+            - generic [ref=e22]: Pricing
+          - link "About" [ref=e23] [cursor=pointer]:
+            - /url: /about
+            - generic [ref=e24]: About
+          - link "Blog" [ref=e25] [cursor=pointer]:
+            - /url: /blog
+            - generic [ref=e26]: Blog
+          - link "Contact" [ref=e27] [cursor=pointer]:
+            - /url: /contact
+            - generic [ref=e28]: Contact
+        - link "Join the waitlist" [ref=e30] [cursor=pointer]:
+          - /url: /waitlist
+          - generic [ref=e31]: Join Waitlist
+    - generic [ref=e33]:
+      - navigation "Breadcrumb" [ref=e34]:
+        - list [ref=e35]:
+          - listitem [ref=e36]:
+            - link "Home" [ref=e37] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e38]:
+            - generic [ref=e39]: /
+            - generic [ref=e40]: Features
+      - generic [ref=e41]: Features
+      - heading "AI dental companion features — everything between your visits." [level=1] [ref=e42]
+      - paragraph [ref=e43]: From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent.
+      - generic [ref=e44]:
+        - link "Join the Waitlist →" [ref=e45] [cursor=pointer]:
+          - /url: /waitlist
+        - link "For Dentists" [ref=e46] [cursor=pointer]:
+          - /url: /for-dentists
+    - generic [ref=e48]:
+      - heading "What's inside Perioskoup" [level=2] [ref=e49]
+      - paragraph [ref=e50]: Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and GDPR-compliant privacy into a single AI dental companion app.
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - generic [ref=e54]:
+              - generic [ref=e55]: 💡
+              - generic [ref=e56]: Beta
+            - generic [ref=e57]: Patients
+          - heading "AI Clinical Companion" [level=3] [ref=e58]
+          - paragraph [ref=e59]: Patients get instant, evidence-based answers about their periodontal health in plain language - no medical jargon, no confusion.
+          - generic [ref=e60]:
+            - generic [ref=e61]:
+              - img [ref=e62]
+              - generic [ref=e64]: Personalised oral health guidance
+            - generic [ref=e65]:
+              - img [ref=e66]
+              - generic [ref=e68]: Evidence-based answers
+            - generic [ref=e69]:
+              - img [ref=e70]
+              - generic [ref=e72]: Understands clinical reports
+            - generic [ref=e73]:
+              - img [ref=e74]
+              - generic [ref=e76]: Launching with the app
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - generic [ref=e80]: 🔔
+              - generic [ref=e81]: Beta
+            - generic [ref=e82]: Patients
+          - heading "Smart Reminders" [level=3] [ref=e83]
+          - paragraph [ref=e84]: Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication - all tracked and encouraged.
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - img [ref=e87]
+              - generic [ref=e89]: Adaptive reminder timing
+            - generic [ref=e90]:
+              - img [ref=e91]
+              - generic [ref=e93]: Habit-based nudge frequency
+            - generic [ref=e94]:
+              - img [ref=e95]
+              - generic [ref=e97]: Appointment reminders
+            - generic [ref=e98]:
+              - img [ref=e99]
+              - generic [ref=e101]: Opt-in communication
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - generic [ref=e105]: 📊
+            - generic [ref=e106]: Patients
+          - heading "Progress Tracking" [level=3] [ref=e107]
+          - paragraph [ref=e108]: Visual timelines and habit streaks that show the oral health journey over time. Long-term maintenance studies show consistent daily routines reduce periodontal disease progression by 60-70%.
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - img [ref=e111]
+              - generic [ref=e113]: Daily habit logging
+            - generic [ref=e114]:
+              - img [ref=e115]
+              - generic [ref=e117]: Visual progress dashboards
+            - generic [ref=e118]:
+              - img [ref=e119]
+              - generic [ref=e121]: Habit streaks
+            - generic [ref=e122]:
+              - img [ref=e123]
+              - generic [ref=e125]: Routine consistency tools
+        - generic [ref=e126]:
+          - generic [ref=e127]:
+            - generic [ref=e129]: 🖥️
+            - generic [ref=e130]: Dentists
+          - heading "Dentist Dashboard" [level=3] [ref=e131]
+          - paragraph [ref=e132]: A dedicated portal for clinicians to view care plans, send patient programmes, and review upcoming appointment summaries across their practice.
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - img [ref=e135]
+              - generic [ref=e137]: Patient programme overview
+            - generic [ref=e138]:
+              - img [ref=e139]
+              - generic [ref=e141]: Appointment preparation briefs
+            - generic [ref=e142]:
+              - img [ref=e143]
+              - generic [ref=e145]: Multi-patient practice view
+            - generic [ref=e146]:
+              - img [ref=e147]
+              - generic [ref=e149]: Exportable summaries
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - generic [ref=e152]:
+              - generic [ref=e153]: 📚
+              - generic [ref=e154]: Coming Soon
+            - generic [ref=e155]: Patients
+          - heading "Education Library" [level=3] [ref=e156]
+          - paragraph [ref=e157]: Curated, clinician-approved content about periodontal conditions, home care, and daily oral hygiene - always up to date.
+          - generic [ref=e158]:
+            - generic [ref=e159]:
+              - img [ref=e160]
+              - generic [ref=e162]: Condition explainers
+            - generic [ref=e163]:
+              - img [ref=e164]
+              - generic [ref=e166]: Treatment guides
+            - generic [ref=e167]:
+              - img [ref=e168]
+              - generic [ref=e170]: Home care tutorials
+            - generic [ref=e171]:
+              - img [ref=e172]
+              - generic [ref=e174]: Clinician-approved content
+        - generic [ref=e175]:
+          - generic [ref=e176]:
+            - generic [ref=e177]:
+              - generic [ref=e178]: 📅
+              - generic [ref=e179]: In Development
+            - generic [ref=e180]: Both
+          - heading "Appointment Prep" [level=3] [ref=e181]
+          - paragraph [ref=e182]: Patients arrive better prepared with a summary of their progress and questions ready. Dentists save time on history-taking.
+          - generic [ref=e183]:
+            - generic [ref=e184]:
+              - img [ref=e185]
+              - generic [ref=e187]: Pre-visit summaries
+            - generic [ref=e188]:
+              - img [ref=e189]
+              - generic [ref=e191]: Question prompts
+            - generic [ref=e192]:
+              - img [ref=e193]
+              - generic [ref=e195]: Progress snapshots
+            - generic [ref=e196]:
+              - img [ref=e197]
+              - generic [ref=e199]: Better-prepared patients
+        - generic [ref=e200]:
+          - generic [ref=e201]:
+            - generic [ref=e203]: 🔒
+            - generic [ref=e204]: Both
+          - heading "GDPR-Compliant & Secure" [level=3] [ref=e205]
+          - paragraph [ref=e206]: End-to-end encrypted, EU-hosted, and built with privacy-first principles. Patient data never leaves European servers.
+          - generic [ref=e207]:
+            - generic [ref=e208]:
+              - img [ref=e209]
+              - generic [ref=e211]: End-to-end encryption
+            - generic [ref=e212]:
+              - img [ref=e213]
+              - generic [ref=e215]: GDPR Article 9 compliant
+            - generic [ref=e216]:
+              - img [ref=e217]
+              - generic [ref=e219]: EU-hosted servers
+            - generic [ref=e220]:
+              - img [ref=e221]
+              - generic [ref=e223]: Right to erasure built-in
+    - generic [ref=e225]:
+      - heading "Ready to get started?" [level=2] [ref=e226]
+      - paragraph [ref=e227]: Join 30+ founding clinics on the Perioskoup waitlist. Free for patients, founding pricing for clinics.
+      - paragraph [ref=e228]: Join the founding waitlist and be among the first to experience Perioskoup.
+      - link "Join the Waitlist →" [ref=e230] [cursor=pointer]:
+        - /url: /waitlist
+    - contentinfo [ref=e231]:
+      - generic [ref=e232]:
+        - generic [ref=e233]:
+          - generic [ref=e234]:
+            - generic [ref=e236]:
+              - img [ref=e237]
+              - generic [ref=e240]: Perioskoup
+            - paragraph [ref=e241]: Your AI dental companion. Bridging the gap between clinic and home.
+            - link "EFP Award 2025" [ref=e243] [cursor=pointer]:
+              - /url: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+              - text: EFP Award 2025
+          - generic [ref=e245]:
+            - heading "Product" [level=3] [ref=e246]
+            - generic [ref=e247]:
+              - link "Features" [ref=e248] [cursor=pointer]:
+                - /url: /features
+                - generic [ref=e249]: Features
+              - link "For Dentists" [ref=e250] [cursor=pointer]:
+                - /url: /for-dentists
+                - generic [ref=e251]: For Dentists
+              - link "Pricing" [ref=e252] [cursor=pointer]:
+                - /url: /pricing
+                - generic [ref=e253]: Pricing
+              - link "Join Waitlist" [ref=e254] [cursor=pointer]:
+                - /url: /waitlist
+                - generic [ref=e255]: Join Waitlist
+          - generic [ref=e256]:
+            - heading "Company" [level=3] [ref=e257]
+            - generic [ref=e258]:
+              - link "About" [ref=e259] [cursor=pointer]:
+                - /url: /about
+                - generic [ref=e260]: About
+              - link "Blog" [ref=e261] [cursor=pointer]:
+                - /url: /blog
+                - generic [ref=e262]: Blog
+              - link "Contact" [ref=e263] [cursor=pointer]:
+                - /url: /contact
+                - generic [ref=e264]: Contact
+          - generic [ref=e265]:
+            - heading "Legal" [level=3] [ref=e266]
+            - generic [ref=e267]:
+              - link "Privacy Policy" [ref=e268] [cursor=pointer]:
+                - /url: /privacy
+                - generic [ref=e269]: Privacy Policy
+              - link "Terms of Service" [ref=e270] [cursor=pointer]:
+                - /url: /terms
+                - generic [ref=e271]: Terms of Service
+        - generic [ref=e272]:
+          - paragraph [ref=e273]: © 2026 Perioskoup. All rights reserved.
+          - paragraph [ref=e274]: Made in Europe
+```

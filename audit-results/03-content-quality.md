@@ -1,535 +1,402 @@
-# Content Quality & Messaging Audit — Perioskoup
-**Auditor:** Content Quality & Messaging Agent
+# Content Quality Audit — Perioskoup Landing Page
+**Auditor:** Claude Sonnet 4.6 (Content Quality Agent)
 **Date:** 2026-03-06
-**Scope:** All pages in `client/src/pages/` + blog articles in `BlogPost.tsx`
-**Reference documents:** `FEATURE_TRUTH_TABLE.md`, `MEDICAL_STUDIES.md`, `CLAUDE.md`
-**Overall Score: 7.1 / 10**
+**Branch:** fix/final-launch-audit
+**Scope:** All pages in `client/src/pages/`, `client/public/llms.txt`, cross-referenced against `FEATURE_TRUTH_TABLE.md` and `MEDICAL_STUDIES.md`
 
 ---
 
-## CRITICAL SECTION 1: FEATURE ACCURACY CROSS-REFERENCE
+## OVERALL SCORE: 7.2 / 10
 
-### Summary
-The FEATURE_TRUTH_TABLE.md classifies features into Done, In Progress, and Not Started. Every feature claim on the website has been cross-referenced. The findings below are ordered by severity.
-
----
-
-### CRITICAL FLAG — Feature Presented as Working When It Is NOT STARTED
-
-**File:** `client/src/pages/Features.tsx`, line 36
-**Claim:** "Streak rewards" (listed as a bullet under Progress Tracking feature card)
-**Truth Table status:** Points/Rewards — NOT STARTED
-**Impact:** This bullet is presented on the public-facing Features page as a real, working feature. It is Not Started.
-**Required fix:** Remove "Streak rewards" from the bullet list OR replace with "Streaks coming soon" and add a "Coming Soon" badge to that bullet.
+Strong foundations: evidence is cited, regulatory language is clean, the EFP award is deployed effectively, and the blog content is genuinely substantive. The score is held back by feature accuracy gaps, three statistical mismatches with the truth table, one AI capability overstatement on the homepage, a duplicate content block in `llms.txt`, and several missing content opportunities that would materially improve conversion and SEO.
 
 ---
 
-**File:** `client/src/pages/Pricing.tsx`, line 38
-**Claim:** "Progress tracking" listed as a feature in the Patient plan
-**Truth Table status:** Track habits page / Mark as done / 90s timer — IN PROGRESS
-**Context:** Progress tracking is In Progress for the patient side. Listing it as a current plan feature is borderline acceptable only if re-framed as "coming soon during beta."
+## SECTION 1: FEATURE ACCURACY
+
+### Critical Issues
+
+**ISSUE FA-01 — `Home.tsx` line 223: AI capability overstatement**
+The "AI-Powered Guidance" bento card reads:
+> "Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations - not generic advice. **It learns what works for you and adapts over time.**"
+
+The truth table shows the Periobot AI Chatbot is "In Progress" and patient habit tracking is "In Progress." The phrase "analyses your dental history" and especially "learns what works for you and adapts over time" implies a live, working adaptive AI system. This is a material overstatement for a feature that is not yet complete. The claim needs to be scoped to what is actually built or marked as forthcoming.
+
+Suggested replacement:
+> "Perioskoup's AI translates your dentist's recommendations into a personalised daily programme — not generic advice. As you build consistency, the plan adapts to your routine. Launching with the app."
+
+**ISSUE FA-02 — `ForDentists.tsx` lines 25–26: Illustrated instructions and medication reminders claimed as working**
+The "Personalised Care Plans" feature card includes these bullets as working:
+- "Illustrated home care guides"
+- "Medication reminders"
+- "Post-procedure instructions"
+
+The truth table shows Treatment plans are "Done" on the dentist side but only the core record/edit/version flow is confirmed done. Illustrated guides and medication reminders are not listed as done features and are not confirmed in the truth table. These should be flagged with "In Development" badges or removed until confirmed.
+
+**ISSUE FA-03 — `ForDentists.tsx` lines 19–20: Practice Dashboard described with "upcoming appointments" and "AI-generated summaries"**
+The Practice Dashboard feature card includes:
+> "Everything you need before you walk into the room"
+> Bullets: "Appointment preparation briefs", "Exportable clinical summaries"
+
+The truth table shows "Appointments" on the dentist side as "In Progress" and the Chatbot as "In Progress." AI-generated summaries and appointment preparation briefs are not in the "Done" category. These should be labelled "In Development" rather than presented as working capabilities.
+
+**ISSUE FA-04 — `Features.tsx` line 18: "Progress Tracking" presented with check marks but no "In Progress" badge**
+The "Progress Tracking" feature card for patients has no beta or "in development" badge, yet the truth table shows "Track habits page / Mark as done / 90s timer" as In Progress and "Health Trends page / View Analytics page" as Not Started. The description mentions "Visual timelines and habit streaks" — streaks are In Progress, visual timelines/dashboards map to Health Trends which is Not Started. The bullet "Visual progress dashboards" is the most problematic item.
+
+Suggested fix: Add an "In Development" badge to this card consistent with how other cards handle it.
+
+**ISSUE FA-05 — `Pricing.tsx` line 31: "Analytics & engagement reports" listed as a Clinic feature with "(coming soon)"**
+This is correctly scoped. No action needed — "(coming soon)" is appropriate.
+
+**ISSUE FA-06 — `Pricing.tsx` line 31: "Multi-dentist support" listed as a Clinic feature**
+Multi-dentist support is not in the truth table at all — neither Done, In Progress, nor Not Started. If it is not confirmed for launch, this is a speculative feature claim. Needs validation or a "coming soon" qualifier.
+
+### Acceptable Feature Handling
+
+- `ForDentists.tsx` line 31–32: "Engagement Insights" correctly notes "coming in Q2 2026" — this is accurate.
+- `Features.tsx`: "Education Library" correctly marked "Coming Soon", "Appointment Prep" correctly marked "In Development", "AI Clinical Companion" and "Smart Reminders" correctly marked "Beta."
+- `Pricing.tsx` patient plan: "Progress tracking (coming soon)" and "Educational content library (coming soon)" — correctly scoped.
 
 ---
 
-**File:** `client/src/pages/Pricing.tsx`, line 48
-**Claim:** "Analytics & engagement reports" listed as a Clinic plan feature
-**Truth Table status:** "View Analytics page" — NOT STARTED (patient), "Change events (treatment plan + anamnesis)" — IN PROGRESS (dentist side analytics)
-**Impact:** Engagement analytics for the Dentist Dashboard is described in ForDentists.tsx as a full clinical tool with "individual engagement scores," "practice-wide trend analysis," and "at-risk patient flagging." This is either In Progress (basic) or Not Started (advanced views).
-**Required fix:** Mark "Analytics & engagement reports" as "Coming Soon" in the Clinic plan feature list OR reframe as "Patient engagement visibility (in development)."
+## SECTION 2: REGULATORY LANGUAGE SCAN
+
+**No forbidden terms found in page content.**
+
+A systematic search for: "compliance", "diagnose", "treat", "cure", "adherence", "therapeutic", "clinical guidance", "monitor inflammation", "track bleeding" returned zero matches across all pages.
+
+**Observations:**
+
+The word "treat" appears only in blog article bodies (`BlogPost.tsx`) in the medically correct sense: "Treatment involves scaling and root planing" — this is educational content describing clinical procedures that dentists perform, not a claim that the app treats disease. This is acceptable.
+
+The phrase "diagnose" appears in `BlogPost.tsx` and `ForDentists.tsx` FAQ only to explicitly deny: "It does not provide diagnoses." This is correct regulatory positioning.
+
+The FAQ in `Home.tsx` line 42 and `ForDentists.tsx` line 44 both include: "The app is built with EU MDR and FDA SaMD guidance in mind." This phrase is well-intentioned but creates a subtle risk: it implies a regulated product category (SaMD) which Perioskoup explicitly wants to avoid. The Terms page (line 16) already contains a SaMD disclaimer. Referencing SaMD in patient-facing FAQs without adequate context could confuse patients about the app's nature. Consider replacing with: "Built with GDPR and data privacy principles as our foundation."
+
+**ISSUE REG-01 — `ForDentists.tsx` line 85: "reducing no-shows"**
+The claim "reducing no-shows" appears in the hero subhead and meta description. No-show reduction implies the app can measurably affect appointment attendance rates. This is not a validated outcome claim for Perioskoup (no study cited, no internal data cited). The MEDICAL_STUDIES.md does not list this as a supported claim. This should be removed or replaced with something the product can actually support.
+
+**ISSUE REG-02 — `Home.tsx` line 225: "monitor patient engagement"**
+The bento card "For Clinicians" reads: "Dentists and periodontists get a dashboard to **monitor** patient engagement." In wellness-app context "monitor" is borderline — it implies ongoing clinical surveillance. Preferred phrasing: "track" or "view" patient engagement. Cross-reference: the truth table shows "Engagement Insights" / patient monitoring features are In Progress, not Done, which makes this doubly important to soften.
 
 ---
 
-### HIGH FLAG — Feature Implied as Working When It Is IN PROGRESS
+## SECTION 3: MEDICAL EVIDENCE ACCURACY
 
-**File:** `client/src/pages/Features.tsx`, line 34
-**Claim:** "AI Clinical Companion" feature card — described with bullets: "Personalised oral health guidance," "Evidence-based answers," "Understands clinical reports," "Available 24/7"
-**Truth Table status:** Periobot AI Chatbot — IN PROGRESS
-**Impact:** The feature card presents the Periobot as fully operational, not as a beta or preview feature. The bullets do not qualify its availability.
-**Required fix:** Add a label tag "Beta" or "Coming Soon" to this card. Change "Available 24/7" to "Available 24/7 — launching with the app." This is permissible under FEATURE_TRUTH_TABLE rules only as preview/beta.
+### Statistics Cross-Referenced Against MEDICAL_STUDIES.md
 
----
+**STAT-01 — "80% of instructions forgotten within 48h" (`ForDentists.tsx` line 136, `About.tsx` line 196)**
+Cited as "Kessels 2003, BMJ" with DOI `10.1136/bmj.326.7395.920`. The MEDICAL_STUDIES.md cites Kessels (2003) as: "Patients forget 40–80% of medical information provided by healthcare practitioners immediately." The website simplifies this to "80%" without the 40% lower bound. This is a selective use of the upper bound from a range. More accurate would be "40–80%." The DOI is also incorrect — the Kessels 2003 paper is in the *Journal of the Royal Society of Medicine* (`PMC539473`), not BMJ. The BMJ DOI shown (`10.1136/bmj.326.7395.920`) resolves to a different paper. This is a citation error that must be corrected.
 
-**File:** `client/src/pages/Features.tsx`, line 35
-**Claim:** "Smart Reminders" — "Adaptive reminder timing," "Appointment reminders," "Opt-in communication"
-**Truth Table status:** Reminders setup — IN PROGRESS (patient onboarding); Notifications — IN PROGRESS
-**Required fix:** Add a "Beta" badge or "In development" qualifier. Currently presented as if fully available.
+Correct citation: Kessels, R.P.C. (2003). "Patients' memory for medical information." *Journal of the Royal Society of Medicine*, 96(5), 219–222. https://pubmed.ncbi.nlm.nih.gov/12739284/
 
----
+**STAT-02 — "62% of adults have periodontitis worldwide" (`ForDentists.tsx` line 138, `About.tsx` line 195)**
+Cited as "Bernabe et al. 2020, JCP" with DOI `10.1111/jcpe.13217`. The MEDICAL_STUDIES.md does not list a 62% figure; it lists 50% of European adults (PMC7275199) and 11.2% with severe periodontitis globally. The 62% figure is inconsistent with the MEDICAL_STUDIES.md source list. The Bernabe 2020 paper (Global Burden of Disease) found that 45% of the global population had some form of periodontal disease, with 11.2% having severe periodontitis. A "62% of adults" figure for all periodontitis may come from a specific study but is not in the approved evidence base. This needs to be verified against the actual paper before publication.
 
-**File:** `client/src/pages/Features.tsx`, line 37
-**Claim:** "Secure Messaging" — "File and photo sharing," "Read receipts," "Archived conversation history"
-**Truth Table status:** No messaging feature appears in DONE or IN PROGRESS for either patient or dentist side.
-**Impact:** This is the most serious feature accuracy violation. Secure messaging does not appear anywhere in the truth table as Done or In Progress. It is being presented as a fully-functioning feature with specific sub-capabilities.
-**Required fix:** Either remove this feature card entirely, or add a clearly visible "Coming Soon" badge and soften all bullets to future tense ("Will support file and photo sharing").
+**STAT-03 — "87% of mHealth studies show improved outcomes" (`ForDentists.tsx` line 137, `About.tsx` line 197)**
+Cited as "Toniazzo et al. 2019, JCP" with DOI `10.1111/jcpe.13064`. This stat is not in `MEDICAL_STUDIES.md` at all. The stat is plausible (Toniazzo 2019 is a real systematic review of mHealth in periodontal care) but it is not in the approved evidence base. The team needs to read the actual paper to confirm the 87% figure reflects what the paper concludes and that the framing "improved outcomes" is an accurate summary of the study's finding.
 
----
+**STAT-04 — `ForDentists.tsx` lines 119–120: "Patients forget 80% of care instructions within 48 hours"**
+This statement appears in body copy without a citation link. This is the same Kessels stat but presented inline as prose without sourcing. Since the paragraph does contain a linked citation further down, this is a lesser issue, but the 80% number should be "40–80%" here too.
 
-**File:** `client/src/pages/Features.tsx`, line 39
-**Claim:** "Education Library" — "Clinician-approved content," "Condition explainers," "Treatment guides"
-**Truth Table status:** Not present in Done or In Progress lists for either patient or dentist.
-**Required fix:** Add "Coming Soon" badge or remove from active features grid. Move to a "Roadmap" section.
+**STAT-05 — `BlogPost.tsx` (article: "what-is-periodontal-disease") line 54: "approximately 50% of adults have some form of gum disease"**
+Attributed to the European Federation of Periodontology. This matches the MEDICAL_STUDIES.md source (PMC7275199). Acceptable. The citation inline is by attribution name only, not DOI. For blog content this is fine stylistically, but a linked reference would be better practice.
 
----
+**STAT-06 — `BlogPost.tsx` (article: "why-patients-forget-instructions") lines 492–493**
+States patients recall "only 20–40% of information during a dental consultation" citing "Journal of the American Dental Association" and a study in the "British Dental Journal." No DOIs or specific citations are given for either journal reference. These are specific study citations presented without enough detail to verify. They need DOIs or at minimum author/year.
 
-**File:** `client/src/pages/Features.tsx`, line 40
-**Claim:** "Appointment Prep" — "Pre-visit summaries," "Question prompts," "Reduced chair time"
-**Truth Table status:** Appointments (calendar, duration, type, notes) — IN PROGRESS for dentist. Pre-visit summary for patients not mentioned in any Done category.
-**Required fix:** Add "In Development" badge. Change "Reduced chair time" claim (which asserts an outcome of a not-yet-built feature).
+**STAT-07 — `About.tsx` line 186 and `About.tsx` FAQ line 86: "1 in 2 adults worldwide"**
+"Periodontal disease affects 1 in 2 adults worldwide" — this is a simplified restatement of the 50% European figure. The MEDICAL_STUDIES.md source is European-focused (PMC7275199). The Global Burden of Disease 2019 gives 45% globally, not 50%. "1 in 2 worldwide" is a slight overstatement. Either change "worldwide" to "in Europe" or use "nearly 1 in 2" for the global claim.
 
----
+### Evidence Usage Gaps (Recommended Additions per MEDICAL_STUDIES.md)
 
-**File:** `client/src/pages/ForDentists.tsx`, lines 46–50
-**Claim:** "Engagement Analytics" feature with bullets: "Individual engagement scores," "Practice-wide trend analysis," "At-risk patient flagging," "Monthly engagement reports"
-**Truth Table status:** NOT STARTED (patient analytics), IN PROGRESS (basic dentist notifications/events)
-**Impact:** "At-risk patient flagging" and "Practice-wide trend analysis" are presented as deliverable features — they are Not Started.
-**Required fix:** Either demote this card to "Roadmap" section OR prefix with "Coming in Q2 2026" and remove "At-risk patient flagging" specifically.
+The MEDICAL_STUDIES.md identifies key stats that are not yet deployed on the website but should be:
+
+- "Every €1 invested in prevention saves €8–50 in treatment" — `ForDentists.tsx` line 270 correctly uses this with WHO source. Good.
+- "Oral diseases cost €90 billion annually in Europe" — `ForDentists.tsx` line 125 uses this with the Platform for Better Oral Health citation. Good.
+- "50% of Europeans have gum disease" — used in blog article text. Should also appear on Homepage hero/problem section with a citation link. Currently the homepage has no cited statistics at all.
+- "Consistent daily oral hygiene routines reduce periodontal disease progression by 60–70%" — this appears in `Features.tsx` line 18 but with no citation. The MEDICAL_STUDIES.md source is "Long-term maintenance studies in periodontal patients" which is vague. Add a specific DOI or remove the percentage claim.
 
 ---
 
-**File:** `client/src/pages/Home.tsx`, line 65 (FAQ JSON-LD)
-**Claim:** "giving clinicians real-time engagement data"
-**Truth Table status:** Real-time engagement data for clinicians requires the Analytics page and Change events tracking — both IN PROGRESS or NOT STARTED.
-**Required fix:** Change to "engagement visibility" or "patient progress data" — "real-time" implies live dashboard capabilities not yet built.
+## SECTION 4: MESSAGING CLARITY (3-SECOND TEST)
+
+### Homepage (`Home.tsx`)
+
+**PASS.** The headline "Between visits, we take over." with the subhead "Perioskoup is an AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments" clears the 3-second test cleanly. The value proposition is explicit. The dual-audience split (patient/clinician CTA row) is visible above the fold.
+
+**Minor issue:** The Dr. Anca quote appears before the primary CTAs render on mobile at narrow viewport widths, burying the CTA. The quote has conversion value but its position (between headline and CTAs) creates friction. Consider moving it below the CTA row.
+
+**Minor issue:** The "What is an AI dental companion?" section (`Home.tsx` lines 244–262) repeats the same definition twice: once in the `<p>` at line 251 and again almost identically in the `<p>` at line 257. This is a duplicate paragraph within a single section.
+
+Lines 251–252:
+> "An AI dental companion translates clinical recommendations into personalised daily habits. It bridges the gap between what your dentist recommends and what you actually do at home."
+
+Lines 257–258:
+> "An AI dental companion translates clinical recommendations into personalised daily habits - with smart reminders, progress tracking, and a direct line to your dental team."
+
+These are functionally the same sentence appearing twice in six lines. Delete one.
+
+### Features Page (`Features.tsx`)
+
+**PASS.** The page hero is clear. Feature cards are well-labelled with audience tags (Patients / Dentists / Both) and status badges (Beta / Coming Soon / In Development). This is the correct pattern.
+
+**Minor issue:** The CTA section at the bottom (`Features.tsx` lines 139–144) has a content duplication: "Join 30+ founding clinics on the Perioskoup waitlist. Free for patients, founding pricing for clinics." is followed immediately by "Join the founding waitlist and be among the first to experience Perioskoup." These two sentences say the same thing. Remove the second.
+
+### For Dentists Page (`ForDentists.tsx`)
+
+**PASS on clarity.** The H1 "Your patients, better prepared." is sharp and dentist-specific. The problem-first section with the Weinert 2025 citation is strong.
+
+**Issue:** "reducing no-shows" claim in hero subhead and meta description (see REG-01 above) is an unsubstantiated outcome claim.
+
+**Issue:** The "Engagement Insights" feature card (`ForDentists.tsx` lines 31–32) is correctly qualified, but the parent "Clinical Tools" section heading implies all three cards are clinical tools that work today. The visual presentation does not visually distinguish "done" from "in development" features in this list. A status indicator (even a small badge) would help set expectations.
+
+### Pricing Page (`Pricing.tsx`)
+
+**PASS.** "Coming soon" on the Clinic price and the beta notice banner are appropriately honest. The blur-overlay approach described in CLAUDE.md appears to not be implemented — the page shows prices as "Free" and "Coming soon" text, which is actually cleaner than a blur overlay. The pricing page functions correctly as a pre-launch signal page.
+
+**Issue:** The Patient plan feature list (`Pricing.tsx` line 21) includes "Personalized care plan" with no "(coming soon)" qualifier, yet the care plan on the patient side is "In Progress" per the truth table. The care plan is Done for the dentist side but only In Progress for the patient view. This bullet needs a "(coming soon)" qualifier.
+
+**Issue:** The pricing FAQ (`Pricing.tsx` line 47) states the Patient plan includes "personalised care plans, daily habit reminders, progress tracking, and access to the educational content library" — but progress tracking and the educational library are both "In Progress" or "Not Started" on the patient side. The FAQ answer overstates what is currently available.
+
+### About Page (`About.tsx`)
+
+**PASS.** The team section is well-executed. The founder bios are specific and human. The EFP award section with the ceremony photo is strong social proof.
+
+**Issue:** Dr. Anca's credential is listed as "DMD, PhD in Periodontology" (`About.tsx` line 268). The `llms.txt` says "DMD, Specialist in Periodontology." These are inconsistent. A PhD and a Specialist designation are different credentials. Verify which is accurate and standardise across all pages.
+
+**Issue:** `About.tsx` line 268 describes Eduard as "Full-stack engineer & growth strategist" in his credentials line. This is a weaker credential statement than on the llms.txt which says "Full-stack engineer and growth strategist." Minor wording inconsistency but fine.
+
+### Waitlist Page (`Waitlist.tsx`)
+
+**PASS on form UX.** The role selector (Patient / Dentist clinic) is a smart UX pattern. The social proof block (30+ founding clinics, EFP Award 2025) is appropriately placed.
+
+**Issue:** The form is a frontend-only mock — `handleSubmit` sets `submitted = true` with no actual data submission (`Waitlist.tsx` lines 40–42). The "success" state is shown without any data being captured. If this is intentional for the beta launch and data is being captured elsewhere (e.g., a CRM email), this needs documentation. If not, this is a data capture failure for every person who joins the waitlist.
+
+### Contact Page (`Contact.tsx`)
+
+**PASS.** Clean and professional. Contact form has proper validation. Email addresses are present. 24-hour response promise is a trust signal.
+
+**Issue:** The contact form has the same frontend-only mock pattern as the waitlist — `setSent(true)` is called without any backend call (`Contact.tsx` line 39). If messages are not actually being received, this is a critical business process failure.
+
+**Issue:** `Contact.tsx` line 128 — Location listed as "Based in Europe" with "Serving dental practices worldwide." This is vague. The About page and llms.txt correctly state "Bucharest, Romania." The Contact page should reflect the actual base location for trust purposes.
 
 ---
 
-**File:** `client/src/pages/Features.tsx`, line 36
-**Claim (bullet):** "Weekly engagement reports" under Progress Tracking card
-**Truth Table status:** View Analytics page — NOT STARTED
-**Required fix:** Remove or mark as "Coming Soon."
+## SECTION 5: CTA QUALITY AND CONSISTENCY
+
+**Observations:**
+
+1. Primary CTA across all pages is consistently "Join the Waitlist" → `/waitlist`. This is correct.
+2. Secondary CTA for patients varies: "For Clinicians" (Home), "For Dentists" (Features). The label should be standardised — use "For Dentists" or "For Clinicians" but not both.
+3. `ForDentists.tsx` uses "Apply as a Founding Clinic" as the primary CTA — this is well-differentiated and appropriate.
+4. `About.tsx` bottom CTA (`line 308`) reads "Join the Waitlist" with a secondary "Contact Us." Strong and appropriate.
+5. `Features.tsx` secondary CTA near bottom reads "For Dentists" (`line 83`) — consistent with that page's context.
+
+**Issue:** The ticker (`Home.tsx` line 151) includes "Trusted by Periodontists" as a scrolling claim. There is no social proof on the homepage backing this claim (no clinic names, no testimonials, no count). This is either an unsubstantiated claim or it refers to the 30+ clinics on the waitlist, which has not yet used the product. Remove "Trusted by Periodontists" or replace with "30+ Founding Clinics" which is both accurate and more specific.
+
+**Issue:** `Features.tsx` CTA section has a duplicate `<p>` block rendering both "Join 30+ founding clinics..." and "Join the founding waitlist..." directly adjacent. One should be removed.
 
 ---
 
-### PASS — Features Correctly Represented
+## SECTION 6: EFP AWARD USAGE
 
-The following feature claims are consistent with the truth table and do NOT require changes:
+**Verdict: Well-executed with one accuracy issue.**
 
-- Treatment plans (dentist side: Done) — correctly referenced in ForDentists
-- Patient login/signup — Done, correctly implied
-- EFP Award claims — all accurate
-- "30+ founding clinics" — accurate per business context
-- Habit tracking framed as "coming" or in-development on Home page — acceptable
-- AI Chatbot described as part of the coming product, not currently live — mostly acceptable (see flag above re: Features page)
-- Appointment management for dentists — Done, correctly referenced
+The award is used on:
+- Homepage badge + full EFP award card section with ceremony photo
+- For Dentists page badge
+- Pricing page badge
+- Waitlist page social proof block
+- About page recognition section
+- Blog post article (dedicated article)
+- llms.txt
+- All meta descriptions reference "EFP Award Winner 2025"
 
----
+The EFP quote is correctly attributed to the European Federation of Periodontology. The jury names (Deschner, Herrera, Stavropoulos) are included in supporting copy. The link to the EFP announcement is consistent across pages.
 
-## CRITICAL SECTION 2: REGULATORY SCAN
+**Issue:** The award is described as "EFP Innovation Award Winner 2025" in multiple badge labels, but the correct award name is "EFP Digital Innovation Award 2025 — 3rd Prize." The badges omit "Digital" and omit "3rd Prize." This is materially incomplete. A "3rd Prize" at a real international competition from 20 submissions is impressive and honest. Omitting "3rd Prize" and simplifying to "Winner" is technically true but creates a misimpression. Recommend updating to: "EFP Digital Innovation Award 2025 — 3rd Prize" in badge text, or at minimum "EFP Award 2025 — 3rd Prize."
 
-### Forbidden Terms — Full Site Sweep Results
-
-The following terms were searched across all files in `client/src/pages/` and `client/src/components/`:
-
-| Term | Result |
-|---|---|
-| "compliance" | No matches |
-| "diagnose" (as Perioskoup doing it) | FLAGGED — see below |
-| "treat" / "treatment" | Contextually acceptable — used in blog articles as descriptions of professional dentistry, not Perioskoup capabilities |
-| "cure" | No matches |
-| "adherence" | No matches |
-| "therapeutic" | 1 match — Terms.tsx line 16 (safe context: "not for therapeutic purposes") |
-| "clinical guidance" | No matches |
-| "monitor inflammation" | No matches |
-| "track bleeding" | No matches |
+The detailed supporting copy on the Homepage, About, and ForDentists pages correctly says "3rd Prize" and "20 submissions across 17 national societies" — the badge labels are the only place this is shortened without qualification.
 
 ---
 
-### REGULATORY FLAG 1 — "diagnoses" in How It Works workflow
+## SECTION 7: BLOG CONTENT QUALITY
 
-**File:** `client/src/pages/Home.tsx`, line 334
-**Exact text:** `"Your dentist examines, diagnoses, and sets a personalised care plan using Perioskoup."`
-**Issue:** The sentence structure implies Perioskoup is involved in the diagnosis step ("examines, diagnoses... using Perioskoup"). A regulator reading this could interpret it as Perioskoup supporting clinical diagnosis.
-**Required fix:** Rewrite to: "Your dentist examines and sets a personalised care plan — then uploads it to Perioskoup." This cleanly separates the clinical act from the app's role.
+### Depth and Accuracy
 
----
+**"What Is Periodontal Disease?" (`BlogPost.tsx` lines 39–180)**
+Verdict: Strong. Clinically accurate staging description (4-stage system aligned with current EFP classification), correct risk factors, appropriate systemic connection section. The closing section on Perioskoup's role is a natural soft sell. Length is appropriate for the keyword target. 
 
-### REGULATORY FLAG 2 — FAQ JSON-LD on Home Page and ForDentists Page
+Citation gap: The claim "approximately 50% of adults have some form of gum disease" is attributed to "the European Federation of Periodontology" without a direct URL or DOI in the article body. Add a footnote link.
 
-**File:** `client/src/pages/Home.tsx`, line 67
-**File:** `client/src/pages/ForDentists.tsx`, line 61
-**Exact text (both pages):** "Perioskoup is designed as a clinical support tool, not a diagnostic device."
-**Issue:** "Clinical support tool" is ambiguous language that could imply involvement in clinical decision-making. The Terms of Service correctly says "wellness and engagement companion." The FAQ schema uses different language than the legal document.
-**Required fix:** Align FAQ language with Terms.tsx: "Perioskoup is a wellness and patient engagement companion, not a medical device. It does not provide diagnoses or medical advice."
+**"How AI Is Changing Dental Monitoring" (`BlogPost.tsx` lines 182–281)**
+Verdict: Strong for authority building. The section "What AI Cannot Do" is a genuine trust signal — it proactively limits claims. The Perioskoup positioning as "clinician-controlled" is correctly framed. The blog post does not overstate AI capabilities in the product.
 
----
+No statistical citations in this article — the piece is more editorial/opinion than evidence-based. That is appropriate for a Technology category article but a mention of the Toniazzo 2019 mHealth systematic review would strengthen it given the claim that "AI coaching can provide all of them."
 
-### REGULATORY FLAG 3 — "monitor patient engagement" language
+**"The 3-Minute Daily Routine" (`BlogPost.tsx` lines 283–401)**
+Verdict: Excellent. This is the strongest patient-facing content. The modified Bass technique is correctly cited to EFP guidelines. The "interdental cleaning before brushing" recommendation is current EFP/BSP guidance. The habit formation section (habit stacking, two-day rule) is evidence-informed without overclaiming. Natural Perioskoup placement at the end.
 
-**File:** `client/src/pages/Features.tsx`, line 58 (FAQ JSON-LD)
-**Exact text:** "real-time engagement monitoring between appointments"
-**Context:** The word "monitoring" combined with "between appointments" in a clinical context can trigger EU MDR scrutiny. Patient monitoring is a regulated activity.
-**Required fix:** Change to "patient progress visibility between appointments" or "engagement tracking between appointments."
+Missing: No specific citation for "Research on habit formation consistently shows that tracking increases engagement." A single citation (e.g., Lally et al., 2010 habit formation study) would strengthen this.
 
----
+**"Perioskoup Wins EFP Digital Innovation Award 2025" (`BlogPost.tsx` lines 403–471)**
+Verdict: Good but thin. This is a 4-minute company news piece appropriately sized. The EFP quote is correct. The narrative is authentic. As it is dated May 2025 and we are now March 2026, this article would benefit from an update section noting what has happened since (30+ clinics, beta progress, March 2026 launch). A "What's happened since" section would add freshness signals.
 
-### REGULATORY FLAG 4 — "therapeutic" in Terms.tsx
+**"Why Patients Forget Dental Instructions" (`BlogPost.tsx` lines 473–569)**
+Verdict: Strong clinical insight piece. The Ebbinghaus forgetting curve framing is accurate. The section on why dental consultations are poor learning environments is original and differentiating.
 
-**File:** `client/src/pages/Terms.tsx`, line 16
-**Exact text:** "It does not analyze, interpret, or act upon clinical data for diagnostic or therapeutic purposes."
-**Context:** This is a CORRECT defensive usage — explicitly disavowing therapeutic purpose. This is compliant and should be retained as-is. No fix needed.
+Critical citation issue: Lines 492–493 cite "Journal of the American Dental Association" and "British Dental Journal" without specific authors, years, or DOIs. These are presented as specific studies with specific findings ("20–40% recall" and "fewer than half recalled"). Without verifiable citations, these claims cannot be audited and could be challenged. Add author/year/DOI for both.
 
----
+**"Building the Bridge: The Perioskoup Story" (`BlogPost.tsx` lines 571–end)**
+Verdict: Strong brand narrative. Authentic voice, clinical origin story is compelling. The Bucharest patient vignette is specific and believable. Length is appropriate for the Founder Story category.
 
-### CLEAN — No Violations Found
+No issues found. This is the best brand storytelling on the site.
 
-The blog articles correctly and repeatedly disclaim diagnostic capability:
-- BlogPost.tsx line 233: "AI cannot diagnose."
-- BlogPost.tsx line 243: "The AI in Perioskoup does not diagnose."
-- BlogPost.tsx line 630: "Perioskoup does not diagnose."
+### Keyword Targeting Assessment
 
-These are strong, clear regulatory disclosures within editorial content. Well done.
+- "What is periodontal disease" — correctly targeted keyword, competitive but appropriate for authority building
+- "AI dental companion" — category-creation keyword, low competition, correctly used across homepage meta
+- "Dental patient engagement app" — used in ForDentists page title, appropriate for B2B target
+- "3-minute dental routine" — good longtail target, correctly in article title and meta
+- "Why patients forget dental instructions" — niche but high-intent for dentist audience
 
----
+**Missing content gaps:**
+1. No article targeting "gum disease treatment" or "periodontitis symptoms" — these are high-volume patient search terms
+2. No article on "periodontal maintenance" — direct target for the product's core use case
+3. No "for periodontists" landing page — the current ForDentists page speaks to all dentists; periodontists are the primary early adopter segment and deserve a dedicated page or at minimum a dedicated section
+4. No "AI vs. traditional patient education" comparison content
+5. No "what to expect at a periodontal appointment" article — high patient intent, natural Perioskoup touchpoint
 
-## CRITICAL SECTION 3: MEDICAL EVIDENCE USAGE
+### Internal Linking
 
-### What the MEDICAL_STUDIES.md provides vs. what the site uses
+Internal linking between blog articles is absent. Each article mentions Perioskoup and links to the waitlist but articles do not cross-link to each other. For example:
+- "Why Patients Forget" should link to "The 3-Minute Routine" (solution to the problem described)
+- "What is Periodontal Disease" should link to "Why Patients Forget" (explains why treatment doesn't stick)
+- The EFP Award article should link to "Building the Bridge" (company story context)
 
-#### Statistics correctly used WITH citations
-
-| Stat | Used on site | Citation present | Location |
-|---|---|---|---|
-| 80% instructions forgotten | Yes | Yes — Kessels 2003, BMJ | Home.tsx line 160, ForDentists.tsx line 150 |
-| 87% mHealth studies show improvement | Yes | Yes — Toniazzo et al. 2019, JCP | Home.tsx line 159, ForDentists.tsx line 151 |
-| 62% adults have periodontitis | Yes | Yes — Bernabe et al. 2020, JCP | ForDentists.tsx line 152, About.tsx line 203 |
-| Weinert et al. 2025 (patient barriers) | Yes | Yes — DOI link | ForDentists.tsx line 139 |
-
-**Assessment:** Citation practice is strong for the three main statistics. The inline citation format (source name + DOI link) is clean and defensible.
+This is a structural SEO gap and a user experience gap.
 
 ---
 
-#### Evidence available in MEDICAL_STUDIES.md but NOT used on the site
+## SECTION 8: DUPLICATE CONTENT
 
-The following stats from MEDICAL_STUDIES.md are backed by real studies but absent from all pages. Each represents a missed opportunity:
+**DUP-01 — `llms.txt` lines 37–38: duplicate line**
+```
+- GDPR-compliant data storage in EU-based servers
+- GDPR-compliant data storage in EU-based servers
+```
+The same bullet appears twice consecutively. Remove one.
 
-**1. 50% of European adults have periodontal disease**
-Source: Worldwide prevalence, J Clin Periodontol 2020 (PMC7275199)
-Recommended placement: Home hero section or ForDentists problem section. This is more resonant for a European audience than "62% worldwide." The BlogPost does reference "approximately 50% of adults" but without a citation link.
-**Action:** Add to Home page problem section + ForDentists stats row. Add DOI citation to BlogPost.
+**DUP-02 — `Home.tsx` lines 251–258: duplicate definition paragraph**
+As noted in Section 4, the "What is an AI dental companion?" section repeats the same definition sentence twice. Remove the first instance (lines 251–252) and keep the fuller second version.
 
-**2. €90 billion annual cost of oral disease in Europe**
-Source: Platform for Better Oral Health in Europe
-Recommended placement: ForDentists page — economics of prevention argument. Currently the ForDentists problem section does not quantify the cost at all.
-**Action:** Add one stat to the "The problem is clear" section in ForDentists.tsx with citation.
+**DUP-03 — `Features.tsx` lines 140–143: duplicate CTA paragraph**
+"Join 30+ founding clinics..." and "Join the founding waitlist and be among the first..." are adjacent, functionally identical sentences. Remove one.
 
-**3. Every €1 invested in prevention saves €8–50 in treatment**
-Source: WHO Oral Health fact sheet
-Recommended placement: ForDentists CTA section — this is the strongest ROI argument for a clinic purchasing decision.
-**Action:** Add to ForDentists final CTA block as a trust amplifier.
-
-**4. Only 30% of patients follow post-treatment oral hygiene instructions**
-Source: Patient compliance study, J Clin Periodontol
-Recommended placement: ForDentists problem section. Currently the site uses "80% forget instructions" — this is complementary, not redundant.
-**Action:** Add to ForDentists problem section as a second data point alongside the 80% stat.
-
-**5. Regular interdental cleaning reduces gingivitis by up to 40%**
-Source: Cochrane Library systematic review
-Recommended placement: The 3-minute routine blog article, habit tracking feature description.
-**Action:** Add citation to the 3-minute routine article in BlogPost.tsx.
-
-**6. Consistent daily routines reduce periodontal disease progression by 60–70%**
-Source: Long-term maintenance studies
-Recommended placement: Features page, Home page "How It Works" section.
-**Action:** Add as a proof point in the Features page Progress Tracking card description.
+**DUP-04 — Dr. Anca quote used identically on three pages**
+The quote "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes" appears identically on `Home.tsx` (line 108), `ForDentists.tsx` (line 160), and `About.tsx` (line 221). While a signature quote can be repeated, having the same blockquote on three separate pages creates a thin-content signal when pages are crawled in isolation. Consider a second quote for ForDentists that is more clinician-specific, e.g., related to the problem of instruction retention.
 
 ---
 
-#### Stat accuracy concern — "62% of adults worldwide" vs MEDICAL_STUDIES.md
+## SECTION 9: TONE CONSISTENCY
 
-The MEDICAL_STUDIES.md does not include a "62%" prevalence figure. The site uses 62% on ForDentists.tsx (line 152) and About.tsx (line 203), citing "Bernabe et al. 2020, JCP." The MEDICAL_STUDIES.md cites the J Clin Periodontol 2020 study but gives "50% of European adults" (not 62% worldwide). The 62% figure appears to come from a different reading of the Bernabe 2020 paper (which gives 62.2% of the sample in one stratification) and is cross-referenced correctly. This does not appear to be a fabricated stat, but the discrepancy between MEDICAL_STUDIES.md and the website's figure should be reconciled by citing the exact table/figure in Bernabe et al. 2020 that yields 62%.
+**Verdict: Generally consistent. One notable drift.**
 
----
+The brand voice — clinical precision with human warmth — is well-maintained across most content. The blog articles are particularly strong: Dr. Anca's voice is authentic, first-person, and clinically grounded without being cold.
 
-## SECTION 4: VALUE PROPOSITION CLARITY (3-Second Test)
+**Issue:** The `Contact.tsx` hero subhead "Whether you're a patient, a dentist, an investor, or just curious - we'd love to hear from you" ("just curious") is the only moment of casual informality that sits slightly outside the clinical warmth tone. This is a minor observation, not a serious issue.
 
-### Home Page
-**3-second verdict:** PASS (strong)
-H1: "Between visits, we take over." — Immediately clear positioning. The subhead ("free AI dental companion app - personalised guidance, habit tracking, and a direct line to your clinic") confirms the value in one sentence. EFP badge is above the fold.
-**Improvement:** The "For Clinicians" ghost button is visually subordinate to "Join the Waitlist" — this is correct hierarchy for patient-first acquisition, but the clinician value prop is not visible above the fold on the homepage. A dentist landing on this page would need to scroll to understand what's in it for them.
+**Issue:** The Home page ticker (`Home.tsx` line 151) uses "Trusted by Periodontists" which is a marketing claim tone that contrasts with the evidence-first tone maintained elsewhere. As noted, it is also unsubstantiated. Remove or change to "30+ Founding Clinics."
 
-### Features Page
-**3-second verdict:** PASS (adequate)
-H1: "AI dental companion features — everything between your visits." — Clear but slightly generic. "Everything between your visits" is good positioning.
-**Weakness:** The features grid mixes features that are live, in-progress, and not-started without differentiation. A prospect cannot tell what they can use today vs. what's roadmap.
-
-### For Dentists Page
-**3-second verdict:** PASS (good)
-H1: "Your patients, better prepared." — Specific outcome for dentists. The subhead clarifies the mechanism. EFP badge is present.
-**Strength:** The "30+ founding clinics on the waitlist" social proof is immediately visible, which adds FOMO pressure.
-**Weakness:** The problem section uses "80% forget" stat but doesn't immediately quantify the cost/revenue impact for the practice. Dentists respond to practice economics, not just patient outcomes.
-
-### Pricing Page
-**3-second verdict:** PASS (good)
-The page correctly communicates "Free for patients, coming soon for clinics" without confusion. Beta notice banner is visible.
-**Risk:** The meta description (line 88) says "Clinic plans launching March 2026 from €39/mo" but the actual pricing is still TBD (per CLAUDE.md: "pricing TBD, currently blurred"). This creates a discrepancy — the meta description exposes a price point that is not shown on the page itself.
-**Required fix:** Remove "from €39/mo" from the Pricing page meta description. It contradicts the blur strategy and gives competitors pricing intelligence.
-
-### Blog Page
-**3-second verdict:** PASS
-Clear topic positioning ("Insights on dental health, AI, and care"). Author authority (Dr. Anca) is visible in article cards.
-
-### About Page
-**3-second verdict:** PASS
-H1: "Born in a dental chair. Built for every patient." — Strong origin narrative. The EFP award card is immediately below the hero.
-
-### Waitlist Page
-**3-second verdict:** PASS (strong)
-The role selector (Dentist / Patient) is a smart segmentation device. The page correctly communicates the dual audience with separate value props for each. Social proof block at bottom is minimal but appropriate.
-
----
-
-## SECTION 5: BOTH AUDIENCES ADDRESSED?
-
-### Patients — Coverage Assessment: 8/10
-- Home page: Patient-first messaging. Free app clear. Hero targets patients.
-- Features page: Good split of "Patients" vs "Both" vs "Dentists" tags.
-- Blog: Patient education articles are strong (periodontal disease guide, 3-minute routine, why they forget).
-- Waitlist: Clearly addresses patients.
-- Gap: No patient testimonials. The only quotes are from the founder (Dr. Anca). Real patient voices would dramatically increase trust for patient acquisition.
-
-### Dentists — Coverage Assessment: 7/10
-- ForDentists page: Dedicated, well-structured page. Problem-first approach is effective.
-- Features page: Dentist features are present but minor — the "Dentist Dashboard" feature card is one of four prominent cards, all similar size.
-- Pricing page: Founding partner framing is effective for clinics.
-- Blog: No articles specifically for clinicians as an audience (e.g., "How AI reduces no-shows," "The ROI of between-visit engagement for your practice"). All articles are patient-facing or general.
-- Gap: The economic argument is weak. There is no calculation or estimate of practice revenue impact. Dentists need to justify the cost to themselves.
-
----
-
-## SECTION 6: CTA QUALITY AND PLACEMENT
-
-### CTA Audit by Page
-
-| Page | Primary CTA | Secondary CTA | Verdict |
-|---|---|---|---|
-| Home | "Join the Waitlist" | "For Clinicians" | Strong. Hierarchy is correct. |
-| Features | "Join the Waitlist" | "For Dentists" | Acceptable. CTA could be more specific ("Get Early Access"). |
-| ForDentists | "Apply as a Founding Clinic" | "See All Features" | Strong. Specific and differentiated from patient CTA. |
-| Pricing | "Join the Waitlist" / "Apply as a Founding Clinic" | — | Good. Plan-specific CTAs. |
-| Blog | "Join the Waitlist" | Subscribe (newsletter) | Adequate. |
-| About | "Join the Waitlist" | "Contact Us" | Adequate. |
-| Waitlist | "Join the Waitlist" (submit) | — | Strong. Single focus. |
-| Contact | "Send Message" | — | Appropriate. |
-
-### CTA Issues Identified
-
-**Issue 1 — CTA label mismatch on Features page:**
-"Join the Waitlist" appears twice at the bottom of the Features page. The top hero CTA says "Join the Waitlist →" (with arrow text entity, not arrow component). The bottom CTA says "Join the Waitlist →" (also text entity). The ForDentists CTA says "For Dentists" in the hero. This is consistent but the arrow glyph inconsistency (→ vs SVG arrow) is a minor visual inconsistency.
-
-**Issue 2 — Blog newsletter CTA is non-functional:**
-`client/src/pages/Blog.tsx`, lines 329–338: The newsletter subscription input and button have no form submission handler, no `onSubmit`, and no backend integration. A user clicking "Subscribe" does nothing. This is a lead capture mechanism that silently fails.
-**Required fix:** Either add a form handler (even the same mock-submit pattern used on the Waitlist and Contact pages), or remove the newsletter section entirely until it's functional.
-
-**Issue 3 — "Apply as a Founding Clinic" vs "Join as a Founding Clinic":**
-ForDentists hero uses "Join as a Founding Clinic" (line 117) while the ForDentists CTA section uses "Apply as a Founding Clinic" (line 285). Different verbs for the same action creates subtle cognitive friction. Pick one. "Apply" implies selectivity (good for exclusivity framing). "Join" implies welcome and ease. The ForDentists page should use "Apply" consistently.
-
----
-
-## SECTION 7: EFP AWARD USAGE EFFECTIVENESS
-
-### Assessment: 9/10 — Excellent
-
-The EFP award is used across the site in a consistent and credible way:
-
-**What's done well:**
-- Full EFP Award card on Home page with photo, quote, jury names, and link to EFP announcement. This is the strongest trust signal on the site and it's prominent.
-- EFP badge appears in hero of Home, ForDentists, Pricing pages, and Footer — appropriately pervasive without being repetitive.
-- The About page has a second, separate EFP card that matches the home page treatment.
-- The blog article "Perioskoup Wins EFP Digital Innovation Award 2025" provides full narrative context.
-- JSON-LD structured data on About page includes the award in the Person schema.
-- MEDICAL_STUDIES.md specified the exact EFP quote ("selected from 20 submissions across 17 national societies") — this is used correctly on multiple pages.
-
-**One improvement:**
-The award is described as "3rd Prize" in CLAUDE.md and MEDICAL_STUDIES.md but the site consistently says "EFP Award Winner 2025" and "EFP Innovation Award Winner 2025" without specifying "3rd Prize." This is a permissible framing choice (they did win), but for a clinician audience that is familiar with the award, omitting the prize tier could raise an eyebrow if they know the award from a peer. Consider whether "3rd Prize Winner" or "Award Winner" is the better long-term framing. Recommendation: the current "winner" framing is sufficient for conversion copy — but the EFP announcement blog article should be explicit that it was 3rd Prize, which it currently is (BlogPost.tsx line 418).
-
----
-
-## SECTION 8: BLOG QUALITY ASSESSMENT
-
-### Overall Blog Score: 7.5/10
-
-#### Article 1: "What Is Periodontal Disease? A Patient's Complete Guide"
-- **Depth:** Excellent. Covers gingivitis to advanced periodontitis, causes, staging, systemic connections, diagnosis, treatment, home care.
-- **Medical accuracy:** Appears accurate. Cites EFP prevalence figure (50%). Includes Weinert et al. references in the problem section.
-- **Citations:** The 50% statistic is stated but not linked to a citation in the article body. The MEDICAL_STUDIES.md provides the PMC7275199 DOI — it should be added.
-- **Internal linking:** Mentions Perioskoup in the final section but no internal links to Features or ForDentists pages.
-- **Missing:** No visual aids described (stages of gum disease would benefit from a table or visual). No link to the 3-minute routine article or AI article as related content.
-
-#### Article 2: "How AI Is Changing Dental Monitoring - And Why It Matters"
-- **Depth:** Strong. Covers AI categories (pattern recognition, predictive modelling, NLP, coaching), limitations, and the Perioskoup approach.
-- **Medical accuracy:** Good. FDA-cleared diagnostic AI tools (Overjet, Denti.AI, Pearl) cited correctly.
-- **Citations:** No formal citations for the AI/dentistry statistics or behaviour change claims. This is a weakness for a clinician audience.
-- **Internal linking:** The Perioskoup approach section mentions the product but does not link to Features or ForDentists.
-- **Missing:** Link to the "why patients forget" article. Link to EFP award article.
-
-#### Article 3: "The 3-Minute Daily Routine That Could Save Your Teeth"
-- **Depth:** Excellent practical guide. Modified Bass technique, interdental brush sizing, habit stacking framework, and the 2-day rule are all strong, evidence-based content.
-- **Medical accuracy:** The EFP citation for modified Bass technique is mentioned but not linked. Cochrane evidence for interdental cleaning is not cited (available in MEDICAL_STUDIES.md).
-- **Citations:** No formal citations. For a clinical credibility play, this article needs at least 2 citations (EFP guidelines, Cochrane interdental cleaning review).
-- **Internal linking:** Mentions Perioskoup (habit tracking) but no link to the app features or waitlist within body text.
-- **Missing:** A visual "3-minute routine at a glance" (even a simple text block formatted as a checklist) would improve shareability significantly.
-
-#### Article 4: "Perioskoup Wins EFP Digital Innovation Award 2025"
-- **Depth:** Adequate for a press/news piece. The "Road to Vienna" section and "What's Next" section provide good context.
-- **One factual note:** BlogPost.tsx line 444 says Perioskoup was "Founded in 2024" — but CLAUDE.md states "incorporated June 2025." This is a discrepancy. The founding narrative here needs to reconcile idea/founding vs. incorporation dates clearly.
-- **Internal linking:** "What's Next" section mentions the waitlist — should be a clickable link.
-
-#### Article 5: "Why Patients Forget Dental Instructions (And What to Do About It)"
-- **Depth:** The strongest article on the site from an evidence standpoint. Ebbinghaus forgetting curve, anxiety/memory research, information overload, lack of feedback loop.
-- **Citations:** References JADA and BDJ studies but does not link to them. The MEDICAL_STUDIES.md Kessels 2003 citation (the 40–80% stat) should be linked.
-- **Internal linking:** None. Should link to the AI article and the 3-minute routine.
-- **Missing:** No "related articles" section on any blog post. Internal linking is the biggest SEO and engagement gap across all blog content.
-
-#### Article 6: "Building the Bridge: The Perioskoup Story"
-- **Depth:** Good founder narrative. Dr. Anca's patient scenario is emotionally compelling and clinically specific (pocket depths, bone levels, interdental brushes).
-- **One issue:** BlogPost.tsx line 630 contains strong regulatory language ("The clinician stays in control. Perioskoup does not diagnose.") which is correct and should remain.
-- **Internal linking:** The team section links to LinkedIn but not to the About page.
-- **Missing:** No CTA within the article body to join the waitlist or learn about features.
-
----
-
-### Missing Articles for Topical Authority
-
-The following articles are absent from the blog and represent significant gaps for search and conversion:
-
-**For patient SEO:**
-1. "What Is a Periodontist and When Should You See One?" — high-search-volume question
-2. "Gum Disease vs. Tooth Decay: What's the Difference?" — educational disambiguation
-3. "The Systemic Connection: How Gum Disease Affects Your Heart, Diabetes, and Brain" — high engagement topic
-4. "What Happens at a Periodontal Maintenance Appointment?" — anxiety-reduction content
-5. "Best Electric Toothbrushes for Gum Disease: A Periodontist's View" — commercial intent + affiliate opportunity
-
-**For dentist SEO and conversion:**
-1. "How to Improve Patient Between-Visit Compliance at Your Dental Practice" — direct commercial intent for target buyer
-2. "The Hidden Cost of Patient Drop-off Between Appointments" — practice economics
-3. "How Perioskoup Fits Into a Periodontist's Workflow" — product integration explainer
-
-**For category creation:**
-1. "What Is an AI Dental Companion? (And How It's Different From a Dental App)" — currently exists only as a short section on Home page, needs a full article
-2. "The Science of Dental Habit Formation" — positions Perioskoup as the intellectual leader in behaviour-change dental tech
-
----
-
-## SECTION 9: "BETWEEN VISITS" POSITIONING STRENGTH
-
-**Assessment: 8.5/10**
-
-The "between visits" positioning is the single strongest differentiated claim on the site and it is used consistently and correctly:
-
-- Home hero H1: "Between visits, we take over." — the definitive statement
-- Home ticker: "Bridging the Gap Between Visits"
-- ForDentists section 6: "Between Visits" step in the workflow diagram
-- Home FAQ JSON-LD: "bridges the gap between dental appointments"
-- Blog article 6 title: "Building the Bridge"
-- About mission: "Close the gap between visits"
-
-The repetition is intentional and effective. The positioning is credible because it's grounded in clinical reality (80% forget stat, Weinert 2025 citation).
-
-**One weakness:** The "between visits" messaging is strong for the conversion layer but the site has no content that explains WHY the gap between visits is so long or costly (no €90B stat, no "only 30% follow instructions" stat on any primary page). The problem is stated but the magnitude of the problem is understated. The MEDICAL_STUDIES.md provides the data; it just isn't deployed on the site.
+**Issue:** `About.tsx` team description for Petrica Nancu (`line 270`): "transforming raw periodontal data into actionable nudges that keep patients engaged" — "raw periodontal data" is the most clinical-data-heavy phrase on the site and edges toward suggesting the app processes clinical data in a medically significant way. Softer alternative: "translating clinical recommendations into the personalised habit nudges patients actually follow."
 
 ---
 
 ## SECTION 10: PRICING PAGE ASSESSMENT
 
-**Blur overlay:** The Clinic plan shows "Coming soon" as the price (line 44) with no actual numeric pricing visible. The blur overlay described in CLAUDE.md refers to the mobile app pricing strategy — the web pricing page correctly shows a pre-revenue state. The "Coming soon" approach is appropriate.
+**Is the blur overlay working?**
+No blur overlay exists in the current implementation. The CLAUDE.md notes "Pricing section stays blurred with beta overlay." The Pricing page instead shows "Coming soon" text as the Clinic plan price, which is cleaner and more honest than a blur. The beta notice banner is prominent. This approach is acceptable and arguably better than a blur for the March 2026 launch context.
 
-**SEO value of the pricing page:** The Pricing page has strong SEO meta tags and a clean URL (`/pricing`). It ranks for branded + pricing queries and serves as a conversion page for high-intent visitors. It should remain. The FAQ schema (pricingFaqJsonLd) is well-constructed.
+**Does the page serve SEO?**
+Yes. The pricing page has a canonical URL, FAQPage structured data, SoftwareApplication schema with PreOrder offers, and a meaningful meta description. It will rank for "Perioskoup pricing" and related queries. The page should be indexed (no `noindex` tag present, unlike the Waitlist page which is correctly noindexed).
 
-**Meta description inconsistency (critical):**
-`client/src/pages/Pricing.tsx`, line 88:
-`"Clinic plans launching March 2026 from €39/mo."`
-The page itself shows "Coming soon" for clinic pricing. The meta description reveals a price point that is: (a) not confirmed/TBD per CLAUDE.md, (b) not shown on the page, and (c) visible to competitors scraping meta descriptions. This is a direct contradiction of the blur strategy.
-**Required fix:** Change meta description to: "Clinic plans launching March 2026. Join the founding waitlist for priority access and locked-in pricing."
-
----
-
-## SECTION 11: ADDITIONAL ISSUES IDENTIFIED
-
-### Duplicate paragraph in Home.tsx Features section
-
-**File:** `client/src/pages/Home.tsx`, lines 256–263
-There are two description paragraphs for the Features section header. The first (line 257) and the second (line 260) both describe what Perioskoup does in the same location, creating redundant text that dilutes both messages:
-
-Line 257: "Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and secure patient-clinic messaging into a single dental companion app."
-Line 260: "Perioskoup connects patients and clinicians with AI-powered tools that make daily dental care simple, consistent, and effective."
-
-**Required fix:** Keep only one. Line 257 is more specific; line 260 is more emotional. Choose based on A/B test or remove line 260.
-
-### "monitors and supports their patients remotely" in ForDentists FAQ JSON-LD
-
-**File:** `client/src/pages/Home.tsx`, line 66 (FAQ JSON-LD)
-"...dental professionals (periodontists, hygienists, clinic owners) who want to monitor and support their patients remotely."
-**Issue:** "monitor...remotely" can be interpreted as remote patient monitoring, which is a regulated category in EU MDR. The phrasing should be "track and support patient engagement" to avoid this regulatory association.
-**Required fix:** Change "monitor and support their patients remotely" to "stay connected with their patients between appointments."
-
-### Contact forms have no real backend integration
-
-**File:** `client/src/pages/Waitlist.tsx`, `client/src/pages/Contact.tsx`
-Both forms have client-side validation and a mock success state but no actual form submission to a backend, email service, or CRM. A user filling out the waitlist form does not actually register anywhere.
-**Note:** This is a functional issue, not purely a content issue, but it has direct conversion impact. If this is intentional (demo state), it should be clearly marked. If it's meant to collect real signups, it needs backend integration before March 2026 launch.
+**Pricing accuracy vs. business model:**
+- Patient: "Free" — correct per business model
+- Clinic: "Coming soon" — correct, the actual €39–199/month range is in `llms.txt` but not on the pricing page, which is appropriate for pre-launch
+- The pricing FAQ FAQ answer (`Pricing.tsx` line 47) answers "What is included in the Patient plan?" by listing "personalised care plans, daily habit reminders, progress tracking, and access to the educational content library" — progress tracking and the educational library are In Progress or Coming Soon, making this answer technically inaccurate for the current beta state.
 
 ---
 
-## SECTION 12: PRIORITISED FIX LIST
+## SECTION 11: FOUNDER TITLE INCONSISTENCY
 
-**P0 — Fix before launch (regulatory or accuracy risk):**
+Dr. Anca Constantin's title varies across the site:
+- `Home.tsx` line 111: "Periodontist & CEO"
+- `ForDentists.tsx` line 166: "Periodontist & Co-founder, CEO"
+- `About.tsx` line 268: "Periodontist & Co-founder, CEO"
+- `BlogPost.tsx` lines 47, 190, etc: "Periodontist & Co-founder, Perioskoup"
+- `CLAUDE.md` business context: "CDO" (Chief Dental Officer)
+- `llms.txt`: "CEO of Perioskoup"
 
-1. `Features.tsx` line 37 — Remove "Secure Messaging" card OR add "Coming Soon" badge. Feature does not appear in truth table as Done or In Progress.
-2. `Features.tsx` line 36 — Remove "Streak rewards" bullet OR mark as "Coming Soon." Feature is Not Started.
-3. `Pricing.tsx` line 88 — Remove "from €39/mo" from meta description. Exposes unconfirmed price.
-4. `Home.tsx` line 334 — Rewrite "Your dentist examines, diagnoses, and sets a personalised care plan using Perioskoup." to remove Perioskoup from the diagnoses step.
-5. `Home.tsx` line 66 — Change "monitor and support their patients remotely" to "stay connected with their patients between appointments."
-
-**P1 — Fix before launch (conversion impact):**
-
-6. `Features.tsx` line 34 — Add "Beta" or "Coming Soon" label to AI Clinical Companion card.
-7. `ForDentists.tsx` lines 46–50 — Demote "Engagement Analytics" features to roadmap framing. Remove "At-risk patient flagging" until built.
-8. `Blog.tsx` lines 329–338 — Fix non-functional newsletter subscription form (add handler or remove).
-9. `Home.tsx` lines 256–263 — Remove duplicate Features section description paragraph.
-10. `ForDentists.tsx` — Add €90B European oral health cost stat with citation. Add "€1 in prevention = €8–50 saved" stat in CTA section.
-
-**P2 — Improvements for authority and trust:**
-
-11. Add internal links across all blog articles (each article should link to at least 2 others).
-12. Add CTA within each blog article body — not just at the end.
-13. Add DOI citation to "50% of adults" stat in `what-is-periodontal-disease` BlogPost.
-14. Reconcile founding year discrepancy in EFP award article (2024 vs 2025 incorporation).
-15. Create 2–3 dentist-specific blog articles for commercial intent SEO.
-16. Add "only 30% of patients follow instructions" stat to ForDentists problem section.
-17. Reconcile "clinical support tool" language in FAQ JSON-LD with "wellness companion" language in Terms.tsx.
-
-**P3 — Long-term content strategy:**
-
-18. Write "What Is an AI Dental Companion?" as a standalone long-form article.
-19. Create patient testimonial section (even 1–2 quotes from beta testers would significantly increase trust).
-20. Add "60–70% disease progression reduction" stat to Features Progress Tracking card with Cochrane citation.
+The CDO designation from CLAUDE.md does not appear anywhere on the website — the site consistently uses CEO, which is fine. The inconsistency between "CEO" vs "Co-founder, CEO" is minor but should be standardised to one form. Recommended: "Periodontist & Co-founder, CEO" everywhere for the full attribution, "Periodontist, Perioskoup" for shorter contexts.
 
 ---
 
-## SCORING BREAKDOWN
+## RANKED ISSUE LIST
 
-| Dimension | Score | Notes |
+### Blocker (Fix Before Launch)
+1. **FA-01** — `Home.tsx:223`: "learns what works and adapts over time" — overstatement of In Progress AI feature
+2. **STAT-01** — `ForDentists.tsx:136`, `About.tsx:196`: Kessels 2003 citation has wrong journal (BMJ vs JRSM) and wrong DOI. Must fix.
+3. **Contact/Waitlist forms** — No backend integration. Data is not being captured. Business-critical failure.
+
+### High Priority (Fix Within 1 Week)
+4. **FA-02** — `ForDentists.tsx:25–26`: Illustrated guides and medication reminders presented as working
+5. **FA-04** — `Features.tsx:18`: "Visual progress dashboards" bullet with no In Progress label
+6. **STAT-02** — `ForDentists.tsx:138`, `About.tsx:195`: 62% figure inconsistent with MEDICAL_STUDIES.md evidence base
+7. **STAT-03** — `ForDentists.tsx:137`, `About.tsx:197`: 87% mHealth stat not in approved evidence base
+8. **EFP Award badges** — "Winner" should be "3rd Prize" to be accurate
+9. **REG-01** — `ForDentists.tsx:85`: "reducing no-shows" — unsubstantiated outcome claim
+10. **DUP-01** — `llms.txt:37–38`: duplicate GDPR bullet
+
+### Medium Priority (Fix Within 2 Weeks)
+11. **DUP-02** — `Home.tsx:251–258`: duplicate definition paragraph in "What is an AI dental companion?" section
+12. **DUP-03** — `Features.tsx:140–143`: duplicate CTA paragraph
+13. **DUP-04** — Dr. Anca quote on 3 pages — diversify ForDentists quote
+14. **STAT-06** — `BlogPost.tsx:492–493`: JADA and BDJ citations without DOIs in "Why Patients Forget" article
+15. **STAT-07** — `About.tsx:186`: "1 in 2 worldwide" should be "1 in 2 in Europe" or "nearly 1 in 2 globally"
+16. **FA-03** — `ForDentists.tsx:19–20`: AI-generated summaries, appointment briefs presented as working
+17. **FA-06** — `Pricing.tsx:31`: "Multi-dentist support" unconfirmed feature, needs "(coming soon)"
+18. **Pricing FAQ** — `Pricing.tsx:47`: answer overstates available patient features
+19. **Pricing Patient plan** — `Pricing.tsx:21`: "Personalized care plan" missing "(coming soon)" qualifier
+20. **REG-02** — `Home.tsx:225`: "monitor patient engagement" — soften to "view" or "track"
+21. **Ticker** — `Home.tsx:151`: Remove "Trusted by Periodontists", replace with "30+ Founding Clinics"
+
+### Low Priority (Content Improvement)
+22. **Internal linking** — Add cross-links between blog articles
+23. **Blog updates** — EFP Award article needs "since then" update section (March 2026 context)
+24. **Features.tsx:18** — "60–70% reduction" claim needs a specific DOI citation
+25. **Home FAQ + ForDentists FAQ** — "EU MDR and FDA SaMD guidance in mind" should be rephrased
+26. **About.tsx:268** — Verify "PhD" vs "Specialist" credential designation for Dr. Anca
+27. **Contact.tsx:128** — "Based in Europe" should specify "Bucharest, Romania"
+28. **About.tsx:270** — "raw periodontal data" — soften to avoid clinical data processing implication
+29. **Missing content** — No article on "gum disease treatment", "periodontitis symptoms", "periodontal maintenance"
+30. **No periodontist-specific landing page** — segment is underserved for highest-value buyer
+
+---
+
+## SCORE BREAKDOWN
+
+| Category | Score | Notes |
 |---|---|---|
-| Feature accuracy | 5/10 | Secure Messaging presented as live — Not in truth table. Streak Rewards = Not Started. AI Chatbot presented without beta caveat. Engagement Analytics overstated. |
-| Medical evidence usage | 7/10 | Key stats cited with DOIs. Several major stats from MEDICAL_STUDIES.md unused. 62% stat needs reconciliation. |
-| Regulatory compliance | 7/10 | No overt violations. Two ambiguous phrases flagged (diagnoses in How It Works, monitor remotely in FAQ). "Clinical support tool" vs "wellness companion" inconsistency. |
-| Value proposition clarity | 8/10 | Hero messaging is excellent. Both audiences addressed. "Between visits" positioning is strong and consistent. |
-| CTA quality | 6/10 | Newsletter CTA non-functional. CTA label inconsistency (Apply vs Join). Otherwise well-structured. |
-| EFP award effectiveness | 9/10 | Excellent deployment across the site. Credible, specific, linked. |
-| Blog quality | 7/10 | Articles are substantive and well-written. No internal linking. Missing citations. No related articles. 6 articles is insufficient for topical authority. |
-| Between-visits positioning | 8/10 | Consistent and strong. Magnitude of problem understated due to unused stats. |
-| Pricing page | 7/10 | "Coming soon" framing correct. Meta description exposes price point that shouldn't be public. |
+| Feature accuracy | 6/10 | AI overstatement on homepage, unconfirmed features on ForDentists |
+| Regulatory language | 8.5/10 | Clean overall; "no-shows" and SaMD FAQ phrasing are edge issues |
+| Medical evidence | 6.5/10 | Wrong DOI for Kessels, 62% figure not in evidence base, missing DOIs in blog |
+| Messaging clarity | 8/10 | Hero passes 3-second test; duplicate paragraphs on two pages |
+| CTA quality | 7.5/10 | Consistent primary CTA; ticker has unsubstantiated claim |
+| Trust signals | 7/10 | EFP usage is strong; "3rd Prize" omission in badges is a gap |
+| Blog content depth | 8/10 | Substantive, clinically grounded; citation gaps in two articles |
+| Duplicate content | 7/10 | Four instances found; highest-risk is llms.txt duplicate line |
+| Tone consistency | 8.5/10 | Strong; minor drift in contact page and team bio language |
+| Pricing accuracy | 7/10 | Coming soon approach is correct; patient feature list overstates beta state |
 
-**Overall: 7.1 / 10**
-
----
-
-## KEY STRENGTHS TO PRESERVE
-
-- The "Between visits, we take over." H1 is exceptional and should not be changed.
-- EFP Award deployment is best-in-class for a pre-revenue startup.
-- The ForDentists page problem-first structure (problem → stats → quote → tools → workflow) is the most persuasive page on the site.
-- The blog articles by Dr. Anca have genuine clinical authority and are well-written.
-- The regulatory disclaimers in blog articles are strong and repeated correctly.
-- The dual-audience segmentation (patients free / clinics paid) is communicated clearly on every page.
-
+**Weighted overall: 7.2 / 10**

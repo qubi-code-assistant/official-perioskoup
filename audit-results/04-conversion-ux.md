@@ -1,675 +1,672 @@
 # Conversion UX Audit — Perioskoup Landing Page
-
-**Auditor:** Conversion Rate Optimization Specialist  
-**Date:** 2026-03-06  
-**Site:** https://official-perioskoup.vercel.app  
-**Codebase reviewed:** client/src/pages/ + client/src/components/ (full source)  
-**Primary goal:** Waitlist signups from dentists  
+**Date:** 2026-03-06
+**Auditor role:** Conversion Rate Optimization Specialist
+**Site:** https://official-perioskoup.vercel.app
+**Primary goal:** Waitlist signups from dentists
 **Secondary goal:** Waitlist signups from patients
 
 ---
 
-## Overall Score: 6.0 / 10
+## Overall Score: 6.4 / 10
 
-The site has strong visual craft, real credibility (EFP Award, Dr. Anca), and a coherent brand voice. The conversion architecture has five structural defects that are actively suppressing signups. The most severe: every form on the site silently discards submitted data — there is no backend call anywhere. Everything else flows from that finding plus four further gaps in CTA coverage, friction, trust signal placement, and IA logic.
+Strong visual identity, clear persona segmentation, and solid accessibility groundwork are real assets. The blocking issue is that **both forms are purely cosmetic** — they perform no real data capture. Every other conversion problem below is secondary to that.
 
 ---
 
-## Section 1: Waitlist Form Friction
+## Critical Bug — Forms Do Not Submit Data
 
-**Score: 4.5 / 10**
+**Severity: P0 — Launch Blocker**
 
-### Architecture of the forms
+**Files:** `client/src/pages/Waitlist.tsx:36-43`, `client/src/pages/Contact.tsx:34-41`
 
-There are exactly three form surfaces on the site:
+Both forms call `setSubmitted(true)` / `setSent(true)` on valid input and do nothing else. There is no `fetch`, `axios`, or third-party form provider call (Formspree, Formspark, Resend, etc.). The user sees a success state but their data goes nowhere.
 
-| Surface | Location | Fields (patient) | Fields (dentist) |
-|---------|----------|-----------------|-----------------|
-| Main waitlist form | /waitlist | First name, Last name, Email = 3 | First name, Last name, Email, Clinic name, City/Country = 5 |
-| Contact form | /contact | First name, Last name, Email, Role (select), Message = 5 | Same |
-| Newsletter input | /blog (bottom) | Email only | Email only |
-
-The Home page has NO inline form. It has two navigation CTAs — "Join the Waitlist" (link to /waitlist) and "For Clinicians" (link to /for-dentists). This is an important finding: a visitor who clicks "Join the Waitlist" from the hero must navigate to a new page before they can submit anything. This navigation step is the single largest friction point in the funnel.
-
-### Critical defect: Forms do not submit data
-
-All three form surfaces call `e.preventDefault()` and flip a local `submitted` / `sent` state variable. No `fetch()`, no third-party SDK, no form `action` attribute exists anywhere in the codebase. The server (`server/index.ts`) is a static file server with no API routes. `vercel.json` contains no serverless function configuration.
-
-**Every person who has signed up since launch has received a success UI state but their data has gone nowhere.**
-
-```tsx
-// Waitlist.tsx — handleSubmit (exact code)
-function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-  const errs = validate(e.currentTarget);
-  setErrors(errs);
-  if (Object.keys(errs).length === 0) {
-    setSubmitted(true);   // no fetch, no API call
-  }
-}
-
-// Contact.tsx — handleSubmit (exact code)
-function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-  const errs = validate(e.currentTarget);
-  setErrors(errs);
-  if (Object.keys(errs).length === 0) {
-    setSent(true);        // no fetch, no API call
-  }
+```
+// Waitlist.tsx line 40-42
+if (Object.keys(errs).length === 0) {
+  setSubmitted(true);  // <-- no API call, no data captured
 }
 ```
 
-The blog newsletter input (`id="newsletter-email"`) has a Subscribe button with `aria-label="Subscribe to newsletter"` and no `onClick`, no `onSubmit` on a parent form, no handler at all. It is a purely decorative input.
+**Impact:** Every dentist and patient who submits the waitlist form is silently lost. This makes the entire waitlist a fiction.
 
-### Field count assessment
+**Fix wireframe:**
+```
+handleSubmit
+  -> validate
+  -> setLoading(true)
+  -> fetch('/api/waitlist', { method: 'POST', body: JSON.stringify(formData) })
+     OR Formspree endpoint
+  -> on success: setSubmitted(true)
+  -> on error: setErrors({ _form: 'Something went wrong. Please try again.' })
+  -> setLoading(false)
+```
 
-**Patient path (3 fields):** First name + Last name + Email. Acceptable. The split first/last name grid is marginally worse than a single "Full name" field — it adds visual complexity but the field count is correct.
-
-**Dentist path (5 fields):** The addition of Clinic name (required) and City/Country (optional) is where friction increases. The City/Country field has placeholder copy "City, Country (helps us plan our EU rollout)" — this is a good micro-copy fix that explains the ask, but the field is still optional and visible, which makes the form feel heavier. For a waitlist (not an application), 4 fields is the maximum before conversion drops materially.
-
-**Recommendation:** Collapse City/Country out of the visible form and make it an optional post-signup survey question. Reduce dentist path to 4 required fields.
-
-### Label patterns
-
-The waitlist form uses `sr-only` labels with placeholder text as the visible label. Once a user starts typing, the field context disappears. The contact form correctly uses persistent visible labels above each field (12px, #8C9C8C). The waitlist form should follow the same pattern — this is a 10-minute fix and a significant UX improvement for returning visitors who pause mid-form.
-
-### Error state quality
-
-Inline validation exists and is architecturally sound: `aria-invalid`, `aria-describedby`, `role="alert"` on error spans. However, error messages render in `#C0E57A` (lime green) on a `#1D3449` (surface) background. Lime green is the brand's positive/CTA color. Using it for errors creates a semantic conflict — users associate lime with "good" throughout the site. Error states should use a distinct red or amber (#FF6B6B is accessible on the dark background at 5.8:1 contrast).
-
-### Success state quality
-
-The post-submission success state shows:
-- A checkmark icon in a lime circle
-- "You're on the list!" headline
-- "We'll reach out as soon as we're ready to onboard [your clinic / you]. Thank you for believing in what we're building."
-- A single "Back to Home" ghost link
-
-For a patient this is adequate. For a dentist making a business decision to invest clinic time in an onboarding process, this is insufficient. There is no: clinic name echoed back, position number, email confirmation promise, or next step. The success state needs to feel like a confirmation, not a thank-you note.
+The submit button must also show a loading state while the network request is in flight and must be disabled to prevent double-submission.
 
 ---
 
-## Section 2: CTA Visibility at Every Scroll Depth
-
-**Score: 5.5 / 10**
-
-### Home page — CTA audit by scroll depth
-
-| Depth (approx) | CTA present | Type | Quality |
-|----------------|-------------|------|---------|
-| 0–10% (hero, above fold) | Yes | "Join the Waitlist" btn-primary + "For Clinicians" btn-ghost | Good. Lime button is high contrast. |
-| 10–15% (ticker) | No | — | Missed: a non-interactive aria-hidden ticker |
-| 15–30% (EFP Award card) | No | External EFP link only | Trust section ends with no conversion action |
-| 30–45% (Features bento) | Weak | "See all features" ghost link | Routes to /features, not /waitlist. Lower intent. |
-| 45–60% (AI Companion definition) | No | — | Pure content, no CTA |
-| 60–75% (How It Works) | No | — | Longest dead zone: ~1000–1400px with zero CTAs |
-| 75–85% (Social proof quote) | No | — | High-trust Dr. Anca quote with no button below it |
-| 85–100% (Footer) | Yes (low priority) | Footer "Join Waitlist" link | Correct but footer link is low-visibility text |
-
-**The critical dead zone spans from ~30% to ~85% scroll depth — roughly 1200px of content — with no primary CTA.** Users building conviction through the EFP card, feature bento, definition section, how-it-works, and social proof quote have no conversion prompt at any of these moments of peak interest.
-
-The fixed navbar contains "Join Waitlist" on desktop — this is the effective rescue mechanism for the dead zone. But:
-
-**Mobile navbar CTA is hidden.** The navbar `btn-primary` has class `hide-mobile` which applies `display: none !important` at ≤768px. Mobile visitors see only the hamburger. The waitlist CTA is only accessible after opening the drawer. On mobile, where scroll depth drop-offs are steeper, users have no persistent CTA visible at any scroll depth except the hero.
-
-### ForDentists page — CTA audit
-
-| Depth | CTA present | Type | Quality |
-|-------|-------------|------|---------|
-| 0–10% (hero) | Yes | "Join as a Founding Clinic" btn-primary + "See All Features" btn-ghost | Good — role-specific CTA label |
-| 10–25% (problem section) | No | — | |
-| 25–40% (stats) | No | — | High-conviction stats with no conversion follow |
-| 40–65% (clinical tools) | No | — | Feature detail section, no mid-page CTA |
-| 65–80% (workflow) | No | — | |
-| 80–90% (positioning) | Partial | Inline callout "Founding clinic spots are limited" | Good callout but no button attached to it |
-| 90–100% (bottom CTA) | Yes | "Apply as a Founding Clinic" + "Talk to the Team" | Correct. Role-specific. Well placed. |
-
-The ForDentists page is better structured than the home page. But the gap between the stats section (25%) and the bottom CTA (90%) is still ~65% of page depth with no conversion action.
-
-### Waitlist page — CTA audit
-
-The /waitlist page is a conversion page — the form IS the CTA. The structure is correct: role selector first, then fields, then submit, then social proof below. This is the right information architecture for a conversion page.
-
-### Features page
-
-Good hero CTA ("Join the Waitlist" btn-primary + "For Dentists" btn-ghost). Feature grid has no CTAs between cards (correct — don't interrupt scanning). Bottom CTA section has a single "Join the Waitlist" link. Adequate.
-
-### Blog page
-
-The blog has a dedicated "Waitlist CTA" block between featured posts and the all-articles list — this is good placement. However, the page ends with a newsletter email capture (not a waitlist CTA). The last conversion surface on a high-intent content page is a newsletter, not the primary goal.
-
----
-
-## Section 3: Social Proof Placement and Credibility
+## Section 1 — Primary CTA Visibility
 
 **Score: 7 / 10**
 
 ### What works
+- "Join Waitlist" pill is persistent in the desktop navbar (Navbar.tsx:136-139).
+- Hero CTA pair is above the fold on all screen sizes: `Join the Waitlist` (primary) + `For Clinicians` (secondary), Home.tsx:116-124.
+- Every page ends with a dedicated CTA section pointing to `/waitlist`.
+- ForDentists.tsx has a closing bottom CTA section (line 258-282) with correct primary/ghost button pairing.
 
-- **EFP Award badge in the hero** — the right instinct. The lime pill badge is visually strong and appears before the user reads the headline. Linking to the actual EFP press release adds verifiability.
-- **EFP Award card section** — the full section with ceremony photo, jury names (Deschner, Herrera, Stavropoulos), and the official EFP quote is the strongest trust asset on the site. This is specific, verifiable, and authoritative.
-- **Dr. Anca quote in the hero** — the blockquote is specific, in clinical language, and explains the problem-origin. Periodontists reading this will recognize the framing.
-- **Stats have academic citations** — the 80% forgotten instructions (Kessels 2003, BMJ), 87% mHealth outcomes (Toniazzo 2019, JCP), and 62% periodontitis prevalence (Bernabe 2020, JCP) all link to real DOIs. This is excellent and differentiates the site from vague health-tech marketing.
-- **Team photos and credentials** — real photos, real LinkedIn profiles, specific credentials (DMD, PhD).
+### Issues
 
-### What is missing or misplaced
+**Issue 1.1 — Mobile navbar has no CTA button** (Navbar.tsx:141-160)
+The `btn-primary` pill in the navbar is `hidden md:inline-flex`. On mobile, the only path to the form is through the hamburger menu, which adds 2 taps. The hamburger menu does contain the CTA (Navbar.tsx:263-265), but it is the last item in a long link list.
 
-**"30+ founding clinics" social proof is buried.** This is your most persuasive live social proof number and it appears only in two places: the waitlist page (below the form, after the decision) and the ForDentists page hero. It does not appear on the Home page hero, which is where it would have maximum impact. Move it to the home hero social proof micro-bar (currently "30+ founding clinics · EFP Award Winner 2025 · Free for patients" — it is actually there in the source at line 152-154 of Home.tsx). Wait — checking again:
+**Fix:** Add a small lime-green "Join" button to the mobile header bar beside the hamburger, or move the CTA link to the top of the mobile drawer list.
 
-```tsx
-// Home.tsx line 152-154
-<p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C", marginBottom: 32, ... }}>
-  30+ founding clinics · EFP Award Winner 2025 · Free for patients
-</p>
+**Issue 1.2 — Home page has no mid-page CTA (above the fold-two)**
+After the hero, the page flows: ticker → EFP award card → Features → What is an AI dental companion → How It Works → Dr. Anca quote → Footer. There is no CTA between the hero and the footer. A user who scrolls past the hero on Home has no invitation to sign up until they leave.
+
+**Fix — wireframe:**
+```
+[Hero]
+[Ticker]
+[EFP Award Card]
+[Features]
+  → Insert: "Ready to join?" mini-CTA bar
+      "30+ founding clinics on the list. Spots are limited."
+      [Join the Waitlist →] [See Pricing]
+[What is an AI Companion?]
+[How It Works]
+[Dr. Anca Quote]
+  → Insert: footer CTA section (already on other pages, missing here)
+[Footer]
 ```
 
-This text does exist. However it renders at 13px in #8C9C8C (muted sage) immediately after the CTA buttons. At this size and color on #0A171E it likely fails 4.5:1 WCAG contrast. More importantly, the visual hierarchy does not treat it as social proof — it reads as a footnote. It needs to be elevated: larger text, the "30+" in lime (#C0E57A), and grouped with a small clinic-count icon.
+**Issue 1.3 — Features page CTA section has duplicate `p` blocks** (Features.tsx:139-145)
+```tsx
+<p style={{ ... }}>Join 30+ founding clinics...</p>
+<p className="body-lg reveal" style={{ marginBottom: "36px", ... }}>
+  Join the founding waitlist and be among the first...
+</p>
+```
+Two consecutive paragraphs both introduce the same CTA. They dilute each other. Pick one and remove the other.
 
-**The bottom social proof quote is founder self-referential.** "The app I always wished I could prescribe to my patients." — Dr. Anca Constantin, Co-founder. A visitor who has already read the team section (if they scrolled that far) knows she is quoting her own product. One testimonial from any of the 30 founding clinic partners would replace this with genuine external validation.
+**Issue 1.4 — Pricing page has no page-bottom CTA**
+After the FAQ accordion (Pricing.tsx:160-183) the page goes directly to `<Footer>`. There is no invitation to act after overcoming objections. This is the page where dentists make their decision.
 
-**No patient testimonials exist.** The entire site speaks to dental professionals or from the founder's clinical perspective. A patient (the free, secondary acquisition target) has no social proof directed at them on any page. Even one sentence from a beta user ("For the first time I understood what my dentist was telling me") converts patient skeptics.
-
-**Pricing page has "30+ founding clinics" in the hero** — good. But the Clinic plan shows "Coming soon" with no price range visible to the user despite the og:description and Twitter meta containing "from €39/mo". The meta content and the visible page content are inconsistent.
-
----
-
-## Section 4: Trust Signals at Decision Points
-
-**Score: 6.5 / 10**
-
-Decision points are moments where a user is deciding whether to give personal information or take an action. Trust signals need to be present at these specific moments, not elsewhere on the page.
-
-| Decision point | Trust signals present | Gap |
-|---|---|---|
-| Home hero (above fold) | EFP badge, Dr. Anca quote | "30+ clinics" micro-bar is present but low-visibility |
-| /waitlist form — before submit | "No credit card" + "GDPR compliant" micro-copy (12px, #8C9C8C) | Too small. No EU data storage mention. No email confirmation promise. |
-| /waitlist role selector | None specific to role | Dentists selecting their role see no "founding pricing" reminder inline |
-| /for-dentists hero | EFP badge, 30+ clinic count | No GDPR/data security signal visible until FAQ |
-| /pricing Clinic plan | "Founding Partner" badge, beta notice | No price shown. Breaks the promise of the headline "Simple, transparent pricing." |
-| /contact form | Email addresses shown in left column | No trust signals on the form card itself. Someone submitting clinic enquiry data sees no security note. |
-| 404 page | None | No trust signals on error page |
-
-### GDPR signal treatment
-
-The GDPR micro-copy under the waitlist form CTA is correctly placed but rendered at 12px in #8C9C8C. On the card background (#1D3449 at ~0.06 opacity over #0A171E), this likely fails WCAG 4.5:1 minimum contrast for small text. For a health data product targeting EU dental clinics, GDPR compliance is a headline differentiator and should be treated as one — not as a fine-print footnote.
-
-**Fix:** Upgrade the GDPR line to 13px with a small shield icon in #C0E57A and add "EU servers · end-to-end encrypted" as a second micro-trust line.
-
-### Pricing transparency as trust killer
-
-The Clinic plan shows "Coming soon" as the price. The og:description and Twitter card meta for the pricing page already contains "from €39/mo" — meaning the price range exists internally and was considered publishable enough for social sharing. But a dentist who navigates to the Pricing page and sees no number has no price anchor. They cannot make a business case internally, cannot compare with alternatives, and cannot trust the "Simple, transparent pricing" headline.
-
-**Fix:** Show "from €39/mo" on the Clinic plan card, with "Founding partner pricing locked for life" as the sub-label. This is a single line of content with high conversion impact.
+**Fix wireframe:**
+```
+[FAQ section ends]
+[Bottom CTA section]
+  Headline: "Founding spots are limited."
+  Sub: "Public launch March 2026. Founding clinics get locked-in pricing."
+  [Apply as a Founding Clinic →] [Talk to the Team]
+[Footer]
+```
 
 ---
 
-## Section 5: Navigation / IA Logic for Dentist vs Patient Personas
+## Section 2 — Waitlist Form UX
 
 **Score: 5 / 10**
 
-### Current nav structure
+**File:** `client/src/pages/Waitlist.tsx`
 
+### Field inventory (dentist mode): 5 fields
+1. First name (required)
+2. Last name (required, but NOT validated — see Issue 2.1)
+3. Email (required, validated)
+4. Clinic / Practice name (required)
+5. City, Country (optional)
+
+### Field inventory (patient mode): 3 fields
+1. First name
+2. Last name
+3. Email
+
+### What works
+- Role selector with `aria-pressed` is a clean UX pattern. Dentist/patient switching without a page reload is conversion-friendly.
+- Validation fires on submit, not on blur, which avoids premature error anxiety.
+- `aria-invalid`, `aria-describedby`, and `role="alert"` on error messages are correct WCAG 4.1.2 implementations.
+- Success state has `role="status"` and `aria-live="polite"` (Waitlist.tsx:81).
+- "No credit card" and "GDPR compliant" micro-trust icons below the submit button (Waitlist.tsx:157-166) are well-placed.
+
+### Issues
+
+**Issue 2.1 — Last name is never validated**
+`waitlist-last-name` is marked `required` in HTML and has `aria-required="true"` (Waitlist.tsx:137) but the `validate()` function (lines 22-33) never checks it. A user can leave it blank and the form submits.
+
+**Fix:** Add to `validate()`:
+```ts
+const lastName = (form.elements.namedItem("waitlist-last-name") as HTMLInputElement)?.value.trim();
+if (!lastName) errs["waitlist-last-name"] = "Last name is required.";
 ```
-Features | For Dentists | Pricing | About | Blog | Contact | [Join Waitlist]
-```
+Also add `aria-describedby` and the error span for `waitlist-last-name`.
 
-### Persona analysis
+**Issue 2.2 — Labels are screen-reader-only, placeholders carry all visible context**
+All labels use `className="sr-only"` (Waitlist.tsx:131, 136, 140, 145, 148). Sighted users rely entirely on placeholder text, which disappears on focus. This is standard placeholder-as-label anti-pattern. When a user tabs through the form, focused fields show a blank input with no visible label.
 
-**Dentist path:** Clean. "For Dentists" is in the nav. Clicking it leads to /for-dentists which has a persona-specific hero, stats, clinical tools, workflow, and a bottom CTA that correctly names the role ("Apply as a Founding Clinic"). The ForDentists hero CTA links to /waitlist, which pre-selects nothing — the user arrives at the neutral dual-role selector and must re-identify themselves.
+**Fix:** Display visible labels above each field. The Contact form (Contact.tsx:159-164) correctly shows visible labels — apply the same pattern to Waitlist.
 
-**Patient path:** Invisible. The nav has no "For Patients" entry. A patient landing on the home page sees "For Dentists" and may conclude this is a B2B product. The hero subhead mentions "free AI dental companion app" which helps, but there is no dedicated navigation entry for the patient persona.
+**Issue 2.3 — Error messages use lime (#C0E57A) on dark background**
+Error states display in `color: "#C0E57A"` (Waitlist.tsx:133). Lime on near-black reads as success or accent, not as an error. Standard error color is red or amber. Accessibility aside, the color creates cognitive confusion — the same accent used for CTAs signals a problem.
 
-**Waitlist page role selector:** The default role on page load is "dentist" (line 34 of Waitlist.tsx: `const [role, setRole] = useState<"patient" | "dentist">("dentist")`). A patient who arrives at /waitlist from the home hero CTA sees the Dentist/Clinic tab selected by default. This is inverted — the home page is more patient-facing, and the most common visitor from the hero will likely be a patient. The default should be patient on the home flow and dentist only if arriving from /for-dentists.
+**Fix:** Use `color: "#F87171"` (a desaturated red) for errors. Update the `role="alert"` spans across Waitlist and Contact.
 
-**URL parameter pre-selection missing.** The ForDentists page links to `/waitlist` with no query parameter. A simple `?role=dentist` parameter that pre-selects the dentist tab would eliminate the re-identification step entirely.
+**Issue 2.4 — No loading/submitting state on the submit button**
+The button shows "Join the Waitlist" before and after click. Once the network call is added (Issue P0), the button must reflect in-flight state. Currently there is no `disabled` prop or label change in the button (Waitlist.tsx:152-155).
 
-**Pricing page persona confusion.** The headline says "Simple, transparent pricing" but the Clinic plan shows no price. The page works for patients (Free plan is complete) but actively fails dentists (the plan most relevant to them is a placeholder). A dentist arriving from the nav item "Pricing" leaves with less trust than before they clicked.
-
-**"Pricing" nav label is a broken promise.** The item labeled "Pricing" leads to a page where one of two plans shows "Coming soon" with no number. Either:
-1. Show at least a price range ("from €39/mo") and the nav item is fine.
-2. Keep the plan hidden and rename the nav item to "Plans" to set correct expectations.
-
-**Blog has no persona filtering.** Articles are tagged with categories (Patient Education, Clinical Insight, Technology, Founder Story) but the blog index shows a flat list with no tabs or filters. A periodontist wants clinical content. A patient wants the education articles. Neither can quickly find what's relevant.
-
----
-
-## Section 6: Scroll Depth Drop-off Predictions
-
-Based on content density, section lengths, and CTA placement against published conversion research benchmarks:
-
-### Home page
-
-```
-0%    → 100%  (hero viewport — all visitors)
-12%   → ~72%  (ticker/EFP award — passive scroll continues)
-25%   → ~55%  (EFP card — trust builders engaged, action-seekers bouncing)
-40%   → ~42%  (Features bento — no CTA catches leavers)
-55%   → ~31%  (AI companion definition — drop intensifies)
-65%   → ~24%  (How It Works — significant drop, no anchor)
-75%   → ~18%  (Social proof quote — only motivated users)
-85%   → ~14%  (Footer zone)
-100%  → ~11%  (Footer)
-```
-
-Implication: fewer than 1 in 5 home page visitors see the bottom social proof section. The hero CTA is doing almost all conversion work. Any form placed below 60% scroll depth will be seen by fewer than 25% of visitors.
-
-### ForDentists page (higher intent audience)
-
-```
-0%    → 100%  (hero — dentist audience is more qualified)
-15%   → ~78%  (problem section)
-30%   → ~63%  (stats grid — very persuasive content, no CTA)
-50%   → ~48%  (clinical tools — feature scanning)
-65%   → ~38%  (workflow)
-80%   → ~30%  (positioning)
-92%   → ~24%  (bottom CTA section)
-```
-
-The bottom CTA on ForDentists is seen by approximately 1 in 4 visitors. The hero CTA and navbar CTA carry the conversion load.
-
-### /waitlist page
-
-This is a conversion page — expected drop-off is lower. Visitors arrive with intent. The main friction is the page navigation step itself (from home hero) and the role default mismatch.
-
----
-
-## Section 7: Exit Intent
-
-**Score: 4.5 / 10**
-
-"Exit intent" means the last conversion-relevant experience before a user leaves.
-
-### What users see last by page
-
-| Page | Last element before footer | Has CTA? |
-|------|---------------------------|----------|
-| Home | Dr. Anca blockquote (no button below it) | No |
-| /for-dentists | Dual CTA section (Apply + Talk to Team) | Yes — good |
-| /features | Single "Join the Waitlist" link | Yes — adequate |
-| /pricing | FAQ section | No — missed opportunity |
-| /about | Dual CTA section (Join Waitlist + Contact Us) | Yes — good |
-| /blog | Newsletter email input (not waitlist) | Misaligned goal |
-| /contact | Form success state / form | Yes — but it's the contact form |
-| /waitlist | Social proof bar (no additional CTA) | No — but form is the page |
-| 404 | "Back to Home" button | No waitlist mention |
-| Blog posts | Not audited in full but footer will be last | Footer only |
-
-### No exit intent modal
-
-No exit intent overlay exists. For a pre-launch product that has not yet paid for traffic but is generating organic visits (blog, EFP award coverage), an exit intent modal triggered on desktop mouse-leave — showing a single email field with "Before you go — join 30+ founding clinics" — would recover a portion of abandoning sessions without requiring any page redesign.
-
-**Implementation note:** This should be triggered at mouse-leave (Y < 20px) on desktop only. On mobile, a sticky bottom bar achieves the same goal without the intrusiveness of a modal.
-
-### No mobile sticky CTA
-
-Mobile users who scroll past the hero without converting have no persistent CTA. A `position: fixed; bottom: 0; width: 100%; z-index: 49` bottom bar containing a lime "Join Waitlist — Free" button, visible below the fold only, would materially increase mobile conversion. It should dismiss automatically after clicking or when the user reaches the footer.
-
----
-
-## Section 8: 404 Page Quality
-
-**Score: 5.5 / 10**
-
-### What exists
-
-Clean, on-brand 404 with:
-- Semi-opaque "404" in lime at 20% opacity (strong visual signal)
-- "Page not found." headline in Dongle font, 40–64px
-- Explanatory copy ("Sorry, the page you're looking for doesn't exist...")
-- Single "Back to Home" btn-primary
-- Full navbar and footer (correct — navigation recovery)
-- ParallaxHeroBg for visual consistency
-
-### What is missing
-
-1. **No waitlist CTA.** A visitor hitting a 404 has demonstrated intent to visit your site. This is an opportunity, not just an error state. Add a secondary conversion block: "While you're here — join 30+ founding clinics waiting for Perioskoup."
-
-2. **No suggested pages.** No links to Features, For Dentists, Blog. A visitor who typed a wrong URL may still want to explore the site.
-
-3. **HeroGlow not applied.** The 404 imports `ParallaxHeroBg` but not `HeroGlow`, which every other secondary page uses. Minor visual inconsistency.
-
-4. **No meaningful error message.** "It may have been moved or deleted" is fine for a generic 404, but no search functionality or help email is offered.
-
----
-
-## Section 9: Form Submission Functionality
-
-**Score: 1 / 10**
-
-This is the only P0 finding in the entire audit. Everything else is optimization. This is a data loss defect.
-
-### Confirmed: every form discards data
-
-The server (`server/index.ts`) is a pure static file server. `vercel.json` has no `functions` key. There are no API routes. There is no `.env` file in the project root. There are no third-party SDK imports (`mailchimp`, `loops`, `resend`, `convertkit`, etc.) in any page or component file.
-
-The three form surfaces and their submit handlers:
-
-**Waitlist form (`/waitlist`):** `handleSubmit` validates fields, if valid sets `setSubmitted(true)`. No data is read from the form DOM and sent anywhere. The `validate()` function reads field values but only for error checking — they are never collected into a payload.
-
-**Contact form (`/contact`):** Identical pattern. `handleSubmit` validates and sets `setSent(true)`. No data sent.
-
-**Newsletter input (`/blog`):** An uncontrolled `<input type="email">` with a `<button>` that has no event handler. The button element does not live inside a `<form>` element. Pressing Subscribe does nothing.
-
-### Impact assessment
-
-The social proof claim "30+ founding clinics on the waitlist" is visible on multiple pages. If this claim was accumulated before the current codebase was deployed, that data is not in a CRM anywhere accessible to the team through these forms. If any visitors have submitted the waitlist form through the current UI, that data is gone.
-
-### Recommended fix (minimum viable — ~45 minutes of work)
-
-The lowest-friction integration for a Vercel-hosted static SPA:
-
-```
-Option A: Loops.so (best for SaaS waitlists)
-- Create a Loops account, get API key
-- Create a Vercel serverless function at /api/waitlist.ts:
-  POST /api/waitlist { email, firstName, role, clinic?, city? }
-  → loops.createContact({ email, firstName, userGroup: role })
-- Update handleSubmit in Waitlist.tsx to fetch('/api/waitlist', { method: 'POST', body: JSON.stringify(formData) })
-- Add loading state (disable button during fetch)
-- On success: setSubmitted(true)
-- On error: setError("Something went wrong — please try again or email hello@perioskoup.com")
-
-Option B: Formspree / Tally (stopgap, no backend needed)
-- Replace form action with Formspree endpoint
-- No serverless function required
-- Less control over confirmation email
-- Takes 10 minutes
-
-Option C: Resend + Vercel function
-- POST /api/waitlist → send confirmation email via Resend API
-- Also write to a Vercel KV or Supabase table
-- Most control, ~2 hours of work
+**Fix wireframe:**
+```tsx
+<button
+  type="submit"
+  className="btn-primary"
+  disabled={isSubmitting}
+  style={{ justifyContent: "center", marginTop: 8, opacity: isSubmitting ? 0.7 : 1 }}
+>
+  {isSubmitting ? "Joining..." : "Join the Waitlist"}
+  {/* spinner or arrow icon */}
+</button>
 ```
 
----
+**Issue 2.5 — Success state has no next step**
+The success screen (Waitlist.tsx:80-90) says "You're on the list!" and offers one action: "Back to Home." For dentists, this is a dead end. A dentist who just joined wants to share with colleagues, bookmark the site, or read more.
 
-## Top 5 Blockers by Conversion Impact
-
-### Blocker 1 — Forms don't submit data
-**Impact: Critical / Effort: Medium (2–4 hours)**
-
-Every waitlist and contact submission is silently lost. The entire business goal of the landing page is data capture. Fix before any marketing spend, any press coverage, or any social sharing. Use Loops.so + a Vercel serverless function as the minimum viable integration.
-
-### Blocker 2 — No inline form in the hero (requires page navigation to convert)
-**Impact: High / Effort: Medium**
-
-The hero has two navigation CTAs but no inline form. A visitor who wants to sign up must: see the button → click → wait for /waitlist to load → re-read the value proposition → choose a role → fill fields → submit. Each step loses a percentage of users. A 2-field inline form (email + role dropdown, 1 row) in the hero with a submit button would capture the highest-intent visitors without page navigation. This is the pattern used by Superhuman, Loom, Linear, and every high-converting SaaS waitlist of the last five years.
-
-### Blocker 3 — No mobile sticky CTA bar
-**Impact: High / Effort: Low (30 minutes)**
-
-Mobile users who scroll past the hero have no persistent conversion prompt. The navbar CTA is hidden on mobile. A fixed bottom bar containing "Join Waitlist — Free" in lime, visible only below the fold (e.g., after 200px scroll), would recover mobile conversion without disrupting desktop UX.
-
-### Blocker 4 — Clinic pricing hidden on Pricing page
-**Impact: High / Effort: Low (10 minutes)**
-
-The Pricing page headline says "Simple, transparent pricing" but the Clinic plan shows "Coming soon." The og:description already contains "from €39/mo" — this range is known and considered publishable. Show it on the page. Dentists need a price anchor to complete the internal business case before joining a waitlist. "Lock in founding pricing" is a strong motivator only when users know what they're locking in.
-
-### Blocker 5 — Error color uses positive brand color
-**Impact: Medium / Effort: Low (15 minutes)**
-
-Form validation errors render in #C0E57A (lime green) — the same color as CTAs, success states, active states, and brand accents. This creates semantic ambiguity. A user who sees lime text next to a field is trained to associate it with positive action. Change error colors to #FF6B6B or similar red that contrasts against #1D3449 at 4.5:1 or better.
-
----
-
-## Quick Wins (Under 30 Minutes Each)
-
-1. **Connect Waitlist.tsx to Loops or Formspree.** One API call in handleSubmit. P0 priority — do this before anything else.
-
-2. **Add "from €39/mo" to the Pricing page Clinic plan.** Change the price string from "Coming soon" to "From €39/mo". One string. Unlocks the full value of the "founding pricing" pitch.
-
-3. **Add mobile sticky CTA bar.** `position: fixed; bottom: 0; width: 100%; padding: 12px 16px; background: #0A171E; border-top: 1px solid #234966; z-index: 49;` with a full-width lime "Join Waitlist" button. Hide above the fold via scroll listener (already used in Navbar.tsx). Show on mobile only.
-
-4. **Pre-select role from URL param.** In Waitlist.tsx, read `new URLSearchParams(window.location.search).get('role')` and initialize `useState` from it. Then update the ForDentists CTA to link to `/waitlist?role=dentist`.
-
-5. **Change error color to red.** Replace all `color: "#C0E57A"` in error span styles with `color: "#FF6B6B"` (or `color: "#F87171"` for a softer option). 5 occurrences across Waitlist.tsx and Contact.tsx.
-
-6. **Add visible labels above waitlist form fields.** The contact form uses them correctly. Copy the label pattern to the waitlist form. Labels should be 12px, #8C9C8C, fontWeight 600.
-
-7. **Add waitlist CTA to the 404 page.** One `<Link href="/waitlist">` component below the "Back to Home" button.
-
-8. **Add newsletter handler to blog.** Either connect the Subscribe button to the same Loops integration (tag as newsletter subscriber), or replace the newsletter section with a waitlist CTA matching the mid-blog CTA block.
-
-9. **Fix the home hero social proof bar** ("30+ founding clinics · EFP Award Winner 2025 · Free for patients"). Currently 13px, #8C9C8C — below WCAG contrast. Increase to 14px, raise color to #A8B4A8 or similar. Make "30+" and "EFP Award Winner" bold for scan pattern.
-
-10. **Add "Talk to the Team" button to the pricing page bottom.** Currently no CTA on the FAQ section. Add a ghost button linking to /contact.
-
----
-
-## Structural Rewrites
-
-### Hero CTA Block Rewrite
-
-**Current layout:**
+**Fix wireframe — Dentist success state:**
 ```
-[EFP badge]
-[Headline: "Between visits, we take over."]
-[Dr. Anca blockquote]
-[Join the Waitlist →]   [For Clinicians]
-[30+ founding clinics · EFP Award Winner 2025 · Free for patients]
-[Stats: 87% / 80% / Winner]
-```
-
-**Suggested wireframe (inline form variant):**
-```
-┌────────────────────────────────────────────────────┐
-│  [EFP Award Winner 2025 — Digital Innovation ↗]    │
-│                                                    │
-│  "Between visits,                                  │
-│   we take over."                                   │
-│                                                    │
-│  [Dr. Anca blockquote, 17px, max-width 480px]      │
-│                                                    │
-│  ┌─────────────────────────────────────────────┐   │
-│  │  [email input — flex-grow]  [I am a... v]   │   │
-│  │  [Join Waitlist — Free  →       ] (lime btn) │   │
-│  │  No credit card · GDPR compliant · EU data  │   │
-│  └─────────────────────────────────────────────┘   │
-│                                                    │
-│  30+ founding clinics · EFP Award 2025             │
-│                                                    │
-│  [For Clinicians — see full dashboard features]    │
-│                                                    │
-│  [Stats row: 87% / 80% / EFP Winner]              │
-└────────────────────────────────────────────────────┘
-```
-
-The inline form is 2 fields (email + role select) + 1 button. The role select also allows routing: on submit, if role=dentist, send to the dentist Loops list; if role=patient, send to the patient list. The trust micro-copy moves inside the form box. The "For Clinicians" secondary link drops below the form (lower hierarchy).
-
-### Mid-Page CTA Insert (after How It Works section, ~60% depth)
-
-Insert between the How It Works section and the Social Proof Quote section:
-
-```
-┌────────────────────────────────────────────────────┐
-│  ─────────────── [1px lime accent bar] ──────────  │
-│                                                    │
-│  "Join 30+ founding clinics building the future    │
-│   of periodontal care."                            │
-│                         (Dongle 28px, #F5F9EA)     │
-│                                                    │
-│       [Join the Waitlist →]   (btn-primary)        │
-│                                                    │
-└────────────────────────────────────────────────────┘
-```
-
-This is a 3-line interrupt between two long sections. It catches the ~40% of users who scrolled past the hero CTA but haven't converted. One social proof number, one button.
-
-### Waitlist Success State Rewrite
-
-**Current:**
-```
-"You're on the list!"
-"We'll reach out as soon as we're ready to onboard [your clinic / you]. 
- Thank you for believing in what we're building."
+[Checkmark circle]
+"You're on the list — founding clinic confirmed."
+"We'll reach out within 48 hours with onboarding details."
+[Share with a colleague]   (mailto: link)
+[Read what founding clinics get →]  (links to /for-dentists#founding)
 [Back to Home]
 ```
 
-**Suggested for dentist path:**
+**Issue 2.6 — No scarcity or urgency on the form page itself**
+The form page's hero says "Be among the first to experience Perioskoup." The social proof block below the form shows "30+ founding clinics" and "EFP Award 2025" (Waitlist.tsx:170-182). However there is no communication of a cap or closing date.
+
+**Fix:** Add one line below the role selector: "Founding clinic spots: 30 of 50 filled. March 2026 launch." This is honest (30 clinics are confirmed) and creates genuine urgency.
+
+**Issue 2.7 — Patient value proposition is thin**
+The patient role card says "Free access to the app" (Waitlist.tsx:121). That is the only patient-specific value statement on the entire page. The page is written for dentists. A patient landing here via organic search has no reason to feel this is for them.
+
+**Fix:** Add a short patient-specific section or at least expand the patient card:
 ```
-"You're in."
-"Spot reserved for [clinic name]."
-
-"We'll email [email] before public launch in March 2026 with your 
- founding partner access. No spam, ever."
-
-"In the meantime:"
-[See Features →]   [Read Our Blog →]
-```
-
-The clinic name echo-back confirms the data was received (even if it currently was not). It personalizes the success state. The email address confirmation sets expectations. The next-step links keep dentists engaged rather than bouncing.
-
----
-
-## 3 CTA Variants to A/B Test
-
-**Variant A (current):** "Join the Waitlist" + arrow icon
-
-**Variant B (role-specific, specificity):**
-- Dentist path: "Reserve My Founding Clinic Spot"
-- Patient path: "Get Free Early Access"
-
-Role-specific language consistently outperforms generic waitlist language in B2B health SaaS. The word "founding" adds scarcity; "Reserve" implies limited availability.
-
-**Variant C (urgency + social proof):**
-- "Join 30+ Founding Clinics — Apply Now"
-- Sub-copy beneath button: "Founding spots close at public launch (March 2026)"
-
-Test B vs A first (copy change only, minimal development). Test C if B wins significantly.
-
----
-
-## A/B Test Priority Matrix
-
-| Test | Hypothesis | Effort | Expected lift |
-|------|------------|--------|---------------|
-| Inline hero form vs navigate-to-page | Fewer steps = more conversions | Medium | +25–40% |
-| Variant B CTA copy ("Reserve My Spot") | Role-specific language outperforms generic | Low | +15–25% |
-| Price range on Pricing page | Transparent pricing reduces dentist bounce | Low | +10–20% |
-| Mid-page CTA insert at 60% depth | Catching scroll-through users before exit | Low | +8–15% |
-| Mobile sticky bottom bar | Persistent mobile CTA recovers abandoners | Low | +12–20% mobile |
-| Error colors (lime → red) | Semantic clarity reduces form abandonment | Low | +3–7% |
-
----
-
-## Page-by-Page Verdict
-
-| Page | Score | Primary conversion issue |
-|------|-------|--------------------------|
-| Home | 6/10 | No inline form; mid-page CTA gap ~1200px; social proof micro-bar below contrast threshold |
-| /waitlist | 4.5/10 | Form submits nothing; default role is wrong for most traffic sources; no visible labels on fields; error color conflicts with brand |
-| /for-dentists | 7/10 | Best-structured page; pricing hidden; no mid-page CTAs between stats and bottom section |
-| /features | 6.5/10 | Good structure; adequate CTAs; no mid-page interrupts; no social proof inline |
-| /pricing | 5/10 | Clinic plan shows no price despite being the primary dentist decision point; "transparent pricing" headline is false |
-| /about | 7/10 | Good story and team section; bottom CTA is correct; About hero CTA is correctly placed |
-| /blog | 6/10 | Good mid-blog waitlist CTA; newsletter exit misaligns with primary goal; no persona filtering |
-| /contact | 5.5/10 | Contact form submits nothing; no trust signals on form card; no waitlist CTA for non-enquiry visitors |
-| 404 | 5.5/10 | On-brand; clean; no waitlist CTA; no suggested pages; HeroGlow inconsistency |
-
----
-
-## Implementation Priority
-
-### This week — P0 (blocking all growth)
-
-1. **Fix form submission.** Connect Waitlist.tsx handleSubmit to Loops.so (or Formspree as a stopgap). Add loading state + error state + real error message. 2–4 hours. This is the only fix that changes whether data is captured at all.
-
-2. **Connect or remove blog newsletter.** Either wire it to the same Loops list (tag as newsletter), or replace the section with a waitlist CTA. 30 minutes.
-
-3. **Connect contact form.** Either Formspree or a mailto: href as a zero-backend fallback. Contact form data is lower priority than waitlist data but still important for partnership enquiries.
-
-### This week — P1 (conversion multipliers)
-
-4. **Add mobile sticky bottom CTA bar.** 30 minutes. Highest ROI for mobile traffic.
-
-5. **Change error colors from lime to red.** 15 minutes. Semantic clarity in all forms.
-
-6. **Add visible labels above waitlist form fields.** 15 minutes. Match contact form pattern.
-
-7. **Show "from €39/mo" on Pricing page Clinic plan.** 10 minutes. Removes the broken-promise effect for the dentist decision-maker.
-
-### Next sprint — P2 (structural improvements)
-
-8. Add inline 2-field hero form (email + role) replacing the navigate-to-page CTA.
-
-9. Add mid-page CTA block between How It Works and Social Proof quote on Home.
-
-10. Add URL param pre-selection (`?role=dentist`) to waitlist page; update ForDentists CTA link.
-
-11. Add waitlist CTA to the 404 page.
-
-12. Add "Talk to the Team" CTA to the Pricing FAQ section.
-
-### Next month — P3 (polish and optimization)
-
-13. Exit intent modal on desktop (triggered on mouse-leave from viewport).
-
-14. Blog persona filtering tabs (Patients / Clinicians / All).
-
-15. Third-party testimonial from one founding clinic partner (replaces self-referential Dr. Anca quote at bottom of home page).
-
-16. A/B test Variant B CTA copy against current.
-
-17. Fix home hero social proof bar contrast (14px, #A8B4A8, bold "30+").
-
----
-
-## Wireframe Annotations
-
-### /waitlist page — current vs recommended
-
-```
-CURRENT:
-┌──────────────────────────────────────────┐
-│  [Early Access label-tag]                │
-│  "Join the founding waitlist."           │
-│  "Be among the first..."                 │
-│                                          │
-│  [Dentist / Clinic]  [Patient]           │   ← role selector
-│                                          │
-│  [First name]  [Last name]               │
-│  [Email address]                         │
-│  [Clinic / Practice name] (dentist only) │
-│  [City, Country]          (dentist only) │
-│                                          │
-│  [Join the Waitlist →]                   │
-│  No credit card · GDPR compliant         │   ← 12px, #8C9C8C, below contrast
-│                                          │
-│  ┌────────────────────────────────────┐  │
-│  │ 30+ founding clinics  EFP 2025     │  │   ← below form, after decision
-│  └────────────────────────────────────┘  │
-└──────────────────────────────────────────┘
-
-RECOMMENDED:
-┌──────────────────────────────────────────┐
-│  [Early Access label-tag]                │
-│  "Join the founding waitlist."           │
-│  "Be among the first..."                 │
-│                                          │
-│  ┌──────────────┐  ┌───────────────────┐ │
-│  │ 30+          │  │  EFP Award Winner │ │   ← MOVED UP, before form
-│  │ founding     │  │  2025             │ │
-│  │ clinics      │  │                   │ │
-│  └──────────────┘  └───────────────────┘ │
-│                                          │
-│  [Dentist / Clinic]  [Patient]           │
-│                                          │
-│  First name ↓           Last name ↓      │   ← visible labels above fields
-│  [First name]           [Last name]      │
-│                                          │
-│  Email address ↓                         │
-│  [Email address]                         │
-│                                          │
-│  Clinic name ↓  (dentist only)           │
-│  [Clinic / Practice name]                │
-│                                          │
-│  [Join the Waitlist →]                   │
-│                                          │
-│  🔒 No credit card · GDPR compliant      │   ← 14px, higher contrast, icon
-│  🌍 EU servers · end-to-end encrypted    │   ← added trust line
-└──────────────────────────────────────────┘
+Patient card subtitle:
+"Free access to the app"
+→ "Track your dental habits, follow your dentist's care plan, 
+   and get AI-powered guidance — free, forever."
 ```
 
 ---
 
-*Full source code review of client/src/pages/ (10 pages) and client/src/components/ (Navbar, Footer, PhoneMockup). No live traffic data or session recordings were available. Scroll depth percentages are predictive estimates based on content density, section pixel heights, and published conversion research benchmarks. Form submission defect confirmed by code inspection — no fetch/axios/SDK calls exist anywhere in the form handlers.*
+## Section 3 — Trust Signals and Social Proof
+
+**Score: 7.5 / 10**
+
+### What works
+- EFP Award badge appears in: Home hero, Home EFP card section, ForDentists hero, Pricing hero, Footer. Good saturation.
+- Dr. Anca's quote appears in: Home hero (blockquote), Home social proof section, ForDentists, About. Repeated correctly.
+- Research citations with DOI links (ForDentists.tsx:136-138) are an unusual and credible choice for a dental professional audience. This is a genuine differentiator.
+- "30+ founding clinics" appears in all the right places: navbar CTA context, waitlist page, Features CTA, ForDentists hero.
+- GDPR / EU storage indicators appear at both the form level (Waitlist.tsx:157-165) and in FAQ answers.
+- Team photos with real LinkedIn links (About.tsx:282-285) add genuine credibility.
+
+### Issues
+
+**Issue 3.1 — EFP Award is "3rd Prize" but this is never stated**
+The EFP badge, the EFP card, and all copy say "EFP Digital Innovation Award Winner 2025" or "3rd Prize" only in structured data (About.tsx personJsonLd). The user-facing claim is "Winner" without the placement. The EFP announcement page shows it is 3rd Prize among three awards. A dental professional audience will verify this and may consider the omission misleading.
+
+**Fix:** Update the badge text to "EFP Digital Innovation Award 2025 · 3rd Prize" or "EFP Award Finalist & 3rd Prize 2025." This is still strong social proof and is more defensible.
+
+**Issue 3.2 — Dr. Anca quote is founder testimony, not third-party validation**
+The most prominent quote on Home ("The app I always wished I could prescribe to my patients.") is from Dr. Anca, who is also CEO. In the context of social proof this carries less weight than it would from an independent clinician.
+
+**Fix:** If any of the 30+ founding clinic dentists will provide a short testimonial quote, replace or supplement this with third-party voice. Even an anonymous attribution ("Periodontist, Bucharest") is more credible than founder self-citation.
+
+**Issue 3.3 — "30+ founding clinics" is static and unsubstantiated**
+The number appears repeatedly but there are no clinic names, logos, or any indicator of who they are. A skeptical dentist reading this cannot verify the claim.
+
+**Fix options (pick one):**
+- Show 3-4 anonymized clinic descriptions: "Private periodontal practice, Madrid" with a quote.
+- Show 2 logos of clinics that have agreed to be named.
+- Change the language to "Beta community of 30+ clinics" which is slightly softer but no less true.
+
+**Issue 3.4 — GDPR / data security trust signals are buried in FAQ**
+Dentists considering joining a platform that will hold patient engagement data need to see GDPR/EU storage above the fold on the ForDentists page, not just in a FAQ answer. Data sovereignty is an objection for clinical purchasers.
+
+**Fix:** Add a trust bar on ForDentists.tsx between the stats section and the Dr. Anca quote:
+```
+[GDPR Badge]  EU data storage
+[Lock icon]   End-to-end encryption  
+[Shield]      No patient data sold, ever
+[Check]       Right to erasure built in
+```
+
+---
+
+## Section 4 — Navigation and IA Logic
+
+**Score: 7 / 10**
+
+### What works
+- NAV_LINKS order (Features, For Dentists, Pricing, About, Blog, Contact) puts the dentist-specific path second, which is correct for the primary persona.
+- `aria-current="page"` is implemented (Navbar.tsx:125-126).
+- Mobile drawer has focus trap, Escape close, and scroll lock (Navbar.tsx:51-84).
+- Breadcrumbs are present on all secondary pages.
+- Footer organizes links into Product / Company / Legal columns — standard and correct.
+
+### Issues
+
+**Issue 4.1 — "For Dentists" is the primary conversion page but it is second in the nav**
+Dentists are the revenue persona. "For Dentists" should be first or given visual prominence (e.g., a subtle lime underline). Currently "Features" leads the nav which is more patient-facing.
+
+**Fix:** Reorder to: `For Dentists | Features | Pricing | Blog | About | Contact`. Or keep current order but style "For Dentists" with a lime dot indicator.
+
+**Issue 4.2 — No "For Patients" nav item**
+Patients are secondary persona. The nav has no patient-facing entry point except the generic "Features" page. A patient landing on the home page via a dentist referral sees a nav that doesn't speak to them.
+
+**Fix:** Add a "For Patients" item, or combine into a "Who it's for" dropdown: `[For Dentists] [For Patients]`.
+
+**Issue 4.3 — Contact page is in primary nav but adds no conversion value**
+Contact is in the main navigation at position 6. For a pre-launch waitlist site, this dilutes the primary CTA. Contact is typically a footer-only or secondary item at this stage.
+
+**Fix:** Remove Contact from primary nav. Keep it in the footer. Replace the slot with "For Patients" or use the space to make "Join Waitlist" more prominent.
+
+**Issue 4.4 — No persistent/sticky secondary CTA on long pages**
+ForDentists.tsx is the longest page (8 sections). After scrolling through stats, Dr. Anca quote, clinical tools, and competitive positioning, there is no in-page reminder to act until the final CTA section. A dentist reading at section 5 (Competitive Positioning) has no CTA visible.
+
+**Fix:** Consider a floating "Apply as a Founding Clinic" pill that appears after 50% scroll depth on the ForDentists page, or anchor links in a sticky sub-nav.
+
+---
+
+## Section 5 — Objection Handling
+
+**Score: 7.5 / 10**
+
+### What works
+- ForDentists.tsx "Problem-First" section (lines 111-129) pre-empts the "why do I need this?" objection with research-backed copy.
+- "Not another PMS plugin" section (ForDentists.tsx:238-255) directly addresses the "I already have software" objection.
+- FAQ sections on Pricing and ForDentists answer the medical device / GDPR / cost objections.
+- "Every €1 invested in prevention saves €8-50" ROI framing in ForDentists CTA (line 270) is a strong economic objection handler.
+
+### Issues
+
+**Issue 5.1 — No objection handling for "this is pre-revenue, are you real?"**
+A dentist considering a founding clinic commitment is being asked to trust a bootstrapped Romanian startup that launched in June 2025. The site has no company registration mention, no physical address, no "as seen in" press mentions. The EFP Award is the strongest credibility signal but it needs reinforcement.
+
+**Fix:** Add to the ForDentists page or About page:
+- "Perioskoup SRL — registered Romania, June 2025"
+- Any press coverage or podcast mention
+- LinkedIn company page link (the JSON-LD has it, but it's not surfaced in the UI)
+
+**Issue 5.2 — Pricing objection is not fully resolved on the Pricing page**
+The Clinic plan shows "Coming soon" as the price. Dentists who visit the Pricing page specifically want to understand cost. Sending them to the waitlist without any pricing signal (even a range like "€39-199/mo launching March 2026") reduces dentist conversion from this high-intent page.
+
+**Fix:** Show the pricing range as a teaser with "Founding clinic pricing locked below this range" message. This sets expectation and creates urgency simultaneously.
+
+**Issue 5.3 — Integration/onboarding objection not answered**
+ForDentists workflow section (lines 209-236) says "no hardware, no software migration, no training days" but gives no detail. A clinic manager reading this thinks "but how does my receptionist use it?"
+
+**Fix:** Add one concrete workflow step: "Takes 4 minutes to set up your first patient plan. Web-based — works on any browser, no app install for the dentist."
+
+---
+
+## Section 6 — Hero and Above-the-Fold Effectiveness
+
+**Score: 7.5 / 10**
+
+**File:** `client/src/pages/Home.tsx:69-143`
+
+### What works
+- Headline "Between visits, we take over." is clear, differentiated, and memorable. It communicates the between-visit angle immediately.
+- EFP badge above the headline establishes credibility before the value proposition. Correct placement.
+- Hero subhead (line 101-103) specifies the product: "AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic." This is concrete.
+- Phone mockup in the right column gives product tangibility without requiring a full demo.
+- Dr. Anca blockquote in the hero grounds the product in clinical reality.
+- Two CTAs with clear hierarchy: primary (lime) + ghost (border).
+
+### Issues
+
+**Issue 6.1 — Hero does not specify the target persona**
+"Between visits, we take over" is persona-agnostic. A patient and a dentist both read this and neither is certain it is for them. The subhead clarifies, but only if the user reads it.
+
+**Fix:** Add a secondary line or badge: "Built for dental clinics and their patients." This 6-word addition eliminates ambiguity for both personas above the fold.
+
+**Issue 6.2 — Hero CTA gap between button row and phone mockup on mobile**
+On mobile, the layout is single-column: headline → subhead → quote → CTAs → phone mockup. The phone mockup renders below the fold on most phones (given the quote's height). The user's first scroll brings them to the ticker, not to the product visual.
+
+**Fix:** On mobile, move the phone mockup above the Dr. Anca quote, or replace it with a static screenshot that loads lighter and sits immediately below the CTA row. The quote can move to a section below the fold.
+
+**Issue 6.3 — Dr. Anca quote in the hero pushes the CTA down**
+The blockquote (Home.tsx:106-113) is 5 lines tall and sits between the subhead and the CTA buttons. On a 375px screen, this moves the primary CTA below the fold.
+
+**Fix:** Move the quote to an element below the hero fold. Keep the CTA row at the top of the hero content stack: `Headline → Subhead → [CTA row]`, and let the quote appear after first scroll.
+
+**Issue 6.4 — Ken Burns animation on hero background runs at full intensity**
+`ken-burns` runs a 24-second 10% scale and 2% pan (index.css:214-220). On a background image with busy content (hero-bg.webp), this can interfere with text legibility. It is correctly disabled for `prefers-reduced-motion`.
+
+**Fix:** Reduce scale range from 1.0→1.1 to 1.0→1.04 and reduce pan from 2% to 0.8%. This preserves the cinematic feel without threatening contrast on the text.
+
+---
+
+## Section 7 — Mobile Conversion Path
+
+**Score: 6 / 10**
+
+### What works
+- Mobile drawer is full-screen with large touch targets (Dongle font at 36-48px, Navbar.tsx:242).
+- Focus trap and scroll lock on mobile drawer are correctly implemented.
+- `btn-primary` inside the drawer is full-width and uses `padding: "16px 24px"` (Navbar.tsx:264), a good 44px minimum touch target height.
+- All `p-input` fields use `padding: 14px 18px` which meets minimum touch target.
+
+### Issues
+
+**Issue 7.1 — No mobile CTA in the fixed navbar (already noted in 1.1)**
+
+**Issue 7.2 — Role selector buttons on Waitlist are 20px padded, which is marginal on mobile**
+The dentist/patient selector buttons use `padding: 20` (Waitlist.tsx:112) but the content inside is small (16px label + 13px sub). On a 375px screen these render as roughly 80px height, which is fine. However they sit in a 2-column grid on `sm:` breakpoint. On screens below 640px they stack, which is correct. No change needed.
+
+**Issue 7.3 — Home hero phone mockup disrupts mobile scroll path**
+The phone mockup (`max-w-[300px]`) renders below the hero text on mobile. It consumes significant vertical space before the user reaches the EFP Award section, which is real social proof. Users may scroll through phone chrome thinking it is a decorative element.
+
+**Fix:** On mobile (`< lg`), hide the phone mockup completely. The hero copy + CTA is sufficient. The mockup is most valuable on desktop where it sits beside the text.
+
+**Issue 7.4 — Waitlist page social proof block (30+ founding clinics) renders below the form on mobile**
+The form is the conversion point. The social proof that reinforces the decision (Waitlist.tsx:170-182) is below it. On mobile this means the trust signals load after the user has already decided to leave or stay.
+
+**Fix:** Move the social proof block above the form on mobile. At `< sm` breakpoint, render the stats row before the form section.
+
+**Issue 7.5 — No sticky bottom CTA bar on mobile for long pages**
+ForDentists.tsx is 8 sections with no CTA until the final section. A dentist on mobile scrolling through clinical tools has to scroll back to the top or to the end to act.
+
+**Fix:** Add a sticky bottom bar on mobile that appears after 30% scroll: `[Apply as a Founding Clinic →]` fixed to the bottom of the viewport. This pattern is standard for mobile B2B SaaS and significantly reduces scroll-to-conversion distance.
+
+---
+
+## Section 8 — Secondary CTAs
+
+**Score: 7 / 10**
+
+### What works
+- "For Clinicians" ghost button in Home hero (line 121-123) correctly routes dentists.
+- "See All Features" ghost button in ForDentists hero (line 104-106) gives dentists a research path.
+- "Talk to the Team" ghost button in ForDentists CTA (line 277-279) gives enterprise/hesitant dentists an off-ramp without losing them.
+- Contact page is a proper form with role selector and clinic-specific email shown.
+
+### Issues
+
+**Issue 8.1 — Contact page form does not submit data either**
+Contact.tsx:34-41 has the same pattern as Waitlist — `setSent(true)` with no network call. A dentist who prefers to talk rather than join a waitlist also has no path to reaching the team. This is a second data-loss point.
+
+**Issue 8.2 — "Talk to the Team" button on ForDentists CTA (line 277) links to /contact but the contact form is non-functional**
+This compiles the P0 bug: a dentist clicks "Talk to the Team" → fills contact form → submits → sees success state → but data never arrives.
+
+**Issue 8.3 — No phone number or direct calendar link**
+For a product selling to dental clinics at €39-199/mo, dentists expect a Calendly link or a direct email address. The contact page shows `hello@perioskoup.com` and `clinic@perioskoup.com` as text (Contact.tsx:127-129) but the email addresses are not `mailto:` links. A dentist on mobile cannot tap to email.
+
+**Fix:** Wrap email addresses in `<a href="mailto:clinic@perioskoup.com">` and add a Calendly link for founding clinic discovery calls.
+
+---
+
+## Section 9 — Scroll Depth Drop-off Predictions
+
+**Based on page structure analysis:**
+
+**Home page predicted drop-off:**
+- 0-20%: Hero (high retention — strong headline, visual interest)
+- 20-35%: Ticker + EFP Award Card (moderate — compelling but long)
+- 35-55%: Features bento grid (moderate retention, good visual density)
+- 55-70%: "What is an AI dental companion?" section (HIGH DROP-OFF RISK — this is a text-heavy explanatory section with no visual relief and no CTA. Users who are not already curious will leave here.)
+- 70-85%: How It Works circles (moderate — visual interest resumes)
+- 85-100%: Dr. Anca quote → Footer (low retention — page ends cold with no CTA section)
+
+**ForDentists page predicted drop-off:**
+- 0-25%: Hero + Problem-First (high retention — dentists are in their problem space)
+- 25-40%: Stats section (high — research citations resonate with clinicians)
+- 40-55%: Dr. Anca quote (moderate)
+- 55-70%: Clinical Tools (moderate — feature detail can feel long)
+- 70-85%: Workflow section (high — dentists want operational clarity)
+- 85-95%: Competitive positioning (moderate)
+- 95-100%: CTA section (good — but reached by fewer users than optimal)
+
+**Waitlist page predicted drop-off:**
+- 0-50%: Hero + role selector + form (primary action zone — low drop-off if user intended to convert)
+- 50-70%: Form submission attempt (likely drop-off point where bugs or form friction surfaces)
+- 70-100%: Social proof block (low — most users have already decided by here)
+
+---
+
+## Section 10 — Exit Intent and Last Seen Content
+
+**Score: 5 / 10**
+
+**Issues:**
+
+**Issue 10.1 — Home page exit intent is the footer, not a CTA**
+The last visible element before the footer on Home is the Dr. Anca quote section (Home.tsx:337-354). There is no page-bottom CTA. A user who has scrolled the full home page and not converted sees the footer's link columns. This is a passive exit.
+
+**Issue 10.2 — No exit intent mechanism**
+There is no exit intent modal, no scroll-depth triggered overlay, and no email capture gate. For a waitlist-mode SaaS site, some form of "before you go" prompt is standard. This is not strictly required but represents a missed recovery opportunity.
+
+**Issue 10.3 — Footer has no CTA**
+The footer (Footer.tsx) has logo, description, link columns, and copyright. There is no CTA button or inline signup form. For a pre-launch waitlist site the footer should end with a mini CTA section above the legal links.
+
+**Fix wireframe — Footer CTA section above the current grid:**
+```
+[SECTION — background: #0D1F2A]
+  "Still thinking? Join 30+ founding clinics."
+  [Email input] [Join Waitlist]
+  "No credit card. GDPR compliant. Cancel any time."
+```
+
+**Issue 10.4 — 404 page only offers "Back to Home"** (NotFound.tsx:33-37)
+A user landing on a 404 has lost their intended destination. The only recovery path is the home page. The page could offer: "Were you looking for: Features | For Dentists | Waitlist?"
+
+**Fix wireframe:**
+```
+[404 large number — current]
+[Headline: "Page not found" — current]
+[Body text — current]
+[Row: Back to Home | Join Waitlist | For Dentists]
+```
+
+---
+
+## Section 11 — Form Accessibility
+
+**Score: 7.5 / 10**
+
+### What works
+- `aria-invalid`, `aria-describedby`, `aria-required` are present on all validated fields.
+- `role="alert"` on error message spans ensures screen readers announce errors on change.
+- `role="status"` + `aria-live="polite"` + `aria-atomic="true"` on success state (Waitlist.tsx:81).
+- `role="group"` + `aria-label="Select your role"` on the role selector (Waitlist.tsx:104).
+- `aria-pressed` on role toggle buttons correctly communicates selection state.
+- `focus-visible` ring is globally defined in CSS (index.css:181-184) using the brand lime (#C0E57A).
+- `skip-link` is correctly implemented (App.tsx:113, index.css:136-153).
+- Route announcer for SPA navigation (App.tsx:49-76) is a sophisticated and correct WCAG 4.1.3 implementation.
+
+### Issues
+
+**Issue 11.1 — Labels are sr-only on Waitlist form (already noted in Issue 2.2)**
+This is an accessibility failure as well as a UX issue. WCAG 1.3.1 and 3.3.2 require that form inputs have visible labels. Placeholders alone do not satisfy this requirement because they disappear on focus.
+
+**Issue 11.2 — Contact page last-name field has no error validation span**
+Contact.tsx:164-166: `waitlist-last-name` equivalent has no `aria-invalid`, `aria-describedby`, or error span despite being `required`.
+
+**Issue 11.3 — Select dropdown has no visible dropdown indicator**
+`p-select` uses `appearance: none` (index.css:875) which removes the native chevron arrow. No custom chevron is added in CSS or the component. Sighted users cannot tell this element is a dropdown without clicking on it.
+
+**Fix:** Add a background-image chevron or a CSS pseudo-element to the `.p-select` rule.
+
+**Issue 11.4 — Error color is ambiguous (#C0E57A = lime = same as success/CTA)**
+Already noted in Issue 2.3. From an accessibility standpoint, using the brand accent color for errors violates WCAG 1.4.1 (Use of Color) if error state is only communicated via color. The `role="alert"` text message partially remedies this, but the visual signal remains confusing.
+
+---
+
+## Section 12 — Page Load and Performance (Structural Only)
+
+**Score: 8 / 10**
+
+### What works
+- Route-level code splitting via `React.lazy` (App.tsx:10-20). Home loads immediately, all other pages are lazy.
+- LCP image has `fetchPriority="high"` and correct `width/height` attributes (Home.tsx:72).
+- Self-hosted WOFF2 fonts with `font-display: swap` (index.css:28-72). No Google Fonts network round-trip.
+- `loading="lazy"` on all non-LCP images.
+- `prefers-reduced-motion` guard on all animations (index.css:1105-1177).
+- `will-change: auto` used sparingly — only where compositing is known to help.
+
+### Issues
+
+**Issue 12.1 — Suspense fallback is a blank div**
+`<Suspense fallback={<div className="min-h-screen bg-[#0A171E]" />}>` (App.tsx:83). A blank navy screen for 200-400ms on slower connections is jarring. A skeleton that approximates the navbar and hero would reduce perceived load time.
+
+**Issue 12.2 — Five simultaneous CTA orbs with `filter: blur(80px)` on the CTA section**
+`.cta-orb--1` through `.cta-orb--5` all use `filter: blur(80px)` (index.css:403). Blur filter requires a compositor layer even without `will-change`. Five blurred elements animating simultaneously is a significant GPU cost on mid-range mobile. The comment in the CSS acknowledges this tradeoff but for a conversion-critical CTA section, stutter directly reduces button click rate.
+
+**Fix:** Reduce to 2-3 orbs, or replace them with a static radial-gradient background without filter:blur.
+
+---
+
+## Score Summary
+
+| Dimension | Score | Primary Issues |
+|---|---|---|
+| Form functionality | 0 / 10 | P0: No data submission on either form |
+| CTA visibility | 7 / 10 | No mid-page CTA on Home; no mobile navbar CTA |
+| Form UX | 5 / 10 | sr-only labels; unvalidated last-name; error color |
+| Trust signals | 7.5 / 10 | "3rd Prize" not disclosed; testimonials founder-only |
+| Navigation/IA | 7 / 10 | No patient nav item; Contact in primary nav |
+| Objection handling | 7.5 / 10 | No pricing signal on Pricing; no company credibility |
+| Hero effectiveness | 7.5 / 10 | CTA pushed below fold on mobile by Dr. Anca quote |
+| Mobile conversion | 6 / 10 | No sticky CTA; social proof below form |
+| Secondary CTAs | 7 / 10 | Emails not mailto: links; no calendar link |
+| Exit intent | 5 / 10 | No footer CTA; no mid-page re-engagement |
+| Form accessibility | 7.5 / 10 | sr-only labels; ambiguous error color; no select chevron |
+| Performance | 8 / 10 | Blank suspense fallback; excessive blur orbs |
+| **OVERALL** | **6.4 / 10** | |
+
+---
+
+## Priority Fix Order
+
+### P0 — Before any traffic is sent (data loss)
+1. `Waitlist.tsx:36-43` — Connect form to backend or third-party form provider (Formspree, Formspark, Resend webhook). Add loading state and error handling.
+2. `Contact.tsx:34-41` — Same as above.
+3. `Contact.tsx:127-129` — Wrap email addresses in `<a href="mailto:...">`.
+
+### P1 — This week (conversion blockers)
+4. `Home.tsx` — Add mid-page CTA section and a page-bottom CTA section.
+5. `Pricing.tsx` — Add page-bottom CTA section after FAQ.
+6. `Navbar.tsx` — Add CTA to mobile navbar bar (beside hamburger).
+7. `Waitlist.tsx:22-33` — Add last-name validation and error span.
+8. `Waitlist.tsx:131-148` — Replace sr-only labels with visible labels.
+9. `Waitlist.tsx:133,142,147` — Change error color from lime to red (#F87171).
+10. `Waitlist.tsx:152-155` — Add submitting/loading state to submit button.
+11. `Waitlist.tsx:80-90` — Expand success state with next steps and sharing option.
+
+### P2 — This sprint (trust and conversion lift)
+12. All EFP Award references — Add "3rd Prize" to the badge and copy.
+13. `ForDentists.tsx` — Add GDPR/security trust bar between stats and Dr. Anca quote.
+14. `ForDentists.tsx` — Add mobile sticky bottom CTA appearing at 50% scroll.
+15. `Waitlist.tsx:99-101` — Add scarcity line: "30 of 50 founding clinic spots filled."
+16. `Footer.tsx` — Add mini CTA section above the link columns.
+17. `NotFound.tsx:33-37` — Add Waitlist and For Dentists quick links.
+18. `index.css:875` — Add chevron indicator to `.p-select`.
+19. `Waitlist.tsx:170-182` — Move social proof above the form on mobile breakpoints.
+20. `Home.tsx:106-113` — Move Dr. Anca quote below hero fold; keep CTAs immediately below subhead.
+
+### P3 — Next sprint (optimization)
+21. `Navbar.tsx:14-21` — Reorder to: For Dentists first; remove Contact from primary nav.
+22. Add "For Patients" page or section.
+23. Add third-party testimonials from founding clinic dentists.
+24. Add Calendly link for founding clinic discovery calls.
+25. Add company details (SRL registration) to About or Contact page for credibility.
+26. `App.tsx:83` — Replace blank Suspense fallback with a skeleton loader.
+27. `index.css:410-440` — Reduce CTA orb count from 5 to 2 for mobile performance.
+
+---
+
+## Appendix — Wireframe Sketches (Text Format)
+
+### A. Waitlist Page Revised Layout (Mobile)
+
+```
+┌─────────────────────────────────┐
+│ [Navbar]                        │
+├─────────────────────────────────┤
+│ Early Access                    │
+│ Join the founding waitlist.     │
+│ Patients free. Clinics get      │
+│ founding partner pricing.       │
+│                                 │
+│ ┌─────────┐ ┌───────────────┐  │
+│ │ 30+     │ │ EFP Award     │  │
+│ │ clinics │ │ Winner 2025   │  │  ← social proof ABOVE form
+│ └─────────┘ └───────────────┘  │
+│                                 │
+│ 30 of 50 founding spots filled  │  ← scarcity
+│                                 │
+│ [I am a Dentist / Clinic] [tab] │
+│ [I am a Patient]          [tab] │
+│                                 │
+│ [First name     ] [Last name  ] │
+│ [Email address               ]  │
+│ [Clinic name  (dentist only) ]  │
+│ [City, Country (dentist only)]  │
+│                                 │
+│ [    Join the Waitlist  →     ] │  ← full width primary
+│                                 │
+│  🔒 No credit card  🛡 GDPR    │
+│                                 │
+│ [Footer]                        │
+└─────────────────────────────────┘
+```
+
+### B. Home Page Mid-Page CTA Bar
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  background: rgba(192,229,122,0.04)                     │
+│  border-top/bottom: 1px solid rgba(192,229,122,0.12)    │
+│                                                         │
+│  "30+ founding clinics are already on the list."        │
+│  "Spots are limited before March 2026 launch."          │
+│                                                         │
+│  [Join the Waitlist →]   [See Pricing]                  │
+└─────────────────────────────────────────────────────────┘
+```
+
+### C. Footer CTA Addition
+
+```
+[Above the current footer grid:]
+┌─────────────────────────────────────────────────────────┐
+│  background: #0D1F2A                                    │
+│  border-top: 1px solid #1D3449                         │
+│                                                         │
+│  Still thinking?                                        │
+│  "Join the founding waitlist. Free for patients.        │
+│   Founding pricing for clinics."                        │
+│                                                         │
+│  [Email input field          ] [Join Waitlist]          │
+│  🔒 No credit card · 🛡 GDPR · EU data storage        │
+└─────────────────────────────────────────────────────────┘
+[Then existing footer grid]
+```
+
+### D. Mobile Sticky Bottom CTA (ForDentists page)
+
+```
+┌─────────────────────────────────┐
+│ (page content scrolls above)    │
+│                                 │
+├─────────────────────────────────┤  ← fixed bottom bar, appears at 50% scroll
+│ background: rgba(10,23,30,0.96) │
+│ border-top: 1px solid #C0E57A  │
+│                                 │
+│ [Apply as a Founding Clinic  →] │  ← full width btn-primary
+└─────────────────────────────────┘
+```
+

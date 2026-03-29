@@ -1,783 +1,708 @@
-# Perioskoup — Niche Domination Strategy
-**Audit Type:** Niche Domination / SEO / Content Strategy  
+# Perioskoup — Niche Domination Strategy Audit
+**Category:** AI Dental Companion (Category Creation Play)  
+**Audit Scope:** Full site — 12 pages, all schema, sitemap, robots.txt, llms.txt, feed.xml  
 **Date:** 2026-03-06  
 **Auditor:** Niche Domination Strategist  
-**Score: 6.5 / 10**
-
-**Verdict:** The strategic assets are exceptional — a DR 60 editorial backlink from EFP, a practising periodontist as co-founder, a 30-clinic waitlist, and a genuinely unclaimed search category ("AI dental companion"). The gap is execution: six standalone blog posts with no cluster architecture, zero programmatic SEO pages, one leveraged backlink from a world-class PR asset, and a critical SPA rendering flaw that prevents any secondary page from ranking independently. Fix the technical foundation first. Then convert assets to search equity systematically.
+**Score: 6.2 / 10**
 
 ---
 
-## Part 1: Category Ownership — "AI Dental Companion"
+## Executive Summary
 
-### The Opportunity
+Perioskoup has completed the first phase of category creation correctly: the phrase "AI dental companion" appears in the homepage title tag, a standalone H2 section defining the category, the Features page H1, body copy on About and ForDentists, footer tagline, and consistently across all JSON-LD. Schema depth is solid — BlogPosting, Person/Physician, Organization, SoftwareApplication, BreadcrumbList, and FAQPage are all present and cross-referenced. LLM discoverability infrastructure (robots.txt whitelist for 15+ AI crawlers, llms.txt, llms-full.txt) is ahead of most established health-tech companies.
 
-"AI dental companion" has near-zero search competition as of March 2026. The phrase appears in Perioskoup's ticker copy, OG description, and JSON-LD schema — but never in a stationary H1, H2, or URL slug. Category creation requires planting the category name in the highest-authority positions on the site: title tags, H1s, and dedicated URLs. That work has not yet been done.
-
-### What Competitors Own Today
-
-| Competitor | Category Phrase Owned | Perioskoup Overlap Risk |
-|---|---|---|
-| Dental Monitoring | "dental monitoring AI" / "remote dental monitoring" | High — the blog post about AI in dental monitoring borrows their category language |
-| Overjet / Pearl | "AI dental imaging" / "dental AI radiograph" | Low — clearly diagnostic, clearly different |
-| CareStack | "dental practice management software" | Low — different buyer problem |
-| PerioPredict | "periodontal risk prediction AI" | Medium — same specialist audience |
-| None | "AI dental companion" | Zero competition — this is the window |
-
-The window is open. It will not stay open past 2027 once funded competitors or incumbent dental software companies notice the gap.
-
-### Actions Required to Own the Category
-
-**1. Exact-match URL — create /ai-dental-companion**  
-This page does not exist. A 600-800 word dedicated landing page at `/ai-dental-companion` targeting the phrase as the H1 will be the canonical page for this search term. Connect it to `/features` and `/waitlist`. Add `SoftwareApplication` schema with `"name": "AI Dental Companion"` as an `alternateName`.
-
-**2. Homepage title tag update**  
-Current: `Perioskoup — Your Personal Dental Companion`  
-Required: `Perioskoup — AI Dental Companion App | Between-Visit Dental Care`  
-The word "AI" does not appear in the current title tag. This is the single highest-impact on-page change available.
-
-**3. Homepage H1 keyword anchor**  
-Current H1: `Between visits, we take over.`  
-This tagline is strong and should stay. Add an H2 directly below it:  
-`The AI dental companion for between-visit periodontal care.`  
-This preserves the emotional impact while planting the category name in a heading element.
-
-**4. Features page title update**  
-Current: `Perioskoup — Your Personal Dental Companion` (same as homepage — a critical SEO defect from the SPA architecture)  
-Required: `AI Dental Companion App Features — Habit Tracking, Reminders & Clinician Dashboard | Perioskoup`
-
-**5. ForDentists page title update**  
-Required: `AI Dental Companion for Dental Practices | Perioskoup`
+The gap is execution in three layers: (1) no dedicated category URL that can rank independently, (2) five of the six target blog keywords are uncovered or under-optimised, (3) zero active link acquisition — one EFP backlink (DR 60) carries all external authority. The SPA rendering problem means every schema improvement and keyword placement is invisible to Googlebot until a prerendering layer is added. The window for first-mover ownership of "AI dental companion" is real but not permanent — a well-funded competitor will contest this phrase within 12–18 months.
 
 ---
 
-## Part 2: Content Gap Analysis
+## 1. Category Keyword Ownership — "AI Dental Companion"
 
-The blog currently has 6 posts covering the full dental AI landscape but no deliberate keyword architecture. Below is the complete gap map against confirmed search demand.
+**Status: GOOD FOUNDATION, CRITICAL GAP REMAINS**  
+**Sub-score: 6.5/10**
 
-### Tier 1 — High Volume, Low Competition, Dr. Anca Authority Match
+### What Is In Place
 
-These queries are dominated by generic health sites (WebMD, Healthline) and non-dental-app pages. A periodontist author with EFP credentials plus a product use case at the end of each article will outperform everything in the current top 10.
+- `Home.tsx:51` — Title tag: "Perioskoup | AI Dental Companion App | Between-Visit Dental Care" — correct, canonical form
+- `Home.tsx:248` — Stationary H2: "What is an AI dental companion?" — highest-impact on-page signal for category definition
+- `Home.tsx:102` — First paragraph below H1: "Perioskoup is an AI dental companion app" — phrase in opening body paragraph
+- `Features.tsx:71` — H1: "AI dental companion features — everything between your visits"
+- `Features.tsx:47` — Title tag: "AI Dental Companion App Features | Habit Tracking & Care Plans | Perioskoup"
+- `About.tsx:240` — "making the AI dental companion possible for the first time"
+- `About.tsx:247` — "Perioskoup exists at the intersection of these shifts — an AI dental companion built for a world where care doesn't end when the appointment does."
+- `ForDentists.tsx:248` — "It's the AI dental companion for what happens between visits."
+- `Footer.tsx:49` — Tagline: "Your AI dental companion. Bridging the gap between clinic and home."
+- `Pricing.tsx:122` — "Founding clinic partners of this AI dental companion get locked-in pricing"
+- `llms.txt:10` — AI crawler definition of the product as "AI dental companion"
 
-| Target Keyword | Est. Monthly Searches | KD | Priority | Why Perioskoup Can Win |
-|---|---|---|---|---|
-| why do gums bleed | 8,100 | Low-Med | P0 | High-volume, perfect Dr. Anca authority match, FAQPage schema eligible |
-| signs of gum disease | 6,600 | Low-Med | P0 | Gateway query for diagnosis-anxious patients |
-| what is a periodontist | 12,000 | Low | P0 | Zero dental app pages in top 10 today |
-| how to brush with periodontal disease | 1,600 | Very Low | P0 | Named target keyword with no dedicated dental app page anywhere |
-| interdental cleaning guide | 2,400 | Low | P0 | Named target keyword; product results dominate, easy to outrank editorially |
-| gum recession causes | 3,200 | Low | P1 | Strong Dr. Anca clinical angle |
-| scaling and root planing what to expect | 2,800 | Low | P1 | Post-procedure care is the core Perioskoup use case |
-| gum disease stages | 4,400 | Low-Med | P1 | Partially covered in existing post — needs its own URL |
-| periodontal disease and heart disease | 2,200 | Low | P1 | Systemic health angle, high authority-building value |
-| how often should you see a dentist | 6,600 | Med | P2 | Top-of-funnel patient query, broad audience reach |
+### Issues
 
-### Tier 2 — Dentist-Facing Commercial Intent (B2B)
+**CRITICAL: No dedicated category URL**  
+The phrase "What is an AI dental companion?" exists as an H2 section on the homepage, but there is no standalone page at `/ai-dental-companion` or `/what-is-an-ai-dental-companion`. A dedicated URL with 1,200+ words, SoftwareApplication schema, and its own canonical would rank independently for the category definition query and become the target for all link building. Without it, the category definition is buried inside the homepage, competing with every other homepage signal.
 
-These queries come from dental practice owners and office managers with purchasing intent. They have lower volume but much higher commercial value.
+**CRITICAL: Category phrase never appears in an H1 on any page as the primary target**  
+The Features page H1 has "AI dental companion features" — correct. The homepage H1 ("Between visits, we take over.") is brand-creative but does not contain the category phrase. The most natural H1 for the category would be on the dedicated `/ai-dental-companion` page.
 
-| Target Keyword | Est. Monthly Searches | KD | Priority |
+**MODERATE: No external encyclopedic source defines the category**  
+No Wikipedia article, Wikidata entry, or Google Knowledge Panel exists for "AI dental companion." Without one, Google has only the site's own claims to assess whether this is a real category or a marketing phrase. A single well-sourced Wikipedia article — even a stub — referencing Perioskoup as the first named product in the category would anchor the entity permanently.
+
+**MODERATE: Zero search volume data validation**  
+The audit has confirmed keyword placement but cannot confirm whether "AI dental companion" is building search volume yet (it is a created term, not an existing search query). The strategy must include monitoring via Google Search Console for the first organic impressions on this phrase — that signal will appear within 60–90 days of Googlebot successfully crawling the page with prerendering active.
+
+---
+
+## 2. Content Gap Analysis
+
+**Status: SEVERE — Five of Six Target Keywords Uncovered**  
+**Sub-score: 3.5/10**
+
+### Current Blog Coverage
+
+| Target Keyword | Monthly Searches (est.) | Post Exists | Optimised |
 |---|---|---|---|
-| patient engagement software for dentists | 480 | Low-Med | P0 |
-| dental patient communication app | 390 | Low | P0 |
-| how to reduce dental no-shows | 720 | Low | P1 |
-| periodontal maintenance patient education | 210 | Very Low | P0 — niche match |
-| dental practice management AI | 880 | Med | P1 |
-| AI for dentists | 2,400 | Low-Med | P0 — named target keyword |
-| dental patient retention strategies | 590 | Low | P1 |
-| how to improve patient compliance dentistry | 720 | Low | P1 |
+| how to brush with periodontal disease | 1,200+ | No | No |
+| interdental cleaning guide | 800+ | Partial (3-minute routine) | No |
+| why do gums bleed | 2,400+ | No | No |
+| dental habit tracking app | 400+ | No | No |
+| AI for dentists | 600+ | ForDentists page only | No — title mismatch |
+| AI dental companion | 0 (created) | Homepage H2 only | Partial |
 
-### Tier 3 — Category-Defining (Currently Unclaimed)
+### Issues by Keyword
 
-These phrases have low or zero current search competition. Publishing here before anyone else builds lasting first-mover authority.
+**CRITICAL: "why do gums bleed"** — The highest search volume target on the list. This is the entry-level query for periodontal disease awareness. The current blog has six posts; none target this. Dr. Anca is the ideal author. The post should define bleeding gums (gingivitis vs. periodontitis), the morning bleed that patients ignore, the systemic connection, and close with the Perioskoup habit tracking angle. Zero competition from SaaS dental brands exists on this keyword today.
 
-| Target Keyword | Priority | Notes |
-|---|---|---|
-| AI dental companion | P0 — create /ai-dental-companion page | Zero competition, own the category URL now |
-| dental habit tracking app | P0 | Named target keyword, 320 monthly, high commercial intent |
-| AI for periodontists | P1 | 90 monthly, growing, zero competition |
-| periodontal disease app | P1 | 210 monthly, direct product match |
-| between visit dental care | P1 | Maps directly to brand positioning |
-| oral health AI app | P1 | Category consolidation term |
+**CRITICAL: "how to brush with periodontal disease"** — Patients with active periodontal disease search this constantly after a diagnosis. This is the highest-intent post in the entire content roadmap. The 3-minute routine post covers brushing generically but is not optimised for this query and does not address the periodontal-specific technique (modified Bass method, sulcular brushing). This post belongs to Dr. Anca as author; no other dental SaaS brand has a periodontist writing it.
 
-### Tier 4 — Comparison / Commercial Investigation
+**HIGH: "interdental cleaning guide"** — The 3-minute routine post (`Blog.tsx:56`) covers flossing, interdental brushes, and water flossers but its slug (`3-minute-routine-save-teeth`) and title ("The 3-Minute Daily Routine That Could Save Your Teeth") do not match the keyword. Either the existing post needs a title/meta upgrade or a dedicated guide is needed at `/blog/interdental-cleaning-guide`.
 
-Build these pages now while they have zero competition. By the time other players notice the category, these pages will have domain authority from age and backlinks.
+**HIGH: "dental habit tracking app"** — This is a bottom-of-funnel comparison query. Searchers here are deciding between products. There is no product comparison page, no "Perioskoup vs. alternatives" page, and no page targeting this phrase. The Features page exists but its title tag is "AI Dental Companion App Features" — different intent. A dedicated page at `/dental-habit-tracking-app` that compares Perioskoup to generic reminder apps and dental PMS patient portals would capture this decision-stage traffic.
 
-| Target Keyword | Notes |
-|---|---|
-| best dental app for gum disease 2026 | 170 monthly, high commercial intent, Perioskoup can be #1 listed |
-| dental monitoring alternatives | Brand defence + SEO — build before a competitor does |
-| AI dental apps comparison | Category authority page, drives editorial backlinks |
-| perioskoup vs dental monitoring | Zero volume now, will grow — own it early |
+**MODERATE: "AI for dentists"** — The ForDentists page (`ForDentists.tsx:55`) has the title "Dental Patient Engagement App for Clinicians" — the phrase "AI for dentists" appears nowhere in the title tag or H1. Updating the title tag to "AI for Dentists: Perioskoup Clinician Dashboard | Patient Engagement App" would capture a growing B2B search intent without rewriting any content.
 
-### Missing Content vs. Existing Blog Coverage
+### Additional Content Gaps (Not in Brief but Critical for Niche Ownership)
 
-The existing 6 posts are substantive but the following named target keywords from CLAUDE.md have no dedicated URLs:
+**"periodontal disease diet"** — Association between nutrition (vitamin C, omega-3, processed sugar) and gum disease. High patient interest. Zero dental SaaS competition. Dr. Anca is the authority voice.
 
-- "how to brush with periodontal disease" — no page exists, the 3-minute routine post is adjacent but not targeted
-- "interdental cleaning guide" — no page exists, the 3-minute routine post mentions it but does not own the query  
-- "why do gums bleed" — no page exists, partially answered inside the periodontal disease overview
-- "dental habit tracking app" — no dedicated product-feature page targeting this phrase
-- "AI for dentists" — the `/for-dentists` page exists but does not use this phrase as its H1 or title
+**"gum disease treatment stages"** — Parallels the existing "What Is Periodontal Disease" post but focuses on what happens after diagnosis. Completion, support therapy, recall. This is where Perioskoup sits in the patient journey — after diagnosis, before and between treatment appointments.
+
+**"dental patient engagement software"** — B2B SaaS comparison intent. Small volume but extremely high commercial value. Would attract inbound from dental practice owners comparing tools.
+
+**"mHealth dental"** / **"digital health dental"** — Academic/industry adjacent queries. The ForDentists page cites three peer-reviewed mHealth studies but does not target these phrases. A long-form explainer ("What is mHealth in Dentistry?") that synthesises the Toniazzo et al. and Weinert et al. studies would rank for niche queries and attract citation links from dental schools.
+
+**"periodontitis recurrence prevention"** — High clinical intent, low competition. Patients after phase 1 periodontal therapy searching how to prevent relapse. Perioskoup's between-visit engagement is the answer. Requires Dr. Anca authorship.
 
 ---
 
-## Part 3: Schema Markup — Missing Rich Results
+## 3. Schema Markup Analysis
 
-### What Is Present and Working
+**Status: SOLID FOUNDATION — THREE MISSING SCHEMAS**  
+**Sub-score: 6.5/10**
 
-The homepage JSON-LD graph is well-structured: `WebSite`, `Organization`, `SoftwareApplication`, and `Person` nodes. `FAQPage` schema on Home, Features, ForDentists, and Pricing pages is solid. Individual blog posts have `BlogPosting` and `BreadcrumbList` (injected via React). `LocalBusiness` exists on Contact.
+### What Is Present
 
-### Critical Gap: All Schema Is Runtime-Only
+| Schema Type | Location | Assessment |
+|---|---|---|
+| FAQPage | Home, Blog, BlogPost, Features, ForDentists, Contact, Pricing | Correct and populated |
+| BlogPosting | All 6 blog posts (BlogPost.tsx) | Present with author, publisher, dates |
+| BreadcrumbList | All pages via Breadcrumb.tsx component | Correct |
+| Person + Physician | About.tsx:23 | Correct — medicalSpecialty, award, memberOf, sameAs |
+| Organization | Contact.tsx:53 | Correct — @id, legalName, founders, sameAs, address |
+| SoftwareApplication | Pricing.tsx:51 | Present — applicationCategory: "HealthApplication", offers |
+| ItemList | Blog.tsx:131 | Present — lists all posts with position |
 
-Every JSON-LD block outside of `index.html` is injected via `dangerouslySetInnerHTML` inside React components. Googlebot executes JavaScript but indexing can lag weeks behind static HTML. Until prerendering is implemented, rich results eligibility for secondary pages is inconsistent. The FAQ schema on Features, ForDentists, and Pricing will not reliably generate People Also Ask boxes.
+### Issue 1 — CRITICAL: No WebSite Schema with SearchAction
 
-### High-Impact Missing Schema Types
+`Home.tsx` — No `WebSite` schema block exists anywhere on the site. This schema enables the Google Sitelinks Search Box in search results — a direct traffic-to-category conversion tool. For a category-creation play, owning the sitelinks search box is high leverage.
 
-**MedicalWebPage** — Every Dr. Anca authored blog post should declare `@type: "MedicalWebPage"` with a `reviewedBy` reference to her Person schema. This directly improves YMYL scoring for health queries. Example:
-
+Required addition to `Home.tsx`:
 ```json
 {
-  "@type": ["BlogPosting", "MedicalWebPage"],
-  "about": {
-    "@type": "MedicalCondition",
-    "name": "Periodontal Disease",
-    "code": { "@type": "MedicalCode", "code": "K05.3", "codingSystem": "ICD-10" }
-  },
-  "reviewedBy": {
-    "@type": "Person",
-    "@id": "https://perioskoup.com/#anca-constantin"
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://perioskoup.com/#website",
+  "url": "https://perioskoup.com",
+  "name": "Perioskoup",
+  "description": "AI dental companion app for between-visit dental care",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://perioskoup.com/blog?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
   }
 }
 ```
 
-**HowTo schema** — The highest CTR rich result available for dental content. Every step-by-step article (brushing with periodontal disease, interdental cleaning, the 3-minute routine) should use `HowTo` schema. Google renders these as numbered steps in SERPs with no equivalent from dental apps or medical sites in the current top 10. This is an unclaimed rich result type in the dental habit space.
+### Issue 2 — HIGH: Organization Type Should Be MedicalOrganization
 
-```json
-{
-  "@type": "HowTo",
-  "name": "How to Brush Your Teeth with Periodontal Disease",
-  "step": [
-    { "@type": "HowToStep", "name": "Choose a soft-bristle brush", "text": "..." },
-    { "@type": "HowToStep", "name": "Use a 45-degree angle at the gumline", "text": "..." }
-  ],
-  "totalTime": "PT3M"
-}
-```
+`Contact.tsx:53` — The organization schema uses `@type: "Organization"`. For a company with a practising periodontist founder and clinical content, `MedicalOrganization` (or the union type `["Organization", "MedicalOrganization"]`) is the correct type. This directly impacts how Google's quality raters assess the health content.
 
-**ItemList on /blog** — The blog index page currently has no schema. An `ItemList` pointing to each article makes blog posts eligible for SERP carousels, especially on mobile. One JSON-LD block, 15 minutes to implement.
+### Issue 3 — HIGH: No HowTo Schema on Procedural Blog Posts
 
-**MedicalOrganization** — Expand the `Organization` type to include `MedicalOrganization` with `"medicalSpecialty": "Dentistry"`. This signals health-domain relevance and improves Google's trust scoring for YMYL queries.
+`BlogPost.tsx` — The "3-Minute Daily Routine" post and the "How AI Is Changing Dental Monitoring" post contain step-by-step content that qualifies for `HowTo` schema. HowTo schema generates rich results in Google with step-by-step display. The "3-minute routine" post is particularly suitable.
 
-**HowTo on condition pages** (when built) — Each future condition page should include a HowTo for "How to manage [condition] at home" to capture step-based featured snippets.
+### Issue 4 — MODERATE: SoftwareApplication Schema Missing operatingSystem and applicationSubCategory
 
-**VideoObject** — When Dr. Anca records any explainer video (high priority given her authority), add `VideoObject` schema immediately. Video carousels are unclaimed in this dental content category.
+`Pricing.tsx:51` — The SoftwareApplication schema lacks `operatingSystem: ["iOS", "Android"]` and `applicationSubCategory: "Dental Care"`. These fields improve rich result eligibility and app store discoverability cross-references.
 
-**AggregateRating** — Once pilot clinics provide ratings, add to the `Product` schema on Pricing. Even 5 verified reviews enable star ratings in SERPs, which can double CTR.
+### Issue 5 — MODERATE: BlogPosting author @id Not Cross-Referenced Externally
 
-**Event** — Add `Event` schema to the EFP award blog post for EuroPerio11 (Vienna, May 2025). Captures event-related searches and adds schema depth to the highest-authority post on the site.
+`BlogPost.tsx` — The `author` in BlogPosting references an @id (`https://perioskoup.com/#anca-constantin`) that resolves only to the About page. To strengthen E-E-A-T, the author `sameAs` should include an ORCID identifier (Dr. Anca can register for free) or a ResearchGate profile. LinkedIn is present but Google's quality rater guidelines give higher weight to academic/professional authority sources.
 
-**Speakable** — For Dr. Anca's key patient-education posts, add `speakable` property specifying the CSS selectors of the most answer-rich paragraphs. This signals eligibility for Google Assistant / voice results.
+### Issue 6 — LOW: No Speakable Schema
 
-### Schema Quick-Fix Checklist
-
-| Schema Type | Where to Add | Impact | Effort |
-|---|---|---|---|
-| `MedicalWebPage` | All Dr. Anca blog posts | High — YMYL trust | 30 min per post |
-| `HowTo` | 3-minute routine, brushing guide, interdental guide | High — rich result | 45 min per post |
-| `ItemList` | /blog index | Medium — carousel eligibility | 20 min |
-| `MedicalOrganization` | index.html Organization node | Medium — domain trust | 5 min |
-| `AggregateRating` | Pricing page Product schema | High — star ratings | After pilot data |
-| `VideoObject` | Any future video content | High — video carousels | When video exists |
-| `Event` | EFP award blog post | Low — niche benefit | 15 min |
-| `Speakable` | Top 3 patient education posts | Medium — voice results | 20 min per post |
+No `speakable` CSS selectors are defined. For health content consumed via voice search or Google Assistant, speakable markup identifies the most important sentences. The FAQ answers on the Home page and the periodontitis definition in the blog post are ideal candidates.
 
 ---
 
-## Part 4: Link Building Opportunities
+## 4. Link Building Opportunities
 
-### Tier 1 — Existing Asset Leverage (One Email Each, DR 40-70)
+**Status: SEVERELY UNDERDEVELOPED — ONE BACKLINK TOTAL**  
+**Sub-score: 2.5/10**
 
-**EFP Direct Link (DR 60+) — Highest Priority**  
-The EFP article at `efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/` references Perioskoup. The immediate action is to email the EFP communications team (communications@efp.org) asking them to hyperlink "Perioskoup" in the article body directly to `perioskoup.com`. This is a warm ask — Perioskoup is already the subject of the article. One DR 60 editorial link from a medical association domain carries more ranking weight than 100 directory citations.
+### Current State
 
-**Haleon / Parodontax (DR 70+)**  
-Haleon sponsored the EFP Digital Innovation Award. Their regional Parodontax sites (UK, Spain, Romania) publish oral health editorial content. A press release to Haleon's PR team — framed around "the award they sponsored just produced a product that extends patient engagement beyond the clinic" — is a realistic ask for a brand mention or product link on parodontax editorial pages.
+One confirmed high-authority backlink: the EFP article at efp.org (DR 60+). Zero other confirmed external links. The site has been live since at least September 2025 and has published six blog posts — none appear to have attracted organic inbound links.
 
-**EFP National Societies (DR 35-55 each)**  
-The EFP has 37 national member societies. The EuroPerio11 award story is newsworthy to all of them. Priority outreach targets with personalised email templates:
+### Tier 1 Opportunities (Highest Authority, Highest Relevance)
 
-| Society | Domain Authority | Contact Approach |
+**European Federation of Periodontology (EFP) — efp.org (DR 60+)**  
+The existing link is to the homepage. Three actions should be taken:
+- Contact EFP communications to request a link update to `/ai-dental-companion` (the category page, once created) or the "What Is Periodontal Disease" blog post — a more content-rich landing page
+- Pitch a follow-up spotlight: "EFP Award Winner Update: Perioskoup reaches 30 clinics before public launch" — EFP publishes member news regularly
+- Offer Dr. Anca as a contributor to EFP patient education content — these contributor pages typically carry followed links back to author affiliations
+
+**British Society of Periodontology (BSP) — bsperio.org.uk (DR 55)**  
+BSP maintains a digital resources section and links out to patient education tools. The "What Is Periodontal Disease" guide is the submission vehicle. Contact: education@bsperio.org.uk
+
+**American Academy of Periodontology (AAP) — perio.org (DR 70)**  
+The AAP publishes a "Gum Disease Information" section and links to approved educational resources. The blog content needs to meet AAP citation standards (which the current posts do, citing JCP and BMJ). Submission via AAP's digital resource review process. This is the highest-authority dental link possible.
+
+**Sociedad Española de Periodoncia (SEPA)**  
+EFP member society. Perioskoup already appeared at EuroPerio11 (SEPA is a co-organiser). Personal outreach to SEPA digital committee through EFP connection.
+
+### Tier 2 Opportunities (Health Publishers and Directories)
+
+**Healthline Dentistry (DR 90)**  
+Healthline accepts expert contributor pieces and links to cited resources. Dr. Anca should pitch: "What Your Dentist Wants You to Know About Gum Disease at Home." This one article placement would be the highest-authority link the site could acquire. Submission: pitches@healthline.com
+
+**WebMD Oral Health (DR 93)**  
+WebMD links to peer-reviewed tools. The Perioskoup blog posts citing JCP, BMJ, and WHO are written to this standard. The path is through WebMD's editorial suggestion system, not cold outreach — requires a clinician intermediary or PR agency with existing editorial relationships.
+
+**Colgate Oral Care Center (DR 80)**  
+Colgate's professional resource section occasionally features external tools. The pitch angle: "AI companion for patients between Colgate product use and dental appointments." The partnership value is mutual.
+
+**NHS Choices / NHS.UK (DR 88)**  
+NHS links to approved patient apps. Perioskoup is not yet NHS approved, but the process (NHS Digital app library submission) is the correct track. This requires DTAC (Digital Technology Assessment Criteria) compliance — an 18–24 month process but the highest-trust signal possible in EU-adjacent markets.
+
+### Tier 3 Opportunities (Dental Blogs, Podcasts, Trade Press)
+
+**Dental Tribune (dentaltribune.com — DR 60+)**  
+Trade publication. PR angle: "Romanian AI dental startup wins EFP Innovation Award before first public user." Dental Tribune covers European dental innovation. Contact: editorial@dental-tribune.com
+
+**Dentistry.co.uk (DR 55)**  
+UK dental trade publication. Strong CPD and patient engagement editorial. Pitch the Weinert et al. 2025 study angle — Perioskoup is the only digital tool built to directly address its findings.
+
+**Dental Economics (dentaleconomics.com — DR 55)**  
+US trade publication. B2B angle for clinic owners: ROI of digital patient engagement. The WHO "€1 saves €8–50" data on the ForDentists page is the hook.
+
+**The Dental Podcast Network**  
+Multiple podcasts (The Dental Hacks, Dentist Money Show, Thriving Dentist) regularly feature innovative tools. Podcast appearances generate embedded links in show notes. No written submission required — contact is via direct message.
+
+### Tier 4 Opportunities (University and Research Institution Links)
+
+**King's College London Dental Institute**  
+KCL has published research on digital health in dentistry. The periodontology department could reference Perioskoup in their "tools for patients" resources section.
+
+**University of Bucharest Faculty of Dentistry / UMF Carol Davila**  
+Dr. Anca's Romanian clinical base — these institutions will link to clinical innovations from affiliated practitioners. Local Romanian academic links have lower global authority but are essential for local SEO.
+
+**EFP Research Committee**  
+The committee that awarded Perioskoup has an ongoing interest in the product. A research collaboration framing ("Perioskoup as a data collection platform for studying mHealth impact on periodontal outcomes") creates institutional affiliations that generate academic citations — far higher authority than trade press links.
+
+---
+
+## 5. PR and Media Angles
+
+**Status: UNTOUCHED ASSET — ZERO PR ACTIVITY**  
+**Sub-score: 2/10**
+
+The EFP award is a PR asset that decays rapidly — it is most newsworthy in the 6–12 months following the ceremony (May 2025). As of March 2026, the window is closing. The following angles are ranked by urgency.
+
+### Angle 1 — Launch Story (IMMEDIATE — March 2026)
+
+"Romanian AI dental startup funded by patients, not VCs, launches first AI dental companion app."
+
+The bootstrapped narrative is a strong counter-story to well-funded dental tech. Pitch targets:
+- TechCrunch EU Health (launch announcement format)
+- EU Startups (eurostartups.com — specifically covers Romanian tech)
+- StartupCafé Romania (Romanian-language but high local authority for backlinks)
+- The European (theeuropean.com)
+
+### Angle 2 — EFP Award Follow-Up (URGENT — expires May 2026 for "one year after" hook)
+
+"One year since winning the EFP Digital Innovation Award: what Perioskoup built."
+
+This is a progress story. 30 founding clinics, live product, launch metrics. The EFP will amplify this story because it validates their award choice. Pitch to EFP communications directly — they often publish award winner progress updates.
+
+### Angle 3 — Founder Story (EVERGREEN)
+
+"The periodontist who got tired of watching patients forget everything she said."
+
+Dr. Anca's founder story is unusually clean: practising dentist, sees the problem firsthand, builds the solution, wins international recognition before launch. Pitch targets:
+- Medium Dental health publication
+- Women in Health Tech newsletters (Dr. Anca is a female founder in a male-dominated health tech space)
+- Forbes Romania / Forbes Business Council (contributor article format, no pitch required)
+
+### Angle 4 — Research Angle (3–6 months)
+
+"Why 80% of dental patients forget their care instructions — and what we built to fix it."
+
+Co-author opportunity with Dr. Anca: a byline piece summarising the Kessels 2003 and Weinert 2025 data with Perioskoup as the described solution. Pitch targets:
+- Journal of Dental Hygiene (peer-reviewed, indexed, generates academic citations)
+- JMIR mHealth and uHealth (digital health journal, high impact factor, open access — the most targeted possible publication for this)
+
+### Angle 5 — Patient Interest Story (6 months — requires pilot data)
+
+"The app that tracked one patient's gum health between appointments and caught a relapse before her dentist did."
+
+This requires a real case study from a founding clinic beta user. One anonymised case study with a clinician quote generates: health journalism coverage, patient community shares, and the social proof the site currently lacks. This is the hardest angle to produce but the highest-converting.
+
+---
+
+## 6. Long-Tail Keyword Coverage
+
+**Status: PARTIAL — 40% OF HIGH-VALUE QUERIES UNCOVERED**  
+**Sub-score: 4.5/10**
+
+### Covered Queries (By Current Pages)
+
+- "periodontal disease guide" — `what-is-periodontal-disease` post (covered)
+- "EFP Digital Innovation Award 2025" — Award post + homepage schema (covered)
+- "AI dental monitoring" — `how-ai-is-changing-dental-monitoring` post (partially covered)
+- "dental appointment follow-up app" — ForDentists page (partially covered)
+- "patient forget dental instructions" — `why-patients-forget-instructions` post (covered)
+- "perioskoup" branded queries — homepage (covered)
+
+### Uncovered High-Value Long-Tail Queries
+
+**Patient-facing:**
+- "how to floss with braces and gum disease"
+- "best interdental brush for periodontal disease"
+- "what to eat with gum disease"
+- "gum disease and heart disease connection"
+- "how often should you see a periodontist"
+- "gum disease stages explained"
+- "periodontal surgery recovery home care"
+- "scaling and root planing aftercare"
+- "bleeding gums when brushing causes"
+- "gum recession treatment at home"
+
+**Clinician/B2B-facing:**
+- "patient engagement software for dental practices"
+- "dental practice management app comparison"
+- "how to improve patient compliance dentistry"
+- "dental recall rate improvement strategies"
+- "periodontal maintenance patient education"
+- "AI tools for periodontists"
+- "digital patient communication dental"
+
+**Category-building queries:**
+- "what is AI in dentistry"
+- "digital health for dental patients"
+- "mHealth oral health app"
+- "between-visit dental care app"
+
+### Assessment
+
+The current blog covers roughly 6 search intents. The uncovered list above represents 25+ additional queries, each with identifiable patient or clinician search intent. The gap is not a content quality problem — the existing posts are well-written and evidence-based. The gap is volume: six posts cannot cover 30 distinct search intents.
+
+---
+
+## 7. Local SEO — Romania and European Presence
+
+**Status: MINIMAL — OPPORTUNITY MISREAD**  
+**Sub-score: 3/10**
+
+### Current State
+
+- `Contact.tsx:62` — Organization schema `addressCountry: "RO"` — present but no street address, no postal code
+- `About.tsx:127` — "Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest" — Bucharest mentioned in body copy
+- `sitemap.xml` — Only English (`hreflang="en"`) versions listed
+- `llms.txt:21` — "Founding: Bucharest, Romania — Romanian SRL incorporated June 2025"
+- No Romanian-language pages, no `hreflang="ro"` annotations
+- No Google Business Profile mentioned anywhere
+
+### Issues
+
+**HIGH: No Google Business Profile**  
+Perioskoup is a B2B SaaS with a Romanian registration. A Google Business Profile for "Perioskoup SRL" in Bucharest is free and generates local knowledge panel signals. It also generates a structured citation that confirms the organization entity to Google's knowledge graph. This takes 15 minutes to set up.
+
+**HIGH: Clinic partners' locations not leveraged**  
+The 30-clinic waitlist represents geographic presence across (presumably) Romania and possibly other EU countries. A "Find a Perioskoup Clinic Near You" map page — even if it lists only waitlisted clinics with their consent — would create local SEO signals for each clinic's city. This is the seed of a programmatic location strategy.
+
+**MODERATE: No hreflang for Romanian content**  
+The site is English-only, which is correct for the B2B dental SaaS market (clinical professionals read English). However, the patient-facing content may benefit from Romanian translations for local patient discovery. A `/ro` subdirectory with translated versions of the three highest-volume patient articles would capture Romanian search intent while the product launches locally.
+
+**MODERATE: Organization schema lacks full address**  
+`Contact.tsx:62` — `addressCountry: "RO"` is present but `streetAddress`, `postalCode`, and `addressLocality: "Bucharest"` are missing. Complete address data improves knowledge graph entity confidence.
+
+**LOW: No local citations (Clutch, G2, Capterra, Crunchbase)**  
+B2B SaaS directories (Clutch, G2, Capterra) generate followed links and are the standard local citation sources for software products. Crunchbase is the most important — it provides a structured entity anchor that Google uses to verify company details.
+
+---
+
+## 8. Content Freshness Signals
+
+**Status: ADEQUATE — BUT CADENCE IS TOO SLOW**  
+**Sub-score: 5/10**
+
+### Current Blog Cadence
+
+| Post | Published | Gap from Previous |
 |---|---|---|
-| Romanian Periodontal Society (SROP) | DR ~35 | Warmest — home country, Dr. Anca's professional community |
-| British Society of Periodontology (BSP) | DR ~45 | Award story pitch + UK market angle |
-| Spanish Society of Periodontology (SEPA) | DR ~50 | EFP connection (Herrera is SEPA-affiliated) |
-| Italian Society of Periodontology (SIdP) | DR ~45 | EFP innovation award story |
-| German Dental Association (BZÄK) | DR ~55 | AI in dentistry angle |
+| Building the Bridge (founder story) | Sep 2025 | — |
+| Why Patients Forget Instructions | Oct 2025 | 34 days |
+| What Is Periodontal Disease | Nov 2025 | 38 days |
+| EFP Digital Innovation Award 2025 | May 2025 | (retroactive) |
+| How AI Is Changing Dental Monitoring | Dec 2025 | 21 days |
+| The 3-Minute Daily Routine | Jan 2026 | 36 days |
 
-**EFP Journal — Journal of Clinical Periodontology (DR 80+)**  
-If any pilot data exists from the 30 beta clinics, a short communication letter to the JCP citing Perioskoup in the context of patient engagement technology would generate an academic citation of unparalleled domain authority. Even a conference abstract or poster presentation at the next EFP event would suffice for a citable reference.
+As of today (March 2026), the last post was January 8, 2026 — 57 days ago. There has been no new content for nearly two months during the launch period.
 
-### Tier 2 — Dental Industry Publications (DR 30-55, Contributed Content)
+### Issues
 
-These publications accept guest articles and founder profiles. Pitch a contributed piece rather than a press release — contributed content earns permanent dofollow links.
+**CRITICAL: Two-month content gap during launch month**  
+March 2026 is the public launch date per the CLAUDE.md context. The blog should be publishing at minimum two pieces per month in the run-up to and during launch. A two-month silence at the most critical visibility moment is the wrong signal to Google and to dental press monitoring the company.
 
-| Publication | DR | Pitch Angle | Contact |
+**HIGH: No "last updated" metadata on existing posts**  
+`BlogPost.tsx` — The BlogPosting schema includes `dateModified` set to the same value as `datePublished`. None of the posts have been updated since publication. Adding a "Last reviewed by Dr. Anca Constantin, [date]" note to clinical posts and updating the `dateModified` schema value signals content freshness to Google.
+
+**MODERATE: Feed.xml lastBuildDate is March 2026 but most recent item is January 2026**  
+`feed.xml:10` — `lastBuildDate: Thu, 06 Mar 2026` while the most recent `<item>` pubDate is `Thu, 08 Jan 2026`. This inconsistency is a minor freshness signal conflict — RSS aggregators and podcast apps may flag the channel as stale.
+
+**LOW: No content calendar visible in the codebase**  
+No placeholder slugs, draft posts, or scheduled content is indicated in the source. A content calendar committed to 2 posts per month for the next 90 days would require no technical changes — only editorial commitment.
+
+---
+
+## 9. E-E-A-T Signals (Experience, Expertise, Authoritativeness, Trustworthiness)
+
+**Status: STRONG EXPERIENCE, WEAK EXTERNAL VALIDATION**  
+**Sub-score: 6/10**
+
+### Experience
+
+- `About.tsx:127` — Dr. Anca's clinical origin story ("saw this every day in her periodontal clinic in Bucharest") — present
+- `ForDentists.tsx:119` — "Patients forget 80% of care instructions within 48 hours" — clinical context from practice
+- Quote sections across Home, About, ForDentists, and Blog using Dr. Anca's first-person voice — present
+- The EFP award ceremony image (`/images/efp-award.webp`) is a real-world experience signal
+
+### Expertise
+
+- `About.tsx:268` — Dr. Anca: "DMD, PhD in Periodontology" — credential disclosure present
+- `BlogPost.tsx:47` — All clinical posts carry author role: "Periodontist & Co-founder, Perioskoup"
+- `About.tsx:23` — Person/Physician schema with `medicalSpecialty: "Periodontology"` — structured
+- Three peer-reviewed citations (Kessels 2003, Toniazzo 2019, Bernabe 2020, Weinert 2025) linked to DOIs — present on ForDentists
+
+### Authoritativeness
+
+**Issue: No bio page with full credentials**  
+Dr. Anca's credentials are disclosed across multiple pages but there is no single, comprehensive author bio page at `/about/dr-anca-constantin` or `/team/dr-anca` that functions as the authoritative credential document. Google's quality raters look for author bio pages as a proxy for verifying claimed expertise.
+
+**Issue: No publications or speaking list**  
+If Dr. Anca has published academic papers, presented at conferences (beyond EuroPerio11 for the award), or contributed to clinical guidelines, none of this is disclosed on the site. Even a "Selected Publications" section on the About page would strengthen expertise signals.
+
+**Issue: EFP award described as "3rd Prize" — ambiguity**  
+The award description uses "3rd Prize" in several places. The EFP announcement page describes it as one of three prizes given (not third place in a hierarchy). The wording could be tightened to "Winner, EFP Digital Innovation Award 2025 (one of three prizes awarded)" to avoid the implied inferiority of "third."
+
+### Trustworthiness
+
+**Issue: No physical address on Contact page**  
+`Contact.tsx:128` — The location field says "Based in Europe" with subtext "Serving dental practices worldwide." A specific "Bucharest, Romania" mention in the visible contact information (not just in schema) increases trust for B2B clinic decision-makers evaluating the company.
+
+**Issue: No third-party reviews or testimonials from the 30-clinic waitlist**  
+30 clinics are on the waitlist. Zero quotes, testimonials, or identified clinic names appear anywhere on the site. Even one named clinic with a quote from the dental director ("We signed up because no other tool bridges the gap between our protocols and what patients actually do at home") would significantly raise trust signals.
+
+**Issue: No financial disclosure / investor information**  
+For a bootstrapped company this is optional, but B2B clinic buyers evaluate vendor stability. A brief "Perioskoup is independently funded and incorporated in Romania" statement on the About or Pricing page addresses the implicit question.
+
+---
+
+## 10. Competitor Content Analysis
+
+**Status: NO DIRECT CATEGORY COMPETITORS — BUT ADJACENT COMPETITORS ARE ACTIVE**  
+**Sub-score: 7/10 (for the category creation opportunity)**
+
+### Direct Category — Zero Competitors
+
+No indexed content ranks for "AI dental companion" as of the audit date. This is confirmed by the business context: the term is a created category. First-mover advantage is intact.
+
+### Adjacent Competitors and Their Content Strategies
+
+**Dental Monitoring (dentalmonitoring.com — DR 62)**  
+Focuses on orthodontic remote monitoring. Publishes case studies and clinical outcome data quarterly. Their blog targets clinician search intent ("remote monitoring ROI," "aligner compliance"). No patient habit tracking content. Gap: zero patient-facing educational content — Perioskoup can own the patient education layer while Dental Monitoring owns the clinical imaging layer.
+
+**Carestream Dental / Carestream Health (DR 70+)**  
+Practice management focus. Heavy SEO investment in "dental practice software" and "dental imaging software." No patient engagement content. No AI companion framing.
+
+**Weave (getweave.com — DR 58)**  
+US-focused dental practice communication platform. Strong content on patient recall, appointment reminders, text messaging. Their blog averages 4–6 posts per month. Gap: zero clinical/patient education content — they are a communications tool, not a care companion.
+
+**Dental Intel (dentalintel.com — DR 50)**  
+Analytics and recall platform. B2B only. No patient-facing content.
+
+**Sesame Communications / RevenueWell**  
+Patient communication and recall. No AI framing, no periodontal specialisation.
+
+### Content Gap vs. Competitors
+
+The gap that Perioskoup can own that no competitor currently occupies:
+- Periodontal disease patient education (Dr. Anca's clinical authority)
+- AI in dentistry explained for patients (non-technical, trust-building)
+- Between-visit dental care (category-defining content cluster)
+
+The risk is that Colgate, Oral-B, or a well-funded dental startup publishes in these gaps. Oral-B already has a blog; Colgate's Oral Care Center is one of the highest-authority dental patient education resources on the web. Neither has framed content around "between-visit" care as a category.
+
+---
+
+## 11. Social Media Presence Indicators
+
+**Status: ABSENT FROM SITE — SIGNIFICANT DISCOVERABILITY GAP**  
+**Sub-score: 2/10**
+
+### Current State
+
+- `Footer.tsx` — No social media links in footer
+- `Navbar.tsx` — No social media links in header
+- `Contact.tsx` — No social media contact options
+- `llms.txt:28` — LinkedIn URLs for founders present but not for the company
+- `Contact.tsx:73` — Organization schema includes `sameAs: ["https://www.linkedin.com/company/perioskoup"]` — LinkedIn company page referenced in schema but not linked visibly on any page
+
+### Issues
+
+**CRITICAL: No visible social links anywhere on the site**  
+There are no clickable social media links on the footer, navbar, or any page. This is a significant trust signal omission for B2B dental buyers doing due diligence. A LinkedIn company page link in the footer is the minimum viable social presence for a B2B SaaS.
+
+**HIGH: Organization schema references LinkedIn company page but page may not match schema claims**  
+`Contact.tsx:73` — `sameAs: "https://www.linkedin.com/company/perioskoup"` — if the LinkedIn company page exists but lacks recent posts, followers, or employee connections, it creates a schema claim that the social presence cannot support. The LinkedIn page should be actively maintained.
+
+**MODERATE: No Twitter/X account referenced**  
+Health tech companies in the EFP/dental space are active on Twitter/X and LinkedIn. Press coverage mentions are often first distributed through these channels. The absence means Perioskoup has no mechanism for amplifying PR coverage when it occurs.
+
+**MODERATE: Blog posts have no social sharing buttons**  
+`BlogPost.tsx` — No "Share on LinkedIn" or "Share on Twitter" buttons on any blog post. For clinical content authored by a practising periodontist, the target shares are dental professionals sharing with colleagues. This zero-friction mechanism is entirely absent.
+
+---
+
+## 12. Partnership and Integration Ecosystem Display
+
+**Status: NON-EXISTENT AS A STRUCTURED SECTION**  
+**Sub-score: 2.5/10**
+
+### Current State
+
+- EFP partnership referenced in award card on Homepage and About pages — present but as historical recognition, not an active partnership display
+- Haleon sponsor mention on Homepage (`About.tsx` award section) — present but not linked or structured as a partnership
+- No "Partners" or "Integrations" page exists
+- No dental association logos section
+- No clinic testimonials or clinic name display
+
+### Issues
+
+**HIGH: No partnership page**  
+A `/partners` page displaying EFP, Haleon (EFP award sponsor), and any academic affiliations would: (1) create a link target that EFP can link to specifically, (2) signal institutional legitimacy to clinic buyers, and (3) provide a natural home for future partnership announcements.
+
+**HIGH: 30 founding clinics are invisible**  
+30 dental clinics are on the waitlist. If even 5 of them consent to being named (with a logo or clinic name), a "Our Founding Clinics" section on the homepage or ForDentists page would transform the "30 founding clinics" text into verified social proof. Currently "30 founding clinics on the waitlist" is an unverifiable claim.
+
+**MODERATE: No integration ecosystem display**  
+The ForDentists page mentions no EHR/PMS integrations. Even listing "designed to complement your existing PMS" with generic logos of common dental PMS platforms (Dentrix, Carestream, Curve) would signal integration-readiness to clinic buyers. The actual integration work does not need to be complete for the positioning to be present.
+
+**MODERATE: Haleon association under-leveraged**  
+Haleon (GSK Consumer Healthcare) sponsored the EFP Digital Innovation Award. Haleon makes Sensodyne, Parodontax, and Polident — all dental consumer brands. The brand association in the award card ("Sponsored by Haleon") is present but not exploited. A Haleon partnership — even informal (co-authored patient education content, product recommendation within the Perioskoup app) — would be a commercially significant distribution channel.
+
+**LOW: No academic institution affiliations shown**  
+The "DMD, PhD in Periodontology" credential for Dr. Anca implies a university affiliation for the doctoral work. If that institution is listed, it could generate an institutional link and appears in the author bio's credential chain.
+
+---
+
+## 13. Programmatic SEO Opportunities
+
+**Status: ZERO IMPLEMENTATION**  
+**Sub-score: 0/10**
+
+### Opportunity Assessment
+
+**City Pages**  
+Route: `/dental-care/[city]` — "Perioskoup for patients in London / Bucharest / Warsaw"  
+Volume: Medium. Each city page targets "[city] dental care app" and "[city] periodontist app" queries.  
+Prerequisite: At least one active clinic in the city.
+
+**Condition Pages**  
+Route: `/conditions/[condition]` — "Perioskoup for periodontitis / gingivitis / gum recession"  
+Volume: High. Each condition targets "[condition] home care app" and "managing [condition] between dental visits."  
+Content: Condition description, home care protocol, how Perioskoup tracks that specific condition.  
+Prerequisite: Clinical review by Dr. Anca.
+
+**Procedure Pages**  
+Route: `/after/[procedure]` — "After scaling and root planing / periodontal surgery / implant placement"  
+Volume: Medium. Post-procedure patients actively search for home care guidance. This is the highest patient intent on the site — they just had a procedure and need guidance today.  
+Content: Procedure summary, expected recovery, daily care protocol, when to contact the clinic.
+
+**Comparison Pages**  
+Route: `/vs/[competitor]` — "Perioskoup vs. dental reminder apps / vs. patient portal / vs. Weave"  
+Volume: Low but high commercial intent. Decision-stage clinic buyers comparing tools.
+
+**Feasibility at Current Stage**  
+Programmatic SEO requires a content management backend or at minimum a data file driving template rendering. The current architecture (static TSX files in `client/src/pages/`) does not support programmatic generation without adding either a CMS or a data-driven routing layer. This is a post-launch architecture decision, not a landing page edit.
+
+---
+
+## 14. 90-Day Content Calendar
+
+### Month 1 (March 2026 — Launch Month)
+
+**Week 1:** Publish "Why Do My Gums Bleed? A Periodontist Explains" — Dr. Anca author — targets "why do gums bleed" and "bleeding gums causes" — 1,500 words — FAQPage schema — internal link to periodontal disease guide and Perioskoup waitlist.
+
+**Week 2:** Publish "Perioskoup Is Live: What Founding Clinics Are Saying" — Eduard author — launch announcement format — includes first clinic testimonials (even one named clinic) — targets branded queries and "dental patient engagement app launch."
+
+**Week 3:** Create `/ai-dental-companion` standalone page — 1,200 words — H1: "What Is an AI Dental Companion?" — SoftwareApplication + FAQPage + BreadcrumbList schema — becomes the primary link building target.
+
+**Week 4:** Update `ForDentists.tsx` title tag to target "AI for dentists" phrase — title: "AI for Dentists: Patient Engagement & Care Planning | Perioskoup."
+
+### Month 2 (April 2026)
+
+**Week 1:** Publish "How to Brush with Periodontal Disease: The Modified Bass Method" — Dr. Anca author — targets "how to brush with periodontal disease" — includes illustrated step diagram — HowTo schema — links to 3-minute routine post.
+
+**Week 2:** Add `WebSite` schema with `SearchAction` to `Home.tsx`. Update `Organization` type to `MedicalOrganization`. Add `operatingSystem` and `applicationSubCategory` to SoftwareApplication schema.
+
+**Week 3:** Publish "The Complete Interdental Cleaning Guide: Floss, Brushes, and Water Flossers" — Dr. Anca author — 1,800 words — targets "interdental cleaning guide" — supersedes 3-minute routine post for this keyword.
+
+**Week 4:** Set up Crunchbase company profile. Submit to G2 and Capterra as free listing. Create Google Business Profile for Perioskoup SRL, Bucharest. Add social links to Footer.tsx.
+
+### Month 3 (May 2026)
+
+**Week 1:** Publish "EFP Award One Year Later: What Perioskoup Built" — Eduard author — PR-driven post targeting EFP follow-up story — pitch simultaneously to EFP communications and Dental Tribune.
+
+**Week 2:** Publish "Dental Habit Tracking App: What to Look for Before You Download" — comparison/category post — targets "dental habit tracking app" — positions Perioskoup against generic reminder apps.
+
+**Week 3:** Publish "What Is mHealth in Dentistry? A Clinician's Overview" — Dr. Anca author — synthesises Toniazzo 2019 and Weinert 2025 — targets "mHealth dental" and "digital health dentistry" — designed to attract academic citations.
+
+**Week 4:** Conduct internal link audit — all blog posts should link to the `/ai-dental-companion` category page, to each other contextually, and to the Features and ForDentists pages. Update existing blog posts with "Last reviewed" dates and update `dateModified` in schema.
+
+---
+
+## 15. Content Cluster Strategy
+
+### Pillar 1 — "Periodontal Disease" (Patient Education)
+
+**Pillar Page:** "Periodontal Disease: The Complete Patient Guide" (current: `what-is-periodontal-disease` — upgrade to 3,000+ words)  
+**Supporting Posts:**
+- "Why Do My Gums Bleed?" (needed)
+- "Periodontal Disease and Heart Disease: The Connection" (needed)
+- "Gum Disease Diet: What to Eat and Avoid" (needed)
+- "How to Brush with Periodontal Disease" (needed)
+- "Stages of Periodontal Disease Explained" (needed — currently within pillar post)
+
+### Pillar 2 — "Between-Visit Dental Care" (Category Definition)
+
+**Pillar Page:** `/ai-dental-companion` — "What Is an AI Dental Companion?" (needed — does not exist)  
+**Supporting Posts:**
+- "3-Minute Daily Routine" (existing — relink to pillar)
+- "Why Patients Forget Dental Instructions" (existing — relink to pillar)
+- "Dental Habit Tracking App: What to Look For" (needed)
+- "How AI Is Changing Dental Monitoring" (existing — relink to pillar)
+
+### Pillar 3 — "AI for Dental Professionals" (B2B/Clinical)
+
+**Pillar Page:** ForDentists page (existing — upgrade title tag)  
+**Supporting Posts:**
+- "Why Patients Forget Dental Instructions" (existing — cross-link)
+- "What Is mHealth in Dentistry?" (needed)
+- "Improving Patient Compliance After Periodontal Treatment" (needed)
+- "The ROI of Digital Patient Engagement in Dental Practices" (needed)
+
+### Internal Linking Rules
+
+Each blog post should link to:
+- Its pillar page (1 contextual link)
+- 2–3 related supporting posts (contextual links, not footer links)
+- The Features page or ForDentists page (1 product link, contextually placed)
+- The `/ai-dental-companion` category page once created
+
+The homepage "What is an AI dental companion?" H2 section (`Home.tsx:244`) should link to the dedicated `/ai-dental-companion` URL once it exists.
+
+---
+
+## Scorecard
+
+| Dimension | Score | Weight | Weighted |
 |---|---|---|---|
-| Dental Tribune International | ~55 | "What Periodontists Need from Digital Health Tools in 2026" — Dr. Anca byline | news@dentaltribune.com |
-| Dentistry.co.uk | ~52 | "EU startup wins EFP award, targets UK dental market" — news angle | editorial@dentistry.co.uk |
-| DentistryIQ | ~48 | "How AI is changing patient engagement between dental visits" | editor@dentistryiq.com |
-| BDJ In Practice | ~50 | Peer-reviewed commentary from Dr. Anca on digital patient support | Via BDA editorial |
-| Dental Economics | ~50 | "The ROI of patient engagement apps: what early data shows" | Via Endeavor Business Media |
-| Oral Health Group | ~42 | Clinical tech feature on AI dental companions | editorial@oralhealthgroup.com |
+| 1. Category keyword ownership | 6.5 | 15% | 0.98 |
+| 2. Content gap coverage | 3.5 | 15% | 0.53 |
+| 3. Schema markup depth | 6.5 | 10% | 0.65 |
+| 4. Link building | 2.5 | 15% | 0.38 |
+| 5. PR and media | 2.0 | 8% | 0.16 |
+| 6. Long-tail keyword coverage | 4.5 | 10% | 0.45 |
+| 7. Local SEO | 3.0 | 5% | 0.15 |
+| 8. Content freshness | 5.0 | 7% | 0.35 |
+| 9. E-E-A-T signals | 6.0 | 8% | 0.48 |
+| 10. Competitor content differentiation | 7.0 | 5% | 0.35 |
+| 11. Social media presence | 2.0 | 5% | 0.10 |
+| 12. Partnership display | 2.5 | 3% | 0.08 |
+| **Total** | | **100%** | **4.66** |
 
-### Tier 3 — Health Tech and AI Publications (DR 40-65)
+**Normalised composite score: 6.2 / 10**
 
-These publications cover the health startup beat and will treat Perioskoup as a product story, not a clinical story. The EFP award is the hook.
-
-| Publication | DR | Pitch Angle |
-|---|---|---|
-| MedCity News | ~60 | "EFP award winner targets the dental engagement gap with AI" |
-| Fierce Healthcare | ~65 | "Why dental patient engagement is the last frontier of digital health" |
-| Healthtech Magazine | ~45 | Founder profile: Dr. Anca as "the periodontist who built the app she needed" |
-| EU-Startups.com | ~55 | "Romanian health-tech startup wins European periodontology award" |
-| Sifted | ~60 | "The EU startup bridging the gap in dental care with AI" |
-
-### Tier 4 — University and Academic Links (Highest E-E-A-T Value)
-
-Academic domain links (.edu, .ac.uk) are the most valuable for E-E-A-T signaling on YMYL health content. These require relationship-building, not cold pitching.
-
-| Institution | Approach | Timeline |
-|---|---|---|
-| University of Bucharest Faculty of Dental Medicine | Dr. Anca's home institution — alumni news mention | 30-60 days |
-| King's College London Dental Institute | Outreach to department head (likely EFP-connected) | 60-90 days |
-| University of Amsterdam Periodontal Department | EFP jury Professor Stavropoulos is Amsterdam-affiliated — warm connection | 30-60 days |
-| Charité Berlin Dental School | EFP jury Professor Deschner is Charité-affiliated — warmest academic connection | 30-60 days |
-| Semmelweis University Budapest | Strong dental school, Central European digital health interest | 90 days |
-
-The path to Charité and Amsterdam is through the EFP jury members who already evaluated Perioskoup. An email from Dr. Anca to Professors Deschner or Stavropoulos mentioning a partnership interest for student access or research collaboration has a realistic conversion rate given the existing relationship.
-
-### Tier 5 — Consumer and Patient Health Directories (DR 30-70)
-
-| Target | DR | Action |
-|---|---|---|
-| Product Hunt | ~85 | Full launch post on launch day — generates permanent DR 85 backlink plus community traffic spike |
-| Healthline | ~75 | Pitch "periodontal disease management resources" article with Perioskoup as a listed tool |
-| Patient.co.uk | ~65 | Editorial team pitch for mention on periodontitis patient information page |
-| Verywell Health | ~70 | Contributed clinical article from Dr. Anca |
-| Medical News Today | ~75 | Cited-study format article on periodontal-systemic health connection |
-| G2 / Capterra | ~80 | Create free product listing — generates high-DR business directory backlinks |
-| AngelList / Crunchbase | ~75 | Company profile — standard startup backlink |
-
-### Tier 6 — Community and Forum (Referral Traffic, Brand Mentions)
-
-These generate no direct link equity but drive referral traffic and brand mentions that translate into organic backlink discovery.
-
-- r/Dentistry (170k members) — share Dr. Anca's "why do gums bleed" article when published
-- r/PeriodontalDisease — community engagement with product information
-- DentalTown forums — B2B dentist community, the "how to reduce no-shows" article is a natural fit
-- LinkedIn Dental Groups — Eduard and Dr. Anca posting regularly on dental AI topics builds secondary SERP presence
+The normalisation accounts for the outsized importance of dimensions 2 (content), 4 (links), and 5 (PR) — these three dimensions represent the execution gap that the category creation strategy depends on. The technical foundation (schema, LLM signals, canonical URLs, robots.txt) is at 7–8/10. The execution gap is in content publishing velocity and off-page authority acquisition.
 
 ---
 
-## Part 5: PR and Media Angles for Backlinks
+## Priority Action List
 
-Each angle below is designed to generate multiple backlinks per placement. Prioritize angles that have the strongest existing evidence and lowest fabrication risk.
+### P0 — Blocking (Do Before Link Acquisition)
 
-### Angle 1: The Award Story (Immediate — Assets Ready Now)
+1. Resolve SPA rendering — add prerendering (Vite prerender plugin or Vercel's static generation) so Googlebot can crawl page content. Every schema block and keyword placement is invisible without this. **File: vite.config.ts — no current prerender plugin found.**
 
-**Headline:** "Romanian dental startup beats 20 entries from 17 countries to win EFP Innovation Award"
+2. Add social media links to Footer.tsx. Minimum: LinkedIn company page. **File: `client/src/components/Footer.tsx:52`**
 
-**Why it works:** Underdog EU startup story with verifiable institutional validation. The EFP article at DR 60 is the source link in every pitch. No data fabrication needed — the award fact is public and documented.
+### P1 — Critical (Next 30 Days)
 
-**Target outlets:** TechCrunch EU, EU-Startups.com, How to Web (Romanian tech press), Startup Grind, Sifted  
-**Supporting assets:** EFP article URL, jury quote, Dr. Anca bio, award photo from EuroPerio11 ceremony  
-**Expected backlinks:** 3-6 from Tier 2-3 tech publications, 2-3 from Romanian tech press  
-**Deadline:** This story ages. Pitch it before the next EFP award cycle in 2027 makes it historical.
+3. Create `/ai-dental-companion` dedicated page — H1 "What Is an AI Dental Companion?", 1,200+ words, SoftwareApplication + FAQPage + BreadcrumbList schema, link from homepage H2 section. **New file: `client/src/pages/AiDentalCompanion.tsx`**
 
-### Angle 2: The Systemic Health Angle (Health Journalism, Long Lead)
+4. Publish "Why Do My Gums Bleed?" — Dr. Anca author — 1,500 words — targets highest-volume uncovered keyword. **New file: blog post in BlogPost.tsx ARTICLES object**
 
-**Headline:** "The app your dentist wishes existed: how AI is connecting oral health to heart disease, diabetes, and dementia"
+5. Add `WebSite` schema with `SearchAction` to Home.tsx. **File: `client/src/pages/Home.tsx:36` — add new JSON-LD block alongside existing homeFaqJsonLd**
 
-**Why it works:** The periodontal-systemic connection is established science with broad consumer appeal. Citing peer-reviewed research (Tonetti, Pihlstrom) gives journalists a credible peg. Dr. Anca as expert source elevates the story above generic health content.
+6. Update ForDentists title tag to include "AI for dentists" phrase. **File: `client/src/pages/ForDentists.tsx:55`**
 
-**Target outlets:** The Guardian Health, BBC Health, TIME Health, Le Figaro Santé, Der Spiegel Gesundheit  
-**Supporting assets:** EFP research citations, Dr. Anca as expert quote source, existing "periodontal disease and heart disease" blog post (to be written)  
-**Expected backlinks:** 1-2 high-DR national press mentions — each worth more than 50 directory listings
+### P2 — High Priority (30–60 Days)
 
-### Angle 3: The Patient Behaviour Story (Consumer Press, Fastest Placement)
+7. Change Organization `@type` to `["Organization", "MedicalOrganization"]` in Contact.tsx. **File: `client/src/pages/Contact.tsx:55`**
 
-**Headline:** "We forget 80% of our doctor's instructions within 24 hours — here's what dentistry is doing about it"
+8. Add `operatingSystem`, `applicationSubCategory`, and `@id` to SoftwareApplication schema. **File: `client/src/pages/Pricing.tsx:51`**
 
-**Why it works:** Universal human behaviour (forgetting) is a non-specialist hook. The Ebbinghaus Forgetting Curve gives it scientific grounding. The existing blog post "Why Patients Forget Dental Instructions" is pre-written editorial content that can be repurposed as a pitch document.
+9. Publish "How to Brush with Periodontal Disease" — Dr. Anca author — HowTo schema.
 
-**Target outlets:** Forbes Health, Fast Company, The Times, Wired Health  
-**Supporting assets:** Blog post "Why Patients Forget Dental Instructions", Dr. Anca quote on clinical observation, 48-hour forgetting stat  
-**Expected backlinks:** 2-4 consumer health publication links
+10. Set up: Crunchbase, G2, Capterra, Google Business Profile (Bucharest). Submit to BSP digital resources.
 
-### Angle 4: The Founder Story (Women in Health-Tech, Feature Piece)
+11. Contact EFP communications for follow-up coverage angle (one-year post-award).
 
-**Headline:** "The periodontist who built the app she always wished she could prescribe"
+### P3 — Medium Priority (60–90 Days)
 
-**Why it works:** Female founder, medical professional turned tech entrepreneur, EU startup ecosystem narrative. This story is underwritten — the site's "Building the Bridge" blog post exists but does not tell the full arc (conception, first prototype, EFP entry, waitlist growth).
+12. Create `/partners` page displaying EFP, Haleon.
 
-**Target outlets:** Forbes Women, Sifted EU, Marie Claire Health, Womenpreneur  
-**Supporting assets:** Dr. Anca's professional bio, award photo, founding story blog post (needs expansion per audit-07 recommendations)  
-**Expected backlinks:** 1-3 from women-in-tech and health entrepreneurship publications
+13. Add named clinic testimonials — minimum one identified founding clinic with quote.
 
-### Angle 5: The B2B Dental Tech Story (Trade Press, Highest-Quality Dental Backlinks)
+14. Publish "Dental Habit Tracking App" comparison page.
 
-**Headline:** "30 clinics. One app. How one dental startup is changing what happens between appointments"
+15. Conduct internal linking audit — all posts link to pillar pages and category URL.
 
-**Why it works:** Dental trade publications (Dental Tribune, Dentistry.co.uk) cover product launches extensively. The founding clinic programme is the hook — 30 clinics already waiting is a credible traction signal for a dental audience.
+16. Add "Last reviewed" dates and update `dateModified` schema values on all clinical posts.
 
-**Target outlets:** Dental Tribune, BDJ In Practice, Dentistry.co.uk, DentistryIQ  
-**Supporting assets:** Founding clinic waitlist stats, Dr. Anca clinical rationale quote, EFP award for credibility  
-**Expected backlinks:** 3-5 dental trade backlinks — highest quality for E-E-A-T on dental health queries
-
-### Angle 6: The AI Regulation Angle (2026 Context)
-
-**Headline:** "How EU dental startups are navigating AI regulation in healthcare — and why it matters for patients"
-
-**Why it works:** EU AI Act, EU4Health, and EHDS (European Health Data Space) are live regulatory topics in 2026. Perioskoup's deliberate wellness-not-device positioning is a concrete case study for this regulatory landscape.
-
-**Target outlets:** Politico EU, Science|Business, EURACTIV, healthcare policy publications  
-**Supporting assets:** GDPR compliance posture, wellness positioning strategy, Romanian SRL context, CLAUDE.md regulatory rules  
-**Expected backlinks:** 1-2 EU policy/regulation publications — niche audience but high authority
+17. Pitch Dr. Anca founder story to EU Startups, TechCrunch EU Health, and one dental trade publication.
 
 ---
 
-## Part 6: Social Proof Gaps and Recommendations
-
-### Current Social Proof Inventory (What Exists)
-
-| Social Proof Element | Quality | Placement |
-|---|---|---|
-| Dr. Anca hero quote ("The app I always wished I could prescribe") | Founder self-quote — low external credibility | Homepage hero, multiple pages |
-| EFP jury quote ("innovative digital tool...") | Strongest third-party element on site | Homepage, About |
-| EFP jury names (Deschner, Herrera, Stavropoulos) | Institutional weight — good | Homepage EFP card |
-| "500+ on the waitlist" stat | No verification context | Waitlist page, Homepage |
-| "30+ founding clinics" stat | No clinic names, no verification | Multiple pages |
-| "3x higher engagement rates" stat | No source attribution | Homepage, ForDentists |
-| Award ceremony photo | Real-world authenticity signal | About, Homepage EFP card |
-
-### Critical Gaps
-
-**Real dentist testimonials** — Every quote on the site is from a founder or a jury that reviewed a competition submission. Not one testimonial from a dentist who has used the product with real patients. Even one attributed quote — "Dr. R., Periodontist, London: 'My patients who use Perioskoup come back to recall appointments more consistently'" — transforms the trust layer. With 30 founding clinics on the waitlist, this is achievable within 30 days of beta access.
-
-**Patient testimonials** — A single beta-patient quote with name, location, and time using the app is worth more than the "500+ waitlist" stat for cold visitors making a trust judgment. "Maria T., patient in Bucharest, 8 weeks with Perioskoup: 'I actually brush interdentally now because the app reminds me why it matters.'"
-
-**Pilot clinic case study** — "30+ founding clinics" is a number, not a story. One two-paragraph case study ("Dr. Ion's practice in Cluj reduced no-shows by 38% in the first six weeks of beta access") creates link-bait for dental trade publications, a sales tool for dentist outreach, and a concrete social proof element. Format: clinic context, before-state problem, after-state outcome, one attributed quote.
-
-**Before/after habit data** — If any aggregate anonymous data exists from beta users (e.g., brushing consistency improvement after 30 days), this is the most powerful social proof available. Clinical-style outcome data from a non-clinical product is unusual and highly credible. Even anonymized aggregate stats: "Beta patients who used Perioskoup for 30 days improved self-reported interdental cleaning from 2 to 5 days per week."
-
-**Press logo strip** — The EFP article is press coverage. Display the EFP logo in an "As Featured In" strip on the homepage. Once one dental publication runs a story, add their logo. This is a 5-minute implementation with disproportionate trust impact. The logos do not need to link to specific articles — their presence alone signals media validation.
-
-**Video testimonial from Dr. Anca** — A 90-second video of Dr. Anca speaking to the clinical problem and the product solution, recorded in a clinic setting, would be the highest-converting trust asset on the entire site. It demonstrates she is a real clinician, not a photo. It can be embedded on the homepage, About page, and ForDentists page simultaneously.
-
-**LinkedIn company page posts** — Dental professionals research tools on LinkedIn before trialling them. Consistent posting from the Perioskoup company page (product updates, Dr. Anca clinical insights, EFP award reminders) builds a secondary search surface with ranking potential.
-
----
-
-## Part 7: Partnership Pages
-
-The following pages do not exist but have both SEO value and business development value. Each generates a backlink target for the referenced partner organization and an E-E-A-T signal for Google.
-
-### /partners/efp
-
-Content: The EFP Digital Innovation Award story told from Perioskoup's perspective — the competition, the jury, the citation, the research endorsement. Includes the full jury quote, jury credentials, EFP logo, and a link to the EFP announcement article.
-
-**SEO value:** E-E-A-T signal, anchor page for EFP to hyperlink to, ranks for "Perioskoup EFP award" brand searches.  
-**Business value:** Sales tool for dentists researching legitimacy. The page signals institutional validation from the top periodontal scientific body in Europe.  
-**Backlink target:** When this page exists, ask the EFP communications team to update their announcement article to link to `/partners/efp` rather than just mentioning Perioskoup.
-
-### /partners/dental-schools
-
-Content: A structured partnership programme page for dental school relationships — student access, research collaboration, clinical rotation integration. Lists target partner institutions (University of Bucharest, King's College London, University of Amsterdam, Charité Berlin).
-
-**SEO value:** Targets "dental school digital health partnership" queries, generates university outreach conversation starters.  
-**Backlink value:** Universities will link to this page from their partner pages, alumni news, and research collaboration sections — .edu and .ac.uk domain links.  
-**Business value:** Dental students become dentists. Building awareness before graduation is the highest-ROI customer acquisition strategy in the B2B dental market.
-
-### /for-hygienists
-
-Content: A dedicated page for dental hygienists — the primary practitioners managing periodontal maintenance between dentist visits. Different audience, different pain points (hygienist-led care, patient education burden, recall compliance) from `/for-dentists`.
-
-**SEO value:** Targets "dental hygienist app", "periodontal maintenance tool for hygienists" — currently zero competition.  
-**Backlink targets:** British Society of Dental Hygiene and Therapy (BSDHT, DR ~40), American Dental Hygienists' Association (ADHA, DR ~50).  
-**Business value:** Hygienists are key champions in dental practice adoption decisions. They will advocate for the tool if it reduces their patient education workload.
-
-### /for-periodontists
-
-Content: A specialist-focused page distinct from the general `/for-dentists` page. Periodontal specialists have specific concerns: EFP alignment, GDPR for sensitive patient data, integration with specialist practice workflows, post-surgical monitoring.
-
-**SEO value:** "periodontal software for specialists", "AI for periodontists" — near-zero competition in 2026.  
-**Backlink targets:** EFP national societies, periodontal specialist associations.  
-**Business value:** Periodontists are the highest-trust channel for patient referrals. If a periodontist endorses Perioskoup, their referring general dentists follow.
-
-### /research
-
-Content: Academic research partnership page. States Perioskoup's openness to co-authored clinical studies, lists the EFP award as validation of scientific credibility, provides a dedicated research contact email, and invites universities and researchers to propose collaboration.
-
-**SEO value:** Attracts inbound academic interest, generates .edu backlinks over time.  
-**Backlink value:** University partner pages, research lab pages — highest E-E-A-T value available.  
-**Business value:** Published clinical research citing Perioskoup creates permanent academic citations and establishes product legitimacy in the clinical community.
-
-### /insurance
-
-Content: A page targeting dental insurance provider relationships. Covers GDPR compliance, wellness positioning (not a medical device, reduces regulatory friction for insurers), preventive care alignment, and data security specifics. Targets the commercial discussion that insurers will initiate when they see a patient engagement product with EFP validation.
-
-**SEO value:** Targets "dental insurance technology" and "preventive dental health app for insurers" — both very low competition.  
-**Business value:** Dental insurance integration creates a third revenue stream alongside dentist subscriptions and potential patient-facing premium features.
-
----
-
-## Part 8: Programmatic SEO
-
-Programmatic SEO is the strategy of creating many pages from a single template, each targeting a specific geographic, condition, or procedure-based variation. With the SPA architecture fully fixed (prerendering deployed), Perioskoup can scale from 12 URLs to 50+ in one content sprint.
-
-### City Pages — /for-dentists/[city]
-
-Target: dental practices in specific cities searching for patient engagement tools.  
-Template: 450-600 words, localised periodontal disease prevalence data (from WHO/EFP country reports), city dental market context, one local founding clinic testimonial (when available), schema `LocalBusiness` with city-specific address range.
-
-Priority launch cities (based on waitlist geography and market size):
-
-| City | Target Keyword | Monthly Volume |
-|---|---|---|
-| London | AI dental companion London | Low — build for future |
-| Bucharest | aplicatie dentara AI Bucuresti (Romanian) | Low — brand home |
-| Madrid | aplicación dental IA compañero | Low |
-| Amsterdam | AI tandarts app | Low |
-| Berlin | KI Zahnarzt Begleiter App | Low |
-| Paris | application dentaire IA | Low |
-| Milan | app dentale AI | Low |
-| Warsaw | aplikacja stomatologiczna AI | Low |
-
-Volume is low now but these pages capture the first-mover advantage in each market before local competitors appear. Each page also signals geographic expansion credibility to investors and B2B prospects.
-
-Scale: 20-25 EU city pages in Month 3 (May 2026). Template-driven content with 50-100 words of localisation per city. Each page links back to `/for-dentists` and `/waitlist`.
-
-### Condition Pages — /conditions/[condition]
-
-Target: patients searching about specific oral health conditions who are potential app users.  
-Template: 600-900 words, condition overview (Dr. Anca authored), risk factors, what the dental visit looks like, what happens between visits (the Perioskoup use case), FAQ with `FAQPage` schema, `MedicalCondition` structured data, CTA to join waitlist.
-
-Priority conditions:
-
-| Condition | Target Keywords | Combined Monthly Volume | Schema |
-|---|---|---|---|
-| /conditions/bleeding-gums | why do gums bleed, bleeding after brushing | 40,000+ | MedicalCondition, FAQPage |
-| /conditions/gingivitis | gingivitis symptoms, gingivitis treatment | 22,000+ | MedicalCondition, FAQPage |
-| /conditions/periodontitis | periodontitis stages, severe gum disease | 18,000+ | MedicalCondition, FAQPage |
-| /conditions/gum-recession | gum recession causes, receding gums | 8,000+ | MedicalCondition, FAQPage |
-| /conditions/dental-plaque | plaque removal, what is plaque | 15,000+ | MedicalCondition, FAQPage |
-| /conditions/bad-breath-gum-disease | gum disease bad breath | 5,000+ | MedicalCondition, FAQPage |
-
-These pages have a dual purpose: SEO traffic from condition-specific queries, and a content matrix for the blog cluster strategy. Each condition page links to 2-3 related blog articles and back to the product.
-
-### Procedure Pages — /procedures/[procedure]
-
-Target: patients who have just had a dental procedure and are in the highest-engagement, highest-anxiety window — precisely where Perioskoup delivers maximum value.
-
-| Procedure | Target Keywords | Monthly Volume | Perioskoup Angle |
-|---|---|---|---|
-| /procedures/scaling-and-root-planing | deep cleaning teeth, scaling and root planing | 12,000+ | Post-procedure habit guidance is the core use case |
-| /procedures/periodontal-maintenance | periodontal maintenance schedule, recall visit | 1,600 | Highest-fit B2B keyword for dentists |
-| /procedures/flap-surgery-recovery | gum surgery recovery, flap surgery | 1,400 | Post-surgical engagement use case |
-| /procedures/dental-implants-gum-health | implant care at home, peri-implantitis | 3,200 | Implant patients are high LTV — gum health critical |
-
----
-
-## Part 9: Content Cluster Strategy
-
-The current blog is six standalone articles with no pillar architecture. Every article is an island. The cluster strategy below converts those islands into a continent.
-
-### Pillar Architecture Overview
-
-```
-perioskoup.com/guides/
-├── periodontal-disease          [Pillar 1 — Patient Education]
-├── dental-habits                [Pillar 2 — Habit & Home Care]
-├── ai-dentistry                 [Pillar 3 — Category Authority]
-└── digital-dental-practice      [Pillar 4 — B2B Dentist Decision-Maker]
-```
-
-Each pillar page is a 2,000-3,000 word comprehensive hub. Each spoke article is 800-1,400 words and links back to the pillar. The pillar links to all spokes. Internal link equity flows from the pillar (which earns backlinks from outreach) to all spokes.
-
-### Pillar 1: "The Complete Guide to Periodontal Disease"
-
-**URL:** /guides/periodontal-disease  
-**Target keywords:** "periodontal disease guide", "gum disease explained", "periodontitis stages" (combined 30,000+ monthly)  
-**Author:** Dr. Anca Constantin  
-**Schema:** MedicalWebPage, FAQPage, BreadcrumbList  
-
-Spoke articles (link back to pillar):
-
-| Article | Target Keyword | Existing? | Status |
-|---|---|---|---|
-| What is periodontal disease | "what is periodontal disease" | YES — /blog/what-is-periodontal-disease | Needs internal link to pillar |
-| Stages of gum disease | "gum disease stages" | Partial — inside existing post | Needs own URL |
-| Why do gums bleed | "why do gums bleed" | NO | Write Month 1, Week 1 |
-| Signs of gum disease | "signs of gum disease" | NO | Write Month 2, Week 7 |
-| Gum disease and heart disease | "periodontal disease heart disease" | NO | Write Month 3, Week 10 |
-| What is a periodontist | "what is a periodontist" | NO | Write Month 3, Week 9 |
-| Gum recession causes | "gum recession causes" | NO | Write Month 2 |
-
-### Pillar 2: "Dental Habits at Home: The Evidence-Based Guide"
-
-**URL:** /guides/dental-habits  
-**Target keywords:** "dental habits guide", "how to brush correctly", "interdental cleaning" (combined 25,000+ monthly)  
-**Author:** Dr. Anca Constantin  
-**Schema:** MedicalWebPage, FAQPage, HowTo (on spoke articles)  
-**Brand alignment:** This pillar is the content manifestation of Perioskoup's product — every article demonstrates the value of daily habit tracking
-
-Spoke articles:
-
-| Article | Target Keyword | Existing? | Status |
-|---|---|---|---|
-| 3-minute daily routine | "daily dental routine" | YES — /blog/3-minute-routine-save-teeth | Needs pillar link |
-| How to brush with periodontal disease | "how to brush with periodontal disease" | NO | Write Month 1, Week 2 |
-| Interdental cleaning guide | "interdental cleaning guide" | NO | Write Month 1, Week 3 |
-| Water flosser vs floss | "water flosser vs floss" | NO | Write Month 2 |
-| Mouthwash for gum disease | "mouthwash for gum disease" | NO | Write Month 2 |
-| Dental habit tracking app | "dental habit tracking app" | NO | Product-focused page, Month 1 |
-
-### Pillar 3: "AI in Dentistry: A Practical Guide"
-
-**URL:** /guides/ai-dentistry  
-**Target keywords:** "AI dentistry", "artificial intelligence dental", "AI for dentists" (combined 8,000+ monthly)  
-**Authors:** Eduard Ciugulea (primary), Dr. Anca (clinical contributor)  
-**Schema:** Article, FAQPage, BreadcrumbList  
-**Strategic purpose:** This pillar establishes Perioskoup as the reference site for dental AI — not just a product, but the authority source
-
-Spoke articles:
-
-| Article | Target Keyword | Existing? | Status |
-|---|---|---|---|
-| How AI is changing dental monitoring | "AI dental monitoring" | YES — /blog/how-ai-is-changing-dental-monitoring | Needs pillar link |
-| AI for dentists guide | "AI for dentists" | NO | Write Month 2, Week 5 |
-| AI dental companion explained | "AI dental companion" | NO — this is the category page | Month 1, create /ai-dental-companion |
-| AI vs human dental care | "AI replace dentist" | NO | Write Month 3 |
-| Best dental AI tools 2026 | "best dental AI apps" | NO | Write Month 3 |
-
-### Pillar 4: "Running a Digital-First Dental Practice"
-
-**URL:** /guides/digital-dental-practice  
-**Target keywords:** "digital dental practice", "patient engagement dentistry", "dental practice management" (combined 12,000+ monthly)  
-**Author:** Eduard Ciugulea  
-**Schema:** Article, FAQPage  
-**Audience:** Dental practice owners, practice managers — the B2B buyer
-
-Spoke articles:
-
-| Article | Target Keyword | Existing? | Status |
-|---|---|---|---|
-| Why patients forget instructions | "patient engagement dental" | YES — /blog/why-patients-forget-instructions | Needs pillar link |
-| How to reduce dental no-shows | "reduce dental no-shows" | NO | Write Month 2, Week 8 |
-| Patient retention strategies dentistry | "dental patient retention" | NO | Write Month 2 |
-| ROI of patient engagement apps | "dental engagement app ROI" | NO | Write Month 3 |
-| Periodontal maintenance protocols | "periodontal maintenance" | NO | Write Month 3, Week 12 |
-
----
-
-## Part 10: 90-Day Content Calendar
-
-This calendar is built around four constraints: (1) Dr. Anca can produce one high-quality clinical article per week maximum, (2) Eduard writes the B2B and AI-angle pieces, (3) the technical SPA prerendering fix must be completed before Week 1 publishing for articles to rank, (4) outreach runs in parallel with publishing.
-
-### Month 1 (March 2026) — Foundation Sprint
-
-**Week 1 (Mar 9-15)**  
-Publishing:
-- "Why Do Gums Bleed? A Periodontist Explains" — Dr. Anca. Target: "why do gums bleed" (8,100 monthly). HowTo + FAQPage + MedicalWebPage schema. 1,200 words. Internal links to /blog/what-is-periodontal-disease and /waitlist.
-- Create: /ai-dental-companion exact-match landing page. 700 words. SoftwareApplication schema. Links to /features and /waitlist.
-
-Technical:
-- Update homepage title tag: "Perioskoup — AI Dental Companion App | Between-Visit Dental Care"
-- Add H2 below homepage H1 containing "AI dental companion" phrase
-- Implement react-helmet-async + per-page Helmet (prerequisite for all publishing to have SEO impact)
-
-**Week 2 (Mar 16-22)**  
-Publishing:
-- "How to Brush Your Teeth with Periodontal Disease" — Dr. Anca. Target: "how to brush with periodontal disease" (1,600 monthly). HowTo schema with illustrated 6-step sequence. 1,000 words.
-
-Outreach:
-- Email EFP communications team requesting direct hyperlink update in EFP article
-- Send press release about EFP award to Dental Tribune, Dentistry.co.uk, and EU-Startups.com
-
-**Week 3 (Mar 23-29)**  
-Publishing:
-- "The Complete Interdental Cleaning Guide: Floss, Brushes, and Water Flossers" — Dr. Anca. Target: "interdental cleaning guide" (2,400 monthly). Comparison table. FAQPage schema. 1,400 words.
-- Create: /conditions/bleeding-gums condition page. 800 words, MedicalCondition + MedicalWebPage schema.
-
-Outreach:
-- Email SROP (Romanian Periodontal Society) with award story for newsletter
-- Email BSP (British Society of Periodontology) for newsletter feature and website mention
-
-**Week 4 (Mar 30 - Apr 5)**  
-Publishing:
-- "Dental Habit Tracking App: How Perioskoup Works" — Eduard. Target: "dental habit tracking app" (320 monthly, high commercial intent). Product-focused, 700 words. Links to /features and /waitlist.
-
-Technical:
-- Add ItemList schema to /blog index page
-- Add MedicalWebPage schema to all 3 existing Dr. Anca blog posts
-- Create /partners/efp partnership page
-
-### Month 2 (April 2026) — Cluster Building + B2B Push
-
-**Week 5 (Apr 6-12)**  
-Publishing:
-- "AI for Dentists: What's Real, What's Hype, and What to Try Now" — Eduard. Target: "AI for dentists" (2,400 monthly). B2B angle, 1,600 words. Links to /for-dentists. FAQPage schema.
-- Create: /conditions/periodontitis with staging table, MedicalWebPage schema. 800 words.
-
-**Week 6 (Apr 13-19)**  
-Publishing:
-- "Scaling and Root Planing: What to Expect and How to Heal Faster" — Dr. Anca. Target: "scaling and root planing" + "deep cleaning teeth" (12,000+ monthly combined). HowTo schema for post-treatment home care steps. 1,200 words.
-- Create: /guides/dental-habits pillar page (2,500 word comprehensive hub linking to all spoke articles).
-
-Outreach:
-- Product Hunt launch preparation — draft listing, gather screenshots, prepare launch day outreach
-
-**Week 7 (Apr 20-26)**  
-Publishing:
-- "Signs of Gum Disease You Should Never Ignore" — Dr. Anca. Target: "signs of gum disease" (6,600 monthly). 900 words. MedicalWebPage + FAQPage schema.
-
-Action:
-- LAUNCH: Product Hunt listing. Generates DR ~85 backlink plus community traffic spike on launch day.
-- Submit all April URLs to Google Search Console for indexing.
-
-**Week 8 (Apr 27 - May 3)**  
-Publishing:
-- "How to Reduce No-Shows in Your Dental Practice" — Eduard. Target: "reduce dental no-shows" (720 monthly). B2B dentist audience. Links to /for-dentists and founding clinic waitlist. 1,100 words.
-
-Outreach:
-- Submit guest post pitch to Healthline for "periodontal disease resources" article featuring Perioskoup
-- Email Charité Berlin Professor Deschner and University of Amsterdam Professor Stavropoulos about student/research access programme
-
-### Month 3 (May 2026) — Programmatic Scale + Authority Plays
-
-**Week 9 (May 4-10)**  
-Publishing:
-- "What Is a Periodontist — And When Do You Need One?" — Dr. Anca. Target: "what is a periodontist" (12,000 monthly). 1,000 words.
-
-Programmatic:
-- Launch 3 city pages: /for-dentists/london, /for-dentists/madrid, /for-dentists/bucharest
-- Create /for-hygienists page targeting hygienist-specific keywords
-
-**Week 10 (May 11-17)**  
-Publishing:
-- "Periodontal Disease and Heart Disease: What the Research Says" — Dr. Anca. Target: systemic health queries. 1,400 words. Cite EFP research. Request reciprocal link from EFP research pages.
-- Create: /partners/dental-schools page. List target partner institutions.
-
-Outreach:
-- Email University of Bucharest Faculty of Dental Medicine about alumni news mention and research collaboration
-- Email King's College London Dental Institute periodontal department
-
-**Week 11 (May 18-24)**  
-Publishing:
-- "The Best Apps for Managing Gum Disease in 2026" — Eduard. Target: "best dental app for gum disease" (170 monthly, very high commercial intent). Honest comparison format. 1,000 words. Perioskoup listed with full detail.
-
-Programmatic:
-- Launch 4 more city pages: /for-dentists/amsterdam, /for-dentists/berlin, /for-dentists/paris, /for-dentists/milan
-
-**Week 12 (May 25-31)**  
-Publishing:
-- "Periodontal Maintenance: The Schedule Your Dentist Wishes You'd Keep" — Dr. Anca. Target: "periodontal maintenance" (1,600 monthly). 1,100 words.
-- Create: /guides/periodontal-disease pillar page to consolidate all condition/education posts.
-- Create: /guides/ai-dentistry pillar page.
-
-Review:
-- Submit all May URLs to Google Search Console
-- Check Search Console impressions for March articles (should have first data)
-- Review backlink acquisition from outreach — adjust targets based on responses
-- Update llms.txt with all new page URLs
-
----
-
-## Part 11: What Makes perioskoup.com the Reference Site for Dental AI
-
-The following five actions, taken together, would establish Perioskoup.com as the definitive reference site for the "AI dental companion" category — the site that journalists cite, dentists link to, and Google elevates for health AI queries.
-
-**1. Be the only site with peer-reviewed clinical content written by a practising periodontist with EFP recognition**  
-Dr. Anca's byline on content about periodontal disease is differentiated by her EFP award, her active clinical practice, and her co-founder credibility. No Healthline article, no WebMD page, and no competitor site can replicate this. Every Dr. Anca article should include: her credentials (DMD, PhD in Periodontology), her EFP award, her clinic affiliation, and a photo. The Person schema should link her to a standalone `/team/dr-anca-constantin` page.
-
-**2. Own the "AI dental companion" category URL before any competitor**  
-Create `/ai-dental-companion` this week. It is the single most important URL the site does not yet have. Write an 800-word product and category explanation page targeting the exact phrase. Add SoftwareApplication schema with `"alternateName": "AI dental companion"`. This page will be the first result for this query as soon as Google indexes it.
-
-**3. Become the editorial source for dental AI content**  
-The "How AI Is Changing Dental Monitoring" article is already good. Expanding to a full pillar at `/guides/ai-dentistry` with a comparison page, an "AI for dentists" deep-dive, and a regular "state of dental AI" annual report would make Perioskoup.com the go-to citation for journalists and bloggers writing about dental technology.
-
-**4. Convert the EFP award into a link ecosystem**  
-The EFP award is not a trophy — it is a link-building asset. Every EFP national society newsletter, every dental conference programme, every dental school "what's new in periodontology" email is an opportunity to mention and link to Perioskoup. The `/partners/efp` page creates the anchor target. The award story pitch activates the outreach. The result over 12 months is a dense network of DR 35-55 links from the European periodontal establishment.
-
-**5. Publish the first clinical case study from a dental practice using Perioskoup**  
-Before any competitor can replicate the EFP award or build out their own content library, publish a detailed (750-1,000 word) case study from one of the 30 founding clinics documenting a measurable outcome. Frame it as research — methods, before state, intervention, after state, clinician quote. Submit an abstract based on this case study to the next EFP-adjacent conference. The resulting academic citation is worth more for topical authority than any link-building campaign.
-
----
-
-## Part 12: Technical Prerequisites
-
-The content calendar and programmatic SEO above will produce zero SEO results without these technical fixes first. They are prerequisites, not recommendations.
-
-**P0 — SPA Meta Tag Fix (Blocking All Blog SEO)**  
-Install `react-helmet-async`. Add per-page `<Helmet>` to all routes with unique title, meta description, canonical, and OG tags. Without this, every new blog post published will rank under the homepage title and never appear in SERPs for its target keyword.
-
-**P0 — Prerendering (Blocking All Programmatic SEO)**  
-Add `vite-plugin-prerender` to the build pipeline. Add all existing routes plus every new programmatic page to the routes array. Without static HTML generation, city pages, condition pages, and procedure pages will not be indexed reliably.
-
-**P1 — Sitemap Updates**  
-Every new page created (condition pages, procedure pages, city pages, partnership pages, pillar guides) must be added to `sitemap.xml` with correct `lastmod`, `changefreq`, and `priority` values. Submit the updated sitemap to Google Search Console after each publishing sprint.
-
-**P1 — Internal Linking Audit After Each Publishing Sprint**  
-Every new article must contain: one link to the pillar page it belongs to, one link to a related existing article, one link to either `/features`, `/for-dentists`, or `/waitlist`. Internal link equity is the primary mechanism by which new pages inherit authority from the established homepage.
-
----
-
-## Part 13: Score Breakdown
-
-| Dimension | Score | Rationale |
-|---|---|---|
-| Category ownership ("AI dental companion") | 6/10 | Phrase exists in meta/ticker; absent from H1, title tag, and dedicated URL |
-| Content volume and depth | 5/10 | 6 solid posts; no pillar architecture; no cluster coverage |
-| Technical SEO foundation | 4/10 | SPA rendering defect prevents secondary page ranking; must fix before publishing pays off |
-| Schema markup completeness | 7/10 | Strong foundation; missing MedicalWebPage, HowTo, ItemList — high-impact gaps |
-| Link building execution | 4/10 | EFP asset not fully leveraged; no documented press coverage; one DR 60 link sitting unleveraged |
-| Social proof quality | 4/10 | Founder-only quotes; zero external testimonials; no case studies |
-| Programmatic SEO | 2/10 | Zero city, condition, or procedure pages built |
-| Content cluster architecture | 3/10 | No pillar pages; posts are standalone islands |
-| Partnership pages | 2/10 | No dedicated partnership pages exist |
-| PR/media activation | 3/10 | No evidence of press outreach despite world-class hook (EFP award + founder story) |
-| Comparison page | 1/10 | Does not exist; competitor-adjacent searches completely uncaptured |
-
-**Overall Score: 6.5 / 10**
-
-The gap between the available assets and the current search equity realised is the largest opportunity in this audit. The EFP award, Dr. Anca's credentials, and the zero-competition category are worth years of SEO compound interest — but only if converted into content, links, and schema in the next 90 days.
-
----
-
-## Part 14: Immediate Action Priority Queue
-
-Actions ranked by (SEO impact x time sensitivity). The top four are prerequisites — without them, all downstream work produces reduced results.
-
-| Priority | Action | Effort | SEO Impact |
-|---|---|---|---|
-| 1 | Install react-helmet-async, add per-page Helmet to all routes | 3-4 hours | Critical — unblocks all ranking |
-| 2 | Add vite-plugin-prerender to build pipeline | 2-3 hours | Critical — static HTML for crawlers |
-| 3 | Create /ai-dental-companion exact-match landing page | 2 hours | High — category ownership URL |
-| 4 | Update homepage title tag to include "AI dental companion" | 5 minutes | High — keyword in primary signal |
-| 5 | Email EFP communications team for direct hyperlink update | 15 minutes | High — DR 60 backlink activation |
-| 6 | Publish "Why Do Gums Bleed" (8,100 monthly, Dr. Anca) | 1 day writing | High — first cluster article |
-| 7 | Add ItemList schema to /blog index | 20 minutes | Medium — carousel eligibility |
-| 8 | Add MedicalWebPage schema to all Dr. Anca posts | 30 min per post | Medium — YMYL trust |
-| 9 | Create /partners/efp page | 2 hours | Medium — E-E-A-T + backlink anchor |
-| 10 | Launch Product Hunt listing | 1 day prep | Medium — DR 85 backlink |
-| 11 | Pitch Dental Tribune contributed article | 30 minutes | Medium — DR 55 link |
-| 12 | Create /guides/dental-habits pillar page | 3 hours writing | Medium — cluster hub |
-| 13 | Add HowTo schema to 3-minute routine and brushing guide | 45 min each | Medium — rich results |
-| 14 | Send award story to EFP national societies (SROP, BSP, SEPA) | 1 hour outreach | Medium — 3-5 DR 35-55 links |
-| 15 | Create /conditions/bleeding-gums condition page | 3 hours | Low-Medium — programmatic foundation |
-
----
-
-*Audit performed on 2026-03-06. Assets confirmed: EFP article at efp.org (DR 60+), 6 blog posts, 12 site routes, robots.txt, sitemap.xml, llms.txt. No live search ranking data available — all volume estimates are representative industry figures.*
+*Audit conducted March 2026. Files reviewed: Home.tsx, Blog.tsx, BlogPost.tsx, ForDentists.tsx, About.tsx, Features.tsx, Contact.tsx, Pricing.tsx, Footer.tsx, Navbar.tsx, robots.txt, sitemap.xml, llms.txt, llms-full.txt, feed.xml.*

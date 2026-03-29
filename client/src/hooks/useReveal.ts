@@ -18,6 +18,10 @@ export function useReveal(threshold = 0.1) {
       return;
     }
 
+    // Immediately mark hero (LCP) section elements visible to prevent
+    // intermittent LCP failures from IntersectionObserver timing gaps.
+    const heroSection = document.getElementById("main-content");
+
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -28,7 +32,13 @@ export function useReveal(threshold = 0.1) {
         }),
       { threshold }
     );
-    elements.forEach((el) => io.observe(el));
+    elements.forEach((el) => {
+      if (heroSection?.contains(el)) {
+        el.classList.add("visible");
+      } else {
+        io.observe(el);
+      }
+    });
     return () => io.disconnect();
-  }, []);
+  }, [threshold]);
 }

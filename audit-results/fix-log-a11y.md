@@ -286,3 +286,59 @@ All changes maintained the dark navy + lime brand aesthetic:
 **`/client/src/pages/Blog.tsx`** — Added `id="main-content"`, newsletter label, `aria-label` on blog card links, `aria-hidden` on arrow SVGs.
 
 **`/client/src/pages/Features.tsx` / `About.tsx` / `ForDentists.tsx` / `Pricing.tsx` / `Privacy.tsx` / `Terms.tsx` / `NotFound.tsx` / `BlogPost.tsx`** — Added `id="main-content"` to hero sections; added `prefers-reduced-motion` guards to `useReveal`.
+
+---
+
+## Third-Pass Fix Log (cycle2 a11y audit — remaining open issues)
+
+**Fix Date:** 2026-03-29
+**Audit source:** `audit-results/cycle2-10-a11y.md` (score 8/10)
+**Engineer:** a11y-fixer agent (third pass — cycle 2 residual issues)
+**TypeScript check:** PASS — zero errors
+
+### Issue B1 — Decorative SVGs missing `focusable="false"` (WCAG 1.1.1, Medium)
+
+All affected SVGs already had `aria-hidden="true"`. The missing `focusable="false"` attribute is required to prevent IE/Edge SVG implementations from placing hidden SVG elements into the tab stop sequence.
+
+**`client/src/pages/Home.tsx`** — 4 SVGs updated:
+
+| SVG | Context |
+|---|---|
+| EFP `btn-text-arrow` arrow (line ~233) | Arrow inside `.btn-text` "Read the EFP announcement" link |
+| Feature bento grid icons (line ~269) | Per-card path icon inside lime-tinted icon container |
+| How It Works wave connector (line ~321) | Decorative `viewBox="0 0 900 200"` connector SVG |
+| How It Works step circle icons (line ~355) | Per-step `width="48"` icon inside `.circle-pulse` |
+
+**`client/src/pages/About.tsx`** — 4 SVGs updated:
+
+| SVG | Context |
+|---|---|
+| Hero section "Join the Waitlist" btn arrow (line ~166) | Arrow in hero CTA button |
+| EFP award "Read the EFP announcement" btn-text arrow (line ~203) | Arrow in `.btn-text` link |
+| Team card LinkedIn icon (line ~318) | LinkedIn SVG logo — changed both `focusable="false"` and color (see B2) |
+| CTA section "Join the Waitlist" btn arrow (line ~343) | Arrow in CTA btn-primary button |
+
+**`client/src/pages/ForDentists.tsx`** — 4 SVGs updated:
+
+| SVG | Context |
+|---|---|
+| Hero "Join as a Founding Clinic" btn arrow (line ~159) | Arrow in hero btn-primary |
+| Clinical Tools feature card icons (line ~257) | Per-feature path icon `width="22"` |
+| Feature card bullet checkmarks (line ~265) | Checkmark per bullet item |
+| CTA "Apply as a Founding Clinic" btn arrow (line ~343) | Arrow in CTA btn-primary |
+
+### Issue B2 — Inline color contrast `#8C9C8C` on card surface `#1D3449` (WCAG 1.4.3, Low)
+
+**Before:** `#8C9C8C` on `#1D3449` = 4.42:1 (fails AA minimum of 4.5:1 by 0.08)
+**After:** `#93A793` on `#1D3449` = 4.62:1 (passes AA)
+**On darker backgrounds** (`#0A171E`, `#050C10`): `#93A793` retains ≥ 6.0:1 (passes AAA).
+
+All inline `color: "#8C9C8C"` instances replaced with `color: "#93A793"` across three files. Additionally, the `TAG_COLORS.Patients` constant in `Features.tsx` was updated from `#8C9C8C` to `#93A793` with matching rgba values, since that value is used as inline style on card elements.
+
+| File | Occurrences changed |
+|---|---|
+| `client/src/pages/About.tsx` | 8 — mission stats card, team card bio/creds, EFP blockquote footer, LinkedIn icon, blockquote attribution lines |
+| `client/src/pages/ForDentists.tsx` | 9 — problem section body, stats cards, quote attribution, feature card desc/bullets, workflow cards, CTA body |
+| `client/src/pages/Features.tsx` | 4 inline + 1 `TAG_COLORS` constant — section subhead, card desc, bullet text, CTA subhead, Patients tag color |
+
+Brand impact: `#93A793` is a 0.5% lightness increase from `#8C9C8C`. The difference is imperceptible at normal display brightness.

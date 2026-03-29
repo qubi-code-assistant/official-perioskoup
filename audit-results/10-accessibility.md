@@ -1,622 +1,511 @@
-# WCAG 2.1 AA Accessibility Audit — Perioskoup Landing Page
+# Perioskoup WCAG 2.1 AA Accessibility Audit
 
-**Audit Date:** 2026-03-06
-**Auditor:** WCAG 2.1 AA Specialist Agent (full source-code review)
-**Product:** Perioskoup — AI Dental Companion SPA (Vite 7 + React 19 + Tailwind CSS v4)
-**Scope:** All 12 routes — Home, Features, ForDentists, Pricing, About, Blog, BlogPost, Contact, Waitlist, Privacy, Terms, NotFound; shared Navbar, Footer, Breadcrumb, Logo components; `index.css` design system; `index.html` shell
-**Evidence Type:** Confirmed implementation issues (source-code analysis); design-time risks noted explicitly
-**Conformance Note:** This report provides accessibility conformance guidance against WCAG 2.1 Level A and AA. It is not a legal determination or certification.
+**Date:** 2026-03-06
+**Auditor:** WCAG 2.1 AA Specialist Subagent
+**Scope:** Full SPA — all pages, components, CSS, HTML shell
+**Evidence type:** Design-time risk (static source analysis + contrast calculation). Runtime screen-reader and keyboard testing not performed; all issues are reproducible from source code inspection.
+**Conformance note:** This report provides accessibility conformance guidance against WCAG 2.1 Level A and AA. It does not constitute a legal conformance certification.
 
 ---
 
-## Overall Score: 7 / 10
+## Score: 6.5 / 10
 
-Perioskoup has a stronger accessibility baseline than most comparable SPA landing pages. The team has clearly thought about accessibility: there is a working skip link, a `RouteAnnouncer` live region for SPA navigation, comprehensive `prefers-reduced-motion` support, semantic HTML throughout, `aria-*` on all interactive states, visible focus-visible styles on every button class, and meaningful alt text on all content images. The heading hierarchy is logical and consistent, form inputs have label associations on every page, and touch targets meet 44×44 px.
-
-The remaining gaps that prevent a higher score are: two contrast failures on key text colours, a raw `outline: none` declaration that suppresses the native browser focus ring on `.p-input` and `.p-select` before the `:focus-visible` override is applied (creating a paint-order risk in some browsers), the mobile navigation drawer lacking a focus trap, a missing `aria-current="page"` on active nav links, non-descriptive link text in several locations, feature card emoji icons missing accessible names, and the newsletter subscription input missing an error live region.
+The site has a solid accessibility foundation: skip link, route announcer, focus-visible CSS, reduced-motion support, drawer focus trap, ARIA roles on the mobile nav, form labels, and live regions for form feedback. However, several confirmed conformance gaps remain — including a structural landmark issue that affects every page, two failing contrast values, missing `autocomplete` tokens on all forms, and a handful of ARIA/semantic issues.
 
 ---
 
 ## A) Audit Summary
 
-| Area | Status | Severity |
+| Category | Status | Critical Gaps |
 |---|---|---|
-| Color contrast — #F5F9EA / #0A171E | PASS 17.00:1 | — |
-| Color contrast — #8C9C8C / #0A171E | PASS 6.28:1 | — |
-| Color contrast — #C0E57A / #0A171E | PASS 12.76:1 | — |
-| Color contrast — #0A171E on #C0E57A (btn-primary) | PASS 12.76:1 | — |
-| Color contrast — #8C9C8C / #1D3449 (card muted) | FAIL 4.42:1 (need 4.5:1) | Medium |
-| Color contrast — #6B7F7B / #0A171E (stat source links) | FAIL 4.29:1 | Medium |
-| Color contrast — rgba(140,156,140,0.55) / #0A171E (source links) | FAIL 2.76:1 | High |
-| Color contrast — breadcrumb separator #4A5E6A / #0A171E | FAIL 2.69:1 (decorative, no text) | Low |
-| Skip to main content link | PASS — present in App.tsx, visible on focus | — |
-| SPA route announcer (aria-live) | PASS — RouteAnnouncer in App.tsx | — |
-| Focus indicators — btn-primary / btn-ghost / btn-text | PASS — :focus-visible with lime outline | — |
-| Focus indicators — .p-input / .p-select | PARTIAL — outline: none set before :focus-visible override | Medium |
-| Keyboard navigation — all interactive elements | PARTIAL — mobile drawer lacks focus trap | High |
-| Mobile nav aria-expanded / aria-controls | PASS — correct on hamburger button | — |
-| Mobile nav role="dialog" aria-modal | PASS — present on drawer div | — |
-| Mobile nav Escape key close | PASS — implemented | — |
-| Focus trap in mobile drawer | FAIL — Tab escapes drawer overlay | High |
-| Active nav link aria-current="page" | FAIL — only .active CSS class, no ARIA state | Medium |
-| Form labels — Waitlist page | PASS — all inputs have <label> with sr-only | — |
-| Form labels — Contact page | PASS — all inputs have visible <label> | — |
-| Form labels — Newsletter input (Blog page) | PASS — sr-only label present | — |
-| Form aria-invalid + aria-describedby | PASS — Waitlist and Contact both implement | — |
-| Form error live regions | PASS — role="alert" on inline errors | — |
-| Form success live regions | PASS — role="status" aria-live="polite" on success states | — |
-| Image alt text | PARTIAL — content images pass; feature icons (emoji) lack accessible names | Medium |
-| SVG icons decorative | PASS — most have aria-hidden="true" | — |
-| Logo SVG accessible name | FAIL — LogoMark SVG has no title/aria-label | Medium |
-| Heading hierarchy | PASS — logical h1→h2→h3 on all pages | — |
-| HTML lang attribute | PASS — lang="en" on <html> | — |
-| Semantic landmarks | PASS — <nav>, <main> (via id+section), <footer> used | — |
-| Breadcrumb aria-label | PASS — aria-label="Breadcrumb" on nav | — |
-| Breadcrumb aria-current | FAIL — current page item missing aria-current="page" | Low |
-| Touch targets ≥ 44×44 px | PASS — buttons and CTA links meet minimum | — |
-| 200% zoom reflow | PASS — clamp() sizing + responsive grid layout | — |
-| prefers-reduced-motion | PASS — comprehensive animation kill-switch in CSS | — |
-| Non-descriptive link text | FAIL — "Read more →" arrows in blog list, source links | Medium |
-| Color alone conveys information | PASS — active state uses both colour and CSS class | — |
-| Page titles per route | PASS — react-helmet-async sets unique title per page | — |
+| Color contrast | Mostly pass | 2 failures |
+| Keyboard navigation | Good | Link-wrapping `<span>` pattern needs review |
+| Focus indicators | Good | Present everywhere via CSS |
+| Skip link | Pass | Present and functional |
+| Landmark regions | Fail | No `<main>` landmark anywhere |
+| Form labels | Good | Missing `autocomplete` on all inputs |
+| ARIA | Good | Minor issues |
+| Screen reader flow | Partial | No `<main>`; `id="main-content"` on `<section>` |
+| Images / alt text | Good | Hero bg alt on decorative `<img>` is non-empty |
+| Reduced motion | Pass | Comprehensive |
+| Zoom / reflow | Good | Responsive design in place |
+| Touch targets | Pass | Buttons ≥ 44×44px |
+| Live regions | Good | Route announcer + form feedback |
+| Heading hierarchy | Mostly good | Minor issues on a few pages |
 
 ---
 
 ## B) Findings Table
 
-| ID | WCAG SC | Name | Severity | Component | Evidence |
-|---|---|---|---|---|---|
-| A01 | 1.4.3 | Contrast Minimum | High | Stat source links (rgba muted 0.55) | 2.76:1 — fails AA for normal text |
-| A02 | 1.4.3 | Contrast Minimum | Medium | Muted text on card surface (#8C9C8C / #1D3449) | 4.42:1 — fails AA by 0.08 |
-| A03 | 1.4.3 | Contrast Minimum | Medium | Stat source links #6B7F7B on #0A171E | 4.29:1 — fails AA |
-| A04 | 2.4.7 | Focus Visible | Medium | .p-input / .p-select | `outline: none` set unconditionally; `:focus-visible` override partially mitigates |
-| A05 | 2.1.2 | No Keyboard Trap (inverse) | High | Mobile navigation drawer | Tab key exits overlay to background content — no focus trap |
-| A06 | 4.1.2 | Name, Role, Value | Medium | Active nav links | Missing `aria-current="page"` on current route item |
-| A07 | 1.1.1 | Non-text Content | Medium | Feature card emoji icons (💡🔔📊…) | Emoji rendered as text nodes without aria-label; screen readers announce Unicode names |
-| A08 | 1.1.1 | Non-text Content | Medium | LogoMark SVG (inline circle+P path) | SVG has no `<title>` element or `aria-label`; presented as decorative inside labelled link |
-| A09 | 2.4.4 | Link Purpose | Medium | Blog list arrow SVGs / source links | Arrow SVG inside <a> wrapper has no aria-label; source links "Kessels 2003, BMJ" describe the citation not the action |
-| A10 | 4.1.3 | Status Messages | Low | Newsletter form (Blog page) | Subscribe button has no aria-live feedback region; success/error state not announced |
-| A11 | 1.3.1 | Info and Relationships | Low | Breadcrumb current page | Final breadcrumb item `<span>` missing `aria-current="page"` |
-| A12 | 2.4.6 | Headings and Labels | Low | Home page Features section | Duplicate paragraph text appears (two adjacent `<p>` blocks with near-identical content) |
+| ID | Severity | WCAG SC | Component / File | Issue |
+|---|---|---|---|---|
+| A01 | **Blocker** | 1.3.1, 4.1.2 | All pages | No `<main>` landmark — `id="main-content"` is on a `<section>` |
+| A02 | **High** | 1.4.3 | All cards (.card) | `#8C9C8C` on `#1D3449` = 4.42:1 — fails AA for normal-size body text |
+| A03 | **High** | 1.4.3 | Breadcrumb.tsx | Separator `#4A5E6A` on `#0A171E` = 2.69:1 — fails for any size |
+| A04 | **High** | 1.3.5 | Waitlist.tsx, Contact.tsx, Blog.tsx | All `<input>` and `<select>` fields are missing `autocomplete` attributes |
+| A05 | **High** | 4.1.2 | Navbar.tsx | Logo `<Link>` wraps `<div>` with `aria-label`; link label "Perioskoup home" is on the `<Link>`, but Wouter renders the anchor wrapping a `<div>` — interactive content is a `<div>` not a phrasing element |
+| A06 | **Medium** | 1.3.1 | Home.tsx, Features.tsx | Feature card icons in bento grid have no `aria-label` on the SVG icon container — SVGs are `aria-hidden` but the icon `<div>` wrapper is not labelled, meaning the feature title alone must carry all meaning (it does — minor) |
+| A07 | **Medium** | 4.1.3 | Contact.tsx | Form success state uses `role="status"` / `aria-live="polite"` but is inside the card that gets replaced — the live region must be present in the DOM before content changes to fire |
+| A08 | **Medium** | 4.1.3 | Waitlist.tsx | Same issue as A07 — success state replaces the form entirely; the `role="status"` div is newly mounted, not pre-existing |
+| A09 | **Medium** | 1.3.1 | Home.tsx:194 | Hero `<img>` for the background has alt `"Perioskoup dental companion app hero"` — it is a **decorative** photographic background and should have `alt=""` plus `aria-hidden="true"` |
+| A10 | **Medium** | 2.4.6 | Blog.tsx | Newsletter `<input>` has no visible label — only a `.sr-only` `<label>`. WCAG 2.4.6 recommends visible labels for inputs that are not part of a self-explanatory icon-only context |
+| A11 | **Medium** | 1.3.1 | Home.tsx:193 | `<p-select>` default text color `#8C9C8C` on `#1D3449` = 4.42:1; fails AA for 14px normal-weight text |
+| A12 | **Medium** | 3.3.2 | Waitlist.tsx:137 | `waitlist-last-name` input has no `aria-invalid` or `aria-describedby` on error — validation for last name is not surfaced (`required` on HTML but `validate()` doesn't set an error for it) |
+| A13 | **Low** | 2.4.2 | App.tsx | `RouteAnnouncer` reads `document.title` after 0ms timeout, but on the Home page the SPA doesn't update `<title>` on first render fast enough for the announcer to catch it on the initial load — only affects repeat visits |
+| A14 | **Low** | 1.3.1 | Pricing.tsx:145 | Plan feature list text `rgba(245,249,234,0.65)` on `#1D3449` = 6.01:1 — passes AA but falls noticeably below the brand standard |
+| A15 | **Low** | 2.4.1 | App.tsx | Skip link targets `#main-content` which is a `<section>` element without `role="main"` or `tabindex="-1"` set statically — focus only moves there after `RouteAnnouncer` fires dynamically via JS |
+| A16 | **Low** | 1.3.1 | Features.tsx, Pricing.tsx | Emoji icons (`💡`, `🔔`, `📊`, etc.) used inside feature cards are wrapped in `aria-hidden="true"` divs — correct — but some older AT versions read emoji aloud regardless |
+| A17 | **Low** | 2.4.4 | Multiple pages | Several `<Link>` / `<a>` elements contain only an SVG arrow with `aria-hidden="true"` inside a `btn-text` context — the visible text in the same element provides the accessible name, which is correct, but the arrow SVG in About.tsx:131 has no `aria-hidden` |
+| A18 | **Low** | 4.1.2 | Home.tsx | `<div className="flex ... w-full" aria-hidden="true">` wrapping the PhoneMockup hides the entire phone mockup from AT — correct, but the PhoneMockup renders a decorative clock with live state (`setTime`) that is now aria-hidden — fine, but confirm intent |
+| A19 | **Low** | 1.3.1 | Footer.tsx | Footer category headings (`<h3>`) use `fontSize: "11px"` which is below 14px and visually acts as a label tag — may confuse heading hierarchy expectations |
+| A20 | **Low** | 2.5.3 | Navbar.tsx:127 | `<span className="nav-link-item">` inside `<Link>` — the accessible name comes from the span text, but if CSS fails to load the span renders as inline text, which is correct. No issue. Note: the `aria-current` is correctly on the `<Link>` (anchor), not the span. |
 
 ---
 
 ## C) Per-Flow Notes
 
-### C1 — Homepage (/)
+### Navigation flow (Navbar)
+- Skip link is present, styled correctly, appears on `:focus` — confirmed in `index.css:136-153` and `App.tsx:113`.
+- Mobile drawer has correct `role="dialog"`, `aria-modal="true"`, `aria-label`, focus trap, Escape key support, and focus restoration to hamburger — well implemented (`Navbar.tsx:50-84`).
+- `aria-expanded` and `aria-controls` are correct on the hamburger button.
+- `aria-current="page"` is correctly applied on active links.
+- **Issue (A05):** The Wouter `<Link>` component renders an `<a>` tag containing a `<div>` — `<a>` may not contain block-level `<div>` children per HTML spec (invalid nesting), though browsers handle it. More critically, the `aria-label="Perioskoup home"` is on the `<Link>` (correct), but the logo renders inside a `<div>` with `cursor: pointer` inline style that adds a redundant click target layer.
 
-**Heading hierarchy:** `h1` "Between visits, we take over." → `h2` "Everything your smile needs" → `h3` feature card titles → `h2` "What is an AI dental companion?" → `h2` "From Chair to Chat." → `h3` step titles. Logical and correct.
+### Form flows (Waitlist, Contact)
+- All visible form inputs have `<label>` elements with matching `for`/`id` pairs.
+- Waitlist uses `.sr-only` labels (visible only to AT) — valid for this design approach.
+- Contact form has visible labels with `font-size: 12px; color: #8C9C8C` — these labels (12px, `#8C9C8C` on `#050C10`) pass contrast at 6.80:1.
+- `aria-invalid`, `aria-describedby`, and `role="alert"` on error spans are implemented — correct pattern.
+- **Issue (A04):** No `autocomplete` attributes anywhere. WCAG 1.3.5 (AA) requires `autocomplete` on inputs collecting personal information. `email`, `given-name`, `family-name`, `organization` values are appropriate.
+- **Issue (A07, A08):** Success messages mounted inside newly-created elements. AT may miss a newly-inserted live region. The live region element must exist in the DOM (even empty) before dynamic content is injected.
+- The newsletter form in Blog.tsx does pre-create the `role="status"` region above the form — this is the correct pattern. The Waitlist and Contact success states should follow the same approach.
 
-**Skip link:** Working. `<a href="#main-content" class="skip-link">` in App.tsx is positioned off-screen at top:-100px and slides to top:0 on `:focus`. Target `id="main-content"` is on the hero `<section>`.
+### Blog post reading flow
+- Article body is rendered as raw HTML via `dangerouslySetInnerHTML` — the markdown content in ARTICLES uses `##` headings that compile to `h2`/`h3` tags, maintaining hierarchy under the page `<h1>`.
+- Author images have descriptive alt text on blog cards.
 
-**Ticker:** `aria-hidden="true"` on the ticker band. Correct — it is purely decorative.
-
-**Phone mockup:** Outer div has `aria-hidden="true"` — correct, it is decorative.
-
-**Stats row:** Source links use `#6B7F7B` which gives 4.29:1 on `#0A171E` — just below the 4.5:1 AA threshold. These are small text (10–11px font size via inline styles) and small text below 14pt requires 4.5:1 even for large text.
-
-**EFP badge link:** Contains an arrow SVG with no `aria-hidden="true"`. The SVG renders a diagonal arrow and is a child of an `<a>` element with visible text. The link text "EFP Award Winner 2025 Digital Innovation" is sufficient for link purpose — SVG does not need an additional label but should be `aria-hidden="true"` to prevent double-reading.
-
-**Hero image:** `alt="Perioskoup dental companion app hero"` — acceptable but could be more descriptive or empty (it is decorative behind gradient overlays).
-
-**Duplicate paragraph in Features section:** There are two adjacent `<p>` elements with similar copy — one from `.body-lg` class and one explicit paragraph — both summarising the features section. This creates redundant reading for screen reader users.
-
-### C2 — Waitlist (/waitlist)
-
-**Form:** All fields have `<label htmlFor="...">` with `className="sr-only"`. Fields have `aria-required="true"`, `aria-invalid={!!errors[...]}`, and `aria-describedby` pointing to error spans with `role="alert"`. This is well-implemented.
-
-**Role toggle buttons:** `role="group" aria-label="Select your role"` on the container. Each button has `aria-pressed={role === r}`. Correct pattern.
-
-**Success state:** `role="status" aria-live="polite" aria-atomic="true"` on the success div. Correct.
-
-**Last name field:** Has `aria-required="true"` but no `aria-invalid` or `aria-describedby`. Validation only checks `waitlist-first-name`, `waitlist-email`, and `waitlist-clinic` — last name is required attribute but not validated in the `validate()` function. Minor inconsistency.
-
-### C3 — Contact (/contact)
-
-**Form:** All inputs have visible `<label>` elements with `htmlFor` associations. `aria-invalid`, `aria-required`, and `aria-describedby` are consistently applied. Error spans have `role="alert"`. Success state has `role="status" aria-live="polite"`.
-
-**Select dropdown:** Native `<select>` element — correct for accessibility. Has a default empty option "Select your role" — screen readers will announce this as the current value before selection.
-
-**Contact info icons:** SVGs have `aria-hidden="true"`. Correct.
-
-### C4 — Navigation (Navbar)
-
-**Desktop nav links:** Rendered as `<Link href="..."><span className="nav-link-item ...">Label</span></Link>`. The Wouter `<Link>` renders an `<a>` tag — keyboard accessible. However, the active state is communicated only via `.active` CSS class (changes colour to lime). **Missing `aria-current="page"`** on the active link — screen readers have no way to know which page is current.
-
-**Mobile hamburger:** `<button aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-nav" type="button">` — exemplary ARIA implementation.
-
-**Mobile drawer:** `role="dialog" aria-modal="true" aria-label="Navigation menu"` — correct. **However, there is no focus trap.** When the drawer opens, Tab continues to cycle through the entire document including content hidden behind the overlay. A keyboard user cannot be held within the drawer while it is open.
-
-**Escape key close:** Implemented — good.
-
-**Logo link:** `<Link href="/" aria-label="Perioskoup home">` — correct accessible name on the home link.
-
-### C5 — Blog (/blog)
-
-**Featured blog cards:** Each card is wrapped in `<Link href={...}>` which renders an `<a>`. The accessible name comes from the combined text content (category, title, excerpt, author, readTime). This is verbose but functional. A `aria-label` summarising just the article title would be cleaner.
-
-**Blog list rows:** Similarly wrapped in `<Link>`. Arrow SVG at the end has no `aria-hidden="true"` — screen reader will read the SVG path as unnamed element.
-
-**Newsletter input:** Has `<label htmlFor="newsletter-email" className="sr-only">Email address</label>`. Good. But the Subscribe button has no associated feedback region — no `aria-live` div to announce success or error on form submission.
-
-### C6 — Features (/features)
-
-**Feature cards:** Icons are emoji (💡🔔📊💬🖥️📚📅🔒) rendered as text. NVDA and VoiceOver both announce emoji by their Unicode description ("light bulb", "bell" etc.) which is generally acceptable, but the descriptions do not precisely match the feature names. Better practice is to wrap emoji with `aria-hidden="true"` and provide a visually hidden text label, or use an SVG icon with `aria-label`.
-
-**Tag badges ("Patients", "Dentists", "Both"):** These use colour as part of the differentiation (lime vs grey) but also include the text label. The text label alone conveys the information — colour is supplementary. Passes 1.4.1.
-
-### C7 — SPA Route Changes
-
-The `RouteAnnouncer` component in `App.tsx` publishes `"Navigated to {document.title}"` to a `role="status" aria-live="polite"` div and programmatically focuses `#main-content` on route change. This is a correct and thorough implementation of SPA focus management.
-
-**One timing concern:** `document.title` is read immediately on `location` change, before react-helmet-async may have updated the `<title>` tag for the new route. If the announcement fires synchronously before the Helmet effect runs, the old page title will be announced. This is a timing race condition, not a guaranteed failure, but worth noting.
+### Screen reader SPA navigation
+- `RouteAnnouncer` in `App.tsx:49-76` correctly uses `role="status"`, `aria-live="polite"`, `aria-atomic="true"`, reads the updated `document.title`, and moves keyboard focus to `#main-content` — this is a strong pattern.
+- **Issue (A01):** The target `#main-content` is always a `<section>` element, never a `<main>`. Screen readers navigate via landmarks (H, main, nav, footer). There is no `<main>` landmark anywhere in the SPA. Every page should have exactly one `<main>` element wrapping the page-specific content (between `<Navbar>` and `<Footer>`).
 
 ---
 
 ## D) Remediation Backlog
 
-### D01 — Fix stat source link contrast (Blocker for small text)
+### FIX-A01 — Add `<main>` landmark (Blocker — all pages)
 
-**WCAG SC:** 1.4.3 Contrast Minimum (Level AA)
-**Severity:** High
-**Affected users:** Low vision users
+**WCAG:** 1.3.1 Info and Relationships, 4.1.2 Name Role Value
+**Affected users:** Screen reader users relying on landmark navigation
+**Effort:** Small — wrapper element change on 12 pages
 
-**Current code in `Home.tsx`, `About.tsx`, `ForDentists.tsx`:**
-```jsx
-<a href={s.href} style={{ fontSize: 10, color: "#6B7F7B", ... }}>{s.source}</a>
-// Also: color: "rgba(140,156,140,0.55)" in ForDentists stat source links
+Replace the outer `<div style={{ background: "#0A171E", minHeight: "100svh" }}>` wrapping each page with a fragment, and make the page-level container a proper `<main>` element:
+
+```tsx
+// In every page (Home.tsx, Features.tsx, etc.)
+// BEFORE:
+<div style={{ background: "#0A171E", minHeight: "100svh" }}>
+  <Navbar />
+  <section id="main-content" ...>
+
+// AFTER:
+<>
+  <Navbar />
+  <main id="main-content" style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <section ...>   {/* remove id="main-content" from section */}
 ```
 
-**Contrast values:**
-- `#6B7F7B` on `#0A171E` = 4.29:1 — fails AA (needs 4.5:1)
-- `rgba(140,156,140,0.55)` on `#0A171E` ≈ 2.76:1 — fails AA badly
+The `id="main-content"` should move to the `<main>` element. The `<main>` also needs `tabindex="-1"` statically (the RouteAnnouncer sets it dynamically, but a static value ensures it is focusable on first page load too):
 
-**Fix:** Change source link colour to `#8C9C8C` (6.28:1 on `#0A171E`) or suppress these links visually and add screen-reader-only text:
-
-```jsx
-// Option A: use brand muted colour which passes
-<a href={s.href} target="_blank" rel="noopener noreferrer"
-   style={{ fontSize: 11, color: "#8C9C8C", textDecoration: "none" }}>
-  {s.source}
-</a>
-
-// Option B: make them truly small and add sr-only citation label
-<a href={s.href} target="_blank" rel="noopener noreferrer"
-   aria-label={`Source: ${s.source}`}
-   style={{ fontSize: 11, color: "#8C9C8C", textDecoration: "none" }}>
-  {s.source}
-</a>
+```tsx
+<main id="main-content" tabIndex={-1} style={{ background: "#0A171E", minHeight: "100svh", outline: "none" }}>
 ```
 
-**Apply to:** `Home.tsx` lines 166, `About.tsx` (mission stats), `ForDentists.tsx` (stats grid).
+Add `outline: none` to suppress the focus ring when JS moves focus programmatically (`preventScroll: true` already used).
+
+**Verification:** Open NVDA/VoiceOver, press `Main` landmark shortcut — should navigate to the page content area.
 
 ---
 
-### D02 — Fix muted text on card surface contrast
+### FIX-A02 — Muted text contrast on card surface (High)
 
-**WCAG SC:** 1.4.3 Contrast Minimum (Level AA)
-**Severity:** Medium
-**Affected users:** Low vision users
+**WCAG:** 1.4.3 Contrast (Minimum)
+**Affected users:** Low-vision users
+**Ratio:** `#8C9C8C` on `#1D3449` = **4.42:1** — fails for 14-15px normal-weight text (requires 4.5:1)
 
-**Failing combination:** `#8C9C8C` on `#1D3449` = **4.42:1** (needs 4.5:1). Fails by 0.08 — extremely close.
+The CSS comment in `index.css:795` already acknowledges this and provides a fix for `.card .body-lg/md/sm`:
 
-**Fix Option A (increase text colour brightness):**
 ```css
-/* In index.css — adjust --brand-muted for card contexts */
-.card .text-muted-brand,
+/* index.css:795-803 — EXISTING partial fix */
+.card .body-lg,
 .card .body-md,
-.card .body-sm {
-  color: #939EA0; /* 4.56:1 on #1D3449 — passes */
+.card .body-sm,
+.card .text-muted-brand {
+  color: #93A793;  /* 4.99:1 on #1D3449 — passes */
 }
 ```
 
-**Fix Option B (darken card surface slightly):**
+This fix exists in CSS but does **not** cover inline `style={{ color: "#8C9C8C" }}` overrides used extensively in card children across `Features.tsx`, `ForDentists.tsx`, `Pricing.tsx`, and `About.tsx`. The inline style takes precedence over the class rule.
+
+**Fix:** Replace `color: "#8C9C8C"` with `color: "#93A793"` inside all `.card` children that use inline styles, or add a stronger CSS rule:
+
 ```css
---card: #1B3243; /* slightly darker; maintains brand feel; 4.51:1 with #8C9C8C */
+/* Add specificity override */
+.card [style*="color: #8C9C8C"],
+.card [style*="color:#8C9C8C"] {
+  /* Cannot override inline via CSS */
+}
 ```
 
-**Fix Option C (mark card body text as large text where font-size ≥ 18px):** Large text (18px+ or 14px+ bold) only needs 3:1 — the 4.42:1 already passes for body-lg (18px). Only body-md (16px) and body-sm (14px) in cards fail. Apply the brightness fix to those classes only.
+The only reliable fix is to replace the inline color values in the JSX. Key locations:
+- `Features.tsx:119` — `color: "#8C9C8C"` (feature desc)
+- `Features.tsx:124` — `color: "#8C9C8C"` (bullet text)
+- `ForDentists.tsx:193,199` — feature card desc and bullets
+- `Pricing.tsx:140,147` — plan description and feature list
+- `About.tsx:281` — team card bio text
+- `Home.tsx:233` — feature bento card body text
+
+**Verification:** Run axe DevTools on `/features` — no "color-contrast" violations in card sections.
 
 ---
 
-### D03 — Add focus trap to mobile navigation drawer
+### FIX-A03 — Breadcrumb separator contrast (High)
 
-**WCAG SC:** 2.1.2 No Keyboard Trap (defensive — users must be able to escape); 2.4.3 Focus Order
-**Severity:** High
-**Affected users:** Keyboard-only users, screen reader users
+**WCAG:** 1.4.3 Contrast (Minimum)
+**Affected users:** Low-vision users
+**Ratio:** Separator `#4A5E6A` on `#0A171E` = **2.69:1** — fails for all text sizes
 
-**Current code in `Navbar.tsx`:** The drawer div has `role="dialog" aria-modal="true"` but no JavaScript focus trap. `aria-modal` semantically tells screen readers to ignore background content but does not programmatically prevent Tab from reaching it.
+**File:** `Breadcrumb.tsx:65`
 
-**Fix — Add focus trap on drawer mount:**
 ```tsx
-import { useEffect, useRef } from 'react';
+// BEFORE:
+<span style={{ color: "#4A5E6A", fontSize: 11 }}>
+  /
+</span>
 
-// Inside the mobile drawer JSX — add ref and focus trap
-const drawerRef = useRef<HTMLDivElement>(null);
+// AFTER (Option A — use muted text at passing ratio):
+<span style={{ color: "#8C9C8C", fontSize: 11 }} aria-hidden="true">
+  /
+</span>
 
-useEffect(() => {
-  if (!menuOpen || !drawerRef.current) return;
-
-  // Move focus into drawer on open
-  const firstFocusable = drawerRef.current.querySelector<HTMLElement>(
-    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-  );
-  firstFocusable?.focus();
-
-  const trap = (e: KeyboardEvent) => {
-    if (e.key !== 'Tab') return;
-    const focusables = Array.from(
-      drawerRef.current!.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      )
-    );
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault(); last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault(); first.focus();
-    }
-  };
-  document.addEventListener('keydown', trap);
-  return () => document.removeEventListener('keydown', trap);
-}, [menuOpen]);
-
-// In the JSX:
-<div
-  id="mobile-nav"
-  ref={drawerRef}
-  role="dialog"
-  aria-modal="true"
-  aria-label="Navigation menu"
-  className="mobile-drawer"
-  ...
->
-```
-
----
-
-### D04 — Add aria-current="page" to active nav link
-
-**WCAG SC:** 4.1.2 Name, Role, Value (Level A)
-**Severity:** Medium
-**Affected users:** Screen reader users
-
-**Current code in `Navbar.tsx`:**
-```jsx
-<span className={`nav-link-item${location === href ? ' active' : ''}`}>
-  {label}
+// AFTER (Option B — hide from AT entirely, it's decorative):
+<span aria-hidden="true" style={{ color: "#6B7F8C", fontSize: 11 }}>
+  /
 </span>
 ```
 
-**Fix:** Propagate `aria-current` to the anchor:
-```jsx
-<Link
-  key={href}
-  href={href}
-  aria-current={location === href ? 'page' : undefined}
->
-  <span className={`nav-link-item${location === href ? ' active' : ''}`}>
-    {label}
-  </span>
+`#6B7F8C` on `#0A171E` = approximately 4.5:1. Alternatively, marking it `aria-hidden="true"` removes the WCAG 1.4.3 requirement for decorative separators.
+
+**Verification:** Colour contrast checker on the breadcrumb separator character.
+
+---
+
+### FIX-A04 — Missing `autocomplete` on form inputs (High)
+
+**WCAG:** 1.3.5 Identify Input Purpose
+**Affected users:** Users with cognitive disabilities, motor impairments (autofill dependency)
+
+**Waitlist.tsx:**
+```tsx
+<input id="waitlist-first-name" type="text" autoComplete="given-name" ... />
+<input id="waitlist-last-name" type="text" autoComplete="family-name" ... />
+<input id="waitlist-email" type="email" autoComplete="email" ... />
+<input id="waitlist-clinic" type="text" autoComplete="organization" ... />
+<input id="waitlist-location" type="text" autoComplete="address-level2" ... />
+```
+
+**Contact.tsx:**
+```tsx
+<input id="contact-first-name" type="text" autoComplete="given-name" ... />
+<input id="contact-last-name" type="text" autoComplete="family-name" ... />
+<input id="contact-email" type="email" autoComplete="email" ... />
+{/* contact-role select: no standard autocomplete token — omit */}
+{/* contact-message textarea: no standard token — omit */}
+```
+
+**Blog.tsx newsletter:**
+```tsx
+<input id="newsletter-email" type="email" autoComplete="email" ... />
+```
+
+**Verification:** Browser DevTools → Autofill should correctly populate fields.
+
+---
+
+### FIX-A05 — Navbar logo link div nesting (High)
+
+**WCAG:** 4.1.1 Parsing, 4.1.2 Name Role Value
+**File:** `Navbar.tsx:112-116`
+
+The Wouter `<Link>` renders an `<a>` tag. Wrapping a `<div>` inside an `<a>` is invalid HTML per spec (interactive elements must not contain block-level descendants in phrasing context).
+
+```tsx
+// BEFORE:
+<Link href="/" aria-label="Perioskoup home">
+  <div style={{ textDecoration: 'none', cursor: 'pointer' }}>
+    <LogoFull height={28} color="#C0E57A" />
+  </div>
+</Link>
+
+// AFTER (remove the redundant div — LogoFull is already a flex div):
+<Link href="/" aria-label="Perioskoup home" style={{ display: 'inline-flex', alignItems: 'center' }}>
+  <LogoFull height={28} color="#C0E57A" />
 </Link>
 ```
 
-Note: `aria-current` should be on the `<a>` element that Wouter's `<Link>` renders, not the inner `<span>`. Wouter's Link component passes through extra props to the anchor — verify this works, or wrap in an actual `<a>` tag.
+Same issue exists in the mobile drawer header at `Navbar.tsx:201` where `<LogoFull>` is rendered without a link wrapper (non-interactive — acceptable).
+
+**Verification:** HTML validator should report zero nesting errors for the nav element.
 
 ---
 
-### D05 — Remove unconditional `outline: none` from `.p-input` and `.p-select`
+### FIX-A07 + FIX-A08 — Pre-mount live regions for form success (Medium)
 
-**WCAG SC:** 2.4.7 Focus Visible (Level AA)
-**Severity:** Medium
-**Affected users:** Keyboard users in browsers where `:focus-visible` has incomplete support or where the paint order matters
+**WCAG:** 4.1.3 Status Messages
+**Files:** `Contact.tsx:146`, `Waitlist.tsx:80`
 
-**Current code in `index.css`:**
-```css
-.p-input {
-  outline: none;      /* ← suppresses native focus ring */
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.p-input:focus {
-  border-color: rgba(192, 229, 122, 0.55);
-  box-shadow: 0 0 0 3px rgba(192, 229, 122, 0.1);
-}
-.p-input:focus-visible {
-  outline: 2px solid #C0E57A;    /* ← restores ring only for keyboard */
-  outline-offset: 2px;
-}
-```
+When the form is submitted, the component conditionally renders either the form or a success message. Because `role="status"` is inside the success div that gets newly mounted, the AT may not announce the content change.
 
-The `:focus` pseudo-class provides a visual glow (border+box-shadow) for mouse and keyboard. The `:focus-visible` override adds the solid lime outline for keyboard-only. This pattern is acceptable in modern browsers (Chrome 86+, Firefox 85+, Safari 15.4+) but the unconditional `outline: none` is still a code smell that can cause regressions. The safer pattern:
-
-```css
-.p-input {
-  /* Remove 'outline: none' — let browser default apply */
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.p-input:focus {
-  border-color: rgba(192, 229, 122, 0.55);
-  box-shadow: 0 0 0 3px rgba(192, 229, 122, 0.1);
-  outline: none; /* suppress default ONLY within :focus to avoid double ring */
-}
-.p-input:focus-visible {
-  outline: 2px solid #C0E57A;
-  outline-offset: 2px;
-}
-```
-
-This moves the `outline: none` suppression to `:focus` rather than always, so the browser native ring is preserved as fallback if `:focus-visible` is not supported.
-
----
-
-### D06 — Add aria-hidden to decorative SVGs in links and cards
-
-**WCAG SC:** 1.1.1 Non-text Content (Level A)
-**Severity:** Medium
-**Affected users:** Screen reader users
-
-Several inline SVGs that serve purely as decorative indicators (arrows, check marks inside button text, card feature indicators) are missing `aria-hidden="true"`. Affected locations:
-
-```jsx
-// Home.tsx — EFP badge arrow SVG
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ color: "#C0E57A", flexShrink: 0 }}>
-  <path d="M7 17L17 7M17 7H7M17 7v10" .../>
-</svg>
-// Fix:
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-
-// Blog.tsx — blog card external link arrow
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ color: "#C0E57A" }}>
-// Fix:
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-
-// Blog.tsx — blog list row arrow (right-side arrow in each row)
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color: "#8C9C8C" }}>
-// Fix:
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-```
-
-Note: `focusable="false"` is required for IE11 SVG elements but is still recommended for defensive compatibility.
-
----
-
-### D07 — Add accessible names to feature card emoji icons
-
-**WCAG SC:** 1.1.1 Non-text Content (Level A)
-**Severity:** Medium
-**Affected users:** Screen reader users (VoiceOver, NVDA announce emoji by Unicode name)
-
-**Current code in `Features.tsx`:**
-```jsx
-<div style={{ fontSize: "24px" }}>{f.icon}</div>
-// where f.icon = "💡" | "🔔" | "📊" etc.
-```
-
-Screen readers will announce "light bulb", "bell", "bar chart" etc. — these are approximately correct but not perfectly matched to feature names. Better approach:
-
-```jsx
-<div aria-hidden="true" style={{ fontSize: "24px" }}>{f.icon}</div>
-```
-
-Since the icon is purely decorative (the feature title `<h3>` immediately below provides the accessible name), hiding the emoji from screen readers with `aria-hidden="true"` gives cleaner announcements. Do not add redundant ARIA labels when adjacent text already describes the feature.
-
----
-
-### D08 — Add logo SVG title for standalone contexts
-
-**WCAG SC:** 1.1.1 Non-text Content
-**Severity:** Low
-**Affected users:** Screen reader users in edge cases
-
-**Current code in `Logo.tsx`:**
-```jsx
-export function LogoMark({ ... }) {
-  return (
-    <svg xmlns="..." viewBox="..." height={height} width={height}>
-      <circle fill={color} .../>
-      <path fill="#0A171E" d="..."/>
-    </svg>
-  );
-}
-```
-
-The `LogoMark` SVG has no `<title>` or `aria-label`. When used inside `<Link href="/" aria-label="Perioskoup home">`, the link's `aria-label` provides the accessible name and the SVG is effectively labelled. However, when `LogoFull` is used in the footer `<div>` (not wrapped in a link), the SVG is announced as an unlabelled image by some screen readers.
-
-**Fix for standalone uses:**
-```jsx
-export function LogoMark({ height = 32, color = '#C0E57A', className = '', ariaHidden = false }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 431.07 431.07"
-      height={height}
-      width={height}
-      className={className}
-      style={{ display: 'block' }}
-      aria-hidden={ariaHidden || undefined}
-      role={ariaHidden ? undefined : 'img'}
-    >
-      {!ariaHidden && <title>Perioskoup</title>}
-      <circle fill={color} cx="215.53" cy="215.53" r="215.53"/>
-      <path fill="#0A171E" d="..."/>
-    </svg>
-  );
-}
-```
-
-In Navbar where the SVG is inside `<Link aria-label="Perioskoup home">`, pass `ariaHidden={true}`.
-
----
-
-### D09 — Add newsletter form feedback live region
-
-**WCAG SC:** 4.1.3 Status Messages (Level AA)
-**Severity:** Low
-**Affected users:** Screen reader users
-
-**Current code in `Blog.tsx`:**
-```jsx
-<input id="newsletter-email" type="email" ... aria-required="true" />
-<button className="btn-primary" aria-label="Subscribe to newsletter">Subscribe</button>
-```
-
-There is no success or error feedback region. Screen readers receive no announcement when the button is clicked.
-
-**Fix:**
+**Fix — Contact.tsx:**
 ```tsx
-const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-// Add aria-live region:
+// Move the live region OUTSIDE the conditional, and update its content reactively:
 <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-  {newsletterStatus === 'success' && 'Subscribed successfully. Thank you!'}
-  {newsletterStatus === 'error' && 'Subscription failed. Please try again.'}
+  {sent ? "Message sent! We'll get back to you within 24 hours." : ''}
 </div>
+
+{sent ? (
+  <div style={{ textAlign: "center", padding: "40px 0" }}>
+    {/* Visual success content — no role/aria-live needed here */}
+    ...
+  </div>
+) : (
+  <form ...>...</form>
+)}
 ```
+
+Apply the same pattern to `Waitlist.tsx`.
+
+**Verification:** VoiceOver/NVDA — submit valid form data, confirm the success message is announced without manual navigation.
 
 ---
 
-### D10 — Add aria-current to breadcrumb current page item
+### FIX-A09 — Hero background image alt text (Medium)
 
-**WCAG SC:** 1.3.1 Info and Relationships (Level A)
-**Severity:** Low
-**Affected users:** Screen reader users
+**WCAG:** 1.1.1 Non-text Content
+**File:** `Home.tsx:72`
 
-**Current code in `Breadcrumb.tsx`:**
-```jsx
-<span style={{ color: "#8C9C8C" }}>{item.label}</span>  // last item, no aria-current
+The hero `<img>` is a purely decorative background photograph. It should have `alt=""` and `aria-hidden="true"`.
+
+```tsx
+// BEFORE:
+<img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" ... />
+
+// AFTER:
+<img src={ASSETS.heroBg} alt="" aria-hidden="true" fetchPriority="high" ... />
 ```
 
-**Fix:**
-```jsx
-{i === items.length - 1 ? (
-  <span aria-current="page" style={{ color: "#8C9C8C" }}>
-    {item.label}
+Note: The pre-render shell in `client/index.html:190` already has `alt=""` for this same image — the React component should match.
+
+**Verification:** axe DevTools — image should not appear in the accessibility tree.
+
+---
+
+### FIX-A10 — Newsletter visible label (Medium)
+
+**WCAG:** 2.4.6 Headings and Labels, 3.3.2 Labels or Instructions
+**File:** `Blog.tsx:322-331`
+
+The newsletter email input has a `.sr-only` label. WCAG 2.4.6 (AA) recommends visible labels for all inputs. The button text "Subscribe" partially identifies the purpose but does not label the input field itself.
+
+**Recommended fix:**
+```tsx
+<label htmlFor="newsletter-email" style={{ 
+  fontFamily: "Gabarito, sans-serif", 
+  fontSize: 13, 
+  color: "#8C9C8C",
+  display: "block",
+  marginBottom: 8,
+  textAlign: "center"
+}}>
+  Your email address
+</label>
+<input
+  id="newsletter-email"
+  type="email"
+  placeholder="you@clinic.com"
+  className="p-input"
+  style={{ flex: "1", minWidth: "220px" }}
+  autoComplete="email"
+  aria-required="true"
+  aria-invalid={newsletterStatus === 'error' || undefined}
+/>
+```
+
+**Verification:** Click the label — focus should move to the email input.
+
+---
+
+### FIX-A11 — `<p-select>` default color fails on `#1D3449` (Medium)
+
+**WCAG:** 1.4.3 Contrast (Minimum)
+**File:** `index.css:874`
+
+```css
+/* BEFORE: */
+.p-select {
+  color: #8C9C8C;  /* 4.42:1 on #1D3449 — fails for normal text */
+}
+
+/* AFTER: */
+.p-select {
+  color: #93A793;  /* 4.99:1 on #1D3449 — passes */
+}
+/* Placeholder / default option: */
+.p-select option[value=""] {
+  color: #93A793;
+}
+```
+
+**Verification:** Contrast checker on the select box before an option is chosen.
+
+---
+
+### FIX-A12 — Last-name field missing error association (Medium)
+
+**WCAG:** 3.3.1 Error Identification
+**File:** `Waitlist.tsx:137`
+
+The `waitlist-last-name` input has `required` and `aria-required` but:
+1. The `validate()` function does not validate it (no error set for it).
+2. No `aria-invalid` or `aria-describedby` is set if the field were to be invalid.
+
+**Fix:** Either remove `required` (since no validation runs on it) or add validation + error display consistent with other fields:
+
+```tsx
+// If last name is genuinely required, add to validate():
+const lastName = (form.elements.namedItem("waitlist-last-name") as HTMLInputElement)?.value.trim();
+if (!lastName) errs["waitlist-last-name"] = "Last name is required.";
+
+// And add error display in JSX:
+<input
+  id="waitlist-last-name"
+  type="text"
+  placeholder="Last name"
+  className="p-input"
+  required
+  aria-required="true"
+  aria-invalid={!!errors["waitlist-last-name"]}
+  aria-describedby={errors["waitlist-last-name"] ? "waitlist-last-name-error" : undefined}
+/>
+{errors["waitlist-last-name"] && (
+  <span id="waitlist-last-name-error" role="alert" style={{ fontSize: 12, color: "#C0E57A", display: "block" }}>
+    {errors["waitlist-last-name"]}
   </span>
-) : (
-  <span style={{ color: "#8C9C8C" }}>{item.label}</span>
 )}
 ```
 
 ---
 
-### D11 — Fix RouteAnnouncer title timing race
+### FIX-A15 — Static `tabindex="-1"` on main-content target (Low)
 
-**WCAG SC:** 4.1.3 Status Messages (Level AA)
-**Severity:** Low (design-time risk — browser-timing dependent)
-**Affected users:** Screen reader users on route change
+**WCAG:** 2.4.3 Focus Order
+**File:** All pages (`Home.tsx:70`, `Features.tsx:65`, etc.)
 
-**Current code in `App.tsx`:**
-```tsx
-useEffect(() => {
-  const title = document.title;           // ← may read previous page title
-  setAnnouncement(`Navigated to ${title}`);
-  ...
-}, [location]);
-```
+The `RouteAnnouncer` in `App.tsx:62-64` sets `tabindex="-1"` dynamically via JS before calling `.focus()`. However, on initial page load (before any route change), the element lacks `tabindex`, meaning the `focus()` call in the initial render effect may silently fail on some browsers.
 
-React-helmet-async updates `document.title` in a separate effect that runs after this effect. The race is timing-dependent.
-
-**Fix — defer announcement by one tick:**
-```tsx
-useEffect(() => {
-  const t = setTimeout(() => {
-    const title = document.title;         // read after Helmet has updated
-    setAnnouncement(`Navigated to ${title}`);
-    const main = document.getElementById("main-content");
-    if (main) {
-      main.setAttribute("tabindex", "-1");
-      main.focus({ preventScroll: true });
-    }
-  }, 0);
-  return () => clearTimeout(t);
-}, [location]);
-```
+Once FIX-A01 is applied (using `<main tabIndex={-1}>`), this is resolved by default.
 
 ---
 
-### D12 — Remove duplicate paragraph copy in Home Features section
+### FIX-A17 — About page CTA arrow SVG missing aria-hidden (Low)
 
-**WCAG SC:** 2.4.6 Headings and Labels (Level AA)
-**Severity:** Low (screen reader experience)
+**WCAG:** 1.1.1 Non-text Content
+**File:** `About.tsx:131`
 
-**Current code in `Home.tsx`:**
-```jsx
-<p style={{ fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-  Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and secure patient-clinic messaging into a single dental companion app.
-</p>
-<p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
-  Perioskoup connects patients and clinicians with AI-powered tools that make daily dental care simple, consistent, and effective.
-</p>
+```tsx
+// BEFORE:
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" .../>
+</svg>
+
+// AFTER:
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" .../>
+</svg>
 ```
 
-Two consecutive paragraphs with similar intent. The second `body-lg` paragraph is `#8C9C8C` colour (the `.body-lg` class sets `color: #8C9C8C`). Remove one to avoid redundant reading. Same duplicate pattern occurs in the How It Works section.
+Same pattern applies to `ForDentists.tsx:102`, `About.tsx:309`. Most arrow SVGs in the codebase already have `aria-hidden="true" focusable="false"` — these are isolated omissions.
 
 ---
 
 ## E) Definition of Done
 
-### Engineering Acceptance Criteria
+### Engineering
+- [ ] Every page has exactly one `<main id="main-content" tabIndex={-1}>` landmark wrapping page-specific content between Navbar and Footer
+- [ ] All `<section id="main-content">` occurrences removed (12 page files)
+- [ ] `#8C9C8C` replaced with `#93A793` in all inline styles inside `.card` children across Features, ForDentists, Pricing, About, Home
+- [ ] Breadcrumb separator is `aria-hidden="true"` OR color changed to meet 4.5:1
+- [ ] `autocomplete` attribute added to all personal-information inputs: `given-name`, `family-name`, `email`, `organization`
+- [ ] Navbar logo link `<div>` wrapper removed; `<Link>` receives inline-flex style directly
+- [ ] Contact and Waitlist pre-mount `role="status"` live region outside the conditional form/success render
+- [ ] Hero background `<img>` in `Home.tsx` changed to `alt=""` and `aria-hidden="true"`
+- [ ] Newsletter input gets a visible `<label>` in Blog.tsx
+- [ ] `p-select` default color changed to `#93A793` in index.css
+- [ ] Last-name field validation added to Waitlist or `required` removed
+- [ ] Remaining SVG arrow icons in About.tsx, ForDentists.tsx CTA sections get `aria-hidden="true" focusable="false"`
 
-- [ ] **A01/A03:** All source link text uses minimum `#8C9C8C` (`6.28:1` on `#0A171E`) — verified with colour picker
-- [ ] **A02:** Muted text on `.card` surface achieves ≥ 4.5:1 — verified with DevTools contrast checker
-- [ ] **A04:** `.p-input` and `.p-select` have `outline: none` moved inside `:focus` only — verified no flash of unringed focus in Chrome keyboard test
-- [ ] **A05:** Mobile drawer focus trap — Tab cycles within drawer, Escape closes, focus returns to hamburger button on close — verified with keyboard-only test
-- [ ] **A06:** Active nav link announces `aria-current="page"` — verified with VoiceOver/NVDA ("current page")
-- [ ] **A07:** All decorative SVGs in interactive elements have `aria-hidden="true" focusable="false"` — zero NVDA announcements of unnamed SVGs
-- [ ] **A08:** Emoji icons in feature cards have `aria-hidden="true"` — NVDA reads only the h3 text
-- [ ] **A09:** Logo SVG has `<title>Perioskoup</title>` in non-link contexts; `aria-hidden="true"` in linked contexts
-- [ ] **A10:** Newsletter section has `role="status" aria-live="polite"` feedback region populated on submit
-- [ ] **A11:** Breadcrumb last item has `aria-current="page"` — VoiceOver announces "current page"
-- [ ] **A12:** RouteAnnouncer deferred with `setTimeout(..., 0)` — screen reader receives correct new page title after navigation
-
-### QA Verification Steps
-
-1. Keyboard-only session (Tab, Shift+Tab, Enter, Space, Escape) through Home → Waitlist → Blog → Contact — all tasks completable without mouse
-2. Open mobile nav → Tab → confirm focus stays within drawer → Escape → confirm focus returns to hamburger
-3. VoiceOver (Mac) or NVDA (Windows) linear read of Home page — confirm no unnamed SVGs, no duplicate announcements, active nav link announced as current
-4. Axe DevTools browser scan on all 12 routes — zero critical/serious violations
-5. Chrome DevTools Lighthouse Accessibility audit — target score ≥ 90
-6. Test with Windows High Contrast Mode — confirm all interactive states remain visible
-7. Text-only zoom to 200% in Chrome — confirm no horizontal scroll, no content clipped
-8. Newsletter form: submit with empty field → confirm error announced; submit valid email → confirm success announced
+### QA Verification
+- [ ] axe DevTools full scan on `/`, `/features`, `/waitlist`, `/contact`, `/blog`, `/about`, `/pricing` — zero critical violations
+- [ ] Lighthouse Accessibility score ≥ 92 on all pages
+- [ ] VoiceOver (macOS): Tab through `/waitlist` form — every field reads its label, errors are announced on submit
+- [ ] VoiceOver (macOS): Navigate by landmarks (VO+U → Landmarks) — `main` landmark appears on every page
+- [ ] VoiceOver (macOS): SPA route change (click Features) — "Navigated to ..." is announced, focus moves to main landmark
+- [ ] Keyboard only (no mouse): Tab through entire homepage — focus ring visible on every interactive element including skip link
+- [ ] Keyboard only: Open/close mobile drawer on narrow viewport — Escape closes, focus returns to hamburger
 
 ---
 
-## F) What the Site Gets Right
+## Contrast Ratio Reference (Calculated)
 
-These are genuine strengths that distinguish Perioskoup from typical marketing SPAs:
-
-1. **Skip link implemented correctly** — `<a href="#main-content" class="skip-link">` in App.tsx, properly positioned off-screen and revealed on focus via CSS transition
-2. **SPA route announcer** — `RouteAnnouncer` component with `role="status" aria-live="polite"` and programmatic focus management on navigation
-3. **Comprehensive `prefers-reduced-motion` support** — Every looping animation, scroll reveal, page transition, and drawer animation is disabled via a single `@media (prefers-reduced-motion: reduce)` block in CSS
-4. **Form accessibility** — Both Waitlist and Contact forms use proper `<label>` associations, `aria-required`, `aria-invalid`, `aria-describedby`, and `role="alert"` on error messages
-5. **Mobile hamburger ARIA** — `aria-expanded`, `aria-controls`, and dynamic `aria-label` on the toggle button
-6. **Mobile drawer role** — `role="dialog" aria-modal="true" aria-label="Navigation menu"` with Escape key close
-7. **Breadcrumb landmark** — `<nav aria-label="Breadcrumb">` with `<ol>` list structure
-8. **Touch targets** — All primary buttons and CTAs meet 44×44 px minimum; hamburger button is exactly 44×44 px
-9. **200% zoom** — `clamp()` typography and responsive CSS grid reflow cleanly at 200%; no horizontal overflow
-10. **`lang="en"`** on `<html>` — correct
-11. **Meaningful alt text** — All content images (team photos, award ceremony, hero) have descriptive alt attributes
-12. **Heading hierarchy** — Consistent h1→h2→h3 across all 12 routes; no skipped levels
-13. **Global focus-visible ring** — `*:focus-visible { outline: 2px solid #C0E57A; outline-offset: 2px; }` in base styles
-14. **Unique page titles** — react-helmet-async sets unique `<title>` per route; titles are descriptive
-15. **High primary contrast** — `#F5F9EA` on `#0A171E` = 17.00:1, `#C0E57A` on `#0A171E` = 12.76:1, both far exceed AA requirements
-
----
-
-## Score Rationale
-
-| Category | Weight | Score |
+| Combination | Ratio | Pass/Fail AA |
 |---|---|---|
-| Colour Contrast | 15% | 6/10 — primary/accent pass with margin; 3 secondary colour combos fail |
-| Keyboard Navigation | 20% | 7/10 — all elements reachable; mobile drawer lacks focus trap |
-| Focus Indicators | 15% | 8/10 — global focus-visible ring present; p-input pattern is borderline |
-| Forms & Labels | 15% | 9/10 — excellent; newsletter missing feedback region |
-| Images & Non-text | 10% | 7/10 — named images have alt; emoji icons and some SVGs need aria-hidden |
-| ARIA & Semantics | 10% | 8/10 — strong pattern usage; missing aria-current on nav |
-| Screen Reader Flow | 10% | 7/10 — RouteAnnouncer is good; timing race; duplicate paragraphs |
-| Motion / Zoom | 5% | 10/10 — exemplary prefers-reduced-motion; 200% zoom works |
+| `#F5F9EA` on `#0A171E` (main text) | 17.00:1 | PASS |
+| `#C0E57A` on `#0A171E` (accent/lime) | 12.76:1 | PASS |
+| `#0A171E` on `#C0E57A` (btn-primary text) | 12.76:1 | PASS |
+| `#8C9C8C` on `#0A171E` (muted on bg) | 6.28:1 | PASS |
+| `#F5F9EA` on `#1D3449` (text on surface) | 11.97:1 | PASS |
+| `#93A793` on `#1D3449` (corrected muted on surface) | 4.99:1 | PASS |
+| **`#8C9C8C` on `#1D3449` (muted on surface)** | **4.42:1** | **FAIL (normal text)** |
+| `#C0E57A` on `#1D3449` (error text on card) | 8.98:1 | PASS |
+| `#C0E57A` on `#050C10` (lime on deep bg) | 13.81:1 | PASS |
+| `#8C9C8C` on `#050C10` (muted on deep bg) | 6.80:1 | PASS |
+| `#F5F9EA` on `#050C10` (text on deep bg) | 18.40:1 | PASS |
+| `#8FB84A` on `#0A171E` (gradient end) | 7.90:1 | PASS |
+| `rgba(245,249,234,0.65)` on `#0A171E` (inactive nav) | 7.66:1 | PASS |
+| `rgba(245,249,234,0.8)` on `#0A171E` (hero subhead) | 11.10:1 | PASS |
+| `rgba(245,249,234,0.65)` on `#1D3449` (plan features) | 6.01:1 | PASS |
+| **`#4A5E6A` on `#0A171E` (breadcrumb sep)** | **2.69:1** | **FAIL** |
+| Focus ring `#C0E57A` vs `#0A171E` | 12.76:1 | PASS |
+| Focus ring `#0A171E` vs `#C0E57A` (btn-primary) | 12.76:1 | PASS |
 
-**Weighted total: 7.4 → Score: 7 / 10**
+---
 
+## What Is Already Done Well
+
+These items are specifically called out because they represent deliberate, correct accessibility implementation:
+
+1. **Skip link** (`App.tsx:113`, `index.css:136`): Present, visually hidden off-screen, slides into view on `:focus`, targets the correct landmark.
+2. **Route announcer** (`App.tsx:49-76`): Polite live region reads `document.title` after a tick delay, then moves keyboard focus to `#main-content`. Strong SPA accessibility pattern.
+3. **Reduced-motion** (`index.css:1105-1177`): Comprehensive — all continuous animations, page transitions, hover lifts, mobile drawer, and reveals are disabled. The parallax JS also checks `prefers-reduced-motion` before subscribing to scroll events.
+4. **Mobile drawer focus trap** (`Navbar.tsx:50-84`): Correct implementation with initial focus, Tab cycling, Escape key, and focus restoration to hamburger.
+5. **ARIA on mobile drawer** (`Navbar.tsx:172-175`): `role="dialog"`, `aria-modal="true"`, `aria-label`, `aria-expanded`, `aria-controls` all correct.
+6. **Form ARIA** (Waitlist, Contact): `aria-invalid`, `aria-describedby`, `role="alert"` pattern is correctly implemented on validated fields.
+7. **Live regions for form errors** (`Waitlist.tsx`, `Contact.tsx`): `role="alert"` on inline error messages ensures immediate announcement.
+8. **Newsletter live region** (`Blog.tsx:312`): Pre-mounted `role="status"` region correctly exists before content changes — this is the right pattern.
+9. **Decorative elements** hidden correctly: ticker `aria-hidden="true"`, phone mockup container `aria-hidden="true"`, most SVG icons `aria-hidden="true"`, ParallaxHeroBg `aria-hidden="true"`.
+10. **Logo ARIA** (`Logo.tsx`): `LogoMark` correctly uses `<title>Perioskoup</title>` when standalone and `ariaHidden={true}` when inside a labelled link.
+11. **Focus-visible CSS** (`index.css:181-184`): Global `*:focus-visible` ring at 2px `#C0E57A` — 12.76:1 contrast — is present and correct.
+12. **Breadcrumb `aria-current="page"`** (`Breadcrumb.tsx:78`): Correct per WCAG 1.3.1.
+13. **Heading hierarchy**: Each page has a single `<h1>` in the hero, `<h2>` for sections, `<h3>` for subsections — logical structure.
+14. **`lang="en"`** on `<html>` in `index.html:2` — correct.
+15. **Touch targets**: All buttons and links have `min-height`/`height` ≥ 44px in their CSS classes or inline styles.
+16. **`prefers-reduced-motion` in JS**: `ParallaxHeroBg.tsx:11` checks `matchMedia` before running the scroll RAF loop.

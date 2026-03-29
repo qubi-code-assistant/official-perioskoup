@@ -1,7 +1,6 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, useLocation } from "wouter";
 import React, { Suspense, useEffect, useState } from "react";
+
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -29,16 +28,16 @@ function ScrollToTop() {
 }
 
 /**
- * Wraps route content in a CSS page-fade-in animation.
- * The key={location} causes React to remount the div on every route
- * change, re-triggering the animation. No Framer Motion required.
+ * Wraps route content in a <main> landmark for WCAG 1.3.6 compliance.
+ * The key={location} causes React to remount on every route change,
+ * re-triggering the page-enter animation. No Framer Motion required.
  */
 function PageWrapper({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   return (
-    <div key={location} className="page-enter">
+    <main key={location} className="page-enter">
       {children}
-    </div>
+    </main>
   );
 }
 
@@ -107,12 +106,9 @@ export default function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          {/* Skip to main content -- visually hidden, appears on keyboard focus (WCAG 2.4.1) */}
-          <a href="#main-content" className="skip-link">Skip to main content</a>
-          <Router />
-        </TooltipProvider>
+        {/* Skip to main content -- visually hidden, appears on keyboard focus (WCAG 2.4.1) */}
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <Router />
       </ThemeProvider>
     </ErrorBoundary>
   );

@@ -1,0 +1,97 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - status [ref=e4]: Navigated to Perioskoup — AI Dental Companion App | Between-Visit Dental Care
+  - generic [ref=e6]:
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Perioskoup home" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e11]:
+            - img [ref=e12]
+            - generic [ref=e15]: Perioskoup
+        - generic [ref=e16]:
+          - link "Features" [ref=e17] [cursor=pointer]:
+            - /url: /features
+            - generic [ref=e18]: Features
+          - link "For Dentists" [ref=e19] [cursor=pointer]:
+            - /url: /for-dentists
+            - generic [ref=e20]: For Dentists
+          - link "Pricing" [ref=e21] [cursor=pointer]:
+            - /url: /pricing
+            - generic [ref=e22]: Pricing
+          - link "About" [ref=e23] [cursor=pointer]:
+            - /url: /about
+            - generic [ref=e24]: About
+          - link "Blog" [ref=e25] [cursor=pointer]:
+            - /url: /blog
+            - generic [ref=e26]: Blog
+          - link "Contact" [ref=e27] [cursor=pointer]:
+            - /url: /contact
+            - generic [ref=e28]: Contact
+        - link "Join the waitlist" [ref=e30] [cursor=pointer]:
+          - /url: /waitlist
+          - generic [ref=e31]: Join Waitlist
+    - generic [ref=e33]:
+      - generic [ref=e34]: "404"
+      - heading "Page not found." [level=1] [ref=e35]
+      - paragraph [ref=e36]: Sorry, the page you're looking for doesn't exist. It may have been moved or deleted.
+      - link "Back to Home" [ref=e37] [cursor=pointer]:
+        - /url: /
+        - text: Back to Home
+        - img [ref=e38]
+    - contentinfo [ref=e40]:
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e45]:
+              - img [ref=e46]
+              - generic [ref=e49]: Perioskoup
+            - paragraph [ref=e50]: Your AI dental companion. Bridging the gap between clinic and home.
+            - link "EFP Award 2025" [ref=e52] [cursor=pointer]:
+              - /url: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+              - text: EFP Award 2025
+          - generic [ref=e54]:
+            - heading "Product" [level=3] [ref=e55]
+            - generic [ref=e56]:
+              - link "Features" [ref=e57] [cursor=pointer]:
+                - /url: /features
+                - generic [ref=e58]: Features
+              - link "For Dentists" [ref=e59] [cursor=pointer]:
+                - /url: /for-dentists
+                - generic [ref=e60]: For Dentists
+              - link "Pricing" [ref=e61] [cursor=pointer]:
+                - /url: /pricing
+                - generic [ref=e62]: Pricing
+              - link "Join Waitlist" [ref=e63] [cursor=pointer]:
+                - /url: /waitlist
+                - generic [ref=e64]: Join Waitlist
+          - generic [ref=e65]:
+            - heading "Company" [level=3] [ref=e66]
+            - generic [ref=e67]:
+              - link "About" [ref=e68] [cursor=pointer]:
+                - /url: /about
+                - generic [ref=e69]: About
+              - link "Blog" [ref=e70] [cursor=pointer]:
+                - /url: /blog
+                - generic [ref=e71]: Blog
+              - link "Contact" [ref=e72] [cursor=pointer]:
+                - /url: /contact
+                - generic [ref=e73]: Contact
+          - generic [ref=e74]:
+            - heading "Legal" [level=3] [ref=e75]
+            - generic [ref=e76]:
+              - link "Privacy Policy" [ref=e77] [cursor=pointer]:
+                - /url: /privacy
+                - generic [ref=e78]: Privacy Policy
+              - link "Terms of Service" [ref=e79] [cursor=pointer]:
+                - /url: /terms
+                - generic [ref=e80]: Terms of Service
+        - generic [ref=e81]:
+          - paragraph [ref=e82]: © 2026 Perioskoup. All rights reserved.
+          - paragraph [ref=e83]: Made in Europe
+```

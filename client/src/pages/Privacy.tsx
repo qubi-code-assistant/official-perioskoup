@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const SECTIONS = [
   { title: "1. Introduction", content: 'Perioskoup ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and protect information about you when you use our application and website. We comply with the General Data Protection Regulation (GDPR) and applicable Romanian and EU data protection laws.' },
@@ -21,6 +22,8 @@ const SECTIONS = [
 ];
 
 export default function Privacy() {
+  const { GEOCapsule } = usePageMeta("/privacy");
+
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
@@ -34,7 +37,13 @@ export default function Privacy() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Privacy Policy | Perioskoup" />
         <meta name="twitter:description" content="How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
       </Helmet>
+      {GEOCapsule}
       <Navbar />
 
       <section id="main-content" style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>

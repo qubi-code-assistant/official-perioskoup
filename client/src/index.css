@@ -1188,10 +1188,12 @@
 .hero-lcp-img.ken-burns { animation: ken-burns 24s ease-in-out infinite; }
 
 /* Hero section: LCP elements must render at opacity:1 immediately.
-   Without this, .reveal starts at opacity:0 which disqualifies LCP candidates. */
+   Without this, .reveal starts at opacity:0 which disqualifies LCP candidates.
+   Uses !important to guarantee specificity over base .reveal { opacity:0 }
+   and prevent intermittent LCP failures when CSS load order varies. */
 #main-content .reveal,
 #main-content .reveal-scale {
-  opacity: 1;
-  transform: none;
-  transition: none;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
 }

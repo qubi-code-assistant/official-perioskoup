@@ -11,9 +11,11 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import PhoneMockup from "@/components/PhoneMockup";
 import { useReveal } from "@/hooks/useReveal";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { capture } from "@/lib/analytics";
 
 // Local Asset URLs
 const ASSETS = {
@@ -32,6 +34,33 @@ const ASSETS = {
    ══════════════════════════════════════════════════════════════ */
 export default function Home() {
   useReveal(0.12);
+  const [, navigate] = useLocation();
+  const { GEOCapsule } = usePageMeta("/");
+
+  const homeOrgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Perioskoup",
+    "url": "https://perioskoup.com",
+    "logo": "https://perioskoup.com/images/og-image.jpg",
+    "description": "AI-powered dental companion app that bridges the gap between dental visits with habit tracking, smart reminders, and a clinician dashboard.",
+    "foundingDate": "2025",
+    "founder": [
+      { "@type": "Person", "name": "Dr. Anca Laura Constantin", "jobTitle": "CEO" },
+      { "@type": "Person", "name": "Eduard Ciugulea", "jobTitle": "Co-founder & CGO" },
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bucharest",
+      "addressCountry": "RO",
+    },
+    "areaServed": { "@type": "Place", "name": "Europe" },
+    "award": "EFP Digital Innovation Award 2025 — 3rd Prize",
+    "sameAs": [
+      "https://www.linkedin.com/company/perioskoup",
+      "https://www.instagram.com/perioskoup",
+    ],
+  };
 
   const homeFaqJsonLd = {
     "@context": "https://schema.org",
@@ -49,27 +78,32 @@ export default function Home() {
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Perioskoup | AI Dental Companion App | Between-Visit Dental Care</title>
-        <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. EFP Digital Innovation Award Winner 2025." />
+        <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. EFP Digital Innovation Award 2025 — 3rd Prize." />
         <link rel="canonical" href="https://perioskoup.com/" />
         <meta property="og:title" content="Perioskoup | AI Dental Companion App | Between-Visit Dental Care" />
-        <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Innovation Award Winner 2025." />
+        <meta property="og:description" content="AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Digital Innovation Award 2025 — 3rd Prize." />
         <meta property="og:url" content="https://perioskoup.com/" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup | AI Dental Companion App | Between-Visit Dental Care" />
-        <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 Winner." />
+        <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 — 3rd Prize." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/" />
       </Helmet>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeOrgJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
+      {GEOCapsule}
       <div className="noise-overlay" />
       <Navbar />
 
       {/* HERO */}
       <section id="main-content" style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "center", paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(48px, 8vw, 80px)", overflow: "hidden" }}>
         {/* Hero LCP image -- outside wrapper so overflow:hidden doesn't block LCP detection */}
-        <img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" fetchPriority="high" width={1280} height={714} className="hero-lcp-img ken-burns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
+        <img src={ASSETS.heroBg} alt="Perioskoup dental companion app hero" fetchPriority="high" decoding="sync" width={1280} height={714} className="hero-lcp-img ken-burns" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
         {/* Animated background overlays */}
         <div className="animated-bg-wrapper">
           <div className="bg-overlay" style={{ background: "linear-gradient(105deg, rgba(10,23,30,0.88) 0%, rgba(10,23,30,0.7) 50%, rgba(10,23,30,0.4) 100%)" }} />
@@ -85,7 +119,7 @@ export default function Home() {
                 <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
                   className="efp-badge-hover"
                   style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none", flexWrap: "wrap" as const }}>
-                  <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>EFP Award Winner 2025</span>
+                  <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>3rd Prize · EFP Award 2025</span>
                   <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500 }}>Digital Innovation</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ color: "#C0E57A", flexShrink: 0 }}><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
@@ -99,7 +133,7 @@ export default function Home() {
 
               {/* Product subhead */}
               <p className="reveal body-lg" style={{ maxWidth: 520, marginBottom: 32, transitionDelay: "0.15s", color: "rgba(245,249,234,0.8)" }}>
-                Perioskoup is an AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+                Perioskoup is an AI dental companion app — personalised guidance, habit tracking, and a connection to your care team between appointments.
               </p>
 
               {/* Dr. Anca quote */}
@@ -114,10 +148,18 @@ export default function Home() {
 
               {/* CTA row */}
               <div className="reveal" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 48, transitionDelay: "0.3s" }}>
-                <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 32px" }}>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  style={{ fontSize: 16, padding: "16px 32px" }}
+                  onClick={() => {
+                    capture("hero_cta_clicked", { cta_text: "Join the Waitlist" });
+                    navigate("/waitlist");
+                  }}
+                >
                   Join the Waitlist
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </Link>
+                </button>
                 <Link href="/for-dentists" className="btn-ghost" style={{ fontSize: 16, padding: "16px 32px" }}>
                   For Clinicians
                 </Link>
@@ -148,13 +190,33 @@ export default function Home() {
         <div className="ticker-track">
           {[...Array(2)].map((_, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center" }}>
-              {["AI-Powered Dental Companion", "EFP Innovation Award Winner 2025", "For Patients & Clinicians", "Personalised Daily Habits", "Bridging the Gap Between Visits", "Trusted by Periodontists", "Launching Soon"].map((t) => (
+              {["AI-Powered Dental Companion", "EFP Award 2025 — 3rd Prize", "For Patients & Clinicians", "Personalised Daily Habits", "Bridging the Gap Between Visits", "Trusted by Periodontists", "Launching Soon"].map((t) => (
                 <span key={t} style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, fontWeight: 700, color: "#0A171E", letterSpacing: "0.06em", textTransform: "uppercase", padding: "0 40px", whiteSpace: "nowrap" }}>
                   {t} <span style={{ color: "rgba(10,23,30,0.35)", margin: "0 8px" }}>·</span>
                 </span>
               ))}
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* PRESS RECOGNITION STRIP */}
+      <div style={{ background: "#050C10", borderTop: "1px solid #234966", borderBottom: "1px solid #234966", padding: "20px 0" }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
+          <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8C9C8C" }}>Recognised by</span>
+          <div style={{ width: 1, height: 16, background: "#234966", flexShrink: 0 }} aria-hidden="true" />
+          <a
+            href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}
+          >
+            <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>European Federation of Periodontology</span>
+            <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A" }}>· Digital Innovation Award 2025 — 3rd Prize</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ color: "#C0E57A", flexShrink: 0 }}><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </a>
+          <div style={{ width: 1, height: 16, background: "#234966", flexShrink: 0 }} aria-hidden="true" />
+          <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>EuroPerio11 Vienna · May 2025</span>
         </div>
       </div>
 
@@ -169,8 +231,8 @@ export default function Home() {
             </div>
             {/* Right: content */}
             <div className="bg-[#1D3449] p-6 md:p-12 flex flex-col gap-0">
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C0E57A", color: "#0A171E", fontSize: 11, fontWeight: 700, padding: "5px 14px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 24 }}>
-                EFP Innovation Award Winner 2025
+              <div style={{ display: "inline-flex", background: "#C0E57A", color: "#0A171E", fontSize: 11, fontWeight: 700, padding: "5px 14px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
+                3rd Prize · EFP Digital Innovation Award 2025
               </div>
               <blockquote style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, marginBottom: 24 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 18, fontStyle: "italic", color: "#F5F9EA", lineHeight: 1.6 }}>
@@ -191,7 +253,7 @@ export default function Home() {
               <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer" className="btn-text">
                 Read the EFP announcement
                 <span className="btn-text-arrow">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </span>
               </a>
             </div>
@@ -222,12 +284,12 @@ export default function Home() {
             {[
               { span: 2, title: "AI-Powered Guidance", desc: "Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations - not generic advice. It learns what works for you and adapts over time.", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
               { span: 1, title: "Habit Tracking", desc: "Daily streaks, reminders, and progress visualisation that make good dental habits stick.", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
-              { span: 1, title: "For Clinicians", desc: "Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+              { span: 1, title: "For Clinicians", desc: "Dentists and periodontists get a dashboard to track patient engagement and send targeted guidance between appointments.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
               { span: 2, title: "Privacy First", desc: "Your dental data stays yours. Perioskoup is built with GDPR protection at its core - no selling of health data, ever. Encrypted end-to-end, stored in the EU.", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
             ].map((f, i) => (
               <div key={f.title} className={`card reveal ${f.span === 2 ? "md:col-span-2" : ""}`} style={{ transitionDelay: `${i * 0.08}s`, background: "rgba(29,52,73,0.75)", backdropFilter: "blur(12px)" }}>
                 <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(192,229,122,0.1)", border: "1px solid rgba(192,229,122,0.25)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d={f.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d={f.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 32, color: "#F5F9EA", lineHeight: 1, marginBottom: 12 }}>{f.title}</h3>
                 <p className="body-md" style={{ maxWidth: f.span === 2 ? 480 : undefined }}>{f.desc}</p>
@@ -240,6 +302,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* INLINE CTA — after Features */}
+      <div className="reveal" style={{ background: "#0A171E", borderTop: "1px solid #234966", borderBottom: "1px solid #234966", padding: "28px 0" }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
+          <p style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(24px, 3vw, 32px)", color: "#F5F9EA", margin: 0, lineHeight: 1 }}>
+            Ready to try Perioskoup?
+          </p>
+          <Link
+            href="/waitlist"
+            className="btn-primary"
+            style={{ fontSize: 15, padding: "12px 28px", whiteSpace: "nowrap" }}
+            onClick={() => capture("inline_cta_clicked", { cta_text: "Join the Waitlist", position: "after_features" })}
+          >
+            Join the Waitlist
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </Link>
+        </div>
+      </div>
 
       {/* WHAT IS AN AI DENTAL COMPANION */}
       <section style={{ background: "#0A171E", padding: "clamp(56px, 7vw, 100px) 0" }}>
@@ -255,7 +335,7 @@ export default function Home() {
               Not a chatbot. Not a practice management system. Not a fitness tracker for teeth.
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
-              An AI dental companion translates clinical recommendations into personalised daily habits - with smart reminders, progress tracking, and a direct line to your dental team. Perioskoup is the first.
+              An AI dental companion translates clinical recommendations into personalised daily habits - with smart reminders, progress tracking, and a connection to your care team. Perioskoup is the first.
             </p>
           </div>
         </div>
@@ -272,14 +352,11 @@ export default function Home() {
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
               Perioskoup connects your dental appointment to your daily routine in three steps: your dentist sets a personalised plan, AI translates it into habits, and you build consistency between visits.
             </p>
-            <p className="body-lg" style={{ maxWidth: 540, margin: "0 auto" }}>
-              The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
-            </p>
           </div>
 
           {/* Wave circles layout */}
           <div style={{ position: "relative", maxWidth: 900, margin: "0 auto", paddingTop: 40, paddingBottom: 40 }}>
-            <svg viewBox="0 0 900 200" fill="none" className="hidden md:block" style={{ position: "absolute", top: 40, left: 0, width: "100%", height: 200, zIndex: 1 }}>
+            <svg viewBox="0 0 900 200" fill="none" aria-hidden="true" focusable="false" className="hidden md:block" style={{ position: "absolute", top: 40, left: 0, width: "100%", height: 200, zIndex: 1 }}>
               <path d="M 120 80 C 250 80, 300 160, 450 160 C 600 160, 650 80, 780 80" stroke="rgba(192,229,122,0.35)" strokeWidth="1.5" fill="none" />
             </svg>
 
@@ -294,7 +371,7 @@ export default function Home() {
                   icon: <><path d="M12 2l2 5L19 9l-5 2-2 5-2-5L5 9l5-2 2-5z" fill="#C0E57A"/><path d="M18 14l1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5 1.5-3z" fill="#C0E57A" opacity="0.6"/></>,
                 },
                 {
-                  step: "03", title: "Build Daily Habits", desc: "Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.", offsetY: 0,
+                  step: "03", title: "Build Daily Habits", desc: "Follow your plan at home with AI support, progress tracking, and a connection to your care team.", offsetY: 0,
                   icon: <><rect x="5" y="1" width="14" height="22" rx="3" stroke="#C0E57A" strokeWidth="1.8" fill="none"/><rect x="10" y="18" width="4" height="2" rx="1" fill="#C0E57A"/></>,
                 },
               ].map((item, i) => (
@@ -313,7 +390,7 @@ export default function Home() {
                       display: "flex", alignItems: "center", justifyContent: "center",
                       animationDelay: `${i * 0.8}s`,
                     }}>
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none">{item.icon}</svg>
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">{item.icon}</svg>
                     </div>
                     <div style={{
                       position: "absolute", top: -4, right: -4,
@@ -334,6 +411,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* INLINE CTA — after How It Works */}
+      <div className="reveal" style={{ background: "#0A171E", padding: "28px 0" }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
+          <p style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(24px, 3vw, 32px)", color: "#F5F9EA", margin: 0, lineHeight: 1 }}>
+            Your patients deserve support between visits.
+          </p>
+          <Link
+            href="/waitlist?role=dentist"
+            className="btn-primary"
+            style={{ fontSize: 15, padding: "12px 28px", whiteSpace: "nowrap" }}
+            onClick={() => capture("inline_cta_clicked", { cta_text: "Apply as a Founding Clinic", position: "after_how_it_works" })}
+          >
+            Apply as a Founding Clinic
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </Link>
+        </div>
+      </div>
+
       {/* SOCIAL PROOF / QUOTE */}
       <section style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container">
@@ -349,6 +444,25 @@ export default function Home() {
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & CEO, Perioskoup</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* KNOWLEDGE HUB TEASER -- internal link to Blog */}
+      <section style={{ background: "#0A171E", padding: "clamp(48px, 6vw, 80px) 0", borderTop: "1px solid #234966" }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <div className="reveal">
+            <span className="label-tag" style={{ marginBottom: 20, display: "inline-flex" }}>Knowledge Hub</span>
+            <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 5vw, 60px)", color: "#F5F9EA", lineHeight: 0.95, marginTop: 16, marginBottom: 16 }}>
+              From the knowledge hub
+            </h2>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 520, margin: "0 auto 32px" }}>
+              Evidence-based articles on periodontal health, AI in dental care, and daily oral habits — written by a practising periodontist.
+            </p>
+            <Link href="/blog" className="btn-ghost">
+              Read the blog
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ marginLeft: 8 }}><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </Link>
           </div>
         </div>
       </section>

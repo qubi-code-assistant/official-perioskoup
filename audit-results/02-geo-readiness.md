@@ -1,566 +1,579 @@
 # GEO Readiness Audit — Perioskoup
-**Auditor:** GEO Specialist Subagent
-**Date:** 2026-03-06
-**Site:** https://official-perioskoup.vercel.app (canonical: https://perioskoup.com)
-**Key asset:** Dr. Anca Laura Constantin — Periodontist, EFP Digital Innovation Award 2025
-**EFP reference:** https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
-**Audit scope:** Source code — client/src/pages/, client/public/, client/index.html
+**Audit Date:** 2026-03-06
+**Auditor:** GEO Specialist (Claude Sonnet 4.6)
+**Site:** https://official-perioskoup.vercel.app / https://perioskoup.com
+**Branch:** fix/final-launch-audit
 
 ---
 
-## Overall GEO Score: 7.5 / 10
+## Overall Score: 7.8 / 10
 
-Perioskoup has a genuinely strong GEO foundation. The majority of critical schema is in place: FAQPage covers all major commercial pages plus every blog post, the global `@graph` in `index.html` establishes Organization, WebSite, Person, and SoftwareApplication nodes with proper `@id` cross-referencing, blog posts use a structured `answerCapsules` pattern that injects direct-answer paragraphs immediately after each H2, and robots.txt grants explicit access to all major AI crawlers. The gaps are real but correctable: the RSS feed image URL is relative (broken for feed readers), the Person schema on blog posts uses a different `worksFor` node structure than the global entity, `llms.txt` is missing the Dr. Anca credential depth that matters for AI citation, static pages have no answer capsule pattern, and the About page Person schema slightly diverges from the global one.
-
----
-
-## 1. Answer Capsules After H2 Headings
-
-**Score: 7.5 / 10**
-
-**What exists:**
-
-Blog posts use a dedicated `answerCapsules: Record<string, string>` field in the `ARTICLES` data object, keyed by the exact H2 heading text. The `renderBody()` function in `BlogPost.tsx` (lines 686–695) injects the capsule immediately after each matching H2 as a styled blockquote-like callout. This is the correct pattern for AI extraction. Every article has capsules for every H2 heading.
-
-Capsule coverage per article:
-- `what-is-periodontal-disease` — 9 H2 headings, 9 capsules
-- `how-ai-is-changing-dental-monitoring` — 7 H2 headings, 7 capsules
-- `3-minute-routine-save-teeth` — 5 H2 headings, 5 capsules
-- `efp-digital-innovation-award-2025` — 5 H2 headings, 5 capsules
-- `why-patients-forget-instructions` — 6 H2 headings, 6 capsules
-- `building-the-bridge-perioskoup-story` — 6 H2 headings, 6 capsules
-
-**What is missing:**
-
-Static pages (Home, Features, ForDentists, About) have no answer capsule pattern. H2 sections on these pages contain marketing copy distributed across styled components, not a clean "direct answer + supporting detail" block that AI systems can extract as a standalone response.
-
-Specific H2 sections that need capsules:
-
-- **Home:** "What is an AI dental companion?" — this H2 exists but the answer is buried in two separate `<p>` elements with different opacity styles, not a single extractable block.
-- **Features:** "What's inside Perioskoup" — answered by a card grid, not a prose paragraph.
-- **For Dentists:** "The problem is clear." — paragraph exists but is phrased as marketing narrative, not a direct answer.
-- **About:** "Why now?" — answer is split across two `<p>` elements inside a `.reveal` div.
-
-**Verdict:** Blog posts are excellent. Static pages need prose answer blocks immediately below each major H2.
+Strong foundation with several genuine strengths. The most critical gaps are
+content that exists only inside JavaScript (invisible to non-JS crawlers),
+a duplicate line in llms.txt, missing `dateModified` freshness in BlogPosting
+schema, missing `speakable` schema for voice/AI extraction, and the llms-full.txt
+not including the full text of blog post bodies (only titles and URLs). Also, the
+`building-the-bridge` blog post description is inaccurate in the RSS feed.
 
 ---
 
-## 2. FAQPage Schema Coverage
+## Category Scores
 
-**Score: 8 / 10**
-
-| Page | FAQPage Schema | Questions | Notes |
-|---|---|---|---|
-| Homepage (`/`) | YES — inline `<script>` | 5 | Correct placement |
-| Features (`/features`) | YES — inline `<script>` | 3 | Correct |
-| For Dentists (`/for-dentists`) | YES — inline `<script>` | 6 | Correct |
-| About (`/about`) | YES — inline `<script>` | 4 | Correct — added since previous audit |
-| Blog Index (`/blog`) | YES — inline `<script>` | 2 | Correct — added since previous audit |
-| Blog Posts | YES — per-article `<script>` | 2-3 per post | BlogPosting + BreadcrumbList + FAQPage triple |
-| Pricing (`/pricing`) | YES | 3 | Also has SoftwareApplication schema |
-| Contact (`/contact`) | YES — inline `<script>` | 3 | Also has Organization schema |
-
-**Current coverage is strong.** Every content page has FAQPage schema.
-
-**Remaining gap:** The About FAQPage questions are well-chosen but could include one more: "What is Dr. Anca Laura Constantin's specialty and why does it matter for Perioskoup?" — this is the highest-value AI citation target and is currently only answered in prose, not in schema.
-
----
-
-## 3. AI Crawlers in robots.txt
-
-**Score: 10 / 10**
-
-All required AI crawlers are explicitly allowed, and the file goes beyond the minimum requirement:
-
-```
-User-agent: GPTBot          → Allow: /
-User-agent: ChatGPT-User    → Allow: /
-User-agent: Google-Extended → Allow: /
-User-agent: anthropic-ai    → Allow: /
-User-agent: ClaudeBot       → Allow: /
-User-agent: PerplexityBot   → Allow: /
-User-agent: Cohere-AI       → Allow: /
-User-agent: Bytespider      → Allow: /
-User-agent: meta-externalagent → Allow: /
-User-agent: Diffbot         → Allow: /
-User-agent: GoogleOther     → Allow: /
-User-agent: CCBot           → Allow: /
-User-agent: Applebot-Extended → Allow: /
-User-agent: YouBot          → Allow: /
-```
-
-The file also includes non-standard `Llms-txt:` and `Llms-full-txt:` directives pointing to content discovery files.
-
-**No action required on robots.txt.**
-
----
-
-## 4. llms.txt Completeness and Accuracy
-
-**Score: 6.5 / 10**
-
-**What exists:** The file has the correct sections — About, Key Facts, Founders & Team, What Perioskoup Does, Intended Use, Business Model, Content Permissions for AI, Key Pages, Blog Articles, and Contact. The EFP announcement URL is cited. Blog post URLs are listed with author and date. Dr. Anca's authority source (EFP URL) is included.
-
-**Gaps that reduce AI citation effectiveness:**
-
-1. **Dr. Anca's credentials are undersold.** The current entry reads: "Periodontist, CEO & Chief Dental Officer. Winner (team lead) of EFP Digital Innovation Award 2025." It does not mention her specialisation (Periodontology), her academic background (DMD), or the jury composition that selected her — details that establish why her statements carry authority. AI systems making citations use these signals to evaluate source credibility.
-
-2. **No explicit preferred citation format for each article.** The file lists blog post URLs but does not indicate the preferred in-text citation style for each piece (e.g., "Cite as: Constantin AL. [Title]. Perioskoup, [date]. perioskoup.com/blog/[slug]").
-
-3. **llms-full.txt contains a stale "How It Works" section.** Lines 64-66 read: "Step 01: Scan — Sync intraoral data instantly from your existing scanner. / Step 02: Analyze — AI maps risk zones & translates perio charts into habits." This copy is outdated (intraoral scanner references) and does not match the actual homepage content which describes "Visit Your Dentist / Get Your Plan / Build Daily Habits." This creates a factual discrepancy that AI systems may detect.
-
-4. **`llms-full.txt` About section credits Dr. Anca with a PhD.** Line 238 reads "DMD, PhD in Periodontology." This is pulled from the About.tsx team card. However, the llms.txt About section only says "Practising periodontist." If the PhD is accurate, it should be consistently stated in both files and in the Person schema.
-
-5. **No `dateModified` field.** LLM crawlers use this to determine content freshness.
-
-6. **Business model stats in `llms-full.txt` For Dentists section** (lines 179-181: "40% reduction in no-shows", "3x higher engagement rates", "85% treatment acceptance") are attributed to "digital health research" — not to specific studies. AI systems cannot responsibly cite these as Perioskoup's performance metrics. They should either be removed or replaced with the properly-cited stats (Toniazzo et al. 2019, Kessels 2003, Bernabe et al. 2020) that appear on the actual page.
-
----
-
-## 5. Content Pattern: Question → Direct Answer → Supporting Detail
-
-**Score: 6.5 / 10**
-
-**Blog posts — Excellent (9/10).** The `answerCapsules` pattern provides exactly the structure AI systems need. Each capsule is 1–3 sentences, phrased as a direct statement, positioned immediately after the H2. The body paragraphs then provide supporting detail. This is best-practice GEO content architecture.
-
-Example of correct pattern (from `what-is-periodontal-disease`):
-
-```
-H2: "What Exactly Is Periodontal Disease?"
-CAPSULE: "Periodontal disease is a bacterial infection that destroys the tissues 
-supporting the teeth — the gums, periodontal ligament, and alveolar bone. It begins 
-as gingivitis (reversible gum inflammation) and can progress to periodontitis 
-(irreversible bone loss) if untreated."
-[supporting paragraphs follow]
-```
-
-**Static pages — Weak (4/10).** The content structure is built for visual marketing, not AI extraction:
-
-- Feature cards have a title + one muted-text description sentence, not a question-answer structure.
-- Stats (87%, 80%, 62%) are displayed as large-format numbers with a small label — the surrounding context is not cohesive enough for AI extraction.
-- The "What is an AI dental companion?" section on the homepage is the best static-page example: the H2 is a direct question and a direct answer paragraph follows. But the answer is split across two `<p>` elements with inconsistent styling, reducing extractability.
-
-**Quotability audit — strong assets identified:**
-
-| Quote | Location | Attribution | AI-Quotable |
-|---|---|---|---|
-| "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health." | Home, About (blockquote) | European Federation of Periodontology | YES — clear source |
-| "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement." | Home, ForDentists, About (blockquote) | Dr. Anca Constantin, Periodontist & Co-founder | YES |
-| "The app I always wished I could prescribe to my patients." | Home (blockquote) | Dr. Anca Laura Constantin, Periodontist & Co-founder | YES |
-| "Patients forget 80% of care instructions within 48h" | Home, About, ForDentists (stat) | Kessels 2003, BMJ — linked | YES — source cited |
-| "87% of mHealth studies show improved oral health" | Home, ForDentists (stat) | Toniazzo et al. 2019, JCP — linked | YES — source cited |
-
----
-
-## 6. Dr. Anca Person Schema — Current State
-
-**Score: 7 / 10**
-
-**Global entity in `index.html` (lines 115-147):**
-
-The global `@graph` node is well-structured. It includes:
-- `@type: ["Person", "Physician"]` — dual typing is correct
-- `@id: "https://perioskoup.com/#anca-constantin"` — globally referenceable
-- `honorificPrefix: "Dr."` — present
-- `medicalSpecialty: "Periodontology"` — present
-- `knowsAbout: [...]` — present (5 topics)
-- `hasOccupation` — present with `occupationLocation`
-- `memberOf: EFP` — present via About.tsx but not in index.html global node
-- `award` — present
-- `sameAs: [EFP URL]` — present
-- `image: "https://perioskoup.com/images/anca-headshot.jpg"` — absolute URL, correct
-- `description` — present (2-sentence bio)
-
-**Gap in index.html global node:** `memberOf` (European Federation of Periodontology) is defined on the About page Person schema but not on the index.html global entity. Since the global `@graph` is the authoritative source for Knowledge Graph construction, `memberOf` should be there.
-
-**About.tsx Person schema (lines 40-59):**
-
-The About page redeclares the Person entity rather than using `@id` reference only. This creates two separate JSON-LD scripts on the About page (one Person + one FAQPage). The Person declaration on About is slightly different from the global one — it includes `memberOf` and `["Person", "Physician"]` dual type, but omits `description`. This inconsistency is not catastrophic but is sloppy.
-
-Best practice: About.tsx should only emit the FAQPage schema. The global `@graph` in `index.html` is already the Person authority. Emitting a separate Person declaration on About creates potential for conflicting entity signals.
-
-**BlogPost.tsx author node (lines 763-778):**
-
-The conditional `authorSchema` pattern is correctly implemented:
-
-```typescript
-const authorSchema = article.author === "Dr. Anca Laura Constantin"
-  ? {
-      "@type": "Person",
-      "@id": "https://perioskoup.com/#anca-constantin",  // correctly links to global entity
-      "name": article.author,
-      "jobTitle": article.authorRole,
-      "worksFor": { "@id": "https://perioskoup.com/#organization" },
-      "sameAs": ["https://www.efp.org/..."]
-    }
-  : { ... }
-```
-
-The `@id` linkage to the global entity is correct. However, the `worksFor` in the blog post author node uses `{ "@id": "..." }` while the global index.html node uses a typed `{ "@type": "Organization", ... }` reference. These are compatible (the `@id` reference is resolved by the global graph) but not identical.
-
-**Missing from all Person schema instances:**
-- `alumniOf` — educational institution would reinforce academic authority
-- `hasCredential` — a DefinedTerm or EducationalOccupationalCredential for "Specialist in Periodontology" would signal verifiable professional credentials to AI systems
-- LinkedIn profile URL in `sameAs` array — Dr. Anca's LinkedIn (https://www.linkedin.com/in/anca-constantin-99800633b/) is used in the team card but not in the sameAs array
-
----
-
-## 7. RSS Feed for Content Discovery
-
-**Score: 7.5 / 10**
-
-**What exists:**
-- `client/public/feed.xml` — valid RSS 2.0 with Atom and Dublin Core namespaces
-- 6 articles listed, all with correct `<link>`, `<description>` (excerpt), `<pubDate>`, `<dc:creator>`, `<category>`, `<guid isPermaLink="true">`
-- `<atom:link>` self-reference present
-- Linked in `index.html` with `<link rel="alternate" type="application/rss+xml" href="https://perioskoup.com/feed.xml">`
-- Feed URL listed in `llms.txt`
-
-**Bug: RSS channel image URL is relative (line 13):**
-
-```xml
-<image>
-  <url>/images/logomark-dark.png</url>
-```
-
-This must be an absolute URL. Feed readers and AI content aggregators will not be able to resolve this. Fix:
-
-```xml
-<image>
-  <url>https://perioskoup.com/images/logomark-dark.png</url>
-  <title>Perioskoup Blog</title>
-  <link>https://perioskoup.com/blog</link>
-</image>
-```
-
-**Minor gaps:**
-- No `<content:encoded>` element with full article body. AI content readers see only the excerpt. Full-text RSS significantly improves AI discoverability.
-- `<managingEditor>` uses team email, not individual author. Fine for a small team.
-
----
-
-## 8. Schema Issues Summary — Full Audit
-
-| Page | Schema Present | Gaps |
+| Category | Score | Status |
 |---|---|---|
-| `index.html` | Organization, WebSite, Person (Dr. Anca), SoftwareApplication | Person missing `memberOf`, LinkedIn in `sameAs`; stale `noscript` How It Works copy |
-| Home | FAQPage (5 questions) | No answer capsules on static H2 sections |
-| Features | FAQPage (3 questions) | — |
-| For Dentists | FAQPage (6 questions) | — |
-| About | Person (redundant — conflicts with global), FAQPage (4 questions) | Should replace Person declaration with `@id`-only reference; Person missing `description`, `memberOf` inconsistently placed |
-| Blog Index | ItemList (6 posts), FAQPage (2 questions) | — |
-| Blog Posts | BlogPosting + BreadcrumbList + FAQPage per article | `worksFor` node structure differs between global entity and BlogPosting author; `memberOf` not on blog author node |
-| Pricing | FAQPage (3 questions), SoftwareApplication | — |
-| Contact | Organization (with founder `@id` links), FAQPage (3 questions) | `addressCountry: "EU"` is not a valid ISO 3166-1 alpha-2 code (should be `"RO"`) |
+| AI Crawler Access (robots.txt) | 10/10 | Excellent |
+| llms.txt completeness | 7/10 | One duplicate line; missing `dateModified` info |
+| llms-full.txt completeness | 6/10 | Blog body text absent; inaccurate RSS description reference |
+| Answer capsules | 9/10 | All blog posts have them; non-blog pages do not |
+| FAQPage schema | 8/10 | Present on all key pages; blog posts have conditional logic gap |
+| noscript fallback | 8/10 | Solid; pricing/FAQ page not in noscript; lacks schema fallback |
+| Dr. Anca Person schema | 8/10 | Good; missing `alumniOf`, `credential`, `url` fields |
+| Citation-ready content | 8/10 | DOIs on ForDentists/About; blog body text has inline sources |
+| Entity definitions | 8/10 | Organization, Person, SoftwareApplication all present |
+| RSS feed | 9/10 | Well-formed; one inaccurate description (`product designer` vs `AI specialist`) |
+| Content extractability (SPA) | 7/10 | noscript covers homepage only; other pages invisible to non-JS crawlers |
+| Content quotability | 8/10 | Blockquotes with attribution are present throughout |
 
 ---
 
-## 9. Corrected JSON-LD — Page by Page
+## Issues — Exhaustive
 
-### A. index.html — Global @graph (add memberOf to Person node)
+### CRITICAL (blocks AI citation)
 
-The only change needed is adding `memberOf` and LinkedIn to the Person node, and removing the redundant `contactPoint` from Organization (it duplicates the `email` field):
+---
+
+**ISSUE GEO-01: llms-full.txt does not contain blog post body text**
+- File: `client/public/llms-full.txt` lines 287–305
+- Current state: Lists blog posts with title, author, and URL only — no body content
+- Impact: AI crawlers using llms-full.txt cannot read the full article text without executing JavaScript. The llms.txt spec's purpose is to provide complete extractable content for non-JS crawlers.
+- Fix: Add the full plain-text body of each blog article under its URL heading in llms-full.txt. Each article should appear as:
+  ```
+  ## Blog: What Is Periodontal Disease? (/blog/what-is-periodontal-disease)
+  Author: Dr. Anca Laura Constantin — Periodontist & Co-founder, Perioskoup
+  Published: 2025-11-12
+  ...full body text...
+  ```
+
+---
+
+**ISSUE GEO-02: Only the homepage is covered by noscript fallback**
+- File: `client/index.html` lines 209–302
+- Impact: Non-JS crawlers (including some AI crawlers) fetching `/features`, `/for-dentists`, `/about`, `/pricing`, or any blog post URL receive a blank page — no content whatsoever. The noscript in `index.html` only fires on the root HTML file and only renders homepage content. Client-side routing means subpages never deliver server-side HTML content.
+- Fix (short-term): Expand llms-full.txt to include all page content verbatim (already partially done). Add a clear note in every page's `<Helmet>` that directs crawlers to llms-full.txt. Long-term: implement SSR or pre-rendering (Vite SSG or Vercel Edge functions) so each route returns crawlable HTML.
+
+---
+
+**ISSUE GEO-03: llms.txt line 39 — exact duplicate of line 37**
+- File: `client/public/llms.txt` lines 37 and 39
+- Both lines read: `- GDPR-compliant data storage in EU-based servers`
+- Fix: Remove the duplicate at line 39.
+
+---
+
+### HIGH SEVERITY (reduces AI extraction quality)
+
+---
+
+**ISSUE GEO-04: Dr. Anca Person schema missing `credential`, `alumniOf`, and `url` fields**
+- Files: `client/index.html` lines 115–148; `client/src/pages/About.tsx` lines 23–43
+- Current state: The Person schema has `award`, `knowsAbout`, `medicalSpecialty`, and `sameAs`. Missing fields that AI knowledge-graph systems use for entity disambiguation:
+  - `hasCredential` / `credential` — links to the DMD and Periodontology specialisation credential entities
+  - `alumniOf` — the university/institution where she graduated
+  - `url` — a direct canonical URL for the person entity (not the organization)
+  - `nationality` — Romanian
+  - `worksFor` should have `url` filled in on the About page (it has `@id` but no `url`)
+- Fix: See corrected JSON-LD in the Schema Code section below.
+
+---
+
+**ISSUE GEO-05: `BlogPosting` schema missing `dateModified` and `wordCount`**
+- File: `client/src/pages/BlogPost.tsx` lines 781–795
+- Current state: `"dateModified": article.date` — sets dateModified identical to datePublished, meaning every re-build makes articles appear stale/unupdated.
+- Fix: Add a `dateModified` field to each article object in the ARTICLES map and pass it independently. Also add `wordCount` (approximate) and `inLanguage: "en-GB"` for entity enrichment.
+
+---
+
+**ISSUE GEO-06: `BlogPosting` author schema is missing `sameAs` for Eduard Ciugulea**
+- File: `client/src/pages/BlogPost.tsx` lines 763–779
+- Current state: The `else` branch for non-Anca authors has no `sameAs` array. Eduard Ciugulea's LinkedIn URL is in llms.txt but not in schema.
+- Fix: Add `"sameAs": ["https://www.linkedin.com/in/eduard-ciugulea/"]` to the Eduard author schema branch.
+
+---
+
+**ISSUE GEO-07: `Speakable` schema entirely absent across all pages**
+- All pages
+- Speakable schema (`https://schema.org/SpeakableSpecification`) marks the 2–3 most answer-ready sentences on a page for voice search and AI extraction. Google uses it for Featured Snippets. No page has it.
+- Fix: Add speakable schema to the `<script type="application/ld+json">` on each page, pointing at the answer capsule elements (could use CSS selector or XPath reference to the answer-capsule divs).
+
+---
+
+**ISSUE GEO-08: `Pricing` page FAQPage schema omits the actual pricing figures**
+- File: `client/src/pages/Pricing.tsx` lines 41–49
+- Current state: The FAQPage answers say "free for patients during beta" and "clinic pricing announced closer to launch" — but the llms-full.txt and CLAUDE.md both state the clinic price is EUR 39–199/month launching March 2026. The schema avoids committing to this figure, which is accurate (pricing is blurred in UI per CLAUDE.md), but the discrepancy between llms-full.txt (which states the figure) and the schema (which does not) creates inconsistency for AI systems.
+- Fix: Either update llms-full.txt to remove the price figure (for consistency) or add it to the FAQ schema answer. If keeping the blurred UI, the llms-full.txt is more authoritative for AI and should be consistent. Recommend keeping the figure in llms-full.txt (it is public domain) and adding it to one FAQ schema answer.
+
+---
+
+**ISSUE GEO-09: Blog index page FAQPage schema has only 2 questions — too sparse**
+- File: `client/src/pages/Blog.tsx` lines 145–171
+- Current state: 2 questions about blog topics and authorship. Missing obvious AI-answerable questions like: "Does Perioskoup have a blog?", "What has Dr. Anca Constantin written about?", "Where can I read about periodontal disease in plain language?"
+- Fix: Add at least 3 more questions. See schema additions in the Schema Code section below.
+
+---
+
+**ISSUE GEO-10: RSS feed description for `building-the-bridge-perioskoup-story` is factually inaccurate**
+- File: `client/public/feed.xml` line 71
+- Current state: `"How a periodontist, a developer, and a product designer decided to build the dental companion they always wished existed."`
+- Issue: The third founder is Petrica Nancu, CTO & Head of AI — not a product designer. BlogPost.tsx line 602 correctly states "an AI specialist with experience in health and wellness applications."
+- Fix: Change to: `"How a periodontist, a full-stack engineer, and an AI specialist decided to build the dental companion they always wished existed."`
+
+---
+
+**ISSUE GEO-11: `SoftwareApplication` schema on homepage missing `aggregateRating` placeholder and `applicationSubCategory` is not a valid schema.org value**
+- File: `client/index.html` lines 149–169
+- `"applicationSubCategory": "Dental Health"` — this is a free-text field and is fine, but `aggregateRating` is absent. AI systems use ratings to assess authority. Even a placeholder with `ratingCount: 1` and a self-reported rating from a founder can legitimise the entity.
+- Fix: Add `"aggregateRating"` once real reviews exist. For now, leave a TODO comment in the schema JSON.
+
+---
+
+### MEDIUM SEVERITY (reduces ranking and citation likelihood)
+
+---
+
+**ISSUE GEO-12: Answer capsules are absent on non-blog pages**
+- Files: `client/src/pages/Home.tsx`, `Features.tsx`, `ForDentists.tsx`, `About.tsx`, `Pricing.tsx`
+- Current state: Answer capsules (2–3 sentence direct answers after H2 headings) exist only in blog posts via the `renderBody()` function with the `answerCapsules` map. The page-level H2 sections (e.g., "What is an AI dental companion?" on Home, "The problem is clear." on ForDentists) have no extractable summary sentence immediately following the heading.
+- Impact: AI systems parsing these pages cannot extract a direct answer to the implied question posed by each H2. The content is present but buried in subsequent paragraphs.
+- Fix: For each key H2 on page-level components, add a visible 1–2 sentence answer capsule immediately after the heading, styled the same as blog answer capsules (left-border lime, subtle background). This is especially needed for:
+  - Home.tsx: "What is an AI dental companion?" (line 248) — the answer is spread across 3 paragraphs instead of a single extract
+  - ForDentists.tsx: "The problem is clear." (line 115) — the problem statement should be a direct 2-sentence answer, not buried in a paragraph
+  - About.tsx: "Why now?" (line 236) — three-paragraph answer; needs a 2-sentence capsule
+
+---
+
+**ISSUE GEO-13: `llms.txt` states Dr. Anca is "CEO" in one place and "CDO" in another (cross-reference with CLAUDE.md)**
+- File: `client/public/llms.txt` line 25 vs CLAUDE.md line
+- llms.txt line 25 says "CEO of Perioskoup"
+- CLAUDE.md states she is "CDO/Periodontist"
+- index.html schema (line 122) says "Periodontist & CEO"
+- About.tsx (line 268) says "Periodontist & Co-founder, CEO"
+- Fix: Standardise on "CDO (Chief Dental Officer) & Co-founder" if that is the accurate title per the business. Update llms.txt, index.html schema, About.tsx, and ForDentists.tsx to be consistent. Currently CLAUDE.md is the canonical source and every public-facing file disagrees with it.
+
+---
+
+**ISSUE GEO-14: `llms-full.txt` missing content for `/contact` and `/waitlist` pages**
+- File: `client/public/llms-full.txt` lines 329–342
+- The sitemap in llms-full.txt lists `https://perioskoup.com/contact` and `https://perioskoup.com/waitlist` but there is no content section for these URLs. AI crawlers following the sitemap will find no content.
+- Fix: Add a short content block for each page.
+
+---
+
+**ISSUE GEO-15: No `Article` or `MedicalWebPage` schema on blog posts — only `BlogPosting`**
+- File: `client/src/pages/BlogPost.tsx` line 783
+- Clinical articles (what-is-periodontal-disease, 3-minute-routine) authored by a licensed Periodontist would benefit from `MedicalWebPage` schema (`https://schema.org/MedicalWebPage`) in addition to `BlogPosting`. This signals medical authority to AI systems.
+- `MedicalWebPage` allows `medicalAudience`, `lastReviewed`, and `reviewedBy` (linking back to Dr. Anca's Person entity).
+
+---
+
+**ISSUE GEO-16: `memberOf` in Dr. Anca's Person schema refers to EFP but she has not been cited as a member — she is an award winner**
+- File: `client/index.html` line 124; `client/src/pages/About.tsx` line 33
+- `"memberOf": { "@type": "Organization", "name": "European Federation of Periodontology" }` — unless she is actually a member of EFP (national society), this is inaccurate. The correct relationship is `"award"` (already present) referencing EFP's recognition, not `memberOf`.
+- Fix: Remove `memberOf` if she is not formally a member, or change to the national Romanian periodontal society if she is a member of that.
+
+---
+
+**ISSUE GEO-17: `og:type` is `website` on all pages — blog articles should be `article`**
+- Files: `client/src/pages/Features.tsx` line 53, `ForDentists.tsx` line 61, `About.tsx` line 101, `Pricing.tsx` line 73, `Blog.tsx` line 117
+- BlogPost.tsx correctly sets `og:type` to `article` (line 829). Non-blog pages correctly use `website`. But `Features`, `ForDentists`, etc. are also `website` which is correct — no action needed there.
+- The Blog index page (Blog.tsx line 117) sets `og:type: "website"` which is correct for a listing page.
+- No action needed. This was a false positive.
+
+---
+
+**ISSUE GEO-18: No `sitelinks_searchbox` or `SearchAction` schema**
+- File: `client/index.html`
+- Missing `SearchAction` in the WebSite schema. AI systems and search engines use this to understand whether site content is searchable.
+- Fix: Add `"potentialAction"` to the WebSite schema node. See Schema Code section below.
+
+---
+
+**ISSUE GEO-19: `feed.xml` missing `<enclosure>` and `<content:encoded>` elements**
+- File: `client/public/feed.xml`
+- Current state: Items have `<title>`, `<link>`, `<description>` (excerpt only), `<pubDate>`, `<dc:creator>`, `<category>`, and `<guid>`. Missing:
+  - `<content:encoded>` — full article body for feed readers and AI content aggregators
+  - No `xmlns:content` namespace declared
+- Fix: Add `xmlns:content="http://purl.org/rss/1.0/modules/content/"` to the `<rss>` element and add `<content:encoded><![CDATA[...full article body...]]></content:encoded>` to each item.
+
+---
+
+**ISSUE GEO-20: `Breadcrumb` schema is absent on Homepage and Blog index**
+- File: `client/src/pages/Home.tsx` and `Blog.tsx`
+- BlogPost.tsx correctly includes BreadcrumbList schema (lines 797–805). Features, About, ForDentists, and Pricing all have the `<Breadcrumb>` component. But the Blog index page and Homepage do not have BreadcrumbList schema.
+- Fix: Add BreadcrumbList schema to Blog.tsx. Homepage does not need one (it is the root).
+
+---
+
+### LOW SEVERITY (polish / future-proofing)
+
+---
+
+**ISSUE GEO-21: `llms.txt` "Key Pages" section lists `/pricing` and `/waitlist` but llms-full.txt does not list `/waitlist` in its sitemap section**
+- File: `client/public/llms-full.txt` line 337 (sitemap) vs `client/public/llms.txt` line 63
+- llms.txt line 63 lists `/waitlist` as a key page. llms-full.txt's "Site Map" section (line 329) does include `/waitlist`. Minor consistency — no action required, already consistent.
+
+---
+
+**ISSUE GEO-22: `ai-content-source` meta tag is non-standard**
+- File: `client/index.html` line 55
+- `<meta name="ai-content-source" content="...">` — this is not a recognised standard. The `<link rel="alternate" type="text/plain">` tag (line 53) is the correct signal.
+- Fix: Keep the link tag; remove or do not rely on the non-standard meta name.
+
+---
+
+**ISSUE GEO-23: `Llms-txt` and `Llms-full-txt` are not valid HTTP header names**
+- File: `client/public/robots.txt` lines 54–55
+- Custom directives in robots.txt are not crawled as HTTP headers. These lines are informational comments to human readers but are not parsed by robots.txt processors. The canonical signal remains the `<link rel="author">` tag in HTML.
+- Fix: Add the link as a comment acknowledging it is informational only. No technical change needed.
+
+---
+
+## What Is Working Well
+
+- All major AI crawlers are explicitly allowed in `robots.txt` with a comprehensive list (GPTBot, ChatGPT-User, Google-Extended, anthropic-ai, ClaudeBot, PerplexityBot, Cohere-AI, Bytespider, meta-externalagent, Diffbot, CCBot, Applebot-Extended, YouBot)
+- Global JSON-LD `@graph` in index.html with correct WebSite, Organization, Person, SoftwareApplication entities is structurally sound
+- Dr. Anca `sameAs` array correctly links to the EFP article and LinkedIn
+- Answer capsules in every blog post are rendered as visually distinct, structurally isolated elements immediately after every H2 heading — textbook GEO
+- FAQPage schema on every page (Home, Features, ForDentists, About, Pricing, Blog, and each BlogPost)
+- `BlogPosting` schema with correct author linking via `@id` back to the global Person entity
+- EFP quote (`"Perioskoup is an innovative digital tool..."`) is in the noscript, llms-full.txt, llms.txt, and multiple page components — highly citable
+- RSS feed is well-formed with dc:creator, categories, and guids
+- llms.txt correctly includes the EFP article URL as an authority source
+- The `EFP award: 3rd Prize` claim is consistent across all files (llms.txt, llms-full.txt, index.html schema, noscript, BlogPost)
+- Content permissions section in llms.txt is clear and attribution instructions are well-phrased
+
+---
+
+## Corrected / Complete JSON-LD — Full Code
+
+### 1. Corrected Dr. Anca Person Schema (replace in `client/index.html` and `client/src/pages/About.tsx`)
 
 ```json
 {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://perioskoup.com/#website",
-      "url": "https://perioskoup.com/",
-      "name": "Perioskoup",
-      "description": "AI-powered dental companion app bridging the gap between dental visits.",
-      "publisher": { "@id": "https://perioskoup.com/#organization" }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://perioskoup.com/#organization",
-      "name": "Perioskoup",
-      "legalName": "Perioskoup SRL",
-      "url": "https://perioskoup.com/",
-      "logo": {
-        "@type": "ImageObject",
-        "@id": "https://perioskoup.com/#logo",
-        "url": "https://perioskoup.com/images/logo.svg",
-        "width": 1080,
-        "height": 1080
-      },
-      "image": { "@id": "https://perioskoup.com/#logo" },
-      "foundingDate": "2025-06",
-      "foundingLocation": {
-        "@type": "Place",
-        "addressLocality": "Bucharest",
-        "addressCountry": "RO"
-      },
-      "founders": [
-        { "@id": "https://perioskoup.com/#anca-constantin" },
-        { "@type": "Person", "name": "Eduard Ciugulea", "jobTitle": "Co-founder & CGO" },
-        { "@type": "Person", "name": "Petrica Nancu", "jobTitle": "CTO & Head of AI" }
-      ],
-      "award": "EFP Digital Innovation Award 2025 — 3rd Prize",
-      "description": "Perioskoup is an AI-powered dental companion app that bridges the gap between dental visits with personalised oral health habits for patients and a monitoring dashboard for clinicians.",
-      "email": "hello@perioskoup.com",
-      "sameAs": [
-        "https://www.linkedin.com/company/perioskoup",
-        "https://www.instagram.com/perioskoup",
-        "https://www.tiktok.com/@perioskoup",
-        "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
-      ]
-    },
-    {
-      "@type": ["Person", "Physician"],
-      "@id": "https://perioskoup.com/#anca-constantin",
-      "name": "Dr. Anca Laura Constantin",
-      "honorificPrefix": "Dr.",
-      "givenName": "Anca Laura",
-      "familyName": "Constantin",
-      "jobTitle": "Periodontist & Chief Dental Officer",
-      "medicalSpecialty": "Periodontology",
-      "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, and co-founder and Chief Dental Officer of Perioskoup. She won the EFP Digital Innovation Award 2025 for her work on AI-assisted periodontal patient engagement.",
-      "image": "https://perioskoup.com/images/anca-headshot.jpg",
-      "worksFor": { "@id": "https://perioskoup.com/#organization" },
-      "memberOf": {
-        "@type": "Organization",
-        "name": "European Federation of Periodontology",
-        "url": "https://www.efp.org"
-      },
-      "award": "EFP Digital Innovation Award 2025 — 3rd Prize, European Federation of Periodontology",
-      "knowsAbout": [
-        "Periodontal Disease",
-        "Periodontology",
-        "AI in Dental Care",
-        "Patient Engagement",
-        "Oral Health Technology"
-      ],
-      "hasOccupation": {
-        "@type": "Occupation",
-        "name": "Periodontist",
-        "occupationLocation": {
-          "@type": "City",
-          "name": "Bucharest"
-        }
-      },
-      "sameAs": [
-        "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/",
-        "https://www.linkedin.com/in/anca-constantin-99800633b/"
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://perioskoup.com/#app",
-      "name": "Perioskoup",
-      "operatingSystem": "iOS, Android",
-      "applicationCategory": "HealthApplication",
-      "applicationSubCategory": "Dental Health",
-      "description": "AI-powered dental companion app that bridges the gap between dental visits with personalised daily habits for patients and a clinician monitoring dashboard.",
-      "url": "https://perioskoup.com/",
-      "author": { "@id": "https://perioskoup.com/#organization" },
-      "award": "EFP Digital Innovation Award 2025",
-      "featureList": "AI habit coaching, periodontal habit tracking, dental patient engagement, clinician dashboard, GDPR-compliant messaging",
-      "countriesSupported": "RO, GB, EU",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/PreOrder",
-        "description": "Free during beta for patients."
-      }
+  "@type": ["Person", "Physician"],
+  "@id": "https://perioskoup.com/#anca-constantin",
+  "name": "Dr. Anca Laura Constantin",
+  "honorificPrefix": "Dr.",
+  "givenName": "Anca Laura",
+  "familyName": "Constantin",
+  "url": "https://perioskoup.com/about#anca-constantin",
+  "jobTitle": "Chief Dental Officer & Co-founder",
+  "medicalSpecialty": "Periodontology",
+  "description": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, and co-founder and Chief Dental Officer (CDO) of Perioskoup. She won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies.",
+  "nationality": {
+    "@type": "Country",
+    "name": "Romania"
+  },
+  "image": "https://perioskoup.com/images/anca-headshot.jpg",
+  "worksFor": {
+    "@type": "Organization",
+    "@id": "https://perioskoup.com/#organization",
+    "name": "Perioskoup",
+    "url": "https://perioskoup.com/"
+  },
+  "hasOccupation": {
+    "@type": "Occupation",
+    "name": "Periodontist",
+    "occupationLocation": {
+      "@type": "City",
+      "name": "Bucharest"
     }
+  },
+  "award": "EFP Digital Innovation Award 2025, 3rd Prize, European Federation of Periodontology, EuroPerio11, Vienna",
+  "knowsAbout": [
+    "Periodontal Disease",
+    "Periodontology",
+    "AI in Dental Care",
+    "Patient Engagement",
+    "Oral Health Technology",
+    "Habit Formation in Healthcare"
+  ],
+  "sameAs": [
+    "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/",
+    "https://www.linkedin.com/in/anca-constantin-99800633b/"
   ]
+}
+```
+
+Note: Remove `"memberOf": { ... EFP ... }` unless she is formally a registered EFP member (not just an award winner). Replace with the above.
+
+---
+
+### 2. Corrected WebSite Schema with SearchAction (replace in `client/index.html`)
+
+```json
+{
+  "@type": "WebSite",
+  "@id": "https://perioskoup.com/#website",
+  "url": "https://perioskoup.com/",
+  "name": "Perioskoup",
+  "description": "AI-powered dental companion app bridging the gap between dental visits.",
+  "publisher": { "@id": "https://perioskoup.com/#organization" },
+  "inLanguage": "en",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://perioskoup.com/blog?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
 }
 ```
 
 ---
 
-### B. About.tsx — Remove Redundant Person, Enrich FAQPage
-
-Replace the existing `personJsonLd` and `aboutFaqJsonLd` pair. Remove the full Person declaration and emit only a thin `@id`-reference Person alongside the FAQPage:
+### 3. BlogPosting Schema with `dateModified`, `wordCount`, `inLanguage` (replace in `client/src/pages/BlogPost.tsx` starting at line 781)
 
 ```typescript
-// In About.tsx — replace personJsonLd with this:
-const ancaRef = {
+const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": "https://perioskoup.com/#anca-constantin"
-  // No properties — the global @graph in index.html is authoritative
+  "@type": "BlogPosting",
+  "headline": article.title,
+  "description": article.metaDescription,
+  "author": authorSchema,
+  "publisher": {
+    "@id": "https://perioskoup.com/#organization"
+  },
+  "datePublished": `${article.date}T00:00:00Z`,
+  "dateModified": `${article.dateModified || article.date}T00:00:00Z`,
+  "url": `https://perioskoup.com/blog/${article.slug}`,
+  "image": OG_IMAGE,
+  "inLanguage": "en-GB",
+  "wordCount": article.wordCount || undefined,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://perioskoup.com/blog/${article.slug}`
+  },
+  "isPartOf": {
+    "@id": "https://perioskoup.com/#website"
+  },
+  "about": {
+    "@type": "MedicalCondition",
+    "name": "Periodontal Disease",
+    "url": "https://www.efp.org/patients/gum-disease/"
+  }
 };
+```
 
-// aboutFaqJsonLd — add one more high-value question:
-const aboutFaqJsonLd = {
+Add `dateModified` and `wordCount` fields to the Article interface and ARTICLES map.
+
+---
+
+### 4. `MedicalWebPage` schema addition for clinical blog posts (add to `client/src/pages/BlogPost.tsx`)
+
+For articles authored by Dr. Anca (clinical posts: `what-is-periodontal-disease`, `3-minute-routine-save-teeth`, `why-patients-forget-instructions`), add alongside the BlogPosting schema:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  "name": "What Is Periodontal Disease? A Patient's Complete Guide",
+  "url": "https://perioskoup.com/blog/what-is-periodontal-disease",
+  "description": "A complete patient guide to periodontal disease, written by a practising periodontist.",
+  "lastReviewed": "2025-11-12",
+  "reviewedBy": {
+    "@id": "https://perioskoup.com/#anca-constantin"
+  },
+  "medicalAudience": {
+    "@type": "MedicalAudience",
+    "audienceType": "Patient"
+  },
+  "about": {
+    "@type": "MedicalCondition",
+    "name": "Periodontal Disease"
+  },
+  "publisher": {
+    "@id": "https://perioskoup.com/#organization"
+  }
+}
+```
+
+In TypeScript, implement as a conditional — only emit this schema block when `article.author === "Dr. Anca Laura Constantin"`.
+
+---
+
+### 5. Blog Index FAQPage — expanded (replace in `client/src/pages/Blog.tsx`)
+
+```json
+{
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Who is Dr. Anca Laura Constantin?",
+      "name": "What topics does the Perioskoup blog cover?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania, specialising in Periodontology. She is the co-founder and Chief Dental Officer of Perioskoup and won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies."
+        "text": "The Perioskoup blog covers periodontal disease education for patients, AI in dental care, daily oral health habits and routines, clinical insights from Dr. Anca Laura Constantin (Periodontist, EFP Digital Innovation Award 2025 winner), and company news including Perioskoup's founding story."
       }
     },
     {
       "@type": "Question",
-      "name": "Who founded Perioskoup?",
+      "name": "Who writes the Perioskoup blog?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist, CDO), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The idea emerged from Dr. Anca's clinical practice — specifically the challenge of maintaining patient engagement between dental appointments."
+        "text": "Articles are written by Dr. Anca Laura Constantin (Periodontist, EFP Digital Innovation Award 2025 winner) and Eduard Ciugulea (Co-founder & CGO). Clinical articles — including guides on periodontal disease, daily oral hygiene routines, and patient instruction retention — are authored by Dr. Anca and reflect her experience as a practising periodontist in Bucharest, Romania."
       }
     },
     {
       "@type": "Question",
-      "name": "What award did Perioskoup win?",
+      "name": "Does Perioskoup have evidence-based dental health content?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Perioskoup won 3rd Prize at the EFP Digital Innovation Award 2025, presented by the European Federation of Periodontology at EuroPerio11 in Vienna. The award was selected from 20 submissions across 17 national periodontal societies by a jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos."
+        "text": "Yes. Perioskoup publishes evidence-based articles on periodontal health, citing peer-reviewed research including studies from the Journal of Clinical Periodontology, British Medical Journal, and the European Federation of Periodontology. Articles authored by Dr. Anca Laura Constantin reflect current EFP clinical guidelines."
       }
     },
     {
       "@type": "Question",
-      "name": "Where is Perioskoup based?",
+      "name": "What has Dr. Anca Constantin written about periodontal disease?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Perioskoup is based in Bucharest, Romania. It is a Romanian SRL incorporated in June 2025, serving dental clinics and patients across Europe."
+        "text": "Dr. Anca Laura Constantin has written a complete patient guide to periodontal disease (covering stages, causes, systemic connections, and treatment options), a clinically-backed 3-minute daily oral hygiene routine, an article on why patients forget dental care instructions, and the founding story of Perioskoup. All articles are available at perioskoup.com/blog."
       }
     },
     {
       "@type": "Question",
-      "name": "What is Perioskoup's mission?",
+      "name": "Is the Perioskoup blog free to read?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Perioskoup's mission is to bridge the gap between dental visits. Periodontal disease affects 1 in 2 adults worldwide, yet most patients forget their care instructions within 48 hours. Perioskoup gives every patient the tools to understand their condition, stay connected to their care team, and take meaningful action between appointments."
+        "text": "Yes. All Perioskoup blog content is free to access at perioskoup.com/blog. Articles are written by a practising periodontist and do not require registration."
       }
     }
   ]
-};
-```
-
----
-
-### C. Contact.tsx — Fix addressCountry
-
-Replace `"addressCountry": "EU"` (invalid) with `"addressCountry": "RO"`:
-
-```json
-"address": {
-  "@type": "PostalAddress",
-  "addressLocality": "Bucharest",
-  "addressCountry": "RO"
 }
 ```
 
 ---
 
-### D. feed.xml — Fix Relative Image URL
+### 6. Eduard Ciugulea author schema fix (modify `client/src/pages/BlogPost.tsx` lines 774–779)
 
-Replace line 13:
+```typescript
+const eduardSchema = {
+  "@type": "Person",
+  "name": article.author,
+  "jobTitle": article.authorRole,
+  "worksFor": { "@id": "https://perioskoup.com/#organization" },
+  "sameAs": ["https://www.linkedin.com/in/eduard-ciugulea/"]
+};
+```
 
+---
+
+### 7. Speakable schema (add to key pages — example for ForDentists)
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://perioskoup.com/for-dentists",
+  "name": "Dental Patient Engagement App for Clinicians | Perioskoup",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".speakable-answer", "h1", ".body-lg"]
+  }
+}
+```
+
+Add `class="speakable-answer"` to the primary answer paragraph that immediately follows each major H2.
+
+---
+
+### 8. RSS Feed corrections (replace in `client/public/feed.xml`)
+
+**Line 71 — fix the `building-the-bridge` description:**
 ```xml
-<!-- BEFORE (broken): -->
-<url>/images/logomark-dark.png</url>
+<description>How a periodontist, a full-stack engineer, and an AI specialist decided to build the dental companion they always wished existed.</description>
+```
 
-<!-- AFTER (correct): -->
-<url>https://perioskoup.com/images/logomark-dark.png</url>
+**Add `xmlns:content` namespace and `content:encoded` to the rss element and each item:**
+```xml
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+```
+
+Each item should then include (example for first post):
+```xml
+<content:encoded><![CDATA[
+Periodontal disease affects more than half of adults over 30, yet most people have never heard the word 'periodontist'. Dr. Anca Laura Constantin, a practising periodontist and EFP Digital Innovation Award 2025 winner, explains what periodontal disease is, how it progresses through four stages from gingivitis to advanced periodontitis, and what patients can do at home to prevent and manage it.
+
+Key facts: 50% of adults have some form of gum disease. Early-stage gingivitis is fully reversible. Advanced periodontitis causes irreversible bone loss. Risk factors include smoking (3-6x increased risk), diabetes (bidirectional relationship), and genetics.
+
+The 3-step home care routine: brush twice daily using the modified Bass technique, clean interdentally every day, attend professional maintenance every 3-6 months.
+
+Read the full article: https://perioskoup.com/blog/what-is-periodontal-disease
+]]></content:encoded>
 ```
 
 ---
 
-### E. llms.txt — Enriched Dr. Anca Entry
+## llms.txt Fix — Remove Duplicate Line
 
-Replace the current Founders & Team section with:
-
-```markdown
-## Founders & Team
-
-- **Dr. Anca Laura Constantin** — Periodontist (DMD, Specialist in Periodontology), CEO & Chief Dental Officer of Perioskoup. Winner of the EFP Digital Innovation Award 2025 — 3rd Prize, awarded by the European Federation of Periodontology at EuroPerio11 (Vienna, May 2025). Selected from 20 submissions across 17 national periodontal societies by a jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos. Practising periodontist, Bucharest, Romania.
-  Authority source: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
-  LinkedIn: https://www.linkedin.com/in/anca-constantin-99800633b/
-  Preferred citation: "Dr. Anca Laura Constantin, Periodontist & co-founder of Perioskoup, EFP Digital Innovation Award 2025."
-
-- **Eduard Ciugulea** — Co-founder & CGO. Full-stack engineer and growth strategist.
-  LinkedIn: https://www.linkedin.com/in/eduard-ciugulea/
-
-- **Petrica Nancu** — CTO & Head of AI. AI and machine learning specialist.
-  LinkedIn: https://www.linkedin.com/in/petrica-nancu-b16468241/
+Current lines 37–39 in `client/public/llms.txt`:
+```
+- Personalised AI-driven oral hygiene routines for patients based on clinician recommendations
+- Daily habit tracking with reminders and progress visualisation
+- Clinician dashboard for monitoring patient engagement between appointments
+- GDPR-compliant data storage in EU-based servers
+- Educational content library on periodontal conditions and treatments
+- GDPR-compliant data storage in EU-based servers    <-- DELETE THIS LINE
 ```
 
 ---
 
-### F. llms-full.txt — Fix Stale "How It Works" Copy
+## llms.txt Title Standardisation Fix
 
-Replace the stale copy on lines 64-66 of `llms-full.txt`:
-
-```markdown
-# REPLACE:
-Step 01: Scan — Sync intraoral data instantly from your existing scanner.
-Step 02: Analyze — AI maps risk zones & translates perio charts into habits.
-Step 03: Engage — Patients receive actionable nudges on their device.
-
-# WITH:
-Step 01: Visit Your Dentist — Your dentist examines, diagnoses, and sets a personalised care plan using Perioskoup.
-Step 02: Get Your Plan — AI translates clinical recommendations into daily habits with smart reminders and tracking.
-Step 03: Build Daily Habits — Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.
-```
-
-Also remove the unsourced statistics from the For Dentists section in `llms-full.txt` (lines 179-181) or replace with the properly cited versions:
-
-```markdown
-# REPLACE (unsourced):
-Clinical Impact Stats:
-- 40% reduction in no-shows (digital health research)
-- 3x higher engagement rates (digital health research)
-- 85% treatment acceptance (digital health research)
-
-# WITH (cited):
-Research on the problem Perioskoup addresses:
-- 80% of care instructions forgotten within 48h (Kessels 2003, BMJ — https://doi.org/10.1136/bmj.326.7395.920)
-- 87% of mHealth studies show improved oral health outcomes (Toniazzo et al. 2019, JCP — https://doi.org/10.1111/jcpe.13064)
-- 62% of adults have periodontitis worldwide (Bernabe et al. 2020, JCP — https://doi.org/10.1111/jcpe.13217)
-```
+Standardise Dr. Anca's title across all files. The authoritative title per CLAUDE.md is "CDO/Periodontist". Public-facing files should use:
+- llms.txt line 25: Change "CEO of Perioskoup" to "Chief Dental Officer (CDO) & Co-founder of Perioskoup"
+- llms.txt line 28: Change "Periodontist & co-founder of Perioskoup, EFP Digital Innovation Award 2025" (preferred citation) — acceptable as-is
+- client/index.html line 122: Change `"jobTitle": "Periodontist & CEO"` to `"jobTitle": "Chief Dental Officer (CDO) & Co-founder"`
+- client/src/pages/About.tsx line 31: Change `"jobTitle": "Periodontist"` — keep as-is (that's fine for the Person schema, jobTitle can be the occupation)
+- ForDentists.tsx line 166: `"Periodontist & Co-founder, CEO"` — change to "Chief Dental Officer & Co-founder"
 
 ---
 
-## 10. Prioritised Action List
+## Priority Action Order
 
-| Priority | Issue | Impact | File |
-|---|---|---|---|
-| P0 | RSS feed image URL is relative — breaks in all feed readers and AI content aggregators | Content discovery failure | `client/public/feed.xml` line 13 |
-| P0 | `llms-full.txt` contains stale "Scan/Analyze/Engage" How It Works copy that contradicts live site | AI systems may cite inaccurate information about Perioskoup | `client/public/llms-full.txt` lines 64-66 |
-| P1 | `llms-full.txt` For Dentists stats are unsourced (40%, 3x, 85%) — no corresponding journal citation | AI cannot verify; responsible AI systems will not cite unsourced health statistics | `client/public/llms-full.txt` lines 179-181 |
-| P1 | Person schema missing LinkedIn in `sameAs` — Dr. Anca's LinkedIn is used in team cards but not in the schema entity | Reduces Knowledge Graph entity confidence for AI systems | `client/index.html` |
-| P1 | Person schema missing `memberOf` (EFP) in global `index.html` entity — present in About.tsx but not the authoritative global node | Key authority signal not in canonical location | `client/index.html` |
-| P1 | About.tsx emits redundant Person schema instead of thin `@id`-reference — creates two potentially conflicting Person declarations for the same entity | Knowledge Graph entity ambiguity | `client/src/pages/About.tsx` |
-| P2 | Contact.tsx `addressCountry: "EU"` is invalid ISO 3166-1 — schema validators will flag this | Validation error in Rich Results Test | `client/src/pages/Contact.tsx` |
-| P2 | Dr. Anca's LinkedIn missing from `sameAs` in llms.txt Founders section | Incomplete authority footprint | `client/public/llms.txt` |
-| P2 | `llms-full.txt` About section credits "DMD, PhD" while llms.txt says only "Periodontist" — credentials inconsistently stated | AI systems may cite conflicting credential claims | Both llms files |
-| P3 | No answer capsules on static page H2 sections (Home, Features, ForDentists, About) | Poor AI extractability for non-blog content | All static pages |
-| P3 | RSS missing `<content:encoded>` with full article bodies | AI content readers see only excerpts | `client/public/feed.xml` |
-| P3 | FAQPage on About missing "Who is Dr. Anca?" as an explicit question | Highest-value AI citation target not schema-enabled | `client/src/pages/About.tsx` |
-
----
-
-## 11. Strengths to Preserve
-
-1. **robots.txt AI crawler coverage** — best-in-class; all 14 major bots explicitly granted access with no blocking.
-2. **Blog post answer capsule pattern** — `answerCapsules` keyed to exact H2 text, injected by `renderBody()` immediately after the heading. This is the correct pattern. Do not change it.
-3. **BlogPosting + BreadcrumbList + FAQPage triple on every blog post** — strong per-article schema stack. Each article has 2-3 FAQPage questions derived from the article content.
-4. **Global `@graph` in index.html** — WebSite, Organization, Person, and SoftwareApplication in a single interconnected graph with proper `@id` cross-referencing. This is the right architecture.
-5. **EFP quote in `<blockquote>` elements** — the most quotable, verifiable asset on the site. It appears on Home and About with clear attribution. Preserve both instances.
-6. **Dr. Anca's founding quote in `<blockquote>` with `<footer>` attribution** — correctly marked up for quote extraction.
-7. **FAQPage coverage across all commercial pages** — Home, Features, ForDentists, About, Blog, Pricing, Contact all have FAQPage schema.
-8. **Conditional `authorSchema` in BlogPost.tsx** — correctly differentiates Dr. Anca (with `@id` link to global Person) from Eduard Ciugulea. The linkage pattern is correct.
-9. **RSS feed in index.html `<link rel="alternate">`** — content discovery signal is properly declared.
-10. **`llms-full.txt` existence with `noscript` fallback in index.html** — AI crawlers that cannot execute JavaScript can access full content through multiple channels.
+1. Fix llms.txt duplicate at line 39 (2-minute fix)
+2. Add full blog body text to llms-full.txt (1-2 hours)
+3. Fix RSS feed inaccuracy — `building-the-bridge` description (2-minute fix)
+4. Standardise Dr. Anca's title to CDO across all files (30 minutes)
+5. Add `dateModified` field to each Article object in BlogPost.tsx (30 minutes)
+6. Add Eduard Ciugulea `sameAs` to BlogPosting author schema (5 minutes)
+7. Remove `memberOf: EFP` from Person schema if membership is unverified (5 minutes)
+8. Add `url`, `nationality` fields to Person schema (10 minutes)
+9. Expand Blog index FAQPage to 5 questions (20 minutes)
+10. Add `MedicalWebPage` schema to clinical blog posts (30 minutes)
+11. Add answer capsule divs to ForDentists, Home, and About page H2 sections (1 hour)
+12. Add `content:encoded` to RSS feed items (1 hour)
+13. Add `speakable` schema to ForDentists and About pages (30 minutes)
+14. Add `SearchAction` to WebSite schema in index.html (10 minutes)
+15. Long-term: Pre-rendering or SSG for all routes so every URL delivers crawlable HTML
 
 ---
 
-## 12. Schema Validation Checklist
+## Reference: File Locations
 
-Run these URLs through https://validator.schema.org/ after implementing fixes:
-
-- [ ] `https://perioskoup.com/` — expect WebSite, Organization, Person, SoftwareApplication, FAQPage (5 entities)
-- [ ] `https://perioskoup.com/about` — expect FAQPage (5 questions) + thin Person reference
-- [ ] `https://perioskoup.com/blog` — expect ItemList (6 items) + FAQPage (2 questions)
-- [ ] `https://perioskoup.com/blog/what-is-periodontal-disease` — expect BlogPosting + BreadcrumbList + FAQPage
-- [ ] `https://perioskoup.com/contact` — expect Organization + FAQPage; `addressCountry: "RO"` (not "EU")
-- [ ] `https://perioskoup.com/feed.xml` — expect valid RSS; image `<url>` is absolute
+- `client/public/llms.txt` — AI crawler summary file
+- `client/public/llms-full.txt` — full content for AI crawlers
+- `client/public/robots.txt` — crawler permissions
+- `client/public/feed.xml` — RSS feed
+- `client/index.html` — global JSON-LD schema, noscript fallback
+- `client/src/pages/Home.tsx` — homepage FAQPage schema, EFP content
+- `client/src/pages/Features.tsx` — features FAQPage schema
+- `client/src/pages/ForDentists.tsx` — dentists FAQPage schema, citations
+- `client/src/pages/About.tsx` — Person schema, FAQPage schema
+- `client/src/pages/Pricing.tsx` — pricing FAQPage + SoftwareApplication schema
+- `client/src/pages/Blog.tsx` — blog ItemList + FAQPage schema
+- `client/src/pages/BlogPost.tsx` — BlogPosting + FAQPage + BreadcrumbList per article, answerCapsules rendering logic at line 686

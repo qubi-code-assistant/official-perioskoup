@@ -48,9 +48,9 @@ Perioskoup — AI dental companion landing page. Vite + React + Tailwind CSS SPA
 ## Business Context
 - AI dental companion app — bridges gap between dental visits
 - Romanian SRL, incorporated June 2025, bootstrapped, pre-revenue
-- 30-clinic waitlist, March 2026 public launch
+- 30-clinic waitlist, public launch
 - EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna)
-- Founders: Dr. Anca Constantin (CDO/Periodontist), Eduard Ciugulea (CGO), Petrica Nancu (CTO & Head of AI)
+- Founders: Dr. Anca Constantin (CEO & Co-founder, Periodontist), Eduard Ciugulea (Co-founder & CGO), Petrica Nancu (CTO & Head of AI)
 - Revenue: Dentists pay (€39-199/mo), Patients FREE
 - "AI dental companion" = zero search competition = category creation opportunity
 
@@ -69,3 +69,50 @@ These skills contain best practices and frameworks that audit agents should read
 - `wcag-21-aa-web-ui-audit/SKILL.md` — WCAG 2.1 AA audit framework
 - `frontend-performance/SKILL.md` — Frontend performance optimization
 - `e2e-testing-patterns/SKILL.md` — E2E testing with Playwright
+
+<!-- ooo:START -->
+<!-- ooo:VERSION:0.14.0 -->
+# Ouroboros — Specification-First AI Development
+
+> Before telling AI what to build, define what should be built.
+> As Socrates asked 2,500 years ago — "What do you truly know?"
+> Ouroboros turns that question into an evolutionary AI workflow engine.
+
+Most AI coding fails at the input, not the output. Ouroboros fixes this by
+**exposing hidden assumptions before any code is written**.
+
+1. **Socratic Clarity** — Question until ambiguity ≤ 0.2
+2. **Ontological Precision** — Solve the root problem, not symptoms
+3. **Evolutionary Loops** — Each evaluation cycle feeds back into better specs
+
+```
+Interview → Seed → Execute → Evaluate
+    ↑                           ↓
+    └─── Evolutionary Loop ─────┘
+```
+
+## ooo Commands
+
+Each command loads its agent/MCP on-demand. Details in each skill file.
+
+| Command | Loads |
+|---------|-------|
+| `ooo` | — |
+| `ooo interview` | `ouroboros:socratic-interviewer` |
+| `ooo seed` | `ouroboros:seed-architect` |
+| `ooo run` | MCP required |
+| `ooo evolve` | MCP: `evolve_step` |
+| `ooo evaluate` | `ouroboros:evaluator` |
+| `ooo unstuck` | `ouroboros:{persona}` |
+| `ooo status` | MCP: `session_status` |
+| `ooo setup` | — |
+| `ooo help` | — |
+
+## Agents
+
+Loaded on-demand — not preloaded.
+
+**Core**: socratic-interviewer, ontologist, seed-architect, evaluator,
+wonder, reflect, advocate, contrarian, judge
+**Support**: hacker, simplifier, researcher, architect
+<!-- ooo:END -->

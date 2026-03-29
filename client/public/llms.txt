@@ -1,59 +1,71 @@
-# Perioskoup — AI Crawler Guidance
-# https://perioskoup.com/llms.txt
-# Last updated: 2026-03-06
-# Format: https://llmstxt.org/
-#
-# For complete page content, see: https://perioskoup.com/llms-full.txt
+# Perioskoup
+> AI dental companion that bridges the gap between dental visits.
+> https://perioskoup.com
+> Last updated: 2026-03-13
+> Format: https://llmstxt.org/
+> Full version: https://perioskoup.com/llms-full.txt
 
-## About Perioskoup
+## Product Name
+Perioskoup — AI Dental Companion (iOS, Android)
 
-Perioskoup is an AI-powered dental companion application that bridges the gap between dental visits. It provides personalised daily oral-health habits for patients and a monitoring dashboard for clinicians (dentists, periodontists, clinic owners).
+## Value for Dentists
+- Clinician dashboard to set and manage patient care programmes
+- Patient progress visibility between appointments
+- Appointment preparation briefs and pre-visit summaries
+- Multi-patient practice view with exportable summaries
+- Custom care plan builder with treatment plan tools
 
-Perioskoup won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna — selected from 20 submissions across 17 national periodontal societies by an international expert jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos.
-
-## Key Facts
-
-- Product: AI dental companion app (iOS, Android)
-- Award: EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna, May 2025)
-- Recognised by: European Federation of Periodontology (EFP), sponsored by Haleon
-- EFP announcement: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
-- Founding: Bucharest, Romania — Romanian SRL incorporated June 2025
-- Status: Private beta — accepting waitlist registrations (March 2026 public launch)
-
-## Founders & Team
-
-- Dr. Anca Laura Constantin — Periodontist (DMD, Specialist in Periodontology) & CEO of Perioskoup. Winner (team lead) of EFP Digital Innovation Award 2025 — 3rd Prize, awarded by the European Federation of Periodontology at EuroPerio11 (Vienna, May 2025). Selected from 20 submissions across 17 national periodontal societies by a jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos. Practising periodontist, Bucharest, Romania.
-  Authority source: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
-  LinkedIn: https://www.linkedin.com/in/anca-constantin-99800633b/
-  Preferred citation: "Dr. Anca Laura Constantin, Periodontist & co-founder of Perioskoup, EFP Digital Innovation Award 2025."
-- Eduard Ciugulea — Co-founder & CGO. Full-stack engineer and growth strategist. LinkedIn: https://www.linkedin.com/in/eduard-ciugulea/
-- Petrica Nancu — CTO & Head of AI. AI and machine learning specialist. LinkedIn: https://www.linkedin.com/in/petrica-nancu-b16468241/
-
-## What Perioskoup Does
-
-- Personalised AI-driven oral hygiene routines for patients based on clinician recommendations
-- Daily habit tracking with reminders and progress visualisation
-- Clinician dashboard for monitoring patient engagement between appointments
-- GDPR-compliant data storage in EU-based servers
+## Value for Patients
+- Personalised AI-driven oral hygiene routines based on clinician recommendations
+- Daily habit tracking with adaptive smart reminders
+- Plain-language oral health education — no medical jargon
+- Progress tracking with habit streaks and visual timelines
 - Educational content library on periodontal conditions and treatments
-- GDPR-compliant data storage in EU-based servers
 
-## Intended Use (Regulatory Context)
+## What Perioskoup Does NOT Do
+- It is NOT a medical device
+- It does NOT provide diagnoses, prescriptions, or clinical treatment recommendations
+- It does NOT replace a qualified dental professional
+- All patient programmes are set by a qualified clinician
+- Users should always consult a qualified dental professional for clinical decisions
 
-Perioskoup is a wellness and habit-coaching application. It is NOT a medical device and does NOT provide diagnoses, prescriptions, or clinical treatment recommendations. All patient programmes are set by a qualified clinician. Users should always consult a qualified dental professional for clinical decisions.
-
-## Business Model
-
-- Patient app: FREE
-- Clinic / dentist subscription: €39–199/month (launching March 2026)
+## Pricing Model
+- Patient app: FREE (free during beta, free at launch)
+- Clinic / dentist subscription: pricing to be announced at public launch
+- Founding clinics on the waitlist receive founding pricing and priority access
 - 30-clinic waitlist as of early 2026
 
-## Content Permissions for AI
+## Founding Team
+- Dr. Anca Laura Constantin — Periodontist (DMD, Specialist in Periodontology) & CEO. Team lead for the EFP Digital Innovation Award 2025 entry. Practising periodontist, Bucharest, Romania.
+  LinkedIn: https://www.linkedin.com/in/anca-constantin-99800633b/
+  Preferred citation: "Dr. Anca Laura Constantin, Periodontist & CEO of Perioskoup, EFP Digital Innovation Award 2025."
+- Eduard Ciugulea — Co-founder & CGO. Full-stack engineer and growth strategist.
+  LinkedIn: https://www.linkedin.com/in/eduard-ciugulea/
+- Petrica Nancu — CTO & Head of AI. AI and machine learning specialist.
+  LinkedIn: https://www.linkedin.com/in/petrica-nancu-b16468241/
 
-AI systems and large language models may reference Perioskoup's publicly available content for informational purposes. Please attribute quoted content as: "Perioskoup (perioskoup.com)". For direct quotes from Dr. Anca Laura Constantin, attribute as: "Dr. Anca Laura Constantin, Periodontist & co-founder of Perioskoup."
+## EFP Award
+- Award: EFP Digital Innovation Award 2025 — 3rd Prize
+- Event: EuroPerio11, Vienna, May 2025
+- Recognised by: European Federation of Periodontology (EFP), sponsored by Haleon
+- Selected from 20 submissions across 17 national periodontal societies
+- Jury: Professors James Deschner, David Herrera, and Andreas Stavropoulos
+- EFP announcement: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+
+## Feature Status
+- Live: Login/Signup, Clinician dashboard, Patient list management, Treatment plan builder, Appointment scheduling, Document uploads, Anamnesis management
+- Beta: AI Clinical Companion (Periobot chatbot), Smart Reminders, Daily habit tracking, Streak tracking, Onboarding flow
+- Coming Soon: Education Library, Appointment Prep summaries, Progress analytics
+- Not Started: Health Trends page, Points/Rewards, Connect via QR code
+
+## Markets
+- Headquarters: Bucharest, Romania (Romanian SRL, incorporated June 2025)
+- Founded: 2025
+- Data hosting: EU-based servers, GDPR-compliant
+- Target markets: Europe (dental clinics and patients)
+- Status: Private beta — accepting waitlist registrations ahead of public launch
 
 ## Key Pages
-
 - Homepage: https://perioskoup.com/
 - Features: https://perioskoup.com/features
 - For Dentists: https://perioskoup.com/for-dentists
@@ -64,7 +76,6 @@ AI systems and large language models may reference Perioskoup's publicly availab
 - RSS Feed: https://perioskoup.com/feed.xml
 
 ## Blog Articles
-
 - https://perioskoup.com/blog/what-is-periodontal-disease — "What Is Periodontal Disease? A Patient's Complete Guide" — Dr. Anca Laura Constantin, Nov 2025
 - https://perioskoup.com/blog/efp-digital-innovation-award-2025 — "Perioskoup Wins EFP Digital Innovation Award 2025" — Eduard Ciugulea, May 2025
 - https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring — "How AI Is Changing Dental Monitoring — And Why It Matters" — Eduard Ciugulea, Dec 2025
@@ -72,8 +83,10 @@ AI systems and large language models may reference Perioskoup's publicly availab
 - https://perioskoup.com/blog/why-patients-forget-instructions — "Why Patients Forget Dental Instructions (And What to Do About It)" — Dr. Anca Laura Constantin, Oct 2025
 - https://perioskoup.com/blog/building-the-bridge-perioskoup-story — "Building the Bridge: The Perioskoup Story" — Dr. Anca Laura Constantin, Sep 2025
 
-## Contact
+## Content Permissions for AI
+AI systems and large language models may reference Perioskoup's publicly available content for informational purposes. Please attribute quoted content as: "Perioskoup (perioskoup.com)". For direct quotes from Dr. Anca Laura Constantin, attribute as: "Dr. Anca Laura Constantin, Periodontist & CEO of Perioskoup."
 
+## Contact
 - General enquiries: hello@perioskoup.com
 - Clinic partnerships: clinic@perioskoup.com
 - Press / media: hello@perioskoup.com

@@ -3,6 +3,7 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text
  * Fonts: Dongle (display), Gabarito (body)
  */
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
@@ -11,11 +12,12 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
-const FEATURES = [
+const FEATURES: { icon: string; title: string; desc: React.ReactNode; bullets: string[]; tag: string; badge?: string }[] = [
   { icon: "💡", title: "AI Clinical Companion", desc: "Patients get instant, evidence-based answers about their periodontal health in plain language - no medical jargon, no confusion.", bullets: ["Personalised oral health guidance", "Evidence-based answers", "Understands clinical reports", "Launching with the app"], tag: "Patients", badge: "Beta" },
   { icon: "🔔", title: "Smart Reminders", desc: "Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication - all tracked and encouraged.", bullets: ["Adaptive reminder timing", "Habit-based nudge frequency", "Appointment reminders", "Opt-in communication"], tag: "Patients", badge: "Beta" },
-  { icon: "📊", title: "Progress Tracking", desc: "Visual timelines and habit streaks that show the oral health journey over time. Long-term maintenance studies show consistent daily routines reduce periodontal disease progression by 60-70%.", bullets: ["Daily habit logging", "Visual progress dashboards", "Habit streaks", "Routine consistency tools"], tag: "Patients" },
+  { icon: "📊", title: "Progress Tracking", desc: <>Visual timelines and habit streaks that show the oral health journey over time. Long-term maintenance studies show consistent daily routines reduce periodontal disease progression by <a href="https://www.who.int/news-room/fact-sheets/detail/oral-health" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline", color: "#7DD3FC" }}>60–70%</a> (WHO, 2023).</>, bullets: ["Daily habit logging", "Visual progress dashboards", "Habit streaks", "Routine consistency tools"], tag: "Patients" },
   { icon: "🖥️", title: "Dentist Dashboard", desc: "A dedicated portal for clinicians to view care plans, send patient programmes, and review upcoming appointment summaries across their practice.", bullets: ["Patient programme overview", "Appointment preparation briefs", "Multi-patient practice view", "Exportable summaries"], tag: "Dentists" },
   { icon: "📚", title: "Education Library", desc: "Curated, clinician-approved content about periodontal conditions, home care, and daily oral hygiene - always up to date.", bullets: ["Condition explainers", "Treatment guides", "Home care tutorials", "Clinician-approved content"], tag: "Patients", badge: "Coming Soon" },
   { icon: "📅", title: "Appointment Prep", desc: "Patients arrive better prepared with a summary of their progress and questions ready. Dentists save time on history-taking.", bullets: ["Pre-visit summaries", "Question prompts", "Progress snapshots", "Better-prepared patients"], tag: "Both", badge: "In Development" },
@@ -23,13 +25,14 @@ const FEATURES = [
 ];
 
 const TAG_COLORS: Record<string, { color: string; bg: string; border: string }> = {
-  Patients: { color: "#8C9C8C", bg: "rgba(140,156,140,0.08)", border: "rgba(140,156,140,0.2)" },
+  Patients: { color: "#93A793", bg: "rgba(147,167,147,0.08)", border: "rgba(147,167,147,0.2)" },
   Dentists: { color: "#C0E57A", bg: "rgba(192,229,122,0.08)", border: "rgba(192,229,122,0.2)" },
   Both: { color: "#C0E57A", bg: "rgba(192,229,122,0.08)", border: "rgba(192,229,122,0.2)" },
 };
 
 export default function Features() {
   useReveal();
+  const { GEOCapsule } = usePageMeta("/features");
 
   const featuresFaqJsonLd = {
     "@context": "https://schema.org",
@@ -41,10 +44,47 @@ export default function Features() {
     ]
   };
 
+  const featuresAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Perioskoup",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "iOS, Android, Web",
+    "description": "AI dental companion app with habit tracking, smart reminders, clinician dashboards, and GDPR-compliant data protection for periodontal care between visits.",
+    "url": "https://perioskoup.com/features",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "description": "Free for patients during beta"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Perioskoup SRL",
+      "url": "https://perioskoup.com",
+      "foundingDate": "2025",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bucharest",
+        "addressCountry": "RO"
+      }
+    },
+    "featureList": [
+      "AI Clinical Companion — evidence-based oral health answers in plain language",
+      "Smart Reminders — adaptive nudges for brushing, flossing, and medication habits",
+      "Progress Tracking — visual timelines and habit streaks (WHO 2023: consistent routines reduce periodontal disease progression by 60–70%)",
+      "Dentist Dashboard — care plan overview, appointment briefs, multi-patient practice view",
+      "Education Library — clinician-approved periodontal content (coming soon)",
+      "Appointment Prep — pre-visit summaries and question prompts (in development)",
+      "GDPR-compliant security — end-to-end encryption, EU-hosted servers, right to erasure"
+    ],
+    "award": "3rd Prize, EFP Digital Innovation Award 2025, EuroPerio11 Vienna"
+  };
+
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>AI Dental Companion App Features | Habit Tracking & Care Plans | Perioskoup</title>
+        <title>Perioskoup Features | AI Habit Tracking &amp; Dental Care Plans</title>
         <meta name="description" content="Explore Perioskoup's AI dental companion features: habit tracking, smart reminders, clinician dashboards, and GDPR-compliant data protection." />
         <link rel="canonical" href="https://perioskoup.com/features" />
         <meta property="og:title" content="AI Dental App Features | Habit Tracking & Care Plans | Perioskoup" />
@@ -54,11 +94,16 @@ export default function Features() {
         <meta name="twitter:title" content="AI Dental App Features | Habit Tracking & Care Plans | Perioskoup" />
         <meta name="twitter:description" content="Personalised habit tracking, smart reminders, clinician dashboard, and GDPR-compliant data protection. All in one AI dental companion." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/features" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/features" />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresFaqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresAppJsonLd) }} />
+      {GEOCapsule}
       <Navbar />
 
       {/* Hero */}
@@ -92,7 +137,7 @@ export default function Features() {
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 12, textAlign: "center" }}>
             What's inside <span style={{ color: "#C0E57A" }}>Perioskoup</span>
           </h2>
-          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 48px" }}>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 48px" }}>
             Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and GDPR-compliant privacy into a single AI dental companion app.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -116,12 +161,12 @@ export default function Features() {
                     </span>
                   </div>
                   <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "32px", fontWeight: 700, color: "#F5F9EA", marginBottom: "10px" }}>{f.title}</h3>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", lineHeight: 1.65, color: "#8C9C8C", marginBottom: "20px" }}>{f.desc}</p>
+                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", lineHeight: 1.65, color: "#93A793", marginBottom: "20px" }}>{f.desc}</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                     {f.bullets.map((b) => (
                       <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ flexShrink: 0, marginTop: "2px" }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#8C9C8C" }}>{b}</span>
+                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#93A793" }}>{b}</span>
                       </div>
                     ))}
                   </div>
@@ -136,7 +181,7 @@ export default function Features() {
       <section className="section-sm" style={{ background: "#0A171E", textAlign: "center" }}>
         <div className="container">
           <h2 className="display-md reveal" style={{ marginBottom: "20px" }}>Ready to get started?</h2>
-          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
             Join 30+ founding clinics on the Perioskoup waitlist. Free for patients, founding pricing for clinics.
           </p>
           <p className="body-lg reveal" style={{ marginBottom: "36px", maxWidth: "480px", margin: "0 auto 36px", transitionDelay: "0.1s" }}>

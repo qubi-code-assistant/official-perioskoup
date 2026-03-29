@@ -11,13 +11,15 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
+import AppScreenshot from "@/components/AppScreenshot";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const FEATURES = [
   {
     icon: "M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18h6",
     title: "Practice Dashboard",
-    desc: "A unified view of all your patients - their engagement rates, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.",
-    bullets: ["Patient engagement overview", "Appointment preparation briefs", "Multi-patient practice overview", "Exportable clinical summaries"],
+    desc: "A unified view of all your patients - their programme status, last activity, upcoming appointments, and AI-generated summaries. Everything you need before you walk into the room.",
+    bullets: ["Care plan status at a glance", "Appointment preparation briefs", "Multi-patient practice overview", "Exportable care summaries"],
   },
   {
     icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
@@ -27,14 +29,15 @@ const FEATURES = [
   },
   {
     icon: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z",
-    title: "Engagement Insights",
-    desc: "See which patients are following their care plans and which may need an extra nudge. Engagement visibility between appointments — coming in Q2 2026.",
-    bullets: ["Patient programme overview", "Appointment preparation briefs", "Engagement visibility (in development)", "Practice-wide insights (coming Q2 2026)"],
+    title: "Care Plan Visibility",
+    desc: "See which patients are following their care plans and which may need an extra nudge. Stay connected between appointments — coming in Q2 2026.",
+    bullets: ["Patient programme overview", "Appointment preparation briefs", "Care plan follow-through (in development)", "Practice-wide summaries (coming Q2 2026)"],
   },
 ];
 
 export default function ForDentists() {
   useReveal();
+  const { GEOCapsule } = usePageMeta("/for-dentists");
 
   const dentistsFaqJsonLd = {
     "@context": "https://schema.org",
@@ -49,25 +52,82 @@ export default function ForDentists() {
     ]
   };
 
+  const dentistsServiceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Perioskoup for Dental Practices",
+    "description": "AI dental companion platform providing clinician dashboards, personalised care plans, and care plan visibility to extend patient care between appointments.",
+    "url": "https://perioskoup.com/for-dentists",
+    "serviceType": "Dental Patient Engagement Platform",
+    "category": "Healthcare Technology",
+    "provider": {
+      "@type": "Organization",
+      "name": "Perioskoup SRL",
+      "url": "https://perioskoup.com",
+      "logo": "https://perioskoup.com/images/og-image.jpg",
+      "foundingDate": "2025",
+      "foundingLocation": {
+        "@type": "Place",
+        "name": "Bucharest, Romania",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bucharest",
+          "addressCountry": "RO"
+        }
+      },
+      "founder": [
+        { "@type": "Person", "name": "Dr. Anca Laura Constantin", "jobTitle": "CEO" },
+        { "@type": "Person", "name": "Eduard Ciugulea", "jobTitle": "Co-founder & CGO" }
+      ]
+    },
+    "areaServed": [
+      { "@type": "Place", "name": "European Union" },
+      { "@type": "Place", "name": "United Kingdom" }
+    ],
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": "https://perioskoup.com/waitlist",
+      "servicePlatform": "Web, iOS, Android"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Perioskoup Clinic Plans",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Founding Clinic Access",
+          "description": "Priority access with founding pricing, dedicated onboarding, and direct product input",
+          "availability": "https://schema.org/PreOrder"
+        }
+      ]
+    },
+    "award": "EFP Digital Innovation Award 2025 — 3rd Prize at EuroPerio11, Vienna"
+  };
+
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Dental Patient Engagement App for Clinicians | Perioskoup</title>
-        <meta name="description" content="Perioskoup gives dental practices a clinician dashboard, personalised care plans, and patient engagement visibility to extend care and reduce no-shows." />
+        <meta name="description" content="Perioskoup gives dental practices a clinician dashboard, personalised care plans, and care plan visibility to extend care and reduce no-shows." />
         <link rel="canonical" href="https://perioskoup.com/for-dentists" />
         <meta property="og:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
-        <meta property="og:description" content="Clinician dashboard, personalised care plans, and patient engagement visibility for dental practices. Extend care beyond the appointment." />
+        <meta property="og:description" content="Clinician dashboard, personalised care plans, and care plan visibility for dental practices. Extend care beyond the appointment." />
         <meta property="og:url" content="https://perioskoup.com/for-dentists" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Dental Patient Engagement App for Clinicians | Perioskoup" />
-        <meta name="twitter:description" content="Give your dental practice a clinician dashboard, personalised care plans, and patient engagement visibility. Join 30+ founding clinics on the Perioskoup waitlist." />
+        <meta name="twitter:description" content="Give your dental practice a clinician dashboard, personalised care plans, and care plan visibility. Join 30+ founding clinics on the Perioskoup waitlist." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/for-dentists" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/for-dentists" />
       </Helmet>
 
+      <script type="application/ld+json">{JSON.stringify(dentistsServiceJsonLd)}</script>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistsFaqJsonLd) }} />
+      {GEOCapsule}
       <Navbar />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
@@ -90,16 +150,16 @@ export default function ForDentists() {
             <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
               className="efp-badge-hover"
               style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none" }}>
-              <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" }}>EFP Award Winner 2025</span>
+              <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" }}>3rd Prize · EFP Award 2025</span>
               <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500 }}>Digital Innovation</span>
             </a>
-            <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>30+ founding clinics on the waitlist</span>
+            <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#93A793" }}>30+ founding clinics on the waitlist</span>
           </div>
 
           <div className="reveal" style={{ display: "flex", gap: 12, flexWrap: "wrap", transitionDelay: "0.28s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "14px 32px" }}>
               Join as a Founding Clinic
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
             <Link href="/features" className="btn-ghost" style={{ fontSize: 16, padding: "14px 32px" }}>
               See All Features
@@ -115,13 +175,13 @@ export default function ForDentists() {
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(36px, 4vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 16 }}>
               The problem is clear.
             </h2>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, lineHeight: 1.7, color: "#8C9C8C", marginBottom: 12 }}>
-              Patients forget 80% of care instructions within 48 hours. Perioskoup translates your clinical recommendations into daily habits they actually follow.
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, lineHeight: 1.7, color: "#93A793", marginBottom: 12 }}>
+              Patients forget 40–80% of care instructions within 48 hours. Perioskoup translates your clinical recommendations into daily habits they actually follow.
             </p>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C" }}>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#93A793" }}>
               Recent research confirms patients lack awareness of their own responsibility for oral health and face barriers including understanding instructions, conflicting recommendations, and lack of motivation (<a href="https://doi.org/10.1111/jcpe.70044" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>Weinert et al. 2025, JCP</a>). Perioskoup is the AI dental companion that extends your care beyond the appointment.
             </p>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C", marginTop: 12 }}>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#93A793", marginTop: 12 }}>
               Only 30% of patients follow post-treatment oral hygiene instructions after leaving the chair (<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/cre2.526" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>J Clin Periodontol</a>). Oral diseases cost €90 billion annually in Europe (<a href="https://www.oralhealthplatform.eu/" target="_blank" rel="noopener noreferrer" style={{ color: "#C0E57A", textDecoration: "none" }}>Platform for Better Oral Health in Europe</a>). Prevention is not just better care — it is better economics.
             </p>
           </div>
@@ -133,7 +193,7 @@ export default function ForDentists() {
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#234966] rounded-2xl overflow-hidden">
             {[
-              { value: "80%", label: "of instructions forgotten within 48h", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", source: "Kessels 2003, BMJ", href: "https://doi.org/10.1136/bmj.326.7395.920" },
+              { value: "40–80%", label: "of instructions forgotten within 48h", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", source: "Kessels 2003, J R Soc Med", href: "https://doi.org/10.1258/jrsm.96.5.219" },
               { value: "87%", label: "of mHealth studies show improved outcomes", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6", source: "Toniazzo et al. 2019, JCP", href: "https://doi.org/10.1111/jcpe.13064" },
               { value: "62%", label: "of adults have periodontitis worldwide", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", source: "Bernabe et al. 2020, JCP", href: "https://doi.org/10.1111/jcpe.13217" },
             ].map((s, i) => (
@@ -142,19 +202,36 @@ export default function ForDentists() {
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d={s.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <div style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 48, color: "#C0E57A", lineHeight: 1, marginBottom: 8 }}>{s.value}</div>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>{s.label}</p>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "#8C9C8C", marginTop: 4, display: "block", textDecoration: "none" }}>{s.source}</a>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#93A793" }}>{s.label}</p>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, color: "#93A793", marginTop: 4, display: "block", textDecoration: "none" }}>{s.source}</a>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* INLINE CTA — after Stats */}
+      <div className="reveal" style={{ background: "#050C10", padding: "28px 0" }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
+          <p style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(24px, 3vw, 32px)", color: "#F5F9EA", margin: 0, lineHeight: 1 }}>
+            Be part of the solution.
+          </p>
+          <Link
+            href="/waitlist?role=dentist"
+            className="btn-primary"
+            style={{ fontSize: 15, padding: "12px 28px", whiteSpace: "nowrap" }}
+          >
+            Apply as a Founding Clinic
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </Link>
+        </div>
+      </div>
+
       {/* ── 4. DR. ANCA QUOTE ───────────────────────────────────────────────── */}
       <section style={{ padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
-            <img src="/images/anca-headshot.jpg" alt="Dr. Anca Laura Constantin" loading="lazy" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0 }} />
+            <img src="/images/anca-headshot.jpg" alt="Dr. Anca Laura Constantin" loading="lazy" decoding="async" width={80} height={80} style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0 }} />
             <div style={{ flex: 1, minWidth: 280 }}>
               <blockquote style={{ borderLeft: "3px solid #C0E57A", paddingLeft: 20, margin: 0 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, fontStyle: "italic", color: "rgba(245,249,234,0.85)", lineHeight: 1.65 }}>
@@ -163,8 +240,8 @@ export default function ForDentists() {
               </blockquote>
               <div style={{ marginTop: 12, paddingLeft: 20 }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>Periodontist & Co-founder, CEO</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", marginTop: 4 }}>EFP Digital Innovation Award Winner 2025</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>CEO & Co-founder, Periodontist</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#93A793", marginTop: 4 }}>3rd Prize, EFP Digital Innovation Award 2025</p>
               </div>
             </div>
           </div>
@@ -182,20 +259,31 @@ export default function ForDentists() {
             </h2>
           </div>
 
+          <div className="reveal" style={{ maxWidth: 800, margin: "0 auto 40px", transitionDelay: "0.16s" }}>
+            <AppScreenshot
+              src="/images/app-dashboard.webp"
+              alt="Perioskoup practice dashboard showing patient care plans, appointment preparation briefs, and multi-patient overview"
+              className="rounded-2xl"
+              width={800}
+              height={450}
+              style={{ width: "100%", height: "auto", border: "1px solid rgba(192,229,122,0.1)", borderRadius: 16 }}
+            />
+          </div>
+
           <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 800, margin: "0 auto" }}>
             {FEATURES.map((f, i) => (
               <div key={f.title} className="card reveal flex flex-col sm:flex-row gap-4 sm:gap-7 p-5 sm:p-9" style={{ transitionDelay: `${i * 0.08}s` }}>
                 <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d={f.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d={f.icon} stroke="#C0E57A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, fontWeight: 700, color: "#F5F9EA", marginBottom: 10 }}>{f.title}</h3>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C", marginBottom: 16 }}>{f.desc}</p>
+                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#93A793", marginBottom: 16 }}>{f.desc}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {f.bullets.map((b) => (
                       <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 3 }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>{b}</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ flexShrink: 0, marginTop: 3 }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#93A793" }}>{b}</span>
                       </div>
                     ))}
                   </div>
@@ -205,6 +293,23 @@ export default function ForDentists() {
           </div>
         </div>
       </section>
+
+      {/* INLINE CTA — after Clinical Tools */}
+      <div className="reveal" style={{ background: "#0A171E", borderTop: "1px solid #234966", padding: "28px 0" }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
+          <p style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(24px, 3vw, 32px)", color: "#F5F9EA", margin: 0, lineHeight: 1 }}>
+            Built for periodontists. Designed around your workflow.
+          </p>
+          <Link
+            href="/pricing"
+            className="btn-primary"
+            style={{ fontSize: 15, padding: "12px 28px", whiteSpace: "nowrap" }}
+          >
+            See Pricing
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </Link>
+        </div>
+      </div>
 
       {/* ── 6. HOW IT FITS YOUR WORKFLOW ────────────────────────────────────── */}
       <section style={{ background: "#050C10", padding: "clamp(56px, 7vw, 100px) 0" }}>
@@ -221,14 +326,14 @@ export default function ForDentists() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5" style={{ maxWidth: 900, margin: "0 auto" }}>
             {[
-              { step: "Before", title: "Pre-Visit Prep", desc: "Patients arrive better prepared. You receive a summary of their engagement, habits, and questions - reducing chair time on history-taking." },
+              { step: "Before", title: "Pre-Visit Prep", desc: "Patients arrive better prepared. You receive a summary of their care plan progress, habits, and questions — reducing chair time on history-taking." },
               { step: "During", title: "Set the Plan", desc: "After the appointment, set a personalised care plan in under 2 minutes. Perioskoup translates it into daily habits with reminders and tracking." },
               { step: "After", title: "Between Visits", desc: "Patients follow their plan at home with AI personalised guidance. You stay connected and can reach out if someone needs an extra nudge." },
             ].map((item, i) => (
               <div key={item.step} className="card reveal" style={{ padding: 32, transitionDelay: `${i * 0.08}s` }}>
                 <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#C0E57A", marginBottom: 12, display: "block" }}>{item.step}</span>
                 <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, color: "#F5F9EA", marginBottom: 10 }}>{item.title}</h3>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, lineHeight: 1.65, color: "#8C9C8C" }}>{item.desc}</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, lineHeight: 1.65, color: "#93A793" }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -249,7 +354,7 @@ export default function ForDentists() {
           </p>
           <div className="reveal" style={{ padding: 24, background: "rgba(192,229,122,0.06)", border: "1px solid rgba(192,229,122,0.15)", borderRadius: 16, transitionDelay: "0.24s" }}>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, fontWeight: 600, color: "#C0E57A", marginBottom: 8 }}>Founding clinic spots are limited.</p>
-            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C" }}>Public launch: March 2026. Founding clinics get locked-in pricing, direct product input, and dedicated onboarding.</p>
+            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#93A793" }}>Founding clinics get locked-in pricing, direct product input, and dedicated onboarding.</p>
           </div>
         </div>
       </section>
@@ -266,13 +371,13 @@ export default function ForDentists() {
           <p className="body-lg reveal" style={{ maxWidth: 440, margin: "0 auto 24px", transitionDelay: "0.16s" }}>
             Founding clinics get lifetime discounted pricing, direct input on the product roadmap, and a dedicated onboarding specialist.
           </p>
-          <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", maxWidth: 440, margin: "0 auto 36px", transitionDelay: "0.20s" }}>
-            Every €1 invested in prevention saves €8–50 in future treatment costs. Source: <a href="https://www.who.int/news-room/fact-sheets/detail/oral-health" target="_blank" rel="noopener noreferrer" style={{ color: "#8C9C8C", textDecoration: "none" }}>WHO Oral Health</a>
+          <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#93A793", maxWidth: 440, margin: "0 auto 36px", transitionDelay: "0.20s" }}>
+            Every €1 invested in prevention saves €8–50 in future treatment costs. Source: <a href="https://www.who.int/news-room/fact-sheets/detail/oral-health" target="_blank" rel="noopener noreferrer" style={{ color: "#93A793", textDecoration: "none" }}>WHO Oral Health</a>
           </p>
           <div className="reveal" style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", transitionDelay: "0.24s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 36px" }}>
               Apply as a Founding Clinic
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
             <Link href="/contact" className="btn-ghost" style={{ fontSize: 16, padding: "16px 36px" }}>
               Talk to the Team

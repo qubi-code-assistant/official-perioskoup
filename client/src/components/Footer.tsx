@@ -73,7 +73,7 @@ export default function Footer() {
                 }}
               >
                 <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#C0E57A', display: 'inline-block' }} />
-                EFP Award 2025
+                3rd Prize · EFP Award 2025
               </a>
             </div>
           </div>

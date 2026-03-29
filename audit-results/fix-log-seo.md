@@ -401,3 +401,143 @@ All critical, high, and medium-priority issues from both audit files have been r
 - [ ] Pricing og:description: confirm "€39" absent
 - [ ] `https://perioskoup.com/llms-full.txt` — "Visit Your Dentist" step 01 visible, no "Scan/Analyze/Engage"
 - [ ] `https://perioskoup.com/llms.txt` — Dr. Anca entry has DMD + LinkedIn + preferred citation
+
+---
+
+---
+
+# SEO Fix Log — Cycle 2 Remediation (cycle2-01-seo.md)
+**Date:** 2026-03-29
+**Source audit:** audit-results/cycle2-01-seo.md (baseline: 8.5/10)
+**TypeScript check:** pnpm check — 0 errors
+
+---
+
+## Fixes Applied
+
+### F1 — Features page title over limit (HIGH)
+**Files:** `client/src/pages/Features.tsx` line 87, `client/src/hooks/usePageMeta.tsx` line 52
+
+Before: `AI Dental Companion App Features | Habit Tracking & Care Plans | Perioskoup` (75 chars — SERP truncation at ~60 chars)
+After: `Perioskoup Features | AI Habit Tracking & Dental Care Plans` (60 chars)
+
+Both the inline Helmet title and the usePageMeta registry entry updated to stay consistent.
+
+---
+
+### F4 — Blog page H1 to H3 heading skip (MED)
+**File:** `client/src/pages/Blog.tsx` line 202
+
+Before: H1 directly followed by H3 card titles — no intervening H2.
+After: Added `<h2 className="display-sm reveal">Featured Articles</h2>` immediately before the featured posts grid. Correct hierarchy: H1 → H2 (Featured Articles) → H3 (card titles) → H2 (All Articles) → H3 (row titles).
+
+---
+
+### F5 — Home page has no body link to Blog (MED)
+**File:** `client/src/pages/Home.tsx` — inserted before `<Footer />`
+
+Added a "Knowledge Hub" teaser section containing:
+- Label tag "Knowledge Hub"
+- H2 "From the knowledge hub"
+- Descriptive paragraph referencing periodontal health and AI articles
+- `<Link href="/blog">Read the blog</Link>` CTA
+
+This establishes a contextual internal link from the homepage body to the blog. No visual change to existing sections.
+
+---
+
+### F6 — Home "How It Works" duplicate paragraph (LOW)
+**File:** `client/src/pages/Home.tsx`
+
+Before: Two consecutive paragraphs under the "From Chair to Chat" H2. The second paragraph — "The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps." — duplicated the meaning of the first.
+After: Duplicate paragraph deleted. First paragraph retained as the canonical description.
+
+---
+
+### F7 — llms.txt duplicate GDPR line (LOW)
+**File:** `client/public/llms.txt`
+
+Audited on 2026-03-29: duplicate line was already absent. The "Value for Patients" section has 5 distinct bullets with no repetition. No change required.
+
+---
+
+### F8 + F9 — BlogPost and all pages missing hrefLang="x-default" (LOW)
+**Files:** BlogPost.tsx + all 8 primary pages
+
+BlogPost.tsx: Added dynamic hreflang tags to Helmet:
+```tsx
+<link rel="alternate" hrefLang="en" href={`https://perioskoup.com/blog/${article.slug}`} />
+<link rel="alternate" hrefLang="x-default" href={`https://perioskoup.com/blog/${article.slug}`} />
+```
+
+All 8 primary pages (Home, Features, ForDentists, About, Blog, Pricing, Contact, Waitlist): Added `hrefLang="x-default"` alongside the existing `hrefLang="en"` link, each pointing to the correct per-page URL.
+
+---
+
+### S2 — Gemini-AI missing from robots.txt (LOW)
+**File:** `client/public/robots.txt`
+
+Added after the YouBot block:
+```
+User-agent: Gemini-AI
+Allow: /
+```
+Total AI crawler allowlist: 16 user-agents (was 15).
+
+---
+
+### S3 — og:image:width and og:image:height missing from primary pages (LOW)
+**Files:** Home.tsx, Features.tsx, ForDentists.tsx, About.tsx, Blog.tsx, Pricing.tsx, Contact.tsx, Waitlist.tsx, Privacy.tsx, Terms.tsx
+
+All 10 pages now have:
+```tsx
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+```
+BlogPost.tsx already had these from the previous cycle.
+
+---
+
+### S1 — manifest.json lang "en-GB" conflicting with html lang="en" (MED)
+**File:** `client/public/manifest.json` line 43
+
+Before: `"lang": "en-GB"`
+After: `"lang": "en"`
+
+---
+
+## Issues Confirmed Already Fixed (No Action Required)
+
+| ID | Issue | Finding |
+|----|-------|---------|
+| F7 | llms.txt GDPR duplicate line | Already absent — 0 grep matches |
+| S4 | feed.xml language tag | Already `<language>en</language>` |
+
+---
+
+## Issues Deferred (Strategic or Content Work)
+
+| ID | Reason |
+|----|--------|
+| D1 | /waitlist noindex — strategic decision |
+| D2 | Per-page OG images — requires image assets not yet created |
+| D3/D4 | Blog contextual links — content editorial work |
+| D5 | Dr. Anca quote on 3 pages — intentional conversion copy |
+| D6 | WebSite SearchAction schema — no blog search UI exists |
+| D7 | BlogPost article lazy-splitting — post-launch performance work |
+
+---
+
+## Projected Score Impact
+
+| Category | Before | After |
+|----------|--------|-------|
+| Title Tags | 8/10 | 9/10 |
+| OG Tags | 7/10 | 9/10 |
+| hreflang | 7/10 | 10/10 |
+| Heading Hierarchy | 8/10 | 9/10 |
+| Internal Links | 6/10 | 7/10 |
+| robots.txt | 9/10 | 10/10 |
+| PWA Manifest | 5/10 | 7/10 |
+| Duplicate Content | 8/10 | 9/10 |
+| **Overall** | **8.5/10** | **~9.3/10** |

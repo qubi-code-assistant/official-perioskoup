@@ -26,6 +26,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "wouter"],
+          "radix-ui": ["@radix-ui/react-slot"],
         },
       },
     },

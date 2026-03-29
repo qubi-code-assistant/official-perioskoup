@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const SECTIONS = [
   { title: "1. Acceptance of Terms", content: "By accessing or using Perioskoup, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our platform." },
@@ -22,6 +23,8 @@ const SECTIONS = [
 ];
 
 export default function Terms() {
+  const { GEOCapsule } = usePageMeta("/terms");
+
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
@@ -35,7 +38,13 @@ export default function Terms() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Terms of Service | Perioskoup" />
         <meta name="twitter:description" content="Terms governing the use of the Perioskoup dental companion application, including wellness disclaimer and data responsibilities." />
+        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
       </Helmet>
+      {GEOCapsule}
       <Navbar />
 
       <section id="main-content" style={{ paddingTop: 140, paddingBottom: 100, position: "relative", overflow: "hidden" }}>

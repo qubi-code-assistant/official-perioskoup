@@ -4,7 +4,7 @@
  * Fonts: Dongle (display) + Gabarito (body/UI)
  */
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,12 +12,23 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { capture } from "@/lib/analytics";
 
 export default function Waitlist() {
   useReveal();
+  const { GEOCapsule } = usePageMeta("/waitlist");
   const [role, setRole] = useState<"patient" | "dentist">("dentist");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Pre-populate role from ?role= URL param (e.g. links from /for-dentists CTAs)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const roleParam = params.get("role");
+    if (roleParam === "patient") setRole("patient");
+    else if (roleParam === "dentist") setRole("dentist");
+  }, []);
 
   function validate(form: HTMLFormElement): Record<string, string> {
     const errs: Record<string, string> = {};
@@ -38,6 +49,7 @@ export default function Waitlist() {
     const errs = validate(e.currentTarget);
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
+      capture("waitlist_signup_completed", { source: "waitlist_page" });
       setSubmitted(true);
     }
   }
@@ -46,9 +58,9 @@ export default function Waitlist() {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "What happens after I join the waitlist?", "acceptedAnswer": { "@type": "Answer", "text": "After joining, you'll receive a confirmation email. We onboard in batches. Founding clinics and early patients get priority access. You'll hear from us before the March 2026 public launch." } },
+      { "@type": "Question", "name": "What happens after I join the waitlist?", "acceptedAnswer": { "@type": "Answer", "text": "After joining, you'll receive a confirmation email. We onboard in batches. Founding clinics and early patients get priority access. You'll hear from us ahead of public launch." } },
       { "@type": "Question", "name": "Is the waitlist free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Joining the Perioskoup waitlist is completely free and comes with no obligations. Patients will always have free access to the app. Founding clinics receive locked-in pricing." } },
-      { "@type": "Question", "name": "When will I get access?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup's public launch is planned for March 2026. Founding waitlist members receive priority access before the public launch date." } },
+      { "@type": "Question", "name": "When will I get access?", "acceptedAnswer": { "@type": "Answer", "text": "Founding waitlist members receive priority access before the public launch." } },
     ]
   };
 
@@ -56,21 +68,25 @@ export default function Waitlist() {
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Join the Perioskoup Waitlist | Early Access</title>
-        <meta name="description" content="Get priority access to the AI dental companion app launching in March 2026. 30+ founding clinics already on the list." />
+        <meta name="description" content="Get priority access to the AI dental companion app launching soon. 30+ founding clinics already on the list." />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://perioskoup.com/waitlist" />
         <meta property="og:title" content="Join the Perioskoup Waitlist | Early Access" />
-        <meta property="og:description" content="Get priority access to the AI dental companion app launching March 2026. Join 30+ founding dental clinics already on the waitlist." />
+        <meta property="og:description" content="Get priority access to the AI dental companion app launching soon. Join 30+ founding dental clinics already on the waitlist." />
         <meta property="og:url" content="https://perioskoup.com/waitlist" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Join the Perioskoup Waitlist" />
-        <meta name="twitter:description" content="Get priority access to the AI dental companion launching March 2026. 30+ founding clinics already on the list." />
+        <meta name="twitter:description" content="Get priority access to the AI dental companion launching soon. 30+ founding clinics already on the list." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/waitlist" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/waitlist" />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(waitlistFaqJsonLd) }} />
+      {GEOCapsule}
       <Navbar />
 
       <section id="main-content" style={{ paddingTop: 140, paddingBottom: 120, position: "relative", overflow: "hidden" }}>
@@ -129,24 +145,24 @@ export default function Waitlist() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label htmlFor="waitlist-first-name" className="sr-only">First name</label>
-                    <input id="waitlist-first-name" type="text" placeholder="First name" className="p-input" required aria-required="true" aria-invalid={!!errors["waitlist-first-name"]} aria-describedby={errors["waitlist-first-name"] ? "waitlist-first-name-error" : undefined} />
-                    {errors["waitlist-first-name"] && <span id="waitlist-first-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["waitlist-first-name"]}</span>}
+                    <input id="waitlist-first-name" type="text" placeholder="First name" autoComplete="given-name" className="p-input" required aria-required="true" aria-invalid={!!errors["waitlist-first-name"]} aria-describedby={errors["waitlist-first-name"] ? "waitlist-first-name-error" : undefined} />
+                    {errors["waitlist-first-name"] && <span id="waitlist-first-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>{errors["waitlist-first-name"]}</span>}
                   </div>
                   <div>
                     <label htmlFor="waitlist-last-name" className="sr-only">Last name</label>
-                    <input id="waitlist-last-name" type="text" placeholder="Last name" className="p-input" required aria-required="true" />
+                    <input id="waitlist-last-name" type="text" placeholder="Last name" autoComplete="family-name" className="p-input" required aria-required="true" />
                   </div>
                 </div>
                 <label htmlFor="waitlist-email" className="sr-only">Email address</label>
-                <input id="waitlist-email" type="email" placeholder="Email address" className="p-input" required aria-required="true" aria-invalid={!!errors["waitlist-email"]} aria-describedby={errors["waitlist-email"] ? "waitlist-email-error" : undefined} />
-                {errors["waitlist-email"] && <span id="waitlist-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 0, display: "block" }}>{errors["waitlist-email"]}</span>}
+                <input id="waitlist-email" type="email" placeholder="Email address" autoComplete="email" className="p-input" required aria-required="true" aria-invalid={!!errors["waitlist-email"]} aria-describedby={errors["waitlist-email"] ? "waitlist-email-error" : undefined} />
+                {errors["waitlist-email"] && <span id="waitlist-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 0, display: "block" }}>{errors["waitlist-email"]}</span>}
                 {role === "dentist" && (
                   <>
                     <label htmlFor="waitlist-clinic" className="sr-only">Clinic or practice name</label>
-                    <input id="waitlist-clinic" type="text" placeholder="Clinic / Practice name" className="p-input" required aria-required="true" aria-invalid={!!errors["waitlist-clinic"]} aria-describedby={errors["waitlist-clinic"] ? "waitlist-clinic-error" : undefined} />
-                    {errors["waitlist-clinic"] && <span id="waitlist-clinic-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 0, display: "block" }}>{errors["waitlist-clinic"]}</span>}
+                    <input id="waitlist-clinic" type="text" placeholder="Clinic / Practice name" autoComplete="organization" className="p-input" required aria-required="true" aria-invalid={!!errors["waitlist-clinic"]} aria-describedby={errors["waitlist-clinic"] ? "waitlist-clinic-error" : undefined} />
+                    {errors["waitlist-clinic"] && <span id="waitlist-clinic-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 0, display: "block" }}>{errors["waitlist-clinic"]}</span>}
                     <label htmlFor="waitlist-location" className="sr-only">City and country</label>
-                    <input id="waitlist-location" type="text" placeholder="City, Country (helps us plan our EU rollout)" className="p-input" />
+                    <input id="waitlist-location" type="text" autoComplete="address-level2" placeholder="City, Country (helps us plan our EU rollout)" className="p-input" />
                   </>
                 )}
                 <button type="submit" className="btn-primary" style={{ justifyContent: "center", marginTop: 8 }}>
@@ -171,7 +187,7 @@ export default function Waitlist() {
                 <div className="flex flex-wrap gap-6 justify-center">
                   {[
                     { value: "30+", label: "founding clinics" },
-                    { value: "Winner", label: "EFP Award 2025" },
+                    { value: "3rd Prize", label: "EFP Award 2025" },
                   ].map((s) => (
                     <div key={s.label} style={{ textAlign: "center" }}>
                       <div style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 28, color: "#C0E57A" }}>{s.value}</div>

@@ -11,9 +11,11 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function Contact() {
   useReveal();
+  const { GEOCapsule } = usePageMeta("/contact");
   const [sent, setSent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -45,7 +47,7 @@ export default function Contact() {
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "How do I contact Perioskoup?", "acceptedAnswer": { "@type": "Answer", "text": "You can reach Perioskoup via email at hello@perioskoup.com for general enquiries or clinic@perioskoup.com for dental practice partnerships. You can also use the contact form on this page. We respond within 24 hours." } },
-      { "@type": "Question", "name": "When does Perioskoup launch?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup's public launch is planned for March 2026. Founding clinics and early patients on the waitlist receive priority access before the public launch." } },
+      { "@type": "Question", "name": "When does Perioskoup launch?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is launching soon. Founding clinics and early patients on the waitlist receive priority access." } },
       { "@type": "Question", "name": "Is Perioskoup available in my country?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is based in Bucharest, Romania and is initially launching across Europe. The platform is designed for dental clinics and patients in the EU, UK, and beyond. Contact us for availability in your region." } },
     ]
   };
@@ -88,13 +90,17 @@ export default function Contact() {
         <meta name="twitter:title" content="Contact Perioskoup" />
         <meta name="twitter:description" content="Reach the Perioskoup team for press, clinic partnerships, investor enquiries, or product questions. We respond within 24 hours." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/contact" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/contact" />
       </Helmet>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactFaqJsonLd) }} />
+      {GEOCapsule}
       <Navbar />
 
       {/* Hero */}
@@ -157,18 +163,18 @@ export default function Contact() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label htmlFor="contact-first-name" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>First name</label>
-                      <input id="contact-first-name" type="text" placeholder="Anca" className="p-input" required aria-required="true" aria-invalid={!!errors["contact-first-name"]} aria-describedby={errors["contact-first-name"] ? "contact-first-name-error" : undefined} />
-                      {errors["contact-first-name"] && <span id="contact-first-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-first-name"]}</span>}
+                      <input id="contact-first-name" type="text" placeholder="Anca" autoComplete="given-name" className="p-input" required aria-required="true" aria-invalid={!!errors["contact-first-name"]} aria-describedby={errors["contact-first-name"] ? "contact-first-name-error" : undefined} />
+                      {errors["contact-first-name"] && <span id="contact-first-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>{errors["contact-first-name"]}</span>}
                     </div>
                     <div>
                       <label htmlFor="contact-last-name" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Last name</label>
-                      <input id="contact-last-name" type="text" placeholder="Constantin" className="p-input" required aria-required="true" />
+                      <input id="contact-last-name" type="text" placeholder="Constantin" autoComplete="family-name" className="p-input" required aria-required="true" />
                     </div>
                   </div>
                   <div>
                     <label htmlFor="contact-email" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Email</label>
-                    <input id="contact-email" type="email" placeholder="you@example.com" className="p-input" required aria-required="true" aria-invalid={!!errors["contact-email"]} aria-describedby={errors["contact-email"] ? "contact-email-error" : undefined} />
-                    {errors["contact-email"] && <span id="contact-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-email"]}</span>}
+                    <input id="contact-email" type="email" placeholder="you@example.com" autoComplete="email" className="p-input" required aria-required="true" aria-invalid={!!errors["contact-email"]} aria-describedby={errors["contact-email"] ? "contact-email-error" : undefined} />
+                    {errors["contact-email"] && <span id="contact-email-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>{errors["contact-email"]}</span>}
                   </div>
                   <div>
                     <label htmlFor="contact-role" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>I am a...</label>
@@ -181,12 +187,12 @@ export default function Contact() {
                       <option value="press">Press / Media</option>
                       <option value="other">Other</option>
                     </select>
-                    {errors["contact-role"] && <span id="contact-role-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-role"]}</span>}
+                    {errors["contact-role"] && <span id="contact-role-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>{errors["contact-role"]}</span>}
                   </div>
                   <div>
                     <label htmlFor="contact-message" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, fontWeight: 600, color: "#8C9C8C", letterSpacing: "0.04em", display: "block", marginBottom: 6 }}>Message</label>
                     <textarea id="contact-message" placeholder="Tell us what's on your mind..." className="p-input" rows={4} required aria-required="true" aria-invalid={!!errors["contact-message"]} aria-describedby={errors["contact-message"] ? "contact-message-error" : undefined} style={{ resize: "vertical" }} />
-                    {errors["contact-message"] && <span id="contact-message-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#C0E57A", marginTop: 4, display: "block" }}>{errors["contact-message"]}</span>}
+                    {errors["contact-message"] && <span id="contact-message-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>{errors["contact-message"]}</span>}
                   </div>
                   <button type="submit" className="btn-primary" style={{ justifyContent: "center" }}>
                     Send Message

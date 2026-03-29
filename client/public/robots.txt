@@ -47,6 +47,9 @@ Allow: /
 User-agent: YouBot
 Allow: /
 
+User-agent: Gemini-AI
+Allow: /
+
 Sitemap: https://perioskoup.com/sitemap.xml
 
 # AI/LLM content — this is a JavaScript SPA; full content in plain text:

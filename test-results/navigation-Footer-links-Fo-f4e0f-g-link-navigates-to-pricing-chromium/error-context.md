@@ -1,0 +1,242 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - status [ref=e4]: Navigated to Perioskoup | AI Dental Companion App | Between-Visit Dental Care
+  - generic [ref=e6]:
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "Perioskoup home" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e11]:
+            - img [ref=e12]
+            - generic [ref=e15]: Perioskoup
+        - generic [ref=e16]:
+          - link "Features" [ref=e17] [cursor=pointer]:
+            - /url: /features
+            - generic [ref=e18]: Features
+          - link "For Dentists" [ref=e19] [cursor=pointer]:
+            - /url: /for-dentists
+            - generic [ref=e20]: For Dentists
+          - link "Pricing" [ref=e21] [cursor=pointer]:
+            - /url: /pricing
+            - generic [ref=e22]: Pricing
+          - link "About" [ref=e23] [cursor=pointer]:
+            - /url: /about
+            - generic [ref=e24]: About
+          - link "Blog" [ref=e25] [cursor=pointer]:
+            - /url: /blog
+            - generic [ref=e26]: Blog
+          - link "Contact" [ref=e27] [cursor=pointer]:
+            - /url: /contact
+            - generic [ref=e28]: Contact
+        - link "Join the waitlist" [ref=e30] [cursor=pointer]:
+          - /url: /waitlist
+          - generic [ref=e31]: Join Waitlist
+    - generic [active] [ref=e32]:
+      - img "Perioskoup dental companion app hero" [ref=e33]
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - link "EFP Award Winner 2025 Digital Innovation" [ref=e39] [cursor=pointer]:
+            - /url: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+            - generic [ref=e40]: EFP Award Winner 2025
+            - generic [ref=e41]: Digital Innovation
+            - img [ref=e42]
+          - heading "Between visits, we take over." [level=1] [ref=e44]:
+            - text: Between visits,
+            - text: we take over.
+          - paragraph [ref=e45]: Perioskoup is a free AI dental companion app - personalised guidance, habit tracking, and a direct line to your clinic between appointments.
+          - blockquote [ref=e46]:
+            - paragraph [ref=e47]: "\"Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes.\""
+            - generic [ref=e48]: "- Dr. Anca Constantin, Periodontist & CDO, Perioskoup"
+          - generic [ref=e49]:
+            - link "Join the Waitlist" [ref=e50] [cursor=pointer]:
+              - /url: /waitlist
+              - text: Join the Waitlist
+              - img [ref=e51]
+            - link "For Clinicians" [ref=e53] [cursor=pointer]:
+              - /url: /for-dentists
+          - paragraph [ref=e54]: 30+ founding clinics · EFP Award Winner 2025 · Free for patients
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - generic [ref=e57]: 87%
+              - generic [ref=e58]: of mHealth studies show improved oral health
+              - link "Toniazzo et al. 2019, JCP" [ref=e59] [cursor=pointer]:
+                - /url: https://doi.org/10.1111/jcpe.13064
+            - generic [ref=e60]:
+              - generic [ref=e61]: 80%
+              - generic [ref=e62]: of care instructions forgotten within 48h
+              - link "Kessels 2003, BMJ" [ref=e63] [cursor=pointer]:
+                - /url: https://doi.org/10.1136/bmj.326.7395.920
+            - generic [ref=e64]:
+              - generic [ref=e65]: Winner
+              - generic [ref=e66]: EFP Innovation Award
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: 22:19
+            - generic [ref=e77]:
+              - img [ref=e78]
+              - img [ref=e83]
+          - generic [ref=e92]:
+            - img [ref=e93]
+            - generic [ref=e94]: Your Personal
+            - generic [ref=e95]: Dental Companion
+            - generic [ref=e96]: Select your role
+            - generic [ref=e97]:
+              - img [ref=e98]
+              - generic [ref=e101]: Patient
+            - generic [ref=e102]:
+              - img [ref=e103]
+              - generic [ref=e107]: Dentist
+    - generic [ref=e115]:
+      - generic [ref=e116]:
+        - generic [ref=e117]: AI-Powered Dental Companion ·
+        - generic [ref=e118]: EFP Innovation Award Winner 2025 ·
+        - generic [ref=e119]: For Patients & Clinicians ·
+        - generic [ref=e120]: Personalised Daily Habits ·
+        - generic [ref=e121]: Bridging the Gap Between Visits ·
+        - generic [ref=e122]: Trusted by Periodontists ·
+        - generic [ref=e123]: Launching Soon ·
+      - generic [ref=e124]:
+        - generic [ref=e125]: AI-Powered Dental Companion ·
+        - generic [ref=e126]: EFP Innovation Award Winner 2025 ·
+        - generic [ref=e127]: For Patients & Clinicians ·
+        - generic [ref=e128]: Personalised Daily Habits ·
+        - generic [ref=e129]: Bridging the Gap Between Visits ·
+        - generic [ref=e130]: Trusted by Periodontists ·
+        - generic [ref=e131]: Launching Soon ·
+    - generic [ref=e134]:
+      - img "EFP Digital Innovation Award ceremony - Perioskoup" [ref=e136]
+      - generic [ref=e138]:
+        - generic [ref=e139]: EFP Innovation Award Winner 2025
+        - blockquote [ref=e140]:
+          - paragraph [ref=e141]: "\"Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health.\""
+          - generic [ref=e142]: "- European Federation of Periodontology"
+        - paragraph [ref=e143]: Selected from 20 submissions across 17 national societies, Perioskoup was recognised by an international expert jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos.
+        - generic [ref=e144]:
+          - generic [ref=e145]: EFP
+          - generic [ref=e146]: Sponsored by Haleon
+          - generic [ref=e147]: EuroPerio11
+        - link "Read the EFP announcement" [ref=e148] [cursor=pointer]:
+          - /url: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+          - text: Read the EFP announcement
+          - img [ref=e150]
+    - generic [ref=e155]:
+      - generic [ref=e156]:
+        - generic [ref=e157]: Features
+        - heading "Everything your smile needs. In one place." [level=2] [ref=e158]:
+          - text: Everything your smile
+          - text: needs. In one place.
+        - paragraph [ref=e159]: Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and GDPR-compliant privacy into a single dental companion app.
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - img [ref=e163]
+          - heading "AI-Powered Guidance" [level=3] [ref=e165]
+          - paragraph [ref=e166]: Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations - not generic advice. It learns what works for you and adapts over time.
+        - generic [ref=e167]:
+          - img [ref=e169]
+          - heading "Habit Tracking" [level=3] [ref=e171]
+          - paragraph [ref=e172]: Daily streaks, reminders, and progress visualisation that make good dental habits stick.
+        - generic [ref=e173]:
+          - img [ref=e175]
+          - heading "For Clinicians" [level=3] [ref=e177]
+          - paragraph [ref=e178]: Dentists and periodontists get a dashboard to monitor patient engagement and send targeted guidance between appointments.
+        - generic [ref=e179]:
+          - img [ref=e181]
+          - heading "Privacy First" [level=3] [ref=e183]
+          - paragraph [ref=e184]: Your dental data stays yours. Perioskoup is built with GDPR protection at its core - no selling of health data, ever. Encrypted end-to-end, stored in the EU.
+      - link "See all features →" [ref=e186] [cursor=pointer]:
+        - /url: /features
+    - generic [ref=e189]:
+      - heading "What is an AI dental companion?" [level=2] [ref=e190]
+      - paragraph [ref=e191]: An AI dental companion translates clinical recommendations into personalised daily habits. It bridges the gap between what your dentist recommends and what you actually do at home.
+      - paragraph [ref=e192]: Not a chatbot. Not a practice management system. Not a fitness tracker for teeth.
+      - paragraph [ref=e193]: An AI dental companion translates clinical recommendations into personalised daily habits - with smart reminders, progress tracking, and a direct line to your dental team. Perioskoup is the first.
+    - generic [ref=e195]:
+      - generic [ref=e196]:
+        - generic [ref=e197]: Seamless Integration
+        - heading "From Chair to Chat." [level=2] [ref=e198]
+        - paragraph [ref=e199]: "Perioskoup connects your dental appointment to your daily routine in three steps: your dentist sets a personalised plan, AI translates it into habits, and you build consistency between visits."
+        - paragraph [ref=e200]: The Perioskoup workflow connects clinical precision with patient daily life in three fluid steps.
+      - generic [ref=e201]:
+        - img [ref=e202]
+        - generic [ref=e204]:
+          - generic [ref=e205]:
+            - generic [ref=e206]:
+              - img [ref=e208]
+              - generic [ref=e213]: "01"
+            - heading "Visit Your Dentist" [level=3] [ref=e214]
+            - paragraph [ref=e215]: Your dentist examines and creates a personalised care plan — then uploads it to Perioskoup.
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - img [ref=e219]
+              - generic [ref=e222]: "02"
+            - heading "Get Your Plan" [level=3] [ref=e223]
+            - paragraph [ref=e224]: AI translates clinical recommendations into daily habits with smart reminders and tracking.
+          - generic [ref=e225]:
+            - generic [ref=e226]:
+              - img [ref=e228]
+              - generic [ref=e231]: "03"
+            - heading "Build Daily Habits" [level=3] [ref=e232]
+            - paragraph [ref=e233]: Follow your plan at home with AI support, progress tracking, and a direct line to your clinic.
+    - generic [ref=e236]:
+      - blockquote [ref=e238]: "\"The app I always wished I could prescribe to my patients.\""
+      - generic [ref=e239]:
+        - img "Dr. Anca Laura Constantin" [ref=e240]
+        - generic [ref=e241]:
+          - paragraph [ref=e242]: Dr. Anca Laura Constantin
+          - paragraph [ref=e243]: Periodontist & Chief Dental Officer, Perioskoup
+    - contentinfo [ref=e244]:
+      - generic [ref=e245]:
+        - generic [ref=e246]:
+          - generic [ref=e247]:
+            - generic [ref=e249]:
+              - img [ref=e250]
+              - generic [ref=e253]: Perioskoup
+            - paragraph [ref=e254]: Your AI dental companion. Bridging the gap between clinic and home.
+            - link "EFP Award 2025" [ref=e256] [cursor=pointer]:
+              - /url: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
+              - text: EFP Award 2025
+          - generic [ref=e258]:
+            - heading "Product" [level=3] [ref=e259]
+            - generic [ref=e260]:
+              - link "Features" [ref=e261] [cursor=pointer]:
+                - /url: /features
+                - generic [ref=e262]: Features
+              - link "For Dentists" [ref=e263] [cursor=pointer]:
+                - /url: /for-dentists
+                - generic [ref=e264]: For Dentists
+              - link "Pricing" [ref=e265] [cursor=pointer]:
+                - /url: /pricing
+                - generic [ref=e266]: Pricing
+              - link "Join Waitlist" [ref=e267] [cursor=pointer]:
+                - /url: /waitlist
+                - generic [ref=e268]: Join Waitlist
+          - generic [ref=e269]:
+            - heading "Company" [level=3] [ref=e270]
+            - generic [ref=e271]:
+              - link "About" [ref=e272] [cursor=pointer]:
+                - /url: /about
+                - generic [ref=e273]: About
+              - link "Blog" [ref=e274] [cursor=pointer]:
+                - /url: /blog
+                - generic [ref=e275]: Blog
+              - link "Contact" [ref=e276] [cursor=pointer]:
+                - /url: /contact
+                - generic [ref=e277]: Contact
+          - generic [ref=e278]:
+            - heading "Legal" [level=3] [ref=e279]
+            - generic [ref=e280]:
+              - link "Privacy Policy" [ref=e281] [cursor=pointer]:
+                - /url: /privacy
+                - generic [ref=e282]: Privacy Policy
+              - link "Terms of Service" [ref=e283] [cursor=pointer]:
+                - /url: /terms
+                - generic [ref=e284]: Terms of Service
+        - generic [ref=e285]:
+          - paragraph [ref=e286]: © 2026 Perioskoup. All rights reserved.
+          - paragraph [ref=e287]: Made in Europe
+```

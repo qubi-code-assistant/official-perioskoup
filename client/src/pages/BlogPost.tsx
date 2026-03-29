@@ -44,7 +44,7 @@ const ARTICLES: Record<string, Article> = {
     category: "Patient Education",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
-    authorRole: "Periodontist & Co-founder, Perioskoup",
+    authorRole: "CEO & Co-founder, Periodontist",
     date: "2025-11-12",
     readTime: "8 min read",
     excerpt: "Periodontal disease affects more than half of adults over 30, yet most people have never heard the word 'periodontist'. Here's everything you need to know.",
@@ -288,7 +288,7 @@ But the fundamental dynamic will remain the same: AI is a tool that extends huma
     category: "Patient Habits",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
-    authorRole: "Periodontist & Co-founder, Perioskoup",
+    authorRole: "CEO & Co-founder, Periodontist",
     date: "2026-01-08",
     readTime: "5 min read",
     excerpt: "Most people spend more time choosing what to watch on Netflix than caring for their teeth. Here's a clinically-backed 3-minute routine that actually works.",
@@ -474,14 +474,14 @@ We are just getting started.
     slug: "why-patients-forget-instructions",
     title: "Why Patients Forget Dental Instructions (And What to Do About It)",
     metaTitle: "Why Patients Forget Dental Instructions | Perioskoup",
-    metaDescription: "Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why, and how technology is changing this.",
+    metaDescription: "Research shows patients forget 40–80% of clinical instructions within 24 hours. A periodontist explains why, and how technology is changing this.",
     category: "Clinical Insight",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
-    authorRole: "Periodontist & Co-founder, Perioskoup",
+    authorRole: "CEO & Co-founder, Periodontist",
     date: "2025-10-05",
     readTime: "6 min read",
-    excerpt: "Research consistently shows that patients forget up to 80% of what they are told in a clinical consultation within 24 hours. This is not a patient failure - it is a systems failure.",
+    excerpt: "Research consistently shows that patients forget 40–80% of what they are told in a clinical consultation within 24 hours. This is not a patient failure - it is a systems failure.",
     body: `
 ## The Forgetting Curve in Dental Care
 
@@ -576,7 +576,7 @@ The forgetting curve is not a patient failure. It is a design failure. And like 
     category: "Founder Story",
     author: "Dr. Anca Laura Constantin",
     authorImg: ANCA_IMG,
-    authorRole: "Periodontist & Co-founder, Perioskoup",
+    authorRole: "CEO & Co-founder, Periodontist",
     date: "2025-09-01",
     readTime: "7 min read",
     excerpt: "Every startup begins with a problem that someone couldn't stop thinking about. For Perioskoup, that problem was the gap between the dental chair and the patient's daily life.",
@@ -667,6 +667,30 @@ The bridge between the chair and the home. That's what we're building.
   },
 };
 
+/** Parse inline bold (**text**) and markdown links ([text](url)) into React nodes. */
+function parseInline(text: string): ReactElement | string {
+  const tokens = text.split(/(\*\*.*?\*\*|\[([^\]]+)\]\(([^)]+)\))/g);
+  if (tokens.length === 1) return text;
+  const nodes: (string | ReactElement)[] = [];
+  let i = 0;
+  while (i < tokens.length) {
+    const token = tokens[i];
+    if (token.startsWith("**") && token.endsWith("**") && token.length > 4) {
+      nodes.push(<strong key={i} style={{ color: "#F5F9EA", fontWeight: 700 }}>{token.slice(2, -2)}</strong>);
+    } else if (token.startsWith("[")) {
+      // Markdown link — next two tokens are the captured groups (label, url)
+      const label = tokens[i + 1] ?? "";
+      const href = tokens[i + 2] ?? "#";
+      nodes.push(<a key={i} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#7DD3FC", textDecoration: "underline" }}>{label}</a>);
+      i += 2; // skip the two capture groups
+    } else if (token) {
+      nodes.push(token);
+    }
+    i++;
+  }
+  return <>{nodes}</>;
+}
+
 function renderBody(body: string, capsules: Record<string, string> = {}) {
   const lines = body.trim().split("\n");
   const elements: ReactElement[] = [];
@@ -708,31 +732,32 @@ function renderBody(body: string, capsules: Record<string, string> = {}) {
     } else if (trimmed.startsWith("- ")) {
       elements.push(
         <li key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "17px", color: "#8C9C8C", lineHeight: 1.75, marginBottom: "10px", paddingLeft: "8px" }}>
-          {trimmed.slice(2).replace(/\*\*(.*?)\*\*/g, (_, t) => t)}
+          {parseInline(trimmed.slice(2))}
+        </li>
+      );
+    } else if (/^\d+\. /.test(trimmed)) {
+      const text = trimmed.replace(/^\d+\. /, "");
+      elements.push(
+        <li key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "17px", color: "#8C9C8C", lineHeight: 1.75, marginBottom: "10px", paddingLeft: "8px", listStyleType: "decimal" }}>
+          {parseInline(text)}
         </li>
       );
     } else if (trimmed.startsWith("> ")) {
       elements.push(
         <blockquote key={key++} style={{ borderLeft: "3px solid #C0E57A", paddingLeft: "20px", margin: "32px 0", fontFamily: "Gabarito, sans-serif", fontSize: "18px", fontStyle: "italic", color: "#F5F9EA", lineHeight: 1.7 }}>
-          {trimmed.slice(2)}
+          {parseInline(trimmed.slice(2))}
         </blockquote>
       );
     } else if (trimmed.startsWith("*") && trimmed.endsWith("*")) {
       elements.push(
         <p key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", color: "#8C9C8C", fontStyle: "italic", marginTop: "48px", paddingTop: "24px", borderTop: "1px solid #234966" }}>
-          {trimmed.slice(1, -1)}
+          {parseInline(trimmed.slice(1, -1))}
         </p>
       );
     } else {
-      // Parse inline bold
-      const parts = trimmed.split(/(\*\*.*?\*\*)/g);
       elements.push(
         <p key={key++} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "18px", color: "#8C9C8C", lineHeight: 1.8, marginBottom: "20px" }}>
-          {parts.map((part, i) =>
-            part.startsWith("**") && part.endsWith("**")
-              ? <strong key={i} style={{ color: "#F5F9EA", fontWeight: 700 }}>{part.slice(2, -2)}</strong>
-              : part
-          )}
+          {parseInline(trimmed)}
         </p>
       );
     }
@@ -827,16 +852,20 @@ export default function BlogPost() {
         <meta property="og:description" content={article.metaDescription} />
         <meta property="og:url" content={`https://perioskoup.com/blog/${article.slug}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        {/* Per-blog og:image: use slug-specific image if available, fallback to default */}
+        <meta property="og:image" content={`https://perioskoup.com/images/og-blog-${slug}.jpg`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="article:published_time" content={`${article.date}T00:00:00Z`} />
         <meta property="article:author" content={article.author} />
         <meta name="twitter:title" content={article.metaTitle} />
         <meta name="twitter:description" content={article.metaDescription} />
-        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        {/* Per-blog twitter:image mirrors og:image */}
+        <meta name="twitter:image" content={`https://perioskoup.com/images/og-blog-${slug}.jpg`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@perioskoup" />
+        <link rel="alternate" hrefLang="en" href={`https://perioskoup.com/blog/${article.slug}`} />
+        <link rel="alternate" hrefLang="x-default" href={`https://perioskoup.com/blog/${article.slug}`} />
       </Helmet>
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -874,7 +903,7 @@ export default function BlogPost() {
 
           {/* Author + meta */}
           <div style={{ display: "flex", alignItems: "center", gap: "16px", paddingTop: "24px", borderTop: "1px solid #234966" }}>
-            <img src={article.authorImg} alt={article.author} loading="lazy" width={48} height={48} style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+            <img src={article.authorImg} alt={article.author} loading="lazy" decoding="async" width={48} height={48} style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
             <div>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", fontWeight: 700, color: "#F5F9EA" }}>{article.author}</p>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#8C9C8C" }}>{article.authorRole}</p>

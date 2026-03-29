@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build && pnpm prerender",
+    "build:vite": "vite build",
+    "prerender": "tsx scripts/prerender.ts",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -14,7 +16,8 @@
     "test:e2e:report": "playwright show-report",
     "test:unit": "vitest --config tests/vitest.config.ts",
     "test:unit:coverage": "vitest --config tests/vitest.config.ts --coverage",
-    "test": "pnpm test:unit && pnpm test:e2e"
+    "test": "pnpm test:unit && pnpm test:e2e",
+    "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
@@ -46,6 +49,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.453.0",
+    "posthog-js": "^1.360.2",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-helmet-async": "^3.0.0",

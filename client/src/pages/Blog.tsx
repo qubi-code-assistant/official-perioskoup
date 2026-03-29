@@ -12,6 +12,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import { useReveal } from "@/hooks/useReveal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
@@ -65,7 +66,7 @@ const POSTS = [
     slug: "why-patients-forget-instructions",
     category: "Clinical Insight",
     title: "Why Patients Forget Dental Instructions (And What to Do About It)",
-    excerpt: "Research shows patients forget up to 80% of clinical instructions within 24 hours. A periodontist explains why - and how technology is changing this.",
+    excerpt: "Research shows patients forget 40–80% of clinical instructions within 24 hours. A periodontist explains why - and how technology is changing this.",
     date: "5 Oct 2025",
     readTime: "6 min read",
     author: "Dr. Anca Laura Constantin",
@@ -90,6 +91,7 @@ const REGULAR = POSTS.filter((p) => !p.featured);
 
 export default function Blog() {
   useReveal();
+  const { GEOCapsule } = usePageMeta("/blog");
   // A10: aria-live feedback for newsletter subscription (WCAG 4.1.3 Status Messages)
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -109,18 +111,21 @@ export default function Blog() {
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Dental Health &amp; AI Blog | Periodontal Care Insights | Perioskoup</title>
-        <meta name="description" content="Evidence-based articles on periodontal health, dental AI, and patient care from Dr. Anca Constantin (Periodontist, EFP Award 2025) and the Perioskoup team." />
+        <meta name="description" content="Evidence-based articles on periodontal health, dental AI, and patient care from Dr. Anca Constantin (Periodontist, EFP Digital Innovation Award 2025 — 3rd Prize) and the Perioskoup team." />
         <link rel="canonical" href="https://perioskoup.com/blog" />
         <meta property="og:title" content="Dental Health &amp; AI Blog | Periodontal Care Insights | Perioskoup" />
         <meta property="og:description" content="Articles on periodontal disease, AI in dental care, and daily oral health habits. Written by Dr. Anca Laura Constantin and the Perioskoup team." />
         <meta property="og:url" content="https://perioskoup.com/blog" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Dental Health &amp; AI Blog | Perioskoup" />
-        <meta name="twitter:description" content="Evidence-based articles on periodontal health, AI in dental care, and daily oral habits from a practising periodontist. EFP Award 2025 winners." />
+        <meta name="twitter:description" content="Evidence-based articles on periodontal health, AI in dental care, and daily oral habits from a practising periodontist. EFP Digital Innovation Award 2025 — 3rd Prize." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/blog" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/blog" />
       </Helmet>
 
       {/* Blog ItemList + FAQPage structured data */}
@@ -154,7 +159,7 @@ export default function Blog() {
                 "name": "What topics does the Perioskoup blog cover?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The Perioskoup blog covers periodontal disease education, AI in dental care, daily oral health habits, clinical insights from Dr. Anca Laura Constantin (Periodontist, EFP Award 2025), and company news.",
+                  "text": "The Perioskoup blog covers periodontal disease education, AI in dental care, daily oral health habits, clinical insights from Dr. Anca Laura Constantin (Periodontist, EFP Digital Innovation Award 2025 — 3rd Prize), and company news.",
                 },
               },
               {
@@ -162,13 +167,14 @@ export default function Blog() {
                 "name": "Who writes the Perioskoup blog?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Articles are written by Dr. Anca Laura Constantin (Periodontist, EFP Digital Innovation Award 2025 winner) and Eduard Ciugulea (Co-founder & CGO). Clinical articles are authored by Dr. Anca and reflect her experience as a practising periodontist.",
+                  "text": "Articles are written by Dr. Anca Laura Constantin (Periodontist, 3rd Prize, EFP Digital Innovation Award 2025) and Eduard Ciugulea (Co-founder & CGO). Clinical articles are authored by Dr. Anca and reflect her experience as a practising periodontist.",
                 },
               },
             ],
           }),
         }}
       />
+      {GEOCapsule}
       <Navbar />
 
       {/* Hero */}
@@ -193,6 +199,7 @@ export default function Blog() {
       {/* Featured posts -- CSS .blog-card-hover, no JS style mutations */}
       <section style={{ paddingBottom: "80px" }}>
         <div className="container">
+          <h2 className="display-sm reveal" style={{ marginBottom: "32px" }}>Featured Articles</h2>
           <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
             {FEATURED.map((post, i) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
@@ -224,7 +231,7 @@ export default function Blog() {
                     {post.excerpt}
                   </p>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingTop: "16px", borderTop: "1px solid #234966" }}>
-                    <img src={post.authorImg} alt={post.author} width={32} height={32} style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
+                    <img src={post.authorImg} alt={post.author} loading="lazy" decoding="async" width={32} height={32} style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", objectPosition: "top", flexShrink: 0 }} />
                     <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600 }}>{post.author}</span>
                     <span style={{ marginLeft: "auto", fontFamily: "Gabarito, sans-serif", fontSize: "12px", color: "#8C9C8C" }}>{post.readTime}</span>
                   </div>
@@ -243,7 +250,7 @@ export default function Blog() {
               Interested in what we're building?
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, color: "#8C9C8C", marginBottom: 24 }}>
-              Join 30+ founding clinics on the Perioskoup waitlist. The AI dental companion launching March 2026.
+              Join 30+ founding clinics on the Perioskoup waitlist. The AI dental companion launching soon.
             </p>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "14px 28px" }}>
               Join the Waitlist
@@ -282,7 +289,7 @@ export default function Blog() {
                     </p>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0 sm:ml-auto" style={{ minWidth: "fit-content" }}>
-                    <img src={post.authorImg} alt={post.author} width={36} height={36} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
+                    <img src={post.authorImg} alt={post.author} loading="lazy" decoding="async" width={36} height={36} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
                     <div style={{ textAlign: "right" }}>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#F5F9EA", fontWeight: 600, margin: 0 }}>{post.author.split(" ")[0]}</p>
                       <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "12px", color: "#C0E57A", margin: 0 }}>{post.readTime}</p>

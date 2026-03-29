@@ -44,9 +44,12 @@ export default function CustomCursor() {
     rafRef.current = requestAnimationFrame(animate);
     window.addEventListener('mousemove', onMove);
 
-    // Add hover listeners to interactive elements
+    // Add hover listeners to interactive elements — WeakSet prevents duplicate listeners
+    const attached = new WeakSet<Element>();
     const addListeners = () => {
       document.querySelectorAll('a, button, [role="button"], .perio-card-hover').forEach((el) => {
+        if (attached.has(el)) return;
+        attached.add(el);
         el.addEventListener('mouseenter', onEnterHoverable);
         el.addEventListener('mouseleave', onLeaveHoverable);
       });

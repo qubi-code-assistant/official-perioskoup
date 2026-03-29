@@ -1,290 +1,398 @@
 # Competitive Positioning Audit — Perioskoup
 **Auditor:** Competitive Strategy Agent (Claude Sonnet 4.6)
 **Date:** 2026-03-06
-**Codebase state:** Post-fix-pass (after content-fixer, seo-fixer, and ForDentists overhaul)
-**Scope:** All pages under client/src/pages/ and client/src/components/
-**Overall Score: 5.8 / 10**
+**Audit generation:** Final (supersedes re-06, cycle2-06, prior 06)
+**Score:** 6.1 / 10
+**Branch:** fix/final-launch-audit
+**Pages audited:** Home.tsx, Features.tsx, ForDentists.tsx, Pricing.tsx, About.tsx, Blog.tsx, BlogPost.tsx, Waitlist.tsx, App.tsx (router), Navbar.tsx, Footer.tsx
 
 ---
 
-## Executive Summary
+## Score Card
 
-Perioskoup has made measurable progress since the initial audit. The ForDentists page received a meaningful competitive positioning section ("Not another PMS plugin."), the homepage gained a "What is an AI dental companion?" H2 section with negative-definition copy, and the hero now carries a product subhead. These moves tighten the category claim and address the PMS confusion objection — but only on the pages where a dentist already is.
-
-The structural problems remain unchanged: no competitor is named by name anywhere in the marketing site, no comparison page exists, the category label does not appear in an H1 on any page, the "between visits" gap is never quantified in revenue terms for the dentist audience, and five of seven objection categories are still unanswered. The site is better than it was, but a dentist comparing Perioskoup against Dental Monitoring or PerioPredict would still leave without a clear answer to "why is this different from what I already know about?"
-
-The score moves from 5.5 to 5.8 — reflecting real improvements that stopped short of solving the core positioning clarity problem.
-
----
-
-## 1. Differentiation Clarity vs Each Competitor
-
-### Score: 4.5 / 10
-
-**PerioPredict** (perio-specific AI risk prediction)
-Not mentioned anywhere. PerioPredict operates inside the clinic, analysing patient data to predict perio risk and guide treatment prioritisation. Perioskoup operates between appointments, on the patient's phone, supporting daily habit formation. These products are complementary — and a dentist who uses PerioPredict for chair-side risk stratification is exactly the kind of early adopter who would be receptive to Perioskoup for between-visit engagement. The current site gives them no signal that these tools belong in the same practice workflow.
-
-**CareStack** (practice management / PMS)
-Partially addressed. The ForDentists page now contains: "Practice management systems track appointments. Patient portals send reminders. But neither helps a patient build the daily habits that prevent disease recurrence." This is the best competitive differentiation sentence on the site. The problem is it lives inside a section heading-free paragraph block, not in a dedicated H2-anchored section where it can be indexed and scanned. A dentist skimming the page would miss it. The "How It Works" section label is "Seamless Integration" — which inadvertently signals the opposite of what the competitive paragraph is trying to say (there is no integration with CareStack or any PMS). This label creates friction.
-
-**Dental Monitoring** (remote monitoring with AI scan analysis)
-The most dangerous overlap, and still entirely unaddressed. Dental Monitoring is orthodontic-focused, hardware-adjacent, scan-dependent, and aimed at clinical remote tracking — categorically different from Perioskoup's no-hardware, perio-focused, habit-coaching model. A dentist or practice manager who has evaluated Dental Monitoring will arrive at Perioskoup's "remote monitoring" language and immediately map the two products onto each other. The Features page lists "Progress Tracking" and "Dentist Dashboard" — both of which are also Dental Monitoring features. No distinction is drawn.
-
-**Overjet / Pearl** (diagnostic AI, X-ray analysis)
-The blog post "How AI Is Changing Dental Monitoring" (in BlogPost.tsx) names Overjet, Pearl, and Denti.AI as FDA-cleared diagnostic AI companies and correctly frames them as image-analysis tools, not patient engagement tools. This is the only place in the codebase where named competitor differentiation exists. A blog post body is not a marketing page. Visitors who only read the homepage, ForDentists, or Features pages will never encounter this clarity.
-
-**Dentistry.AI**
-Not mentioned anywhere.
-
-**Summary of gap:** The competitive differentiation picture is essentially unchanged. The ForDentists "Not another PMS plugin" paragraph is a genuine improvement, but no competitor is named, no comparison table exists, and the blog post that does name competitors is buried 1,500 words into a technology piece most dentists will not read.
+| Dimension | Score | Notes |
+|-----------|-------|-------|
+| 1. Category creation clarity — "AI dental companion" | 6.5/10 | Label is distributed but not in the homepage H1; no dedicated URL |
+| 2. Differentiation vs each named competitor | 4.0/10 | Generic PMS category addressed; 5 of 6 named competitors unaddressed on any marketing page |
+| 3. "Between visits" gap — prominence | 7.0/10 | Strong H1 + three cited stats; still not monetised in practice-revenue terms |
+| 4. Claims strength | 5.5/10 | Six cited academic sources; one uncited health stat; no Perioskoup-specific outcome data |
+| 5. Unaddressed objections | 4.0/10 | Cost ROI partial; five major objection categories unanswered |
+| 6. "Why now?" urgency | 5.0/10 | Lives only on About page; absent from both primary conversion pages |
+| 7. Comparison page opportunity | 1.0/10 | Does not exist; no `/compare`, no `/vs/`, no `/ai-dental-companion` route |
+| 8. Founder authority (Dr. Anca) | 6.0/10 | Used well as a quote and trust signal; clinical depth understated on ForDentists |
+| 9. Use case clarity — dual audience | 6.5/10 | Dentist/patient paths are clear; dentist workflow specifics missing |
+| 10. Brand voice distinctiveness | 7.5/10 | Strong; "Between visits, we take over" is a genuine category anchor |
+| **Overall** | **6.1/10** | Seven structural gaps unchanged since initial audit; evidence quality is good |
 
 ---
 
-## 2. Category Creation: "AI Dental Companion" Ownership
+## 1. Category Creation Clarity — "AI Dental Companion"
 
-### Score: 6 / 10
+**Score: 6.5/10**
 
-**What now exists (post-fix):**
+### What works
 
-The site has meaningfully expanded its use of the category label since the initial audit:
+The category label is used consistently and in the right places:
 
-- Homepage hero subhead (body text, not a heading): "Perioskoup is a free AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments."
-- Homepage H2 section: "What is an AI dental companion?" — a full definition section with answer copy: "Not a chatbot. Not a practice management system. Not a fitness tracker for teeth." and "Perioskoup is the first."
-- Features page H1: "AI dental companion features — everything between your visits."
-- Ticker: "AI-Powered Dental Companion" in scrolling uppercase.
-- Footer tagline: "Your AI dental companion. Bridging the gap between clinic and home."
-- ForDentists competitive paragraph: "It's the AI dental companion for what happens between visits."
-- Blog CTA block: "The AI dental companion launching March 2026."
-- About page Why Now section: "making the AI dental companion possible for the first time."
+- `Home.tsx:102` — hero subhead: "Perioskoup is an AI dental companion app — personalised guidance, habit tracking, and a direct line to your clinic between appointments."
+- `Home.tsx:249` — section H2: "What is an AI dental companion?" — the single most important category-creation asset on the site. The accompanying body copy, "Not a chatbot. Not a practice management system. Not a fitness tracker for teeth. Perioskoup is the first," does the definitional work by exclusion.
+- `Features.tsx:72-74` — H1: "AI dental companion features — everything between your visits." This is the only H1 on the site containing the exact category phrase.
+- `ForDentists.tsx:248` — body: "It's the AI dental companion for what happens between visits."
+- `Pricing.tsx:122` — beta notice: "Founding clinic partners of this AI dental companion get locked-in pricing..."
+- `About.tsx:244` — Why Now: "making the AI dental companion possible for the first time."
+- `Blog.tsx:246` — CTA: "The AI dental companion launching March 2026."
+- `Footer.tsx:50` — tagline: "Your AI dental companion. Bridging the gap between clinic and home."
+- Ticker (`Home.tsx:152`): "AI-Powered Dental Companion"
 
-**What this means strategically:**
+The "What is an AI dental companion?" section at `Home.tsx:244-262` is the site's strongest competitive asset. No other dental-adjacent product has a definition section that marks the category boundary this clearly. It should be treated as an untouchable founding document.
 
-The category label has gone from ticker-only to being present on at least five pages in stationary copy. The "What is an AI dental companion?" section on the homepage is a genuine category-creation asset — it defines the term by exclusion ("not a chatbot, not a practice management system") and claims primacy ("Perioskoup is the first"). This is the correct move.
+### What is missing
 
-**What is still missing:**
+**The homepage H1 does not contain the category label.** `Home.tsx:95-98` reads: "Between visits, / we take over." This is the right emotional positioning. It is not the search association anchor. The Features page H1 is the only H1 with the exact phrase — and Features is a secondary page. For category ownership, the homepage H1 needs to carry the term or the category needs its own dedicated URL.
 
-The category label has never appeared in an H1 on the homepage. The homepage H1 remains "Between visits, we take over." — a strong tagline, but not the category anchor. The Features page H1 ("AI dental companion features...") is the closest, but it is on a secondary page. For search association and visitor recall, the homepage H1 is the highest-value real estate on the site, and it still does not contain the phrase "AI dental companion."
+**No `/ai-dental-companion` route exists.** `App.tsx:86-98` lists eleven routes. An exact-match keyword URL is the single highest-value missing SEO asset for category ownership. This page could be as simple as an expanded version of the "What is an AI dental companion?" section from Home.tsx, with the category comparison table and a CTA. It would rank for a zero-competition search term and serve as the canonical definition page for the entire category.
 
-The "first mover" claim is present only once ("Perioskoup is the first.") — in muted grey body copy inside the definition section. For a category-creation claim, this needs to be in bold, in a headline, or in a CTA-proximate trust signal. As formatted, it is easy to scroll past.
+**"Perioskoup is the first" is visually buried.** `Home.tsx:259` renders this sentence in muted grey (`#8C9C8C`) body copy at 17px. A first-mover claim in a new category requires visual weight proportional to its strategic importance. It is currently indistinguishable from surrounding explanatory copy.
 
 ---
 
-## 3. "Between Visits" Gap as the No. 1 Problem
+## 2. Differentiation vs Each Named Competitor
 
-### Score: 6.5 / 10
+**Score: 4.0/10**
 
-**What the site does well:**
+This is the most consequential gap on the site and has been unchanged across all audit iterations.
 
-- Homepage H1: "Between visits, we take over." — still the best single piece of copy on the site. It opens with the problem space, not a feature list.
-- About page H2: "Close the gap between visits." — reinforces the core problem framing.
-- ForDentists page now has a dedicated problem-first section: "Patients forget 80% of care instructions within 48 hours." with a Weinert et al. 2025 research citation. This is a genuine improvement from the initial audit.
-- The "Why Now?" section on the About page names the convergence of AI pricing, smartphone health app normalisation, and patient expectations — the closest the site gets to explaining the market timing of the problem.
-- The stats block (80%, 87%, 62%) appears on both the homepage and ForDentists page with source citations (Kessels 2003, Toniazzo et al. 2019, Bernabe et al. 2020) — the citations add credibility.
+### PerioPredict (perio-specific AI)
 
-**What still falls short:**
+**Not mentioned anywhere on any marketing page.** The complementarity argument is entirely unarticulated: PerioPredict operates at chair-side, identifying risk at the point of examination. Perioskoup operates between visits, translating that risk assessment into patient action. These are not competing products — they are sequential in the care workflow. A single paragraph on ForDentists.tsx making this explicit would eliminate this competitor as a sales objection before it is raised.
 
-The problem is framed in clinical terms (patient forgetting rates, mHealth outcomes), not in the economic terms that drive a practice owner's decision. No page answers: "What does a disengaged patient cost me?" The revenue math is never done. One no-show at €80-150 costs more than a month of Perioskoup. One treatment plan abandoned to recurrence becomes years of retreatment cost for the patient and administrative overhead for the clinic. None of this is articulated.
+### CareStack (practice management)
 
-The Pricing page contains zero reference to the between-visits problem. A dentist who navigates to Pricing to evaluate ROI finds features and "coming soon" — no anchor to the problem that justifies the purchase.
+**Partially addressed at `ForDentists.tsx:238-255`.** The section "Not another PMS plugin." contains the right differentiation sentence: "Practice management systems track appointments. Patient portals send reminders. But neither helps a patient build the daily habits that prevent disease recurrence." This is correct and well-written. However, it is generic category differentiation that does not name any specific product. A dentist who uses CareStack and searches "CareStack patient engagement" would not find this page. The section also has no scannable structure — it is three unlabelled paragraphs under a heading, not a comparison table or bullet matrix.
 
-The Features page hero says: "From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent." This is close but framed as a product description, not as the consequence of the alternative (disengaged patients, poor outcomes, lost revenue).
+### Dental Monitoring (remote monitoring)
+
+**Completely unaddressed on any marketing page.** This is the most dangerous positioning gap because Dental Monitoring and Perioskoup both operate "between visits" and both have clinician dashboards. A dentist who already knows Dental Monitoring will map Perioskoup into the same mental category unless explicitly told otherwise. The distinction that matters: Dental Monitoring is hardware-dependent (scan boxes), ortho-focused, and captures scan data for clinical review. Perioskoup is hardware-free, perio/general-focused, and provides habit coaching and patient engagement. Neither `ForDentists.tsx` nor `Features.tsx` articulates any of these boundaries.
+
+### Overjet / Pearl (diagnostic AI)
+
+**Named in `BlogPost.tsx:209`** — "Companies like Overjet, Denti.AI, and Pearl have developed FDA-cleared diagnostic AI tools." This is the only named competitor differentiation on the site. It correctly frames them as image-analysis tools. The problem: this appears in article body copy on a non-conversion page. No dentist evaluating Perioskoup for their practice will read a blog article before making a decision. The differentiation needs to be on ForDentists.tsx or a comparison page.
+
+### Dentistry.AI
+
+**Not mentioned anywhere.** Not a priority given the competitor's footprint, but its absence reflects the overall pattern.
+
+### The Missing Competitor Table
+
+The single most actionable fix is a five-row comparison table on ForDentists.tsx showing the competitive landscape by category and operating window:
+
+| Tool | Category | When it operates |
+|------|----------|-----------------|
+| Overjet / Pearl | Diagnostic AI | During the appointment |
+| Dental Monitoring | Remote scan monitoring | Between ortho check-ins |
+| CareStack | Practice management | Before and during appointments |
+| PerioPredict | Perio risk stratification | During the appointment |
+| **Perioskoup** | **AI Dental Companion** | **Between every appointment** |
+
+This table requires approximately 30 minutes to implement, requires zero new research, answers the most common sales objection before it is raised, and defines the category by showing what Perioskoup is not. It should be added beneath the "Not another PMS plugin" section on ForDentists.tsx.
+
+---
+
+## 3. "Between Visits" Gap — Prominence
+
+**Score: 7.0/10**
+
+This is the strongest dimension on the site and the one where the evidence base is most solid.
+
+### What works
+
+- `Home.tsx:96-98` — H1: "Between visits, we take over." The strongest single piece of copy on the site. Category-defining without being clinical.
+- `ForDentists.tsx:118-128` — The problem statement section contains three cited statistics:
+  - 80% of care instructions forgotten within 48h (Kessels 2003, BMJ, DOI link present)
+  - 30% of patients follow post-treatment oral hygiene instructions (J Clin Periodontol, link present)
+  - EUR 90B annual oral disease burden in Europe (Platform for Better Oral Health in Europe, link present)
+- `ForDentists.tsx:269-271` — WHO prevention ROI stat: "Every EUR 1 invested in prevention saves EUR 8-50 in future treatment costs." This is the first economically-framed claim on the site. It is correctly placed in the CTA section.
+- `About.tsx:181-183` — H2: "Close the gap between visits" supported by three-stat mission card.
+- `Features.tsx:75-77` — "From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent."
+
+### What is missing
+
+**The between-visits problem is not monetised in practice-revenue terms on any conversion page.** The WHO prevention ROI stat is a population-level economics argument. A solo practitioner evaluating a EUR 99/month subscription needs a concrete calculation: "If I recover one no-show per month, have I paid for Perioskoup?" This calculation is nowhere on the site. A single illustrative paragraph on Pricing.tsx or the ForDentists CTA would transform this dimension from academic to actionable.
+
+**Pricing.tsx contains zero reference to the between-visits problem.** `Pricing.tsx` is a standalone conversion page where a dentist goes to make a financial decision. It lists features and says "Coming soon." No problem statement, no ROI frame, no connection between the product cost and the practice pain the product solves. This is the page where competitive differentiation has the highest conversion leverage — and it is currently inert from a positioning standpoint.
 
 ---
 
 ## 4. Claims Strength
 
-### Score: 5 / 10
+**Score: 5.5/10**
 
-**Current claims across all pages:**
+### Cited claims (correct and defensible)
 
-- 80% of care instructions forgotten within 48h — cited (Kessels 2003, BMJ)
-- 87% of mHealth studies show improved outcomes — cited (Toniazzo et al. 2019, JCP)
-- 62% of adults have periodontitis worldwide — cited (Bernabe et al. 2020, JCP)
-- 30+ founding clinics — social proof, uncited
-- EFP Award Winner 2025 — verified, linked to source
+All six of the following appear with DOI or live links in current source:
 
-**Improvement since initial audit:**
+1. 80% of care instructions forgotten within 48h — Kessels 2003, BMJ (DOI present at `ForDentists.tsx:136`)
+2. 87% of mHealth studies show improved oral health outcomes — Toniazzo et al. 2019, JCP (DOI present at `ForDentists.tsx:137`)
+3. 62% of adults have periodontitis worldwide — Bernabe et al. 2020, JCP (DOI present at `ForDentists.tsx:138`)
+4. 30% of patients follow post-treatment instructions — J Clin Periodontol (link at `ForDentists.tsx:125`)
+5. EUR 90B annual oral disease burden — Platform for Better Oral Health in Europe (link at `ForDentists.tsx:125`)
+6. EUR 1 invested in prevention saves EUR 8-50 — WHO Oral Health (link at `ForDentists.tsx:270`)
 
-The population-level statistics now carry source citations with DOI links on both the homepage and ForDentists page. The Weinert et al. 2025 citation on the ForDentists problem section is particularly strong — it is a 2025 publication in the Journal of Clinical Periodontology, directly relevant to the problem being solved, and it gives the site a recency signal that most competitors cannot match.
+The citation hygiene is the strongest it has been across all audit passes. The previous problematic unsourced outcome claims (40% fewer no-shows, 85% treatment acceptance, 3x engagement) have been correctly removed.
 
-**What remains problematic:**
+### The uncited stat — active credibility liability
 
-The three hero stats from the original audit (40% fewer no-shows, 85% treatment acceptance, 3x higher engagement) are no longer visible in the current page code. This is an improvement — those stats had no source citations. However, the site now has a social proof gap: there are no outcome claims about what Perioskoup itself achieves. The stats describe the problem (patient forgetting rates, periodontitis prevalence) and the category potential (87% mHealth improvement rates) but not Perioskoup's specific results. For a B2B SaaS in healthcare, "our beta data shows X" is the most powerful claim available. It is absent.
+`Features.tsx:18` — Progress Tracking card description reads: "Long-term maintenance studies show consistent daily routines reduce periodontal disease progression by 60-70%."
 
-The "30+ founding clinics" and "EFP Award Winner" are the only Perioskoup-specific social proof elements. "30+ founding clinics" is a waitlist metric, not an outcome metric. "EFP Award Winner" is institutional recognition, not a customer result. No beta customer has a quote on any marketing page.
+There is no source link, no author, no journal. This sits on a page where all other health claims are either cited or soft-framed. For a clinically-trained reader — who is the primary B2B buyer — this stat will read as anomalous and invite suspicion of the other claims nearby. Action required: either find the source (likely somewhere in the periodontal maintenance literature — Axelsson, Lindhe, or Ramfjord cohort studies are the probable candidates) and add a citation link, or soften to "research suggests" without a specific percentage.
 
-The quote section on the homepage and ForDentists page uses Dr. Anca Constantin's own voice. She is a co-founder praising her own product. The EFP jury quote ("Perioskoup is an innovative digital tool...") is stronger third-party evidence and appears prominently on the About page — but not on the homepage.
+### What is still absent
+
+**No Perioskoup-specific outcome data exists anywhere on the site.** Every cited claim describes the problem space or the category potential — not what Perioskoup itself delivers to real patients or practices. "Our beta patients show X% improvement in habit consistency over 30 days" would be more persuasive than any population-level reference stat. This gap cannot be filled without actual beta data, but collecting and displaying even two or three beta patient testimonials with specific outcome data would transform the claims picture.
+
+**The EFP Award is positioned as a trust badge, not a performance claim.** The EFP jury quote — "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians" — is the only external institutional voice on the site. It validates the concept. It does not describe outcomes. It is correctly placed and well-presented at `Home.tsx:175-199`.
 
 ---
 
 ## 5. Unaddressed Objections
 
-### Score: 4 / 10
+**Score: 4.0/10**
 
-This remains the weakest section of the site. The ForDentists page added a competitive differentiation block that pre-empts the PMS comparison objection — that is one objection partially handled. The remaining five categories are still absent.
+Six major objection categories exist for any B2B dental SaaS in a new category. The site addresses one partially.
 
-**"My patients won't download another app."**
-Still zero counter-argument on any marketing page. This is the single highest-frequency objection any dentist will raise. The entire Perioskoup revenue model depends on patient adoption. No page explains the onboarding mechanic (dentist sends invite, patient receives SMS/email, friction is designed to be sub-30-seconds to first open), no data on typical patient adoption rates from healthcare engagement apps, no case study, no "here's what happened in our beta" narrative. The Features page lists "Smart Reminders" but this describes a feature of the app, not a reason why the patient will open it in the first place.
+### Partially addressed
 
-**"How does this integrate with my existing PMS/software?"**
-The "Not another PMS plugin" section on ForDentists pre-empts the confusion but does not answer the integration question. A dentist reading that section will understand Perioskoup does not replace their PMS — but they will not understand whether it connects to it. The current How It Works section on the homepage shows three steps (Visit / Get Plan / Build Habits), all of which are described from the patient's perspective. No step describes the dentist's actual workflow: log into dashboard, create patient, send invite, set care plan. This opacity around the actual setup process is a conversion blocker for any technical evaluator.
+**"How do I justify this cost?"** The WHO prevention ROI stat at `ForDentists.tsx:270` is the closest the site comes to an economic argument. It establishes the category logic (prevention is cost-effective) without connecting it to Perioskoup's specific price point. Improvement: add a specific calculation to the Pricing page.
 
-**"What's the learning curve? My team won't adopt new software."**
-Not addressed anywhere. The ForDentists page says "no hardware, no software migration, no training days" inside the Workflow section label context — but this is one clause inside a section intro paragraph, not an objection-specific response. No claim like "up and running in under 10 minutes" or "your receptionist never touches it" is present.
+### Not addressed
 
-**"Data privacy — who owns the patient data? Can it be subpoenaed?"**
-Partially addressed. GDPR compliance, EU hosting, and no data selling are mentioned in the Features page ("EU-hosted servers," "GDPR Article 9 compliant," "Right to erasure built-in") and in the FAQ schemas. Missing: data retention policy, data processor vs data controller distinction under GDPR Article 28 (clinics need to know if they sign a DPA with Perioskoup), how long patient data is kept after a patient stops using the app, and what happens to patient data if the company winds down. These are not marketing questions for progressive health-tech buyers — they are legal due diligence questions that close or kill contracts.
+**"My patients won't download another app."** This is the single highest-frequency objection a dentist will raise and the entire revenue model depends on patient adoption. Zero counter-argument exists on any marketing page. The objection's obvious answer — that patient adoption is Perioskoup's responsibility, not the dentist's, and that the app's first 60 seconds are designed to convert skeptical patients — is never stated. `Features.tsx` lists smart reminders without explaining the onboarding mechanic.
 
-**"Cost vs. ROI — how do I justify this to my practice owner?"**
-The Pricing page shows "Coming soon" for clinic pricing with no ROI context whatsoever. The founding-partner CTA ("lifetime discounted pricing") creates urgency but does not give the dentist a number to work with. Even an illustrative calculation ("at €99/month for up to 200 active patients, Perioskoup costs under €0.50 per patient per month — a single recovered no-show covers 2-3 months of subscription") would transform the pricing page from a holding screen into a conversion asset.
+**"How does this integrate with my PMS?"** `ForDentists.tsx:219` says "no hardware, no software migration, no training days" in a paragraph body sentence. This addresses the concern tangentially, not directly. No page walks through the dentist's actual workflow: log in via browser, create patient record, send invite link, set care plan. The absence of this workflow narrative means a dentist's imagination fills it with friction. Additionally, the label "Seamless Integration" at `Home.tsx:268` directly above the How It Works section implies PMS connectivity that does not exist. This label is the cheapest and most impactful fix available: four words changed to "The Between-Visit Workflow" would eliminate a contradiction that has persisted across all audit passes.
 
-**"Is this a medical device / am I creating regulatory liability?"**
-The FAQ on the homepage answers "Perioskoup is designed as a clinical support tool, not a diagnostic device." The answer notes "EU MDR and FDA SaMD guidance in mind" — but this hedge ("in mind") signals regulatory uncertainty rather than resolved compliance. A dentist's practice manager or compliance officer will read "EU MDR guidance in mind" and schedule a follow-up with their legal team, not click the waitlist CTA.
+**"What is the learning curve?"** The ForDentists workflow card at `ForDentists.tsx:225` says "set a personalised care plan in under 2 minutes" — this is present but embedded in card body copy. It has never been elevated to a hero-level scannable claim. "Up and running in 10 minutes. First patient plan sent in 2." would function as an objection-killer in a hero-level proof point that the site currently lacks.
+
+**"Data privacy — who owns the patient data?"** FAQ schemas on Home and ForDentists address GDPR and EU hosting at a consumer level. What is missing for a practice compliance decision is: (a) the data processor vs data controller distinction under GDPR Article 28, (b) data retention policy after a patient stops using the app, and (c) what happens to patient data if the company winds down. These are not marketing gaps — they are sales-process gaps that will block conversions at any dental group, NHS-adjacent practice, or multi-site operator with a compliance officer.
+
+**"Is this a medical device — am I creating regulatory liability?"** The Home FAQ at `Home.tsx:42-43` states: "Perioskoup is a wellness and patient engagement companion, not a medical device." Correct. But the follow-on sentence — "The app is built with EU MDR and FDA SaMD guidance in mind" — signals unresolved regulatory positioning to a legal reader. "Built with guidance in mind" is not the same as "confirmed as a wellness tool under EU MDR Article 2." A dentist who asks their practice solicitor will get an uncertain answer. A dedicated regulatory FAQ page, or a clear one-pager, would remove this objection from the sales process.
 
 ---
 
 ## 6. "Why Now?" Urgency
 
-### Score: 5 / 10
+**Score: 5.0/10**
 
-**What now exists:**
+The "Why Now?" argument exists only on the About page.
 
-The About page "Why Now?" section is the first genuine market timing argument on the site. It names three converging forces:
-1. AI became capable of personalising recommendations at scale.
-2. Smartphones became the primary health interface.
-3. Patients began expecting continuous digital support between appointments.
+`About.tsx:233-250` — "Three things changed. AI became capable of personalising recommendations at scale. Smartphones became the primary health interface. And patients began expecting continuous digital support between appointments." This is the correct argument. It identifies three macro-level shifts that make 2026 the right moment for this category.
 
-This is the correct framework. It is present. It is on a page that dentists looking for due diligence material will visit.
+### The conversion problem
 
-**What is still missing:**
+Neither the homepage nor ForDentists — the two primary conversion pages for a dentist evaluating Perioskoup — carries this argument. A dentist who lands on ForDentists and doesn't click through to About will never encounter a reason why "now" rather than "wait and see." At this stage, inertia is the dominant competitor. Every dentist who chooses to wait for more evidence is a lost conversion. The Why Now argument should appear on ForDentists.tsx, preferably above or near the primary CTA.
 
-The "Why Now?" argument lives exclusively on the About page — a trust and team page, not a conversion page. The homepage has no "why now" signal at all. The ForDentists page — the primary dentist-facing conversion page — has no market timing argument. A dentist evaluating Perioskoup against inertia (the most common competitor: doing nothing) needs to understand why Q1 2026 is the moment to act, not Q3 2026 or Q1 2027.
+### The EFP Award as a market timing signal
 
-The About page Why Now section is also light on evidence. It describes the three shifts in general terms but does not cite the facts that make each shift compelling:
-- "AI became capable at scale" — when? What changed? The GPT-4 / Claude API pricing collapse (2023-2024) that made per-patient AI economics viable is not mentioned.
-- "Smartphones as health interface" — 86% of EU adults own a smartphone (Eurostat 2024). EU patients already use apps for glucose monitoring, menstrual tracking, and mental health. Dental is the last holdout.
-- "Patients expect digital support" — post-COVID telehealth normalisation data, patient satisfaction survey data, or any reference that would make this assertion credible.
+The EFP Award is currently used as a trust badge (correctly). It could also be framed as a market timing signal: "In 2025, the European Federation of Periodontology formally recognised between-visit patient engagement as the critical frontier in periodontal care. Perioskoup is the first product built specifically for that frontier." This reframing is available in the existing content — it just requires a single paragraph on ForDentists.tsx connecting the award to the competitive window.
 
-The EFP award is the single most powerful "why now" signal available to Perioskoup, and it is never used this way. The award signals that the European periodontology establishment has formally recognised the between-visits gap as the next priority in dental care. That is the market timing signal. The site positions the award as a trust badge rather than as a competitive window-opening event.
+### The founding clinic programme creates urgency
 
-The March 2026 launch date is the only hard urgency trigger on the site. It creates scarcity for the founding clinic programme but does not explain the market opportunity that closes as competitors emerge.
+The "limited spots" and "founding pricing locked in forever" language appears on ForDentists.tsx and Pricing.tsx. This is urgency for the deal terms, not for the market timing. Both types of urgency should be present. Currently only the deal-terms urgency exists on conversion pages.
 
 ---
 
 ## 7. Comparison Page Opportunity
 
-### Score: 1 / 10
+**Score: 1.0/10**
 
-There is still no comparison page. The route `/compare` does not exist. No `/vs/` pages exist. No competitor is named in a URL, in a page title, or in an H1.
+The site has no comparison infrastructure. Confirmed via `App.tsx:86-98`: the router contains eleven routes. None of them are `/compare`, `/vs/`, `/ai-dental-companion`, or any variant of a competitive positioning page.
 
-This is the highest-ROI missing asset in the competitive positioning toolkit:
+### The SEO opportunity that is open right now
 
-**The SEO opportunity:** "Dental Monitoring alternative," "Overjet vs dental engagement app," "CareStack patient engagement," and "AI dental companion" all have zero or near-zero competition in organic search. Creating comparison pages while these terms are empty is worth more than any paid acquisition spend at this stage. The window is open precisely because the AI dental companion category does not yet have established search behaviour — which means the comparison pages Perioskoup creates now will rank first by default.
+As of March 2026, the following search terms have zero or near-zero meaningful organic competition:
+- "AI dental companion" — the category is uncontested in search
+- "Dental Monitoring alternative" — no comparison pages exist from any competitor
+- "patient engagement app for dentists" — underserved
+- "periodontal disease app for patients" — underserved
 
-**The sales objection opportunity:** Every dentist demo call will include "how is this different from Dental Monitoring / Pearl / what my PMS already does?" A comparison page is the pre-call asset that answers this before the calendar invite goes out. It also establishes the framing: Perioskoup defines the comparison, rather than having the dentist import the competitor's framing.
+Every week without a page targeting these terms is a week the first-mover indexing advantage is unused. This opportunity is not permanent. As soon as another well-funded competitor enters the category, they will create this content and it will take Perioskoup months to recover the ranking position.
 
-**The category definition opportunity:** Comparison pages define a category by negative space. A table showing:
+### Minimum viable comparison page
 
-| Tool | Category | Primary user | Happens when? |
-|------|----------|-------------|---------------|
-| Overjet / Pearl | Diagnostic AI | Dentist (chair-side) | During the appointment |
-| Dental Monitoring | Remote scan monitoring | Orthodontist (clinical tracking) | Between ortho check-ins |
-| CareStack | Practice management | Clinic admin | Before and during the appointment |
-| PerioPredict | Risk stratification AI | Periodontist (clinical) | During the appointment |
-| Perioskoup | AI Dental Companion | Patient (home) | Between every appointment |
+A `/compare` page with the following would cost approximately 4-5 hours of effort and generate compounding organic traffic:
 
-...is a more compelling category definition statement than any paragraph of prose.
+1. The five-row category comparison table (shown in Section 2 above)
+2. Three paragraphs of differentiation copy (one each for Dental Monitoring, PMS/CareStack, and Diagnostic AI/Overjet/Pearl)
+3. The "What is an AI dental companion?" definition section, linked back from the main homepage section
+4. A waitlist CTA
 
----
-
-## 8. Additional Observations
-
-### 8a. The "Seamless Integration" Label Contradiction
-
-The How It Works section on the homepage uses the label "Seamless Integration" and the section text says "Perioskoup connects your dental appointment to your daily routine." But the ForDentists page says "no hardware, no software migration, no training days." These signals contradict each other: "seamless integration" implies integration with existing systems (what doesn't exist), while the ForDentists section correctly positions Perioskoup as standalone. The "Seamless Integration" label should be replaced with something like "The Between-Visit Workflow" or "How It Works Between Appointments."
-
-### 8b. The "Perioskoup is the first" Claim Needs a Better Frame
-
-The homepage definition section ends with: "Perioskoup is the first." This is a category-creation claim that could be enormously powerful — but it is embedded in muted grey body copy inside a definition section that visitors scan rather than read. "First" is typically bold, large, and in a visual hierarchy that stops scrolling. As formatted, it reads like a sentence that happened to get there, not a claim that was designed. This single sentence, if promoted to a visual element (pullquote, stat card, testimonial-weight format), would do more competitive positioning work than any other change available.
-
-### 8c. The Hero Quote Problem Persists
-
-The homepage social proof section uses Dr. Anca Constantin: "The app I always wished I could prescribe to my patients." This occupies the visual and emotional weight of a customer testimonial while being a founder quote. It is labelled as "Periodontist & Co-founder, Perioskoup" — so it is disclosed. But the disclosure comes after the quote lands. The EFP jury quote ("Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health.") is from the European Federation of Periodontology — an external, credible, institutional voice that a dentist will recognise as authoritative. It should be on the homepage, not just the About page.
-
-### 8d. Messaging Consistency: Still Three Different Entry Frames
-
-- Homepage: patient-first ("Between visits, we take over")
-- ForDentists: outcome-first ("Your patients, better prepared")
-- About: origin-story-first ("Born in a dental chair")
-
-None of these are wrong. But there is still no portable positioning statement — a single sentence any salesperson, investor, or clinic champion could repeat. "Perioskoup is the AI dental companion that bridges the gap between dental appointments" comes closest and appears in meta descriptions, but never in a headline.
-
-### 8e. Blog as Competitive Asset: Underused
-
-The blog has six posts. One of them ("How AI Is Changing Dental Monitoring") does competitive positioning work by naming Overjet, Pearl, and Denti.AI and drawing the category line. This post is buried in the "regular articles" list on the Blog page — not pinned, not featured, not surfaced on the ForDentists page or the features page as a "learn more" resource. A blog post that names competitors should be strategically surfaced in every context where a dentist might be evaluating alternatives.
+This page does not require naming competitors aggressively or making comparative claims that carry legal risk. It simply defines the category landscape and shows where Perioskoup fits.
 
 ---
 
-## Priority Recommendations
+## 8. Founder Authority — Dr. Anca Constantin
 
-Ranked by competitive positioning impact relative to effort:
+**Score: 6.0/10**
 
-**1. Create a comparison page at `/compare`.**
-A single page with a competitor table and a "different category" explanation would simultaneously handle the most common sales objection, generate SEO traffic for competitor-adjacent searches, and define the "AI dental companion" category by negative space. Estimated effort: 3-4 hours for copy, 2-3 hours for development. ROI is immediate and compounding.
+Dr. Anca's credibility is used as a trust signal in three places:
+- `Home.tsx:106-113` — hero blockquote: "Perioskoup was born out of two big challenges that we face in practice: a shortage of time and the lack of patient engagement, which leads to poor outcomes." This is the most prominently placed founder quote.
+- `Home.tsx:342-354` — social proof quote: "The app I always wished I could prescribe to my patients." Attributed to Dr. Anca with photo and role.
+- `ForDentists.tsx:153-172` — standalone quote section with photo, role, and EFP award mention.
+- `About.tsx` — full team section with bio, LinkedIn, and credentials.
+- `BlogPost.tsx` — two articles authored under her name with author byline and bio.
 
-**2. Promote "Perioskoup is the first" to a visual claim.**
-Move this sentence from muted body copy to a stat card, pullquote, or hero element. Consider adding a founding date signal: "The first AI dental companion. Launched 2025." This claim does not require evidence — it requires prominence.
+### What works
 
-**3. Replace the homepage social quote with the EFP jury quote.**
-"Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians in managing oral health." — European Federation of Periodontology. This is more credible than a founder testimonial and signals institutional validation to a dentist evaluating the product.
+The clinical founder narrative is authentic and correctly presented. The EFP Award acts as third-party institutional validation of her credibility, not just the product's quality. The author bios on blog articles ("Dr. Anca Laura Constantin is a practising periodontist based in Bucharest, Romania...") are the right depth for clinical audiences.
 
-**4. Add an objection-handling FAQ to the ForDentists page.**
-Five questions, five answers:
-- "My patients won't download another app." — Address onboarding friction, adoption mechanic, dentist-sends-invite flow.
-- "How does this integrate with my PMS?" — "Perioskoup is standalone, not a plugin. There is nothing to install."
-- "What's the learning curve?" — "Your first patient care plan takes under 3 minutes to set up."
-- "Who owns the patient data?" — "You do. You are the data controller. Perioskoup processes data on your behalf under a GDPR-compliant Data Processing Agreement."
-- "How do I justify this cost?" — ROI calculation.
+### What is underused
 
-**5. Add a "Why Now?" signal to the homepage and ForDentists page.**
-One paragraph, above the fold or proximate to the CTA. Frame the EFP award as the market timing signal: "In 2025, the European Federation of Periodontology formally recognised the between-visits gap as the next frontier in dental care. The first AI dental companion built for that gap is here."
+Dr. Anca's clinical depth as a periodontist — specifically her experience treating hundreds of patients with the exact problem Perioskoup addresses — is never quantified or made specific anywhere on the site. "Treated hundreds of patients with periodontal disease" (from the blog bio) is good. "After seeing 400+ patients forget their care instructions, I built the app I wish I could prescribe" would be more conversion-optimised. A clinical founder who built the product out of direct patient need is a category-defining narrative. The site has it. It doesn't use it with the specificity that would make it stick.
 
-**6. Fix the "Seamless Integration" label.**
-This label implies PMS integration that does not exist and contradicts the "no software migration" claim on the ForDentists page. Replace with "The Between-Visit Workflow" or "From Chair to Home in 3 Steps."
-
-**7. Add founding-clinic social proof from a dentist's perspective.**
-Even one external voice — a dentist on the waitlist who has seen a demo — is more credible than 30 founder quotes. If no quote is available, attribute the EFP jury quote more prominently and frame the 30+ waitlist clinics as peer validation: "30+ dental practices in Europe are already waiting."
-
-**8. Surface the competitive blog post.**
-Pin "How AI Is Changing Dental Monitoring" as a featured post and add a link to it from the ForDentists page under "How is Perioskoup different from other dental AI?" This creates an SEO and navigation path for dentists doing competitive research.
+**On ForDentists.tsx specifically**, Dr. Anca's periodontist credentials are not used to validate the clinical workflow cards (Practice Dashboard, Personalised Care Plans, Engagement Insights). A dentist reading those sections has no signal that the features were designed by someone who runs a clinic. A single line — "Designed by Dr. Anca Constantin, practising periodontist" — under each card header would be a small change with a meaningful trust effect.
 
 ---
 
-## Score Summary
+## 9. Use Case Clarity — Dual Audience
 
-| Dimension | Score | Delta vs Initial | Notes |
-|-----------|-------|-----------------|-------|
-| Differentiation vs named competitors | 4.5/10 | +0.5 | "Not a PMS plugin" paragraph added; no competitors named by name |
-| Category creation ("AI dental companion") | 6/10 | +1.0 | Definition section + Features H1 added; still not in homepage H1 |
-| "Between visits" gap prominence | 6.5/10 | 0 | Strong on homepage; still not monetised in dentist economic terms |
-| Claims strength | 5/10 | +0.5 | Population stats now cited; Perioskoup-specific beta data absent |
-| Objections addressed | 4/10 | +0.5 | PMS objection partially handled; 5/6 categories still absent |
-| "Why now?" urgency | 5/10 | +1.0 | About page has a Why Now section; missing from ForDentists/Home |
-| Comparison page | 1/10 | 0 | Does not exist |
-| **Overall** | **5.8/10** | **+0.3** | Foundation is stronger; structural competitive gaps unchanged |
+**Score: 6.5/10**
 
----
+The dual-audience architecture is structurally present and reasonably executed:
 
-## What the Site Gets Right — Preserve These
+- Navbar `ForDentists.tsx` link is the primary dentist entry point.
+- Waitlist.tsx allows role selection (dentist/patient) on a single form with branched fields.
+- Features.tsx uses tag labels (Patients, Dentists, Both) to segment feature relevance.
+- Pricing.tsx shows two plans (Patient: free; Clinic: coming soon) side by side.
 
-- "Between visits, we take over." — The homepage H1 remains the best single piece of copy on the site. It positions the product around the gap rather than around features. Do not change it.
-- "What is an AI dental companion?" — The definition section on the homepage with "Not a chatbot. Not a practice management system. Not a fitness tracker for teeth." is the highest-value new addition from the fix pass. It should be mirrored on the ForDentists page.
-- "Not another PMS plugin." — The ForDentists competitive paragraph is the right idea. It needs to be elevated from body text to an H2 heading and given the structural weight it deserves.
-- The 2025/2026 research citations (Weinert, Kessels, Toniazzo, Bernabe) with DOI links — these are defensible, current, and appropriate for the clinical audience. Do not remove them.
-- The "AI dental companion" definition section's negative-space framing — this is how categories are created. It just needs to be on more pages and in higher visual hierarchy positions.
-- The EFP award. It appears on every page. It is the single most credible third-party signal available to an early-stage health-tech company. Continue amplifying it, especially as the jury quote (institutional voice) rather than only as the badge.
-- The regulatory restraint (no "diagnose," "treat," "cure," "adherence"). Consistent throughout. It is the right call and must be maintained.
+### What works
+
+The dentist's journey is: ForDentists landing page → problem statement + stats → clinical tools overview → workflow section → CTA. This journey is reasonably coherent and evidence-backed.
+
+The patient's journey is: Home hero → ticker → EFP card → features bento → "What is an AI dental companion?" definition → How It Works three-step → waitlist.
+
+### What is missing
+
+**The dentist's workflow specifics are abstracted.** `ForDentists.tsx:222-235` describes "Before / During / After" cards, but never shows the dentist what they actually do in the dashboard. No screenshot, no UI mockup, no "here's what you'll see when you log in" narrative. This is a significant conversion gap: a dentist who cannot visualize the daily workflow will not commit to a waitlist. The patient side has a phone mockup (`Home.tsx:133-141` via `PhoneMockup`). The dentist side has text cards.
+
+**No patient perspective on the dentist pages.** ForDentists.tsx describes what the dentist can do. It does not describe what the patient experiences — which is what determines whether a dentist's recommendation will be followed. A dentist who recommends Perioskoup to a patient needs confidence that the patient will actually use it. A short "what your patients see" section on ForDentists.tsx, with the patient's first three screens or the onboarding flow, would address this directly.
 
 ---
 
-*Filed 2026-03-06. Source code audited: Home.tsx, ForDentists.tsx, Features.tsx, Pricing.tsx, About.tsx, Waitlist.tsx, Blog.tsx, BlogPost.tsx, Footer.tsx, Navbar.tsx.*
+## 10. Brand Voice Distinctiveness
+
+**Score: 7.5/10**
+
+The brand voice is genuinely distinctive by dental-tech standards. The specific combination of:
+- Clinical precision in the evidence base (DOI-cited academic sources)
+- Human warmth in the copy ("The app I always wished I could prescribe")
+- Confident category assertion ("Perioskoup is the first")
+- Non-corporate brevity ("Between visits, we take over")
+
+...creates a voice that does not sound like a dental PMS, a generic health app, or a Silicon Valley wellness startup. The dark-navy premium design reinforces the clinical authority signal without the coldness of typical medical software.
+
+### What works
+
+- `Home.tsx:96-98` — "Between visits, we take over." — the strongest category-defining headline in dental tech. Short, confident, direct.
+- `Home.tsx:255-256` — "Not a chatbot. Not a practice management system. Not a fitness tracker for teeth." — negation positioning is a legitimate category-creation technique and is used correctly here.
+- `ForDentists.tsx:241-243` — "Not another PMS plugin." — right tone, right level of directness for a dentist audience.
+- The regulatory restraint throughout (no "diagnose," "treat," "cure," "adherence") is consistent and correctly maintained.
+
+### What could be stronger
+
+**The blog excerpt at `Blog.tsx:79` still reads "a periodontist, a developer, and a product designer."** This describes the wrong team composition (old founding team framing) and is visible to every cold visitor who scrolls the blog listing without opening the article. The correct description — "a periodontist, an engineer, and an AI specialist" — appears correctly on About.tsx. This inconsistency undermines the credibility of the "built by clinicians and technologists" narrative. It is a two-minute fix.
+
+**The tone on Pricing.tsx is the weakest on the site.** The FAQ section at `Pricing.tsx:171-182` uses generic answers that do not reflect the specific positioning language used elsewhere. "We're in beta - so right now, Perioskoup is free for patients. Clinic pricing is coming soon." is the kind of placeholder copy that telegraphs pre-launch uncertainty rather than category confidence. Compare this to the voice on ForDentists.tsx. A visitor who reads both pages in sequence will notice the register change.
+
+---
+
+## Priority Fixes — Ranked by Impact vs Effort
+
+### P1 — Immediate (under 2 hours each, zero new research)
+
+**P1-A: Change "Seamless Integration" label to "The Between-Visit Workflow"**
+- `Home.tsx:268` — label tag above "From Chair to Chat" H2
+- Current text: `Seamless Integration`
+- Required text: `The Between-Visit Workflow` or `How It Works`
+- Rationale: The label implies PMS integration. ForDentists.tsx explicitly denies this. The contradiction is visible to any dentist who reads both pages. This has been flagged in every prior audit pass and remains unfixed.
+
+**P1-B: Fix the Blog.tsx "product designer" excerpt**
+- `Blog.tsx:79` — excerpt field
+- Current: "a periodontist, a developer, and a product designer"
+- Required: "a periodontist, an engineer, and an AI specialist"
+- Rationale: This is visible to cold visitors without opening the article. It contradicts the team description on About.tsx.
+
+**P1-C: Cite or soften the 60-70% stat**
+- `Features.tsx:18` — Progress Tracking card description
+- Current: "Long-term maintenance studies show consistent daily routines reduce periodontal disease progression by 60-70%."
+- Required: Either add a citation link (likely Axelsson & Lindhe maintenance cohort studies) or soften to "research suggests significant reduction in disease progression"
+- Rationale: Uncited health stat on a page where all other claims are cited; credibility liability with clinical audience.
+
+**P1-D: Elevate "Perioskoup is the first" to a visually weighted element**
+- `Home.tsx:259` — currently muted grey body copy
+- Required: Bold text, a pullquote, or a stat-card-weight element
+- Rationale: Category primacy claims require visual weight. Currently invisible to scanning readers.
+
+### P2 — High Priority (2-4 hours each)
+
+**P2-A: Add the competitor category table to ForDentists.tsx**
+- Insert after the "Not another PMS plugin" section (`ForDentists.tsx:238-255`)
+- Content: Five-row table showing the competitive landscape by category and operating window (shown in Section 2 above)
+- Rationale: Highest competitive positioning ROI available. Answers the most common sales objection before it is raised. No new research required.
+
+**P2-B: Add one ROI paragraph to Pricing.tsx**
+- Insert above or near the beta notice (`Pricing.tsx:116-124`)
+- Content: Illustrative calculation connecting a prevented no-show to months of Perioskoup coverage at founding clinic pricing
+- Rationale: Pricing.tsx is where the subscription decision is made. It currently contains zero connection between product cost and the practice pain the product solves.
+
+**P2-C: Add a "Why Now?" paragraph to ForDentists.tsx**
+- Insert above or near the founding clinic CTA (`ForDentists.tsx:257-283`)
+- Content: One paragraph framing the EFP Award as a market timing signal and the founding clinic opportunity as a competitive window
+- Rationale: "Why now?" urgency exists only on the About page. Primary conversion page carries none of it.
+
+### P3 — Structural (4-8 hours)
+
+**P3-A: Create `/compare` page**
+- New route in `App.tsx`; new `Compare.tsx` page
+- Content: Category table, three differentiation paragraphs, "What is an AI dental companion?" definition, waitlist CTA
+- Rationale: Zero-competition SEO terms, uncontested category definition space, answers the most common sales objection. Every week this page doesn't exist is a week of foregone indexing.
+
+**P3-B: Add a "What your patients see" section to ForDentists.tsx**
+- Insert after the clinical tools section
+- Content: 3-screen narrative of the patient onboarding flow, or a phone mockup showing the patient app
+- Rationale: A dentist who cannot visualize what their patient experiences will not recommend the app.
+
+**P3-C: Add "Why Now?" paragraph to Home.tsx**
+- Insert in the EFP Award card section or as a standalone section
+- Content: The three macro-level shifts from About.tsx, compressed to 3-4 sentences
+- Rationale: Homepage is the highest-traffic page. Category urgency should appear here, not only on About.
+
+---
+
+## What Must Not Change
+
+The following copy and assets are correctly positioned and must be preserved in any future edits:
+
+1. **"Between visits, we take over."** — `Home.tsx:96-98`. The H1. The best piece of copy on the site.
+2. **"What is an AI dental companion?"** section — `Home.tsx:244-262`. The category definition by exclusion. "Not a chatbot. Not a practice management system. Not a fitness tracker for teeth." is the most important category-creation asset on the site.
+3. **The three-citation stats block** — Kessels, Toniazzo, Bernabe with DOI links. Defensible, current, appropriate for clinical audiences.
+4. **The EFP jury quote** — "Perioskoup is an innovative digital tool that uses artificial intelligence to support both patients and clinicians." The only external institutional voice on the site.
+5. **"Not another PMS plugin."** — `ForDentists.tsx:241`. Right framing. Needs a competitor table beneath it to complete the work.
+6. **The regulatory restraint** — No "diagnose," "treat," "cure," "adherence" anywhere in current source. Consistent and correct.
+7. **The WHO EUR 1/EUR 8-50 prevention ROI stat** — `ForDentists.tsx:270`. First economically-framed claim on the site. Should be replicated on Pricing.tsx.
+
+---
+
+## Overall Assessment
+
+The site has genuine competitive positioning assets — notably the category-defining headline, the "What is an AI dental companion?" definition section, the clinical founder narrative, and a solid evidence base. These are real, and they represent more category clarity than most dental-tech sites achieve at this stage.
+
+The gap is structural: seven issues identified in the initial audit remain open after multiple revision passes. They are not expensive to fix. The comparison table (P2-A) is 30 minutes. The label change (P1-A) is 30 seconds. The blog excerpt (P1-B) is 2 minutes. The ROI paragraph (P2-B) is 1 hour.
+
+The combined effect of these unfixed items is that a dentist comparing Perioskoup against Dental Monitoring, or asking "why now rather than wait," or wondering what their patients will see — leaves every page without an answer. Conversion depends on answering those questions. The site currently relies on the dentist to be patient enough to read between the lines.
+
+**Overall Score: 6.1/10**
+
+The score is held at 6.1 because the evidence quality and brand voice are genuinely good (preventing a lower score) and because the seven structural gaps are all still open (preventing a higher one). Addressing P1-A through P1-D, P2-A, and P2-B would move the score to approximately 7.5/10 with an estimated 6-8 hours of effort.
+
+---
+
+*Filed: 2026-03-06. Source audited: Home.tsx, Features.tsx, ForDentists.tsx, Pricing.tsx, About.tsx, Blog.tsx, BlogPost.tsx, Waitlist.tsx, App.tsx, Navbar.tsx, Footer.tsx. Cross-referenced against re-06-competitive-positioning.md and cycle2-06-competitive.md for change detection.*

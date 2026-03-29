@@ -11,6 +11,7 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const PLANS = [
   {
@@ -37,6 +38,7 @@ const PLANS = [
 
 export default function Pricing() {
   useReveal();
+  const { GEOCapsule } = usePageMeta("/pricing");
 
   const pricingFaqJsonLd = {
     "@context": "https://schema.org",
@@ -57,7 +59,7 @@ export default function Pricing() {
     "brand": { "@type": "Organization", "name": "Perioskoup" },
     "offers": [
       { "@type": "Offer", "name": "Patient Plan", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/PreOrder", "description": "Free during beta. Includes AI-powered care plans, reminders, progress tracking, and educational content." },
-      { "@type": "Offer", "name": "Clinic Plan", "availability": "https://schema.org/PreOrder", "description": "Coming soon. Includes clinician dashboard, patient monitoring, analytics, and multi-dentist support." }
+      { "@type": "Offer", "name": "Clinic Plan", "availability": "https://schema.org/PreOrder", "description": "Coming soon. Includes clinician dashboard, patient engagement tracking, analytics, and multi-dentist support." }
     ]
   };
 
@@ -65,22 +67,26 @@ export default function Pricing() {
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Perioskoup Pricing | Free for Patients, Plans for Dental Clinics</title>
-        <meta name="description" content="Perioskoup is free for patients during beta. Dental clinic plans launching March 2026. Join the founding waitlist for priority access and founding pricing." />
+        <meta name="description" content="Perioskoup is free for patients during beta. Dental clinic plans launching soon. Join the founding waitlist for priority access and founding pricing." />
         <link rel="canonical" href="https://perioskoup.com/pricing" />
         <meta property="og:title" content="Perioskoup Pricing | Free for Patients, Plans for Dental Clinics" />
-        <meta property="og:description" content="Perioskoup is free for patients during beta. Clinic plans launching March 2026. Join the founding waitlist for priority access and locked-in pricing." />
+        <meta property="og:description" content="Perioskoup is free for patients during beta. Clinic plans launching soon. Join the founding waitlist for priority access and locked-in pricing." />
         <meta property="og:url" content="https://perioskoup.com/pricing" />
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup Pricing | Free for Patients, Plans for Clinics" />
-        <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans launching March 2026. Join 30+ founding clinics on the waitlist for locked-in pricing." />
+        <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans launching soon. Join 30+ founding clinics on the waitlist for locked-in pricing." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/pricing" />
+        <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/pricing" />
       </Helmet>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
+      {GEOCapsule}
       <Navbar />
 
       {/* Hero */}
@@ -101,7 +107,7 @@ export default function Pricing() {
             <a href="https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/" target="_blank" rel="noopener noreferrer"
               className="efp-badge-hover"
               style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 6px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.3)", borderRadius: 100, textDecoration: "none" }}>
-              <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>EFP Award Winner 2025</span>
+              <span style={{ background: "#C0E57A", color: "#0A171E", fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 100, fontFamily: "Gabarito, sans-serif", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>3rd Prize · EFP Award 2025</span>
               <span style={{ color: "#C0E57A", fontSize: 13, fontFamily: "Gabarito, sans-serif", fontWeight: 500 }}>Digital Innovation</span>
             </a>
             <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#8C9C8C" }}>30+ founding clinics</span>

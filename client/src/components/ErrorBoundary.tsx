@@ -1,7 +1,100 @@
 import { cn } from "@/lib/utils";
-import { AlertTriangle, RefreshCw, RotateCcw } from "lucide-react";
-import { Component, ErrorInfo, ReactNode } from "react";
+import { AlertTriangle, RefreshCw, RotateCcw, WifiOff } from "lucide-react";
+import { Component, ErrorInfo, ReactNode, useEffect, useState } from "react";
 
+/* ─── Offline Banner ─── */
+function OfflineBanner() {
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+
+  useEffect(() => {
+    const handleOffline = () => setIsOffline(true);
+    const handleOnline = () => setIsOffline(false);
+
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+    };
+  }, []);
+
+  if (!isOffline) return null;
+
+  return (
+    <div
+      role="alert"
+      aria-label="You are offline"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        background: "#0A171E",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "24px",
+        padding: "32px",
+        fontFamily: "Gabarito, sans-serif",
+      }}
+    >
+      <WifiOff size={56} style={{ color: "#C0E57A", flexShrink: 0 }} />
+
+      <h1
+        style={{
+          fontFamily: "Dongle, sans-serif",
+          fontSize: "clamp(48px, 8vw, 80px)",
+          fontWeight: 700,
+          color: "#F5F9EA",
+          margin: 0,
+          lineHeight: 1,
+          textAlign: "center",
+        }}
+      >
+        You're offline.
+      </h1>
+
+      <p
+        style={{
+          fontFamily: "Gabarito, sans-serif",
+          fontSize: "18px",
+          color: "#F5F9EA",
+          margin: 0,
+          textAlign: "center",
+          maxWidth: "400px",
+          opacity: 0.8,
+        }}
+      >
+        Check your connection and try again.
+      </p>
+
+      <button
+        onClick={() => location.reload()}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "12px 28px",
+          borderRadius: "8px",
+          background: "#C0E57A",
+          color: "#0A171E",
+          fontFamily: "Gabarito, sans-serif",
+          fontSize: "16px",
+          fontWeight: 700,
+          border: "none",
+          cursor: "pointer",
+          marginTop: "8px",
+        }}
+      >
+        <RefreshCw size={16} />
+        Retry
+      </button>
+    </div>
+  );
+}
+
+/* ─── Error Boundary ─── */
 interface Props {
   children: ReactNode;
 }
@@ -84,7 +177,12 @@ class ErrorBoundary extends Component<Props, State> {
       );
     }
 
-    return this.props.children;
+    return (
+      <>
+        <OfflineBanner />
+        {this.props.children}
+      </>
+    );
   }
 }
 

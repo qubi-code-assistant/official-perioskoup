@@ -1,481 +1,331 @@
-# Code Quality & Performance Audit — Perioskoup Landing Page
-
+# Perioskoup — Frontend Performance Audit
 **Date:** 2026-03-06  
-**Auditor:** Performance Auditor (Claude Sonnet 4.6)  
-**Score: 7.2 / 10**
+**Auditor:** Claude Sonnet 4.6 (Performance Agent)  
+**Build:** Vite 7.1.9 + React 19 + Tailwind CSS v4  
+**Score: 6 / 10**
 
 ---
 
 ## Build Output Summary
 
 ```
-pnpm build — vite v7.1.9, 1637 modules transformed, 856ms
+index.js (main):       347.20 KB raw → 107.86 KB gzip
+index.css:             105.76 KB raw →  18.55 KB gzip
+vendor.js:              17.47 KB raw →   6.60 KB gzip
+BlogPost.js:            66.05 KB raw →  21.08 KB gzip
+ForDentists.js:         21.18 KB raw →   6.11 KB gzip
+About.js:               19.63 KB raw →   5.65 KB gzip
+Blog.js:                13.17 KB raw →   4.22 KB gzip
+Contact.js:             12.35 KB raw →   3.73 KB gzip
+Pricing.js:             11.84 KB raw →   3.72 KB gzip
+Features.js:            10.66 KB raw →   3.56 KB gzip
+Waitlist.js:            10.54 KB raw →   3.34 KB gzip
+Privacy.js:              4.52 KB raw →   1.85 KB gzip
+Terms.js:                4.47 KB raw →   1.81 KB gzip
 
-index.html          19.87 kB │ gzip:   5.41 kB
-assets/index.css   105.14 kB │ gzip:  18.41 kB
-assets/vendor.js    17.47 kB │ gzip:   6.60 kB   (react, react-dom, wouter)
-assets/index.js    347.24 kB │ gzip: 107.88 kB   ← main chunk (HOME PAGE)
-assets/BlogPost.js  65.73 kB │ gzip:  20.99 kB   ← content-heavy lazy chunk
-assets/About.js     19.37 kB │ gzip:   5.81 kB
-assets/ForDentists.js 20.22 kB │ gzip:  5.98 kB
-... (remaining route chunks all under 13KB gzip)
+First-load transfer (main + vendor + CSS): 133.01 KB gzip
+Total all JS gzip:                         ~171.91 KB
+Build time:                                864 ms
 ```
-
-**Initial page load (gzip total): ~138 KB**  
-HTML (5.4) + CSS (18.4) + vendor (6.6) + main (107.9) = 138.3 KB gzip
 
 ---
 
 ## 1. Bundle Size Breakdown
 
-### Finding: Main chunk at 347 KB raw / 108 KB gzip is the dominant concern
+**Score: 5/10**
 
-The `index.js` main chunk includes:
-- React 19 + ReactDOM (~130 KB of the total, minified)
-- Home page component (the only eagerly loaded page)
-- All shared components: Navbar, Footer, PhoneMockup, Logo, ErrorBoundary, ThemeContext
-- `react-helmet-async` (pulled in via HelmetProvider in `main.tsx`)
-- Radix `@radix-ui/react-tooltip` + `sonner` (both loaded in `App.tsx` unconditionally)
-- Three lucide-react icons in ErrorBoundary (Menu, X in Navbar are also eagerly loaded)
+The main `index.js` chunk at **347 KB raw / 108 KB gzip** is the primary concern. This chunk is large because:
 
-**Root causes of bloat:**
-1. `HelmetProvider`, `TooltipProvider`, and `<Toaster>` are all in the root `App.tsx`, forcing those dependencies into the main chunk. TooltipProvider wraps the entire app even though only a handful of pages use tooltips (and none currently render a Tooltip component).
-2. `react-helmet-async` (~15 KB minified) is in the main chunk because it's used in `main.tsx`.
-3. `sonner` (~12 KB minified) is always loaded even on the Home page which never shows a toast.
-4. The vendor chunk is only `react + react-dom + wouter`. All other third-party deps land in `index.js`.
+1. `Home.tsx` is eagerly imported (intentional, correct — it is the LCP route)
+2. `App.tsx` directly imports `TooltipProvider` from `@radix-ui/react-tooltip` and `Toaster` from `sonner`, pulling both into the critical path
+3. `Navbar.tsx` pulls `lucide-react` (Menu + X icons) — tree-shaken correctly to two icons only
+4. `ErrorBoundary.tsx` pulls three Lucide icons (AlertTriangle, RefreshCw, RotateCcw) into the main bundle, even though the error state is never rendered under normal conditions
 
-**Comparison to industry benchmark:**
-A 108 KB gzip first-paint JS payload is within acceptable range for a React SPA (Google recommends < 170 KB total JS on mobile). This is **not critical**, but there is ~30–40 KB of recoverable gzip savings.
+**The vendor chunk (17.47 KB) is anomalously small** for a bundle declared to contain `react + react-dom + wouter`. React 19 in production mode with esbuild `target: esnext` compresses efficiently, but this warrants investigation. The manual `manualChunks` config is correct in intent.
 
-### BlogPost chunk (65 KB raw / 21 KB gzip)
+**Issues:**
 
-All blog article content is hardcoded as a `const ARTICLES: Record<string, Article>` object in `BlogPost.tsx`. This is the primary reason BlogPost is 3x larger than any other page chunk. The content should eventually be fetched from an API/CMS, but for a pre-launch landing page this is acceptable.
+- **PERF-01** `vite.config.ts:28` — `manualChunks` vendor split is underpowered. Radix UI packages, sonner, and react-helmet-async are all colocated in the main index chunk. A more granular split (e.g., `radix: ["@radix-ui/react-tooltip"]`, `ui-libs: ["sonner", "react-helmet-async"]`) would improve caching. Currently a change to any shared component invalidates the entire 347 KB chunk.
+
+- **PERF-02** `client/src/App.tsx:1-2` — `TooltipProvider` and `Toaster` are synchronously imported in `App.tsx` even though `TooltipProvider` wraps lazy routes (it is not needed for the initial render frame) and `Toaster` only renders when toasts fire. Neither is critical-path. Both could be deferred or removed if not actively used.
 
 ---
 
-## 2. Dependency Audit
+## 2. Code Splitting
 
-### Unused/zombie packages in `package.json`
+**Score: 8/10**
 
-| Package | Status | Notes |
-|---------|--------|-------|
-| `@radix-ui/react-accordion` | Installed, not used in pages | shadcn/ui `accordion.tsx` exists but is never imported by any page |
-| `@radix-ui/react-alert-dialog` | Installed, not used | Same pattern |
-| `@radix-ui/react-aspect-ratio` | Installed, not used | |
-| `@radix-ui/react-avatar` | Installed, not used | |
-| `@radix-ui/react-checkbox` | Installed, not used | |
-| `@radix-ui/react-collapsible` | Installed, not used | |
-| `@radix-ui/react-context-menu` | Installed, not used | |
-| `@radix-ui/react-dropdown-menu` | Installed, not used | |
-| `@radix-ui/react-hover-card` | Installed, not used | |
-| `@radix-ui/react-menubar` | Installed, not used | |
-| `@radix-ui/react-navigation-menu` | Installed, not used | |
-| `@radix-ui/react-popover` | Installed, not used | |
-| `@radix-ui/react-progress` | Installed, not used | |
-| `@radix-ui/react-radio-group` | Installed, not used | |
-| `@radix-ui/react-scroll-area` | Installed, not used | |
-| `@radix-ui/react-select` | Installed, not used | |
-| `@radix-ui/react-slider` | Installed, not used | |
-| `@radix-ui/react-switch` | Installed, not used | |
-| `@radix-ui/react-tabs` | Installed, not used | |
-| `@radix-ui/react-toggle` | Installed, not used | |
-| `@radix-ui/react-toggle-group` | Installed, not used | |
-| `@types/google.maps` | DevDep — referenced only in Map.tsx comments | |
-| `add` | DevDep — `pnpm add` wrapper, not needed | Remove |
-| `Map.tsx` component | Dead code — never imported by any page | Delete file |
-| `useScrollReveal.ts` hook | Unused — pages use inline `useReveal()` | Delete or consolidate |
-| `HeroBackground.tsx` | Imported nowhere (pages use ParallaxHeroBg) | Delete file |
-| `ThemeContext.tsx` | Theme switching is `switchable: false` in App.tsx — toggleTheme is never callable | Simplify or remove |
+Route-level code splitting is implemented correctly via `React.lazy()`. All 11 routes except `Home` are lazy-loaded.
 
-**Radix dependency note:** Although Vite + Rollup tree-shakes unused exports, the Radix packages themselves have side-effect-free design and tree-shake well at the **module level** (each component is a separate import). The unused shadcn/ui wrapper `.tsx` files are compiled but their Radix imports are tree-shaken **only if the wrapper is never imported**. Checking: the shadcn/ui components that ARE imported by pages are: `sonner`, `tooltip`, `dialog`, `button`, `separator`, `input`, `textarea`, `label`, `sheet`, `toggle`, `skeleton`. That's 11 of 45 components. The remaining 34 wrapper files are never imported by pages or App.tsx, so they should be tree-shaken from the final bundle. The Radix peer packages however remain installed, adding to `node_modules` disk weight (not bundle weight).
+**What is correct:**
+- `client/src/App.tsx:10-20` — All non-home pages use `React.lazy(() => import(...))`
+- `Suspense` fallback at `App.tsx:83` is a zero-dependency plain div — correct
+- Build output confirms every page gets its own named chunk (verified by chunk filenames matching page names)
+- HeroGlow and ParallaxHeroBg are also split into their own micro-chunks (0.59 KB, 0.82 KB) — correctly isolated
+
+**Issues:**
+
+- **PERF-03** `client/src/App.tsx:7` — `Home` is eagerly imported (not lazy). This is intentionally correct for LCP, but it means all of Home's dependencies (PhoneMockup, useReveal, react-helmet-async, Navbar, Footer, Logo) flow into the main 347 KB chunk. Home is the heaviest page and this is the correct tradeoff, but it should be documented.
+
+- **PERF-04** `client/src/App.tsx:83` — The single `Suspense` boundary wraps all lazy routes. A route-level Suspense boundary per route would allow partial hydration and better error isolation, but this is a minor enhancement for the current scale.
 
 ---
 
-## 3. Component Architecture
+## 3. Unused Dependencies
 
-### Strengths
+**Score: 4/10** — This is the most critical finding.
 
-- Clear separation: `pages/` for routes, `components/` for shared UI, `components/ui/` for shadcn primitives
-- Navbar, Footer, Logo, PhoneMockup are properly extracted as reusable components
-- CSS-only hover states replace JS `onMouseEnter`/`onMouseLeave` mutations throughout (performance-correct pattern)
-- ParallaxHeroBg, HeroGlow, Breadcrumb are extracted as composable micro-components
-- ErrorBoundary correctly implemented as a class component
+### Package.json Has 26 Radix UI Packages Installed
 
-### Issues
+The `package.json` lists every standard Radix UI primitive (accordion, alert-dialog, aspect-ratio, avatar, checkbox, collapsible, context-menu, dialog, dropdown-menu, hover-card, label, menubar, navigation-menu, popover, progress, radio-group, scroll-area, select, separator, slider, switch, tabs, toggle, toggle-group, tooltip).
 
-**Critical DRY violation: `useReveal()` is copy-pasted into 7 files**
+**Zero of these components are imported by any page or non-ui component in the application.** The only Radix packages that flow into the runtime bundle are:
+- `@radix-ui/react-tooltip` — used by `App.tsx` via `TooltipProvider`
+- `@radix-ui/react-slot` — used by the `button.tsx` shadcn primitive (ErrorBoundary uses `cn()` from utils, not button)
 
-The same hook is defined identically in:
-- `Home.tsx`
-- `Features.tsx`
-- `ForDentists.tsx`
-- `About.tsx`
-- `Blog.tsx`
-- `Contact.tsx`
-- `Pricing.tsx`
-- `Waitlist.tsx`
+The shadcn/ui component files in `client/src/components/ui/` exist as 44 files / ~4768 lines of source, but **none are imported outside their own directory** (the `ui/` folder only references itself or Radix). Tailwind v4 + Vite tree-shakes unused JS exports correctly, so these files do not bloat the runtime bundle — but they inflate install size and maintenance surface.
 
-An existing `useScrollReveal.ts` hook lives in `client/src/hooks/` but uses a completely different interface. The inline `useReveal()` should be extracted to `client/src/hooks/useReveal.ts` and imported.
+**Issues:**
 
-**Fix:**
-```ts
-// client/src/hooks/useReveal.ts
-import { useEffect } from "react";
+- **DEP-01** `package.json:4-30` — 24 of 26 `@radix-ui/*` packages serve only as backing implementations for shadcn/ui components that are never consumed. These should remain installed if the component library will be used in the future, but should be documented as dormant. If the landing page is the final scope, ~23 packages can be removed.
 
-export function useReveal(threshold = 0.12) {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const els = document.querySelectorAll(".reveal, .reveal-scale");
-    if (prefersReducedMotion) {
-      els.forEach((el) => el.classList.add("visible"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("visible");
-            io.unobserve(e.target);
-          }
-        }),
-      { threshold }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
-```
+- **DEP-02** `package.json` — `tailwindcss-animate` is listed as a dependency AND `tw-animate-css` is a devDependency. Both appear to serve the same purpose (CSS animation utilities). `tw-animate-css` is imported in `index.css:22`. `tailwindcss-animate` is referenced in the Tailwind plugin chain but with Tailwind v4 using `@import "tw-animate-css"` directly, the npm package `tailwindcss-animate` is redundant.
 
-Then each page simply:
-```ts
-import { useReveal } from "@/hooks/useReveal";
-// in component:
-useReveal();
-```
+- **DEP-03** `client/src/components/CustomCursor.tsx` — This is a fully implemented custom cursor component (RAF-based mouse tracking, MutationObserver, hover expansion) but is **never imported or used anywhere in the application**. The cursor DOM elements (`#cursor-dot`, `#cursor-ring`) are styled in `index.css:1072-1098` but `CustomCursor` is dead code. The CSS rules for it ship in the bundle even though the component is never mounted.
 
-**Inline style overuse in Home.tsx and ForDentists.tsx**
+- **DEP-04** `client/src/hooks/useScrollReveal.ts` — Contains `useScrollReveal()` and `useCountUp()`. Neither is imported anywhere in the application. `useReveal.ts` (a different hook) is the one actually used. `useScrollReveal.ts` is dead code.
 
-Virtually every element has inline `style={{}}` props instead of design system classes or Tailwind utilities. While this works, it makes the code harder to maintain. The global CSS already defines `.card`, `.section`, `.container`, `.btn-primary`, `.body-lg`, `.display-lg`, etc. — these should be used consistently. The heavy inline style approach in Home.tsx (400+ lines, ~150 style objects) is a tech debt concern.
+- **DEP-05** `client/src/contexts/ThemeContext.tsx` — `ThemeProvider` is used in `App.tsx` with `defaultTheme="dark"` and `switchable` not set (defaults to `false`). The provider is live but does nothing observable: it sets `document.documentElement.classList.add("dark")` on mount but the CSS is already hardcoded to dark brand colors regardless. `useTheme()` is never called anywhere. The context adds overhead (useState, useEffect, localStorage read) for zero user-facing effect.
 
-**EFP badge duplicated verbatim** in Home.tsx and ForDentists.tsx. Should be extracted as `<EFPBadge />`.
+- **DEP-06** `client/public/images/logomark-dark.png` (36 KB) — Not referenced in any `.tsx`, `.ts`, or `index.html` file. Dead asset shipped in the public directory.
 
-**Stats row duplicated** (same 87% / 80% stats appear in both Home.tsx and ForDentists.tsx with nearly identical markup).
+- **DEP-07** `client/public/images/eduard-formal.jpg` (30 KB) — Not referenced in any `.tsx`, `.ts`, or `index.html` file. Dead asset shipped in the public directory.
 
 ---
 
 ## 4. Image Optimization
 
-### Hero background
+**Score: 7/10**
 
-| File | Format | Size | Used in |
-|------|--------|------|---------|
-| `hero-bg.webp` | WebP | 13 KB | Home.tsx `<img>`, index.html preload, noscript |
-| `hero-bg.jpg` | JPEG | 82 KB | Not referenced — orphan file |
+**What is correct:**
+- Hero image (`hero-bg.webp`) uses `fetchPriority="high"` and is `<link rel="preload">` in `index.html`
+- Hero image is a real `<img>` element (not CSS background) — Lighthouse can detect it as LCP candidate
+- All below-fold images use `loading="lazy"` and `decoding="async"`
+- Background section images are served as WebP (features-bg-v2.webp, cta-bg-v2.webp, howitworks-rings-bg.webp, efp-award.webp)
+- Width/height attributes are set on most images (CLS prevention)
 
-**Good:** hero-bg.webp is correctly chosen, preloaded in `<head>`, has `fetchPriority="high"`, `width`/`height` attributes set (prevents CLS), and uses the `.webp` format. The noscript shell also uses `.webp`.
+**Issues:**
 
-**Issue:** `hero-bg.jpg` (82 KB) is an orphan file sitting in `public/images/`. It is never referenced but still served. Delete it.
+- **IMG-01** `client/public/images/anca-headshot.jpg` (19 KB) and `client/public/images/eduard-headshot.jpg` (43 KB) — Headshots are served as JPEG. Converting to WebP would reduce size by ~30-40%. These images are used across multiple pages (Home, About, ForDentists, BlogPost).
 
-### Profile images
+- **IMG-02** No `srcset` or `<picture>` elements anywhere in the application. For background images used at full viewport width on large screens (features-bg-v2.webp at 93 KB), serving a 640px variant to mobile browsers would save significant bandwidth. The hero LCP image at 1280px is appropriate for desktop but oversized for mobile.
 
-| File | Format | Size | Issue |
-|------|--------|------|-------|
-| `anca-headshot.jpg` | JPEG | 19 KB | No WebP version; could convert |
-| `eduard-headshot.jpg` | JPEG | 43 KB | No WebP version |
-| `petrica.jpg` | JPEG | 86 KB | Has WebP equivalent (27KB) — .jpg never used |
-| `logomark-dark.png` | PNG | 36 KB | Only used as fallback in noscript? Check usage |
+- **IMG-03** `client/public/images/og-image.jpg` (116 KB) — OG image is larger than necessary. Twitter and Facebook both crop to 1200×630; the current image is not resized and may be unnecessarily large. Not an on-page performance issue but a social share load concern.
 
-All non-hero images correctly use `loading="lazy"` and `decoding="async"`. Width/height attributes are set. No `srcset` or `sizes` are used — since these are portrait photos displayed at fixed small sizes (44×44 or 80×80), this is acceptable. For the award photo (800×446 display), a `srcset` would help on mobile.
+- **IMG-04** `client/public/images/logomark-dark.png` (36 KB) — A PNG logo that is unused (see DEP-06). If used in the future, it should be converted to WebP or served as SVG.
 
-**Recommendations:**
-1. Delete `hero-bg.jpg` and `petrica.jpg` (orphan files, WebP versions exist and are used).
-2. Convert `anca-headshot.jpg` and `eduard-headshot.jpg` to `.webp` (potential 60–70% size reduction).
-3. Add `srcset` to the EFP award image for responsive image delivery.
+- **IMG-05** `client/src/pages/Blog.tsx:227,285` — Two author avatar `<img>` elements without `loading="lazy"`. These are small (32px, 36px) avatars but still trigger network requests on Blog page load. They should have `loading="lazy"`.
 
-### og-image
-
-`og-image.jpg` is 49 KB — reasonable for social sharing.
+- **IMG-06** No AVIF format usage anywhere. For background hero images and the features background image (93 KB), AVIF would achieve 50%+ further size reduction versus WebP with no quality loss at equivalent file size.
 
 ---
 
-## 5. CSS Analysis
+## 5. Font Loading
 
-### Tailwind v4 purge
+**Score: 8/10**
 
-Tailwind v4 via `@tailwindcss/vite` performs content scanning automatically by analyzing all files in the Vite module graph. This is equivalent to `purge: true` in v3. The production CSS at **105 KB raw / 18.4 KB gzip** includes:
+**What is correct:**
+- All fonts are self-hosted (no Google Fonts CDN round-trip)
+- `font-display: swap` on all `@font-face` declarations (FOUT is acceptable, FOIT is prevented)
+- Critical path fonts preloaded in `index.html`: `dongle-700-latin.woff2` and `gabarito-latin.woff2`
+- Unicode-range subsetting reduces download to only required character sets
+- `crossorigin` attribute correctly set on preload links
 
-- Tailwind base/utilities used across the project
-- The full custom design system (1,169 lines of hand-written CSS in `index.css`)
-- `tw-animate-css` animations (imported in `index.css`)
+**Issues:**
 
-The 105 KB raw CSS is on the higher side for a landing page. The custom CSS alone (index.css) accounts for a significant portion. The CSS is correctly minified (`cssMinify: true` in vite.config.ts).
+- **FONT-01** `client/src/index.css:57-71` — Gabarito `font-weight: 700` `@font-face` declarations point to the **identical `src` URLs** as the `font-weight: 400` declarations (`gabarito-latin.woff2` and `gabarito-latin-ext.woff2`). This means Gabarito is registered four times in `@font-face` when it should be declared twice using `font-weight: 400 700` (a weight range). The browser will deduplicate downloads, but the duplicate declarations inflate the CSS source and add parser work. If Gabarito is a variable font, use `font-weight: 400 700` in a single declaration per unicode range.
 
-**Specific issues:**
-- `tw-animate-css` (`devDependencies`) is imported into the production CSS via `@import "tw-animate-css"` in `index.css`. This is likely a bootstrap animation library that adds to CSS weight even if only a subset of its animations are used.
-- The `@layer components` block in `index.css` (lines 573–1035) redefines `container`, `flex`, typescale, buttons, cards, navbar, inputs, and reveals. This is clean and intentional — it's the design system. Not a bug, just weight.
-- No unused styles issue: Tailwind v4 correctly tree-shakes only used utility classes. Custom classes in `@layer components` are always included regardless of usage (e.g., `.card-dark` might be defined but used rarely).
+- **FONT-02** `vercel.json` — The `Cache-Control: public, max-age=31536000, immutable` header covers `/assets/(.*)` and `/images/(.*)` but not `/fonts/(.*)`. Self-hosted fonts in the public directory are served without long-term cache headers, meaning repeat visitors re-download 70 KB of font data on each visit. Add a `/fonts/(.*)` cache header entry.
 
----
-
-## 6. TypeScript Analysis
-
-### Strict mode
-
-**Good.** `tsconfig.json` has `"strict": true`. This enables `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, etc.
-
-### `any` type usage
-
-Three intentional `any` casts in shadcn/ui component wrappers:
-- `client/src/components/ui/input.tsx:25`: `(e.nativeEvent as any).isComposing`
-- `client/src/components/ui/textarea.tsx:24`: `(e.nativeEvent as any).isComposing`
-- `client/src/components/ui/dialog.tsx:107`: `(e as any).isComposing`
-
-These are in scaffolded shadcn/ui files, working around a DOM event typing gap. They are acceptable but should be replaced with a proper type cast:
-```ts
-// Instead of: (e.nativeEvent as any).isComposing
-// Use: (e.nativeEvent as InputEvent).isComposing
-```
-
-### Type check result
-
-`pnpm check` (tsc --noEmit) passes with **zero errors**. Clean bill of health.
-
-### Type coverage gaps
-
-- `Map.tsx` uses `usePersistFn` hook from `@/hooks/usePersistFn` which does not appear to exist in the hooks directory (only `useMobile.tsx`, `useScrollReveal.ts`, and `useComposition.ts` were found). If Map.tsx is dead code, this doesn't matter, but it should be deleted to avoid future confusion.
-- `client/src/hooks/useMobile.tsx` has `.tsx` extension but contains no JSX. Should be `.ts`.
+- **FONT-03** `index.html` — Only the `latin` subset woff2 files are preloaded. The `latin-ext` variants (needed for Romanian/Central European characters used in some content) are not preloaded. If any text in the LCP viewport uses latin-ext characters, this could cause a FOUT for that content.
 
 ---
 
-## 7. Code Splitting
+## 6. Third-Party Scripts
 
-### What's working
+**Score: 10/10**
 
-All 11 route pages except Home are lazy-loaded via `React.lazy()`:
-```tsx
-const Features = React.lazy(() => import("./pages/Features"));
-// ...all other routes lazy
-```
+No third-party scripts are loaded. No analytics (GA4, Mixpanel, Segment), no chat widgets, no tag managers, no A/B testing SDKs. The only external network requests on page load are:
+- Self-hosted fonts from the same origin
+- Self-hosted images from the same origin
 
-The Suspense boundary wraps the entire router with a background-color fallback (not a skeleton, but acceptable for this SPA pattern).
-
-Home is **correctly** kept eager (not lazy) — it is the first route and should be in the main bundle for instant paint.
-
-### What's missing
-
-**No prefetching on hover.** When a user hovers over a nav link (e.g., "Features"), the Features chunk could begin loading before click. This would eliminate the brief white flash on navigation. Implementation:
-
-```tsx
-// In Navbar.tsx, add onMouseEnter prefetch
-const ROUTE_PREFETCH_MAP: Record<string, () => Promise<unknown>> = {
-  '/features': () => import('./pages/Features'),
-  '/for-dentists': () => import('./pages/ForDentists'),
-  // etc.
-};
-
-// On Link hover:
-onMouseEnter={() => ROUTE_PREFETCH_MAP[href]?.()}
-```
-
-**BlogPost is the largest lazy chunk (65 KB raw).** This is because all article content is hardcoded. No code-splitting issue per se, just content weight.
+This is excellent for Core Web Vitals. All JSON-LD structured data is inline in `index.html` — zero render-blocking.
 
 ---
 
-## 8. Tree Shaking
+## 7. CSS Efficiency
 
-### lucide-react
+**Score: 7/10**
 
-All lucide-react imports use named imports:
-```ts
-import { Menu, X } from 'lucide-react';
-import { AlertTriangle, RefreshCw, RotateCcw } from "lucide-react";
-```
+The CSS bundle is **105.76 KB raw / 18.55 KB gzip**. Tailwind v4 with the `@tailwindcss/vite` plugin purges unused utilities correctly based on content scanning.
 
-lucide-react v0.453 ships ES modules with per-icon files and a barrel `index.js`. Vite correctly tree-shakes named imports from barrel exports via Rollup. Only the imported icons should be in the final bundle. **This is correct.**
+**What is correct:**
+- Tailwind v4 automatic content purging via `@tailwindcss/vite`
+- CSS is minified (`cssMinify: true` in `vite.config.ts:23`)
+- `@layer components` used correctly for custom classes
+- `@media (prefers-reduced-motion: reduce)` implemented comprehensively
 
-However, lucide-react is installed at v0.453.0 in dependencies. The `node_modules` contains **two** lucide-react versions (0.453.0 and 0.542.0) totalling ~69 MB on disk. The newer version 0.542 is likely a transitive dependency pull. This doesn't affect bundle output but pollutes `node_modules`.
+**Issues:**
 
-### Radix UI
+- **CSS-01** `client/src/index.css:601` — `.flex { min-height: 0; min-width: 0; }` inside `@layer components` overrides Tailwind's native `.flex` utility class to add `min-height: 0` and `min-width: 0` globally. This is a flexbox truncation fix but it is a blanket override that changes the default behavior of every `.flex` element globally. This can cause unexpected layout issues if Tailwind's `.flex` is used in ways that rely on default min-height behavior. This override should target a more specific selector (e.g., `.flex-truncate`) rather than the generic `.flex` class.
 
-All Radix imports in shadcn wrappers use the `* as` namespace pattern:
-```ts
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-```
+- **CSS-02** `client/src/index.css:543,562,563` — Three `!important` declarations in hover states (`.blog-card-hover:hover` and `.efp-badge-hover:hover`). These exist because inline styles set `border-color` and `background` on these elements. The correct fix is to move those inline styles to CSS classes so the hover state does not require `!important` overrides.
 
-This is the shadcn/ui conventional pattern. Since Radix packages export ES modules, Rollup can tree-shake unused exports from these namespace imports. Vite correctly eliminates unused shadcn/ui wrapper files that are never imported by pages.
+- **CSS-03** `client/src/index.css` — CSS has 17 `!important` declarations in the `prefers-reduced-motion` block. These are justified (they must override animation CSS regardless of specificity), but items CSS-02 above are not justified.
 
-### class-variance-authority / tailwind-merge / clsx
+- **CSS-04** The CSS source is 1,197 lines. The custom CSS defines many patterns that duplicate Tailwind utilities: `.container`, `.section`, `.section-sm`, `.flex` — some of these conflict with or shadow Tailwind's own utilities.
 
-Small utilities, fully tree-shaken. No issues.
+- **CSS-05** `client/src/index.css:820-831` — `.nav-link` class is defined in `@layer components` but the Navbar component does not use `.nav-link` — it uses `.nav-link-item` (defined at line 505). The `.nav-link` definition is dead CSS that ships in the bundle.
 
 ---
 
-## 9. Font Loading Strategy
+## 8. TypeScript Strictness
 
-### What's working
+**Score: 9/10**
 
-All fonts are self-hosted (no Google Fonts network dependency):
-```
-/fonts/dongle-700-latin.woff2       13 KB
-/fonts/dongle-700-latin-ext.woff2   11 KB
-/fonts/gabarito-latin.woff2         34 KB
-/fonts/gabarito-latin-ext.woff2     12 KB
-```
+**What is correct:**
+- `"strict": true` enabled in `tsconfig.json`
+- `pnpm check` (tsc --noEmit) passes with zero errors
+- No `@ts-ignore` or `@ts-expect-error` suppressions
+- Proper interface definitions throughout
 
-`@font-face` declarations use `font-display: swap` — eliminates FOIT (invisible text). Text renders immediately in system font, then swaps when web font loads (FOUT). This is the correct production choice.
+**Issues:**
 
-Critical fonts are preloaded in `<head>`:
-```html
-<link rel="preload" href="/fonts/dongle-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/gabarito-latin.woff2" as="font" type="font/woff2" crossorigin />
-```
+- **TS-01** `client/src/components/ui/dialog.tsx:107` — `(e as any).isComposing` cast. This is a workaround for a React synthetic event limitation where `isComposing` is not typed. Acceptable workaround but could use a typed interface extension instead.
 
-**Good:** Only the two primary subset files are preloaded (latin range). Latin-ext is loaded on demand.
+- **TS-02** `client/src/components/ui/textarea.tsx:24` and `input.tsx:25` — Same `(e.nativeEvent as any).isComposing` pattern. Three occurrences total across shadcn ui primitives — not application code.
 
-### Issues
-
-1. **Gabarito latin.woff2 is 34 KB** — unusually large for a woff2 web font. The `gabarito-latin-ext.woff2` at 12 KB is smaller than the latin subset, which suggests the latin file may not be subset-optimized. A properly subsetting tool (e.g., `fonttools`) typically produces 8–18 KB for a latin woff2. Consider re-subsetting with only the characters actually used in the site.
-
-2. **Both Gabarito weights (400 and 700) point to the same file:**
-```css
-/* weight: 400 */
-src: url('/fonts/gabarito-latin.woff2') format('woff2');
-/* weight: 700 */
-src: url('/fonts/gabarito-latin.woff2') format('woff2');
-```
-This means the browser loads only one Gabarito file for both weights. If the font is a variable font covering both axes, this is intentional. If it's a static font, only one weight is rendering (likely 400). This should be verified — if Gabarito needs true 700 weight, a separate 700 woff2 is needed.
+- **TS-03** `client/src/hooks/usePersistFn.ts:3` — `type noop = (...args: any[]) => any` — a variadic any-typed function alias. This hook is never used (see DEP-04 territory), but the type is imprecise.
 
 ---
 
-## 10. Accessibility
+## 9. Tree Shaking
 
-### Strengths (excellent)
+**Score: 7/10**
 
-- **Skip link** implemented and focused: `.skip-link` appears on keyboard focus, targets `#main-content` (WCAG 2.4.1)
-- **RouteAnnouncer** in App.tsx broadcasts route changes to `aria-live="polite"` region and moves focus to `#main-content` (WCAG 2.4.3, 4.1.3)
-- **Reduced motion**: comprehensive `@media (prefers-reduced-motion: reduce)` block kills all animations and transitions (WCAG 2.3.3)
-- **Focus ring**: `*:focus-visible { outline: 2px solid #C0E57A }` globally applied
-- **Mobile menu**: `aria-expanded`, `aria-controls`, `aria-label`, Escape key handler
-- **Form inputs** in Waitlist: `aria-required`, `aria-invalid`, `aria-describedby` for error messages, `role="alert"` on error spans
-- **ARIA landmarks**: `role="dialog"` on mobile drawer, `role="status"` on Suspense-equivalent regions
-- **Semantic HTML**: `<nav>`, `<footer>`, `<section>`, `<main>` (via `id="main-content"` on first section), `<blockquote>`, `<figure>` used correctly
-- All decorative elements use `aria-hidden="true"`
+**What is correct:**
+- Lucide React: only named imports used (`Menu`, `X`, `AlertTriangle`, `RefreshCw`, `RotateCcw`, `ChevronDownIcon`, etc.) — Vite tree-shakes correctly, only imported icons ship
+- Wouter: lightweight router (wouter is ~5 KB), correct
+- No barrel file re-exports that defeat tree shaking
 
-### Issues
+**Issues:**
 
-1. **Hero's `.reveal` class starts at `opacity: 0`** — this would hide `h1` from LCP calculation. Mitigated by the override at the bottom of `index.css`:
-```css
-#main-content .reveal, #main-content .reveal-scale {
-  opacity: 1; transform: none; transition: none;
-}
-```
-This is a fragile coupling. If the `#main-content` ID moves or the `.reveal` class is applied higher up, the override breaks.
+- **TREE-01** `vite.config.ts:28` — The `vendor` manual chunk forces `react`, `react-dom`, and `wouter` into one chunk. This means that a `wouter` update forces users to re-download `react-dom` (the largest chunk). Better to split: `{ react: ["react", "react-dom"], router: ["wouter"] }`.
 
-2. **Features page icon tiles use emoji** (`💡`, `🔔`, `📊`) inside interactive card-like divs without `aria-label`. Screen readers announce these as "light bulb", "bell", etc. which is acceptable, but the emoji are inside styled `div`s that may confuse AT. Adding `aria-hidden="true"` to the emoji span and adding a `title` to the card would be cleaner.
+- **TREE-02** The shadcn/ui components import all their Radix dependencies via star imports (`import * as TooltipPrimitive from "@radix-ui/react-tooltip"`). This prevents tree shaking of individual Radix primitives within each package. Since only Tooltip is used, the entire `@radix-ui/react-tooltip` package is bundled. This is inherent to the Radix API design, not actionable, but worth documenting.
 
-3. **Ticker strip** (`aria-hidden="true"` on the outer div) — correct, animated tickers should be hidden from AT.
-
-4. **Waitlist role selector buttons** use `aria-pressed` — correct for toggle buttons. 
-
-5. **Color contrast**: The brand muted color `#8C9C8C` on `#0A171E` background gives a contrast ratio of approximately 5.2:1 (passes AA for body text at 16px). The `#8C9C8C` on `#050C10` background is ~4.8:1 — passes AA but not AAA.
+- **TREE-03** `client/src/App.tsx:1-2` — `Toaster` from `sonner` is imported synchronously in `App.tsx`. The `sonner` package is 184 KB on disk. Even though tree-shaken, its critical-path presence prevents it from being split into a deferred chunk.
 
 ---
 
-## 11. Lighthouse Score Estimation
+## 10. Dead Code / Unused Exports
 
-Based on code review (no live Lighthouse run):
+**Score: 5/10**
 
-| Metric | Estimate | Reasoning |
-|--------|----------|-----------|
-| **Performance** | 82–88 | LCP image preloaded + WebP + fetchPriority="high". Main JS 108 KB gzip. Font display:swap. Render-blocking: none detected. Ken-Burns CSS animation on LCP image is a risk. |
-| **Accessibility** | 90–95 | Skip link, ARIA landmarks, reduced motion, focus management. Small deductions for emoji icons without aria-hidden and potential contrast gaps. |
-| **Best Practices** | 90–95 | No console errors expected in prod. HTTPS. No mixed content. |
-| **SEO** | 95–100 | Meta tags, canonical, OG, hreflang, structured data (JSON-LD), robots.txt, sitemap, noscript fallback. |
+| Item | File | Size | Verdict |
+|------|------|------|---------|
+| `CustomCursor` component | `client/src/components/CustomCursor.tsx` | ~2 KB | Never imported anywhere |
+| `useScrollReveal` hook | `client/src/hooks/useScrollReveal.ts` | ~1 KB | Never imported anywhere |
+| `useCountUp` hook | `client/src/hooks/useScrollReveal.ts` | ~1 KB | Never imported anywhere |
+| `useTheme` hook | `client/src/contexts/ThemeContext.tsx` | — | Exported but never called |
+| `.nav-link` CSS class | `client/src/index.css:820-831` | — | Defined but Navbar uses `.nav-link-item` |
+| `cursor-dot`/`cursor-ring` CSS | `client/src/index.css:1072-1098` | — | DOM elements never mounted |
+| `logomark-dark.png` | `client/public/images/logomark-dark.png` | 36 KB | No references in source |
+| `eduard-formal.jpg` | `client/public/images/eduard-formal.jpg` | 30 KB | No references in source |
+| Full shadcn/ui library | `client/src/components/ui/` (44 files) | ~4768 lines | Zero page-level imports |
 
-**Estimated overall Lighthouse score: 88–92 (desktop)**
-
-**Mobile estimate: 78–84** — The main JS chunk at 107 KB gzip will score worse on mobile Lighthouse's simulated slow 4G + slower CPU profiles (TTI impact). The Ken-Burns animation on the hero LCP image may slightly degrade LCP score on mobile.
-
----
-
-## Prioritised Fixes
-
-### High priority (quick wins, high impact)
-
-1. **Extract `useReveal` hook** — removes 7 copies of the same code, makes a shared hook testable. 30 minutes of work.
-
-2. **Delete dead files:**
-   - `client/public/images/hero-bg.jpg` (82 KB saved in deploy)
-   - `client/public/images/petrica.jpg` (86 KB saved — WebP version already used)
-   - `client/src/components/Map.tsx` (dead code, broken `usePersistFn` import)
-   - `client/src/components/HeroBackground.tsx` (never imported)
-
-3. **Add route prefetch on hover** — eliminates the Suspense flash on navigation for users with fast connections.
-
-4. **Fix Gabarito 700 weight** — verify if the 700 weight is truly a variable font or if a dedicated bold woff2 is needed.
-
-### Medium priority (moderate effort, meaningful gain)
-
-5. **Vendor chunk expansion** — move react-helmet-async, @radix-ui/react-tooltip, and sonner into the vendor chunk or a separate `providers` chunk. This would reduce the main index.js by ~25–35 KB raw:
-```ts
-// vite.config.ts
-manualChunks: {
-  vendor: ["react", "react-dom", "wouter"],
-  providers: ["react-helmet-async", "sonner", "@radix-ui/react-tooltip"],
-},
-```
-
-6. **Convert anca-headshot.jpg and eduard-headshot.jpg to WebP** — ~60% file size reduction.
-
-7. **Remove unused Radix dependencies** from `package.json` (the 20+ Radix packages whose shadcn wrappers are never imported). This reduces install time and `node_modules` weight, not bundle weight (already tree-shaken).
-
-### Low priority (larger effort)
-
-8. **Extract inline styles to design system classes** — the heavy `style={{}}` usage in Home.tsx and ForDentists.tsx makes the code harder to maintain. This is a refactor, not a bug.
-
-9. **Subset Gabarito font** — `gabarito-latin.woff2` at 34 KB is large. Run through `pyftsubset` to extract only the character set used on the site (expected output: 12–16 KB).
-
-10. **Move blog content to a data file or API** — `BlogPost.tsx` at 65 KB raw is bloated by hardcoded article content. Consider splitting articles into individual JSON/MD files loaded dynamically.
+The dead CSS (`#cursor-dot`, `#cursor-ring`) ships in the CSS bundle. The dead JS components (`CustomCursor`, `useScrollReveal`) are tree-shaken by Vite and do not appear in the output — only their source files accumulate maintenance debt.
 
 ---
 
-## What's Done Well (Preserve)
+## 11. Accessibility (Quick Audit)
 
-- `font-display: swap` on all web fonts — correct
-- `fetchPriority="high"` on hero LCP image — correct
-- LCP image preloaded in `<head>` — correct
-- Width/height on all images (CLS prevention) — correct
-- All non-hero images have `loading="lazy" decoding="async"` — correct
-- Route-level code splitting via `React.lazy` — correct pattern
-- `passive: true` on scroll listeners — correct
-- `requestAnimationFrame` in ParallaxHeroBg (avoids forced reflows) — correct
-- TypeScript `strict: true` with zero type errors — excellent
-- Custom `useReveal` respects `prefers-reduced-motion` — correct
-- Comprehensive `@media (prefers-reduced-motion: reduce)` in CSS — excellent
-- Skip link, RouteAnnouncer, ARIA attributes throughout — excellent a11y foundation
-- `modulePreload: { polyfill: false }` (removes unnecessary polyfill for modern browsers) — correct
-- `target: "esnext"` in Vite build config — correct for Vercel deployment
-- `will-change: auto` on the LCP image (correctly removing the hint after it was incorrectly added) — correct
+**Score: 9/10**
+
+**Excellent implementations found:**
+- Skip link: `client/index.html` and `App.tsx:113` — `.skip-link` implemented with correct `focus:top:0` reveal
+- Route announcer: `App.tsx:49-76` — `aria-live="polite"` region announces navigation to screen readers (WCAG 4.1.3)
+- Focus management on route change: `App.tsx:61-63` — `#main-content` receives programmatic focus
+- Mobile drawer focus trap: `Navbar.tsx:51-84` — Escape key, Tab cycle, initial focus all implemented
+- `aria-current="page"` on active nav links: `Navbar.tsx:125`
+- `aria-label` on hamburger: `Navbar.tsx:153`
+- Form labels via sr-only: `Waitlist.tsx` — all inputs have associated labels
+- `prefers-reduced-motion` comprehensive: `index.css:1105-1177` — all animations disabled
+
+**Issues:**
+
+- **A11Y-01** `client/src/pages/Home.tsx:133` — The phone mockup container has `aria-hidden="true"` which is correct (decorative). But the `PhoneMockup` component itself contains text content ("Patient", "Dentist", "Your Personal Dental Companion") that aria-hidden removes from the accessibility tree entirely. Ensure this content is truly decorative and not informational.
+
+- **A11Y-02** `client/src/pages/Home.tsx:147` — The ticker strip has `aria-hidden="true"` — correct, as it contains marketing repetition. Verified.
+
+- **A11Y-03** Heading hierarchy: Multiple pages use `<h3>` for feature card titles directly after an `<h2>` section title. This is correct. Not flagged.
 
 ---
 
-## Score Breakdown
+## 12. Lighthouse Score Estimation
 
-| Category | Score | Notes |
-|----------|-------|-------|
-| Bundle size | 6/10 | 108 KB gzip main chunk is acceptable but has 30–40 KB recoverable savings |
-| Dependency hygiene | 5/10 | 20+ unused Radix packages, dead files, duplicate lucide versions |
-| Component architecture | 6/10 | Clear structure, but critical `useReveal` DRY violation, heavy inline styles |
-| Image optimization | 8/10 | WebP hero, lazy loading, correct attributes; 2 orphan JPGs to delete |
-| CSS | 7/10 | Correct purging, good custom system; Gabarito weight and tw-animate-css weight |
-| TypeScript | 9/10 | Strict mode, zero errors, 3 minor `any` casts in shadcn scaffolding |
-| Code splitting | 8/10 | All routes lazy except Home (correct); no prefetch on hover |
-| Tree shaking | 8/10 | Named icon imports, shadcn tree-shaken; providers not split out |
-| Font loading | 7/10 | Self-hosted, font-display:swap, preloaded; Gabarito 700 weight concern |
-| Accessibility | 9/10 | Excellent: skip link, announcer, reduced motion, ARIA; minor emoji issue |
+Based on static analysis (no live Lighthouse run):
 
-**Overall Score: 7.2 / 10**
+| Metric | Estimated | Reasoning |
+|--------|-----------|-----------|
+| Performance | 78-85 | 108 KB gzip JS on first load; LCP image preloaded as WebP; CSS 18.5 KB gzip; no render-blocking third-party scripts; static pre-render shell in HTML |
+| Accessibility | 92-96 | Skip link, ARIA landmarks, focus management, reduced-motion — a few minor gaps |
+| Best Practices | 88-92 | No console errors; HTTPS; no deprecated APIs; manifest.json present but icons array only has SVG (maskable PNG recommended) |
+| SEO | 90-95 | Canonical tags, structured data, hreflang, meta descriptions per page; minor crawlability concern (SPA requiring JS) mitigated by noscript fallback |
 
-The codebase is in solid shape for a pre-launch landing page. TypeScript hygiene is excellent, code splitting is correctly implemented, and accessibility foundations are among the best seen in this class of project. The main issues are a DRY violation in the reveal hook, dead files bloating the deploy, and an oversized main bundle that could be trimmed by splitting providers into a separate chunk.
+**Estimated composite Lighthouse score: ~87/100**
+
+**Key Lighthouse drag factors:**
+1. Main JS chunk at 347 KB raw triggers a "Reduce JavaScript payload" warning
+2. Missing AVIF/WebP `<picture>` with srcset on team photos (served as JPEG)
+3. No explicit font cache headers on `/fonts/` (impacts repeat visit score)
+4. BlogPost at 66 KB is driven by inline article content, not optimizable without a CMS/API
+
+---
+
+## Priority Fixes (Ranked by Impact)
+
+### P0 — High Impact, Low Effort
+
+1. **Add `/fonts/(.*)` cache header to `vercel.json`** — 30 seconds to fix, saves 70 KB re-download on repeat visits (FONT-02)
+2. **Remove dead assets** — Delete `logomark-dark.png` (36 KB) and `eduard-formal.jpg` (30 KB) from `client/public/images/` (DEP-06, DEP-07)
+3. **Add `loading="lazy"` to Blog author avatars** — `client/src/pages/Blog.tsx:227,285` (IMG-05)
+
+### P1 — High Impact, Medium Effort
+
+4. **Convert headshot JPEGs to WebP** — `anca-headshot.jpg` (19 KB) and `eduard-headshot.jpg` (43 KB) → estimated 30-40% size reduction (IMG-01)
+5. **Fix duplicate Gabarito `@font-face` declarations** — Collapse 4 declarations into 2 using `font-weight: 400 700` range syntax (FONT-01)
+6. **Remove `CustomCursor.tsx` and its CSS** — Delete dead component and its `#cursor-dot`/`#cursor-ring` CSS rules from `index.css:1072-1098` (DEP-03)
+7. **Remove `useScrollReveal.ts`** — Dead hook file containing `useScrollReveal` and `useCountUp` (DEP-04)
+
+### P2 — Medium Impact, Medium Effort
+
+8. **Simplify `ThemeContext`** — The dark theme is hardcoded; if switching is not planned, remove the context entirely and the `localStorage` read on startup (DEP-05)
+9. **Fix `.flex` CSS override** — Rename `.flex` in `@layer components` to a more specific selector to avoid shadowing Tailwind's utility (CSS-01)
+10. **Improve vendor chunk splitting** — Separate `react`/`react-dom` from `wouter` in `manualChunks` for better cache invalidation (TREE-01)
+11. **Add srcset to team photos** — Serve mobile-sized variants for the 80px avatar use case (IMG-02)
+
+### P3 — Lower Impact, Higher Effort
+
+12. **Extract blog article content to JSON/API** — BlogPost.tsx at 66 KB gzip is dominated by inline article strings. Extracting to a `data/` directory and dynamic `import()` would allow per-article code splitting (PERF bloat in BlogPost chunk)
+13. **Audit and remove unused Radix packages** — If the landing page scope is final, remove 23 of 26 `@radix-ui/*` packages from `package.json` (DEP-01)
+14. **Add AVIF format** — Wrap background images in `<picture>` with AVIF source for ~50% additional compression (IMG-06)
+
+---
+
+## Score Rationale: 6/10
+
+**What brings the score up:** Excellent code splitting with React.lazy, zero third-party scripts, self-hosted fonts with `font-display: swap`, proper LCP image handling with fetchPriority, TypeScript strict mode passing cleanly, comprehensive accessibility implementation, correct Tailwind v4 purging, and a solid 133 KB gzip first-load transfer.
+
+**What brings the score down:** The main bundle at 347 KB raw is above ideal for a landing page (150-200 KB target). A large portion of installed packages (`shadcn/ui` components, 23+ Radix packages) are dormant. Two dead public assets (66 KB combined) ship to production. The `useScrollReveal` hook file and `CustomCursor` component are dead code. The `ThemeContext` runs on every page load for zero effect. The font caching gap means repeat visitors re-download 70 KB of fonts. The `.flex` CSS override is a latent bug risk. The absence of `srcset` and AVIF means mobile users receive desktop-sized images.
+
