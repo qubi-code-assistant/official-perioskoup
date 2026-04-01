@@ -675,6 +675,7 @@ function parseInline(text: string): ReactElement | string {
   let i = 0;
   while (i < tokens.length) {
     const token = tokens[i];
+    if (!token) { i++; continue; }
     if (token.startsWith("**") && token.endsWith("**") && token.length > 4) {
       nodes.push(<strong key={i} style={{ color: "#F5F9EA", fontWeight: 700 }}>{token.slice(2, -2)}</strong>);
     } else if (token.startsWith("[")) {
