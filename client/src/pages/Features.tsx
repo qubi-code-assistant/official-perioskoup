@@ -284,61 +284,51 @@ export default function Features() {
         </div>
       </section>
 
-      {/* Feature rows — alternating layout with app screenshot slots */}
+      {/* Feature cards */}
       <section className="section" style={{ background: "#050C10", paddingTop: "80px", paddingBottom: "80px" }}>
         <div className="container">
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 12, textAlign: "center" }}>
             What's inside <span style={{ color: "#C0E57A" }}>Perioskoup</span>
           </h2>
-          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 72px" }}>
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 56px" }}>
             Five features built to keep patients engaged and dentists in control — all in one app.
           </p>
 
-          <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {FEATURES.map((f, i) => {
-              const isReversed = i % 2 === 1;
               const tagStyle = TAG_COLORS[f.tag] || TAG_COLORS.Patients;
               return (
                 <div
                   key={f.title}
-                  className={`reveal flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-10 lg:gap-20`}
+                  className="card reveal"
                   style={{
-                    paddingTop: "72px",
-                    paddingBottom: "72px",
-                    borderBottom: i < FEATURES.length - 1 ? "1px solid #1D3449" : "none",
-                    transitionDelay: `${i * 0.04}s`,
+                    padding: "32px",
+                    display: "flex",
+                    flexDirection: "column",
+                    transitionDelay: `${i * 0.06}s`,
                   }}
                 >
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
-                      <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: tagStyle.color, background: tagStyle.bg, border: `1px solid ${tagStyle.border}`, padding: "4px 10px", borderRadius: "100px" }}>
-                        {f.tag}
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: tagStyle.color, background: tagStyle.bg, border: `1px solid ${tagStyle.border}`, padding: "4px 10px", borderRadius: "100px" }}>
+                      {f.tag}
+                    </span>
+                    {f.badge && (
+                      <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#0A171E", background: "#C0E57A", padding: "3px 8px", borderRadius: "100px" }}>
+                        {f.badge}
                       </span>
-                      {f.badge && (
-                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#0A171E", background: "#C0E57A", padding: "3px 8px", borderRadius: "100px" }}>
-                          {f.badge}
-                        </span>
-                      )}
-                    </div>
-                    <div style={{ fontSize: "40px", marginBottom: "12px", lineHeight: 1 }} aria-hidden="true">{f.icon}</div>
-                    <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(38px, 3.5vw, 52px)", fontWeight: 700, color: "#F5F9EA", lineHeight: 1, marginBottom: "16px" }}>{f.title}</h3>
-                    <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "16px", lineHeight: 1.7, color: "#8C9C8C", marginBottom: "28px", maxWidth: "480px" }}>{f.desc}</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                      {f.bullets.map((b) => (
-                        <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ flexShrink: 0, marginTop: "3px" }}>
-                            <path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                          <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", color: "#93A793" }}>{b}</span>
-                        </div>
-                      ))}
-                    </div>
+                    )}
                   </div>
-
-                  {/* Phone mockup — set FEATURES[n].screenshot to swap in a real screenshot */}
-                  <div className="w-[200px] md:w-[220px] lg:w-[260px] flex-shrink-0 mx-auto md:mx-0">
-                    <PhoneMockup icon={f.icon} title={f.title} screenshot={f.screenshot} />
+                  <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(32px, 2.5vw, 42px)", fontWeight: 700, color: "#F5F9EA", lineHeight: 1, marginBottom: "12px" }}>{f.title}</h3>
+                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", lineHeight: 1.7, color: "#8C9C8C", marginBottom: "24px" }}>{f.desc}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "auto" }}>
+                    {f.bullets.map((b) => (
+                      <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ flexShrink: 0, marginTop: "3px" }}>
+                          <path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", color: "#93A793" }}>{b}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               );
