@@ -3,7 +3,6 @@
  * Colors: #0A171E bg, #1D3449 surface, #C0E57A lime, #F5F9EA text
  * Fonts: Dongle (display), Gabarito (body)
  */
-import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
@@ -14,14 +13,94 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
-const FEATURES: { icon: string; title: string; desc: React.ReactNode; bullets: string[]; tag: string; badge?: string }[] = [
-  { icon: "💡", title: "AI Clinical Companion", desc: "Patients get instant, evidence-based answers about their periodontal health in plain language - no medical jargon, no confusion.", bullets: ["Personalised oral health guidance", "Evidence-based answers", "Understands clinical reports", "Launching with the app"], tag: "Patients", badge: "Beta" },
-  { icon: "🔔", title: "Smart Reminders", desc: "Personalised, adaptive nudges that fit into daily routines. Brushing, flossing, medication - all tracked and encouraged.", bullets: ["Adaptive reminder timing", "Habit-based nudge frequency", "Appointment reminders", "Opt-in communication"], tag: "Patients", badge: "Beta" },
-  { icon: "📊", title: "Progress Tracking", desc: <>Visual timelines and habit streaks that show the oral health journey over time. Long-term maintenance studies show consistent daily routines reduce periodontal disease progression by <a href="https://www.who.int/news-room/fact-sheets/detail/oral-health" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline", color: "#7DD3FC" }}>60–70%</a> (WHO, 2023).</>, bullets: ["Daily habit logging", "Visual progress dashboards", "Habit streaks", "Routine consistency tools"], tag: "Patients" },
-  { icon: "🖥️", title: "Dentist Dashboard", desc: "A dedicated portal for clinicians to view care plans, send patient programmes, and review upcoming appointment summaries across their practice.", bullets: ["Patient programme overview", "Appointment preparation briefs", "Multi-patient practice view", "Exportable summaries"], tag: "Dentists" },
-  { icon: "📚", title: "Education Library", desc: "Curated, clinician-approved content about periodontal conditions, home care, and daily oral hygiene - always up to date.", bullets: ["Condition explainers", "Treatment guides", "Home care tutorials", "Clinician-approved content"], tag: "Patients", badge: "Coming Soon" },
-  { icon: "📅", title: "Appointment Prep", desc: "Patients arrive better prepared with a summary of their progress and questions ready. Dentists save time on history-taking.", bullets: ["Pre-visit summaries", "Question prompts", "Progress snapshots", "Better-prepared patients"], tag: "Both", badge: "In Development" },
-  { icon: "🔒", title: "GDPR-Compliant & Secure", desc: "End-to-end encrypted, EU-hosted, and built with privacy-first principles. Patient data never leaves European servers.", bullets: ["End-to-end encryption", "GDPR Article 9 compliant", "EU-hosted servers", "Right to erasure built-in"], tag: "Both" },
+const FEATURES: {
+  icon: string;
+  title: string;
+  tag: string;
+  badge?: string;
+  bullets: string[];
+  desc: string;
+  screenshot?: string; // e.g. "/images/screenshots/periobot.png"
+}[] = [
+  {
+    icon: "🤖",
+    title: "PerioBOT — Your Dental AI",
+    tag: "Patients",
+    badge: "Beta",
+    bullets: [
+      "Chat trained on your own dental records",
+      "Voice message support with transcription",
+      "Contextual answers based on your treatment history",
+      "Available 24/7 between appointments",
+    ],
+    desc: "Ask questions about your oral health and get personalized answers grounded in your clinical data.",
+    // screenshot: "/images/screenshots/periobot.png",
+  },
+  {
+    icon: "📋",
+    title: "Treatment Plans",
+    tag: "Dentists",
+    bullets: [
+      "Create and review treatment plans per patient",
+      "Track plan status (pending, approved, completed)",
+      "Patient-facing plan summaries with explanations",
+      "Link plans to specific appointments",
+    ],
+    desc: "Structured treatment planning that keeps both dentist and patient aligned on next steps.",
+    // screenshot: "/images/screenshots/treatment-plans.png",
+  },
+  {
+    icon: "📂",
+    title: "Document Management",
+    tag: "Both",
+    bullets: [
+      "Upload X-rays, photos, and clinical documents",
+      "Patients access their records anytime",
+      "Dentists attach files to patient profiles",
+      "Compressed uploads for fast mobile transfer",
+    ],
+    desc: "All dental documents in one secure place — accessible to both patient and provider.",
+    // screenshot: "/images/screenshots/documents.png",
+  },
+  {
+    icon: "📱",
+    title: "Instant QR Pairing",
+    tag: "Both",
+    bullets: [
+      "Scan a QR code to link patient and dentist",
+      "No manual data entry or invitation codes",
+      "Secure handshake with JWT verification",
+      "Works in-clinic in seconds",
+    ],
+    desc: "Connect patient to dentist with a single scan — no forms, no friction.",
+    // screenshot: "/images/screenshots/qr-pairing.png",
+  },
+  {
+    icon: "🪥",
+    title: "Daily Habit Tracker",
+    tag: "Patients",
+    bullets: [
+      "Track brushing, flossing, mouthwash, and more",
+      "Build streaks with daily check-ins",
+      "Personalized habit goals set by your dentist",
+      "Visual progress charts over time",
+    ],
+    desc: "Small daily habits, big dental health gains. Track your routine and watch your streaks grow.",
+    // screenshot: "/images/screenshots/habit-tracker.png",
+  },
+  {
+    icon: "🩺",
+    title: "Smart Health Profile",
+    tag: "Patients",
+    bullets: [
+      "Guided anamnesis questionnaire",
+      "Medical conditions, allergies, medications",
+      "Automatically shared with your dentist",
+      "Update anytime as health changes",
+    ],
+    desc: "Complete your dental health profile once — your dentist gets the full picture instantly.",
+    // screenshot: "/images/screenshots/health-profile.png",
+  },
 ];
 
 const TAG_COLORS: Record<string, { color: string; bg: string; border: string }> = {
@@ -70,13 +149,12 @@ export default function Features() {
       }
     },
     "featureList": [
-      "AI Clinical Companion — evidence-based oral health answers in plain language",
-      "Smart Reminders — adaptive nudges for brushing, flossing, and medication habits",
-      "Progress Tracking — visual timelines and habit streaks (WHO 2023: consistent routines reduce periodontal disease progression by 60–70%)",
-      "Dentist Dashboard — care plan overview, appointment briefs, multi-patient practice view",
-      "Education Library — clinician-approved periodontal content (coming soon)",
-      "Appointment Prep — pre-visit summaries and question prompts (in development)",
-      "GDPR-compliant security — end-to-end encryption, EU-hosted servers, right to erasure"
+      "PerioBOT — AI chat trained on patient dental records, voice support, available 24/7 (Beta)",
+      "Treatment Plans — structured plan creation, status tracking, patient-facing summaries",
+      "Document Management — X-rays, photos, clinical documents with secure patient access",
+      "Instant QR Pairing — link patient to dentist with a single scan, JWT-verified",
+      "Daily Habit Tracker — brushing, flossing, streaks, dentist-set goals",
+      "Smart Health Profile — guided anamnesis, medical history, shared with dentist automatically"
     ],
     "award": "3rd Prize, EFP Digital Innovation Award 2025, EuroPerio11 Vienna"
   };
@@ -131,44 +209,88 @@ export default function Features() {
         </div>
       </section>
 
-      {/* Feature grid */}
-      <section className="section" style={{ background: "#050C10", paddingTop: "80px" }}>
+      {/* Feature rows — alternating layout with app screenshot slots */}
+      <section className="section" style={{ background: "#050C10", paddingTop: "80px", paddingBottom: "80px" }}>
         <div className="container">
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 12, textAlign: "center" }}>
             What's inside <span style={{ color: "#C0E57A" }}>Perioskoup</span>
           </h2>
-          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 48px" }}>
-            Perioskoup combines AI-powered guidance, daily habit tracking, a clinician dashboard, and GDPR-compliant privacy into a single AI dental companion app.
+          <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 72px" }}>
+            Six features built to keep patients engaged and dentists in control — all in one app.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+
+          <div>
             {FEATURES.map((f, i) => {
+              const isReversed = i % 2 === 1;
               const tagStyle = TAG_COLORS[f.tag] || TAG_COLORS.Patients;
               return (
-                <div key={f.title} className="card reveal" style={{ transitionDelay: `${(i % 4) * 0.06}s` }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div style={{ width: "52px", height: "52px", borderRadius: "14px", background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px" }} aria-hidden="true">
-                        {f.icon}
-                      </div>
-                      {(f as { badge?: string }).badge && (
+                <div
+                  key={f.title}
+                  className={`reveal flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-10 lg:gap-20`}
+                  style={{
+                    paddingTop: "72px",
+                    paddingBottom: "72px",
+                    borderBottom: i < FEATURES.length - 1 ? "1px solid #1D3449" : "none",
+                    transitionDelay: `${i * 0.04}s`,
+                  }}
+                >
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+                      <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: tagStyle.color, background: tagStyle.bg, border: `1px solid ${tagStyle.border}`, padding: "4px 10px", borderRadius: "100px" }}>
+                        {f.tag}
+                      </span>
+                      {f.badge && (
                         <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#0A171E", background: "#C0E57A", padding: "3px 8px", borderRadius: "100px" }}>
-                          {(f as { badge?: string }).badge}
+                          {f.badge}
                         </span>
                       )}
                     </div>
-                    <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: tagStyle.color, background: tagStyle.bg, border: `1px solid ${tagStyle.border}`, padding: "4px 10px", borderRadius: "100px" }}>
-                      {f.tag}
-                    </span>
+                    <div style={{ fontSize: "40px", marginBottom: "12px", lineHeight: 1 }} aria-hidden="true">{f.icon}</div>
+                    <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(38px, 3.5vw, 52px)", fontWeight: 700, color: "#F5F9EA", lineHeight: 1, marginBottom: "16px" }}>{f.title}</h3>
+                    <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "16px", lineHeight: 1.7, color: "#8C9C8C", marginBottom: "28px", maxWidth: "480px" }}>{f.desc}</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                      {f.bullets.map((b) => (
+                        <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ flexShrink: 0, marginTop: "3px" }}>
+                            <path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                          <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "15px", color: "#93A793" }}>{b}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: "32px", fontWeight: 700, color: "#F5F9EA", marginBottom: "10px" }}>{f.title}</h3>
-                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "14px", lineHeight: 1.65, color: "#93A793", marginBottom: "20px" }}>{f.desc}</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {f.bullets.map((b) => (
-                      <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" style={{ flexShrink: 0, marginTop: "2px" }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "13px", color: "#93A793" }}>{b}</span>
-                      </div>
-                    ))}
+
+                  {/* Phone mockup — drop screenshot path into FEATURES[n].screenshot to activate */}
+                  <div className="w-[200px] md:w-[220px] lg:w-[260px] flex-shrink-0 mx-auto md:mx-0">
+                    <div style={{
+                      width: "100%",
+                      aspectRatio: "9/19",
+                      borderRadius: "40px",
+                      border: "1.5px solid #234966",
+                      background: "#071016",
+                      overflow: "hidden",
+                      boxShadow: "0 0 0 4px rgba(35,73,102,0.25), 0 32px 80px rgba(0,0,0,0.6)",
+                      position: "relative",
+                    }}>
+                      {f.screenshot ? (
+                        <img
+                          src={f.screenshot}
+                          alt={`${f.title} app screenshot`}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                        />
+                      ) : (
+                        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "14px", position: "relative" }}>
+                          {/* Dynamic Island / notch */}
+                          <div style={{ position: "absolute", top: "18px", left: "50%", transform: "translateX(-50%)", width: "72px", height: "22px", background: "#050C10", borderRadius: "100px" }} aria-hidden="true" />
+                          <span style={{ fontSize: "42px", marginTop: "32px" }} aria-hidden="true">{f.icon}</span>
+                          <div style={{ textAlign: "center", padding: "0 20px" }}>
+                            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 600, color: "#2A4A5E", marginBottom: "4px" }}>{f.title}</p>
+                            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "9px", color: "#1D3449", textTransform: "uppercase", letterSpacing: "0.14em" }}>App screenshot</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
