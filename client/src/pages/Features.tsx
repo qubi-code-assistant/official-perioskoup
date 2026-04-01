@@ -143,7 +143,6 @@ function PhoneMockup({ icon, title, screenshot }: { icon: string; title: string;
               <span style={{ fontSize: "32px", marginTop: "18%" }} aria-hidden="true">{icon}</span>
               <div style={{ textAlign: "center", padding: "0 18%" }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "9px", color: "#2A4A5E", fontWeight: 600, lineHeight: 1.4 }}>{title}</p>
-                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "7px", color: "#1A3448", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "4px" }}>Screenshot</p>
               </div>
             </div>
           )}
