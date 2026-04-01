@@ -88,20 +88,97 @@ const FEATURES: {
     desc: "Small daily habits, big dental health gains. Track your routine and watch your streaks grow.",
     // screenshot: "/images/screenshots/habit-tracker.png",
   },
-  {
-    icon: "🩺",
-    title: "Smart Health Profile",
-    tag: "Patients",
-    bullets: [
-      "Guided anamnesis questionnaire",
-      "Medical conditions, allergies, medications",
-      "Automatically shared with your dentist",
-      "Update anytime as health changes",
-    ],
-    desc: "Complete your dental health profile once — your dentist gets the full picture instantly.",
-    // screenshot: "/images/screenshots/health-profile.png",
-  },
 ];
+
+function PhoneMockup({ icon, title, screenshot }: { icon: string; title: string; screenshot?: string }) {
+  return (
+    <div style={{ position: "relative", width: "100%" }}>
+      {/* Silent switch */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-3px", top: "18%", width: "3px", height: "6%", minHeight: "12px", borderRadius: "2px 0 0 2px", background: "#3A3A3C" }} />
+      {/* Volume up */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-3px", top: "28%", width: "3px", height: "9%", minHeight: "18px", borderRadius: "2px 0 0 2px", background: "#3A3A3C" }} />
+      {/* Volume down */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-3px", top: "40%", width: "3px", height: "9%", minHeight: "18px", borderRadius: "2px 0 0 2px", background: "#3A3A3C" }} />
+      {/* Power button */}
+      <div aria-hidden="true" style={{ position: "absolute", right: "-3px", top: "33%", width: "3px", height: "14%", minHeight: "24px", borderRadius: "0 2px 2px 0", background: "#3A3A3C" }} />
+
+      {/* Phone body — Space Black titanium finish */}
+      <div style={{
+        width: "100%",
+        aspectRatio: "9/19",
+        borderRadius: "36px",
+        background: "linear-gradient(160deg, #2E2E30 0%, #1C1C1E 55%, #262628 100%)",
+        padding: "4%",
+        boxShadow: [
+          "0 0 0 1px rgba(255,255,255,0.08)",
+          "inset 0 0 0 1px rgba(255,255,255,0.04)",
+          "0 40px 80px rgba(0,0,0,0.85)",
+          "0 16px 32px rgba(0,0,0,0.5)",
+          "0 0 0 6px rgba(0,0,0,0.3)",
+        ].join(", "),
+      }}>
+        {/* Screen glass */}
+        <div style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: "28px",
+          background: "#000",
+          overflow: "hidden",
+          position: "relative",
+          outline: "1px solid rgba(255,255,255,0.05)",
+        }}>
+          {screenshot ? (
+            <img src={screenshot} alt={`${title} screenshot`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          ) : (
+            <div style={{
+              width: "100%",
+              height: "100%",
+              background: "linear-gradient(165deg, #0D1F2D 0%, #071016 100%)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "12px",
+            }}>
+              <span style={{ fontSize: "32px", marginTop: "18%" }} aria-hidden="true">{icon}</span>
+              <div style={{ textAlign: "center", padding: "0 18%" }}>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "9px", color: "#2A4A5E", fontWeight: 600, lineHeight: 1.4 }}>{title}</p>
+                <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "7px", color: "#1A3448", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "4px" }}>Screenshot</p>
+              </div>
+            </div>
+          )}
+
+          {/* Dynamic Island */}
+          <div aria-hidden="true" style={{
+            position: "absolute",
+            top: "3%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "32%",
+            height: "5%",
+            minHeight: "20px",
+            maxHeight: "28px",
+            background: "#000",
+            borderRadius: "100px",
+            zIndex: 10,
+          }} />
+
+          {/* Home indicator */}
+          <div aria-hidden="true" style={{
+            position: "absolute",
+            bottom: "2.5%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "36%",
+            height: "4px",
+            background: "rgba(255,255,255,0.18)",
+            borderRadius: "100px",
+          }} />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const TAG_COLORS: Record<string, { color: string; bg: string; border: string }> = {
   Patients: { color: "#93A793", bg: "rgba(147,167,147,0.08)", border: "rgba(147,167,147,0.2)" },
@@ -153,8 +230,7 @@ export default function Features() {
       "Treatment Plans — structured plan creation, status tracking, patient-facing summaries",
       "Document Management — X-rays, photos, clinical documents with secure patient access",
       "Instant QR Pairing — link patient to dentist with a single scan, JWT-verified",
-      "Daily Habit Tracker — brushing, flossing, streaks, dentist-set goals",
-      "Smart Health Profile — guided anamnesis, medical history, shared with dentist automatically"
+      "Daily Habit Tracker — brushing, flossing, streaks, dentist-set goals"
     ],
     "award": "3rd Prize, EFP Digital Innovation Award 2025, EuroPerio11 Vienna"
   };
@@ -216,7 +292,7 @@ export default function Features() {
             What's inside <span style={{ color: "#C0E57A" }}>Perioskoup</span>
           </h2>
           <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, textAlign: "center", maxWidth: 560, margin: "0 auto 72px" }}>
-            Six features built to keep patients engaged and dentists in control — all in one app.
+            Five features built to keep patients engaged and dentists in control — all in one app.
           </p>
 
           <div>
@@ -261,36 +337,9 @@ export default function Features() {
                     </div>
                   </div>
 
-                  {/* Phone mockup — drop screenshot path into FEATURES[n].screenshot to activate */}
+                  {/* Phone mockup — set FEATURES[n].screenshot to swap in a real screenshot */}
                   <div className="w-[200px] md:w-[220px] lg:w-[260px] flex-shrink-0 mx-auto md:mx-0">
-                    <div style={{
-                      width: "100%",
-                      aspectRatio: "9/19",
-                      borderRadius: "40px",
-                      border: "1.5px solid #234966",
-                      background: "#071016",
-                      overflow: "hidden",
-                      boxShadow: "0 0 0 4px rgba(35,73,102,0.25), 0 32px 80px rgba(0,0,0,0.6)",
-                      position: "relative",
-                    }}>
-                      {f.screenshot ? (
-                        <img
-                          src={f.screenshot}
-                          alt={`${f.title} app screenshot`}
-                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                        />
-                      ) : (
-                        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "14px", position: "relative" }}>
-                          {/* Dynamic Island / notch */}
-                          <div style={{ position: "absolute", top: "18px", left: "50%", transform: "translateX(-50%)", width: "72px", height: "22px", background: "#050C10", borderRadius: "100px" }} aria-hidden="true" />
-                          <span style={{ fontSize: "42px", marginTop: "32px" }} aria-hidden="true">{f.icon}</span>
-                          <div style={{ textAlign: "center", padding: "0 20px" }}>
-                            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 600, color: "#2A4A5E", marginBottom: "4px" }}>{f.title}</p>
-                            <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: "9px", color: "#1D3449", textTransform: "uppercase", letterSpacing: "0.14em" }}>App screenshot</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                    <PhoneMockup icon={f.icon} title={f.title} screenshot={f.screenshot} />
                   </div>
                 </div>
               );
