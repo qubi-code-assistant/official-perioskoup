@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from "react";
 
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import CookieBanner from "./components/CookieBanner";
 import Home from "./pages/Home";
 
 // Route-level code splitting -- every non-Home page is lazy loaded
@@ -109,6 +110,7 @@ export default function App() {
         {/* Skip to main content -- visually hidden, appears on keyboard focus (WCAG 2.4.1) */}
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <Router />
+        <CookieBanner />
       </ThemeProvider>
     </ErrorBoundary>
   );
