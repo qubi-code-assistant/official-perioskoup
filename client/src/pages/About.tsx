@@ -154,29 +154,31 @@ export default function About() {
         <ParallaxHeroBg />
         <HeroGlow />
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
+          <div style={{ textAlign: "center" }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
           <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Our Story</span>
           <h1 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(56px, 7vw, 88px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 28, marginTop: 16, transitionDelay: "0.08s" }}>
             Born in a dental chair.<br />
             <span style={{ color: "#C0E57A" }}>Built for every patient.</span>
           </h1>
-          <p className="body-lg reveal" style={{ fontSize: 19, maxWidth: 600, transitionDelay: "0.16s" }}>
+          <p className="body-lg reveal" style={{ fontSize: 19, maxWidth: 600, margin: "0 auto", transitionDelay: "0.16s" }}>
             Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest - and decided to build the solution herself.
           </p>
-          <div className="reveal" style={{ marginTop: 32, transitionDelay: "0.24s" }}>
+          <div className="reveal" style={{ marginTop: 32, transitionDelay: "0.24s", display: "flex", justifyContent: "center" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "12px 28px" }}>
               Join the Waitlist
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
+          </div>
           </div>
         </div>
       </section>
 
       {/* EFP Award */}
       <section style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
-        <div className="container">
+        <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <span className="label-tag reveal" style={{ marginBottom: 32, display: "inline-flex" }}>Recognition</span>
-          <div className="reveal-scale grid grid-cols-1 md:grid-cols-2 rounded-3xl overflow-hidden border border-[#234966]" style={{ maxWidth: 900 }}>
+          <div className="reveal-scale grid grid-cols-1 md:grid-cols-2 rounded-3xl overflow-hidden border border-[#234966]" style={{ maxWidth: 900, width: "100%" }}>
             {/* Photo */}
             <div className="relative min-h-[240px] md:min-h-[360px] overflow-hidden">
               <img src={AWARD_IMG} alt="EFP Digital Innovation Award 2025 ceremony" loading="lazy" decoding="async" width={900} height={360} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
