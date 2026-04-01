@@ -1,0 +1,16 @@
+node_modules
+dist
+.git
+.env*
+audit
+audit-results
+playwright-report
+test-results
+scripts
+*.md
+*.pdf
+*.html
+*.sh
+*.jpg
+*.png
+patches
