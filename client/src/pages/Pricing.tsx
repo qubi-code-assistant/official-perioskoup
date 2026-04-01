@@ -29,7 +29,7 @@ const PLANS = [
     price: "Coming soon",
     period: "",
     description: "For dental practices that want to improve patient engagement and outcomes.",
-    features: ["Everything in Patient", "Clinician dashboard", "Patient engagement visibility", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports (coming soon)", "Multi-dentist support", "Priority support"],
+    features: ["Dentist dashboard", "Patient engagement visibility", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports (coming soon)", "Priority support"],
     cta: "Apply as a Founding Clinic",
     href: "/waitlist",
     highlighted: true,
@@ -59,7 +59,7 @@ export default function Pricing() {
     "brand": { "@type": "Organization", "name": "Perioskoup" },
     "offers": [
       { "@type": "Offer", "name": "Patient Plan", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/PreOrder", "description": "Free during beta. Includes AI-powered care plans, reminders, progress tracking, and educational content." },
-      { "@type": "Offer", "name": "Clinic Plan", "availability": "https://schema.org/PreOrder", "description": "Coming soon. Includes clinician dashboard, patient engagement tracking, analytics, and multi-dentist support." }
+      { "@type": "Offer", "name": "Clinic Plan", "availability": "https://schema.org/PreOrder", "description": "Coming soon. Includes dentist dashboard, patient engagement tracking, analytics, and priority support." }
     ]
   };
 
