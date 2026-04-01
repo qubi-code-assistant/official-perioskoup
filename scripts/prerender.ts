@@ -114,5 +114,10 @@ async function prerender() {
 
 prerender().catch((err) => {
   console.error("Prerender failed:", err);
+  // On CI/Vercel, Playwright browsers may not be available — skip prerender gracefully
+  if (process.env.CI || process.env.VERCEL) {
+    console.warn("Skipping prerender in CI/Vercel environment.");
+    process.exit(0);
+  }
   process.exit(1);
 });
