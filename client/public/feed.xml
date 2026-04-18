@@ -5,67 +5,13 @@
     <link>https://perioskoup.com/blog</link>
     <description>Insights on periodontal health, AI in dentistry, and patient engagement from the Perioskoup team.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 22 Mar 2026 15:18:21 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 18 Apr 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://perioskoup.com/feed.xml" rel="self" type="application/rss+xml" />
     <image>
       <url>https://perioskoup.com/images/og-image.jpg</url>
       <title>Perioskoup Blog</title>
       <link>https://perioskoup.com/blog</link>
     </image>
-
-    <item>
-      <title><![CDATA[The 3-Minute Daily Routine That Could Save Your Teeth]]></title>
-      <link>https://perioskoup.com/blog/3-minute-routine-save-teeth</link>
-      <guid isPermaLink="true">https://perioskoup.com/blog/3-minute-routine-save-teeth</guid>
-      <description><![CDATA[Most people spend more time choosing what to watch on Netflix than caring for their teeth. Here's a clinically-backed 3-minute routine that actually works.]]></description>
-      <pubDate>Thu, 08 Jan 2026 00:00:00 GMT</pubDate>
-      <author>hello@perioskoup.com (Dr. Anca Laura Constantin)</author>
-      <category>Patient Habits</category>
-    </item>
-    <item>
-      <title><![CDATA[How AI Is Changing Dental Monitoring - And Why It Matters]]></title>
-      <link>https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring</link>
-      <guid isPermaLink="true">https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring</guid>
-      <description><![CDATA[From pattern recognition in X-rays to personalised habit coaching, AI is beginning to close the gap between clinical visits. Here's what's real and what's hype.]]></description>
-      <pubDate>Wed, 03 Dec 2025 00:00:00 GMT</pubDate>
-      <author>hello@perioskoup.com (Eduard Ciugulea)</author>
-      <category>Technology</category>
-    </item>
-    <item>
-      <title><![CDATA[What Is Periodontal Disease? A Patient's Complete Guide]]></title>
-      <link>https://perioskoup.com/blog/what-is-periodontal-disease</link>
-      <guid isPermaLink="true">https://perioskoup.com/blog/what-is-periodontal-disease</guid>
-      <description><![CDATA[Periodontal disease affects more than half of adults over 30, yet most people have never heard the word 'periodontist'. Here's everything you need to know.]]></description>
-      <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
-      <author>hello@perioskoup.com (Dr. Anca Laura Constantin)</author>
-      <category>Patient Education</category>
-    </item>
-    <item>
-      <title><![CDATA[Why Patients Forget Dental Instructions (And What to Do About It)]]></title>
-      <link>https://perioskoup.com/blog/why-patients-forget-instructions</link>
-      <guid isPermaLink="true">https://perioskoup.com/blog/why-patients-forget-instructions</guid>
-      <description><![CDATA[Research consistently shows that patients forget up to 80% of what they are told in a clinical consultation within 24 hours. This is not a patient failure - it is a systems failure.]]></description>
-      <pubDate>Sun, 05 Oct 2025 00:00:00 GMT</pubDate>
-      <author>hello@perioskoup.com (Dr. Anca Laura Constantin)</author>
-      <category>Clinical Insight</category>
-    </item>
-    <item>
-      <title><![CDATA[Building the Bridge: The Perioskoup Story]]></title>
-      <link>https://perioskoup.com/blog/building-the-bridge-perioskoup-story</link>
-      <guid isPermaLink="true">https://perioskoup.com/blog/building-the-bridge-perioskoup-story</guid>
-      <description><![CDATA[Every startup begins with a problem that someone couldn't stop thinking about. For Perioskoup, that problem was the gap between the dental chair and the patient's daily life.]]></description>
-      <pubDate>Mon, 01 Sep 2025 00:00:00 GMT</pubDate>
-      <author>hello@perioskoup.com (Dr. Anca Laura Constantin)</author>
-      <category>Founder Story</category>
-    </item>
-    <item>
-      <title><![CDATA[Perioskoup Wins EFP Digital Innovation Award 2025]]></title>
-      <link>https://perioskoup.com/blog/efp-digital-innovation-award-2025</link>
-      <guid isPermaLink="true">https://perioskoup.com/blog/efp-digital-innovation-award-2025</guid>
-      <description><![CDATA[At EuroPerio11 in Vienna, Perioskoup was awarded 3rd Prize at the EFP Digital Innovation Awards - selected from 20 submissions across 17 national societies.]]></description>
-      <pubDate>Sat, 17 May 2025 00:00:00 GMT</pubDate>
-      <author>hello@perioskoup.com (Eduard Ciugulea)</author>
-      <category>Company News</category>
-    </item>
+    <!-- Articles will be added here when published -->
   </channel>
 </rss>
