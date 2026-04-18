@@ -53,7 +53,7 @@ export default function Home() {
     ],
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Bucharest",
+      "addressLocality": "Buzău",
       "addressCountry": "RO",
     },
     "areaServed": { "@type": "Place", "name": "Europe" },
@@ -362,7 +362,7 @@ export default function Home() {
               <path d="M 120 80 C 250 80, 300 160, 450 160 C 600 160, 650 80, 780 80" stroke="rgba(192,229,122,0.35)" strokeWidth="1.5" fill="none" />
             </svg>
 
-            <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 0, position: "relative", zIndex: 2 }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0" style={{ position: "relative", zIndex: 2 }}>
               {[
                 {
                   step: "01", title: "Visit Your Dentist", desc: "Your dentist examines and creates a personalised care plan — then uploads it to Perioskoup.", offsetY: 0,

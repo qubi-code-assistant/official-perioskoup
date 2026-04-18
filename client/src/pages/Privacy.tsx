@@ -18,7 +18,7 @@ const SECTIONS = [
   { title: "4. Data Storage & Security", content: "All data is stored on servers located within the European Union. We use industry-standard encryption (TLS in transit, AES-256 at rest) and access controls. Health data is stored separately from account data and is accessible only to you and your authorized clinician." },
   { title: "5. Your Rights", content: "Under GDPR, you have the right to access, rectify, erase, restrict, or port your personal data. You may withdraw consent at any time. To exercise your rights, contact us at privacy@perioskoup.com. We will respond within 30 days." },
   { title: "6. Cookies", content: "We use essential cookies for authentication and session management, and analytics cookies (with your consent) to understand how the app is used. You can manage cookie preferences at any time through your browser settings." },
-  { title: "7. Contact", content: "For privacy-related enquiries, contact our Data Protection Officer at: privacy@perioskoup.com. Perioskoup SRL, Bucharest, Romania." },
+  { title: "7. Contact", content: "For privacy-related enquiries, contact our Data Protection Officer at: privacy@perioskoup.com. Perioskoup SRL, Buzău, Romania." },
 ];
 
 export default function Privacy() {

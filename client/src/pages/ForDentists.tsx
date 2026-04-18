@@ -129,10 +129,10 @@ export default function ForDentists() {
       foundingDate: "2025",
       foundingLocation: {
         "@type": "Place",
-        name: "Bucharest, Romania",
+        name: "Buzău, Romania",
         address: {
           "@type": "PostalAddress",
-          addressLocality: "Bucharest",
+          addressLocality: "Buzău",
           addressCountry: "RO",
         },
       },

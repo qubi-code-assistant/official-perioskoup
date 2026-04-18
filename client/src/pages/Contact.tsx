@@ -125,7 +125,7 @@ export default function Contact() {
         name: "Is Perioskoup available in my country?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Perioskoup is based in Bucharest, Romania and is initially launching across Europe. The platform is designed for dental clinics and patients in the EU, UK, and beyond. Contact us for availability in your region.",
+          text: "Perioskoup is based in Buzău, Romania and is initially launching across Europe. The platform is designed for dental clinics and patients in the EU, UK, and beyond. Contact us for availability in your region.",
         },
       },
     ],
@@ -184,7 +184,7 @@ export default function Contact() {
         />
         <meta
           property="og:description"
-          content="Get in touch with the Perioskoup team for press, clinic partnerships, or general enquiries. Based in Bucharest, serving clinics across Europe."
+          content="Get in touch with the Perioskoup team for press, clinic partnerships, or general enquiries. Based in Buzău, Romania, serving clinics across Europe."
         />
         <meta property="og:url" content="https://perioskoup.com/contact" />
         <meta property="og:type" content="website" />

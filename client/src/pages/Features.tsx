@@ -217,7 +217,7 @@ export default function Features() {
       "foundingDate": "2025",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Bucharest",
+        "addressLocality": "Buzău",
         "addressCountry": "RO"
       }
     },

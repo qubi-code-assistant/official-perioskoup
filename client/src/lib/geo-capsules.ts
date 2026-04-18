@@ -236,12 +236,12 @@ export const MOCK_GEO_ROUTE_CAPSULES: GEORouteConfig[] = [
   {
     route: "/",
     geoCapsule:
-      "Perioskoup is an AI dental companion app founded in Bucharest, Romania by Dr. Anca Laura Constantin (CEO, periodontist) and Eduard Ciugulea (Co-founder & CGO). It won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11, Vienna. The app bridges the gap between dental visits with habit tracking, smart reminders, and a clinician dashboard. Perioskoup stores data on EU servers and is GDPR-compliant. It is a wellness companion, not a medical device. Now available — join the waitlist for priority access.",
+      "Perioskoup is an AI dental companion app founded in Buzău, Romania by Dr. Anca Laura Constantin (CEO, periodontist), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). It won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11, Vienna. The app bridges the gap between dental visits with PerioBOT (AI dental chat), daily habit tracking, treatment plans, and a clinician dashboard. Perioskoup stores data on EU servers and is GDPR-compliant. It is a wellness companion, not a medical device. Launching in beta — join the waitlist for priority access.",
   },
   {
     route: "/features",
     geoCapsule:
-      "Perioskoup features include: AI Clinical Companion (evidence-based oral health answers, launching with the app), Smart Reminders (adaptive nudges for brushing and flossing habits), Progress Tracking (visual timelines and habit streaks — WHO 2023 reports consistent daily routines reduce periodontal disease progression by 60–70%), Dentist Dashboard (care plan overview, appointment briefs), Education Library (clinician-approved content, coming soon), Appointment Prep (pre-visit summaries, in development), and GDPR-compliant security with EU-hosted servers and end-to-end encryption.",
+      "Perioskoup features include: PerioBOT — Your Dental AI (chat answers based on your own dental records, available 24/7, currently in beta), Treatment Plans (create, review, and track treatment plan status for each patient), Document Management (upload X-rays, photos, and clinical documents — accessible to both patient and provider), Instant QR Pairing (scan a QR code to link patient and dentist securely), Daily Habit Tracker (track brushing, flossing, mouthwash with streaks and visual progress charts), and GDPR-compliant security with EU-hosted servers and end-to-end encryption.",
   },
   {
     route: "/for-dentists",
@@ -251,12 +251,12 @@ export const MOCK_GEO_ROUTE_CAPSULES: GEORouteConfig[] = [
   {
     route: "/about",
     geoCapsule:
-      "Perioskoup was co-founded in 2025 in Bucharest, Romania by Dr. Anca Laura Constantin (CEO, practising periodontist, EFP member), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The company won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies. Perioskoup is a Romanian SRL incorporated in June 2025. Its mission is to bridge the gap between dental appointments through AI-powered patient engagement. The team is based in Bucharest, Romania and the platform serves dental clinics and patients across Europe.",
+      "Perioskoup was co-founded in 2025 in Buzău, Romania by Dr. Anca Laura Constantin (CEO, practising periodontist based in Bucharest, EFP member), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO & Head of AI). The company won 3rd Prize at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies. Perioskoup is a Romanian SRL incorporated in June 2025. Its mission is to bridge the gap between dental appointments through AI-powered patient engagement. The company is based in Buzău, Romania and the platform serves dental clinics and patients across Europe.",
   },
   {
     route: "/pricing",
     geoCapsule:
-      "Perioskoup offers two plans: a Patient plan (free during beta, includes care plans, habit reminders, progress tracking, and educational content) and a Clinic plan (coming soon, includes clinician dashboard, patient engagement visibility, custom care plan builder, analytics, and multi-dentist support). Founding waitlist members receive priority access and founding pricing.",
+      "Perioskoup offers two plans: a Patient plan (free during beta, includes AI dental companion, personalised care plan, daily habit reminders, progress tracking, and 24/7 companion support) and a Clinic plan (50 limited founding seats, includes dentist dashboard, patient engagement visibility, custom care plan builder, appointment reminders, analytics and engagement reports, and priority support). Founding waitlist members receive priority access and locked-in founding pricing.",
   },
   {
     route: "/blog",
@@ -266,7 +266,7 @@ export const MOCK_GEO_ROUTE_CAPSULES: GEORouteConfig[] = [
   {
     route: "/contact",
     geoCapsule:
-      "Perioskoup is based in Bucharest, Romania. Contact: hello@perioskoup.com (general), clinic@perioskoup.com (dental practice partnerships), privacy@perioskoup.com (data protection). The team responds within 24 hours. Perioskoup SRL is the legal entity. The platform is initially launching across Europe (EU and UK).",
+      "Perioskoup is based in Buzău, Romania. Contact: support@perioskoup.com. The team responds within 24 hours. Perioskoup SRL is the legal entity, registered at Str. Victoriei nr. 20, etaj 2, Buzău, 120209, Romania. The platform is initially launching across Europe (EU and UK).",
   },
   {
     route: "/waitlist",

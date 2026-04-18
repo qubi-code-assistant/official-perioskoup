@@ -59,7 +59,7 @@ export default function About() {
     "description": "AI dental companion app that bridges the gap between dental visits with habit tracking, smart reminders, and a clinician dashboard.",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Bucharest",
+      "addressLocality": "Buzău",
       "addressCountry": "RO"
     },
     "areaServed": {
@@ -111,7 +111,7 @@ export default function About() {
         "name": "Where is Perioskoup based?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Perioskoup is based in Bucharest, Romania. It is a Romanian SRL incorporated in June 2025. The platform serves dental clinics and patients across Europe."
+          "text": "Perioskoup is based in Buzău, Romania. It is a Romanian SRL incorporated in June 2025. The platform serves dental clinics and patients across Europe."
         }
       },
       {
@@ -128,14 +128,14 @@ export default function About() {
   return (
     <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
-        <title>About Perioskoup | Dental AI Built in Bucharest</title>
+        <title>About Perioskoup | Dental AI Built in Romania</title>
         <meta name="description" content="Meet the team behind Perioskoup: a periodontist, engineer, and AI specialist building the dental companion they always wished existed." />
         <link rel="canonical" href="https://perioskoup.com/about" />
-        <meta property="og:title" content="About Perioskoup | Dental AI Built in Bucharest" />
+        <meta property="og:title" content="About Perioskoup | Dental AI Built in Romania" />
         <meta property="og:description" content="Meet the founders of Perioskoup: Dr. Anca Constantin (Periodontist), Eduard Ciugulea (CGO), and Petrica Nancu (CTO). EFP Digital Innovation Award 2025 — 3rd Prize." />
         <meta property="og:url" content="https://perioskoup.com/about" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:title" content="About Perioskoup | Dental AI Built in Bucharest" />
+        <meta name="twitter:title" content="About Perioskoup | Dental AI Built in Romania" />
         <meta name="twitter:description" content="A periodontist, an engineer, and an AI specialist walk into a dental chair... and build the companion they always wished existed. EFP Digital Innovation Award 2025 — 3rd Prize." />
         <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
