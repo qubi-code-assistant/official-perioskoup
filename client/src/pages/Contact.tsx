@@ -17,6 +17,8 @@ export default function Contact() {
   useReveal();
   const { GEOCapsule } = usePageMeta("/contact");
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   function validate(form: HTMLFormElement): Record<string, string> {
@@ -33,12 +35,36 @@ export default function Contact() {
     return errs;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const errs = validate(e.currentTarget);
+    const form = e.currentTarget;
+    const errs = validate(form);
     setErrors(errs);
-    if (Object.keys(errs).length === 0) {
+    setSubmitError(null);
+    if (Object.keys(errs).length > 0) return;
+
+    const role = (form.elements.namedItem("contact-role") as HTMLSelectElement)?.value;
+    const payload = {
+      first_name: (form.elements.namedItem("contact-first-name") as HTMLInputElement).value.trim(),
+      last_name: (form.elements.namedItem("contact-last-name") as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem("contact-email") as HTMLInputElement).value.trim(),
+      user_type: (role === "dentist" || role === "clinic") ? "dentist" : "patient",
+      message: (form.elements.namedItem("contact-message") as HTMLTextAreaElement).value.trim(),
+    };
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/contact/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Server error");
       setSent(true);
+    } catch {
+      setSubmitError("Something went wrong. Please try again or email us directly.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -60,9 +86,13 @@ export default function Contact() {
     "legalName": "Perioskoup SRL",
     "description": "AI-powered dental companion app for personalised periodontal care between appointments.",
     "url": "https://perioskoup.com",
-    "email": "hello@perioskoup.com",
+    "email": "support@perioskoup.com",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Str. Victoriei nr. 20, etaj 2",
+      "addressLocality": "Buzău",
+      "addressRegion": "Județul Buzău",
+      "postalCode": "120209",
       "addressCountry": "RO"
     },
     "foundingDate": "2025-06",
@@ -130,9 +160,8 @@ export default function Contact() {
             {/* Left: info */}
             <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
               {[
-                { icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z", label: "Email", value: "hello@perioskoup.com", sub: "We reply within 24 hours." },
-                { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z", label: "Location", value: "Based in Europe", sub: "Serving dental practices worldwide." },
-                { icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z", label: "For Clinics", value: "clinic@perioskoup.com", sub: "Founding partner enquiries." },
+                { icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z", label: "Email", value: "support@perioskoup.com", sub: "We reply within 24 hours." },
+                { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z", label: "Location", value: "Str. Victoriei nr. 20, etaj 2, Buzău", sub: "Județul Buzău, România · 120209" },
               ].map((item) => (
                 <div key={item.label} className="reveal" style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(192,229,122,0.08)", border: "1px solid rgba(192,229,122,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -194,9 +223,12 @@ export default function Contact() {
                     <textarea id="contact-message" placeholder="Tell us what's on your mind..." className="p-input" rows={4} required aria-required="true" aria-invalid={!!errors["contact-message"]} aria-describedby={errors["contact-message"] ? "contact-message-error" : undefined} style={{ resize: "vertical" }} />
                     {errors["contact-message"] && <span id="contact-message-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>{errors["contact-message"]}</span>}
                   </div>
-                  <button type="submit" className="btn-primary" style={{ justifyContent: "center" }}>
-                    Send Message
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  {submitError && (
+                    <p role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#F87171", textAlign: "center" }}>{submitError}</p>
+                  )}
+                  <button type="submit" className="btn-primary" style={{ justifyContent: "center", opacity: loading ? 0.6 : 1 }} disabled={loading}>
+                    {loading ? "Sending..." : "Send Message"}
+                    {!loading && <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                   </button>
                 </form>
               )}

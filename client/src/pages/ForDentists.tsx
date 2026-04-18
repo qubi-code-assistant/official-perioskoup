@@ -30,8 +30,8 @@ const FEATURES = [
   {
     icon: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z",
     title: "Care Plan Visibility",
-    desc: "See which patients are following their care plans and which may need an extra nudge. Stay connected between appointments — coming in Q2 2026.",
-    bullets: ["Patient programme overview", "Appointment preparation briefs", "Care plan follow-through (in development)", "Practice-wide summaries (coming Q2 2026)"],
+    desc: "See which patients are following their care plans and which may need an extra nudge. Stay connected between appointments.",
+    bullets: ["Patient programme overview", "Appointment preparation briefs", "Care plan follow-through", "Practice-wide summaries"],
   },
 ];
 
@@ -242,6 +242,12 @@ export default function ForDentists() {
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 13, color: "#C0E57A" }}>CEO & Co-founder, Periodontist</p>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#93A793", marginTop: 4 }}>3rd Prize, EFP Digital Innovation Award 2025</p>
+                <a href="https://www.efp.org/publications-hub/an-ai-based-app-promises-to-strengthen-the-patient-clinician-relationship/" target="_blank" rel="noopener noreferrer" className="btn-text" style={{ marginTop: 12, display: "inline-flex", fontSize: 13 }}>
+                  Read Dr. Anca's article about Perioskoup on EFP
+                  <span className="btn-text-arrow">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -344,7 +350,7 @@ export default function ForDentists() {
       <section style={{ padding: "clamp(56px, 7vw, 100px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24 }}>
-            Not another PMS plugin.
+            Not another practice management system plugin.
           </h2>
           <p className="body-lg reveal" style={{ marginBottom: 20, transitionDelay: "0.08s" }}>
             Practice management systems track appointments. Patient portals send reminders. But neither helps a patient build the daily habits that prevent disease recurrence.
@@ -370,9 +376,6 @@ export default function ForDentists() {
           </h2>
           <p className="body-lg reveal" style={{ maxWidth: 440, margin: "0 auto 24px", transitionDelay: "0.16s" }}>
             Founding clinics get lifetime discounted pricing, direct input on the product roadmap, and a dedicated onboarding specialist.
-          </p>
-          <p className="reveal" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#93A793", maxWidth: 440, margin: "0 auto 36px", transitionDelay: "0.20s" }}>
-            Every €1 invested in prevention saves €8–50 in future treatment costs. Source: <a href="https://www.who.int/news-room/fact-sheets/detail/oral-health" target="_blank" rel="noopener noreferrer" style={{ color: "#93A793", textDecoration: "none" }}>WHO Oral Health</a>
           </p>
           <div className="reveal" style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", transitionDelay: "0.24s" }}>
             <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 36px" }}>

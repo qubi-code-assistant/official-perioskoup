@@ -19,17 +19,19 @@ const PLANS = [
     price: "Free",
     period: "during beta",
     description: "For patients who want to understand and manage their periodontal health.",
-    features: ["Plain-language oral health education", "Personalized care plan", "Daily habit reminders", "Progress tracking (coming soon)", "Educational content library (coming soon)"],
+    features: ["Full access to your AI dental companion", "Personalized care plan", "Daily habit reminders", "Progress tracking", "24/7 companion support"],
+    note: "*During beta you have unlimited access to all features",
     cta: "Join the Waitlist",
     href: "/waitlist",
     highlighted: false,
   },
   {
     name: "Clinic",
-    price: "Coming soon",
+    price: "50 limited seats",
     period: "",
     description: "For dental practices that want to improve patient engagement and outcomes.",
-    features: ["Dentist dashboard", "Patient engagement visibility", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports (coming soon)", "Priority support"],
+    features: ["Dentist dashboard", "Patient engagement visibility", "Custom care plan builder", "Appointment reminders", "Analytics & engagement reports", "Priority support"],
+    note: "",
     cta: "Apply as a Founding Clinic",
     href: "/waitlist",
     highlighted: true,
@@ -140,11 +142,11 @@ export default function Pricing() {
                 )}
                 <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 28, fontWeight: 700, color: "#F5F9EA", marginBottom: 8 }}>{plan.name}</h3>
                 <div style={{ marginBottom: 16 }}>
-                  <span style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: 40, color: plan.highlighted ? "#C0E57A" : "#F5F9EA" }}>{plan.price}</span>
+                  <span style={{ fontFamily: "Dongle, sans-serif", fontWeight: 700, fontSize: plan.highlighted ? 28 : 40, color: plan.highlighted ? "#C0E57A" : "#F5F9EA" }}>{plan.price}</span>
                   {plan.period && <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", marginLeft: 8 }}>{plan.period}</span>}
                 </div>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, lineHeight: 1.6, color: "#8C9C8C", marginBottom: 28 }}>{plan.description}</p>
-                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 10 }}>
+                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 16px", display: "flex", flexDirection: "column", gap: 10 }}>
                   {plan.features.map((feat) => (
                     <li key={feat} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><path d="M5 13l4 4L19 7" stroke="#C0E57A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -152,6 +154,9 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
+                {plan.note && (
+                  <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", fontStyle: "italic", marginBottom: 20 }}>{plan.note}</p>
+                )}
                 <Link href={plan.href} className={plan.highlighted ? "btn-primary" : "btn-ghost"} style={{ width: "100%", justifyContent: "center", display: "flex" }}>
                   {plan.cta}
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -174,10 +179,10 @@ export default function Pricing() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {[
-              { q: "Is it really free for patients?", a: "Yes. During our beta phase, the patient app is completely free. We believe access to dental health information should not be a barrier." },
+              { q: "Is it really free for patients?", a: "We believe access to dental health information should not be a barrier. The patient app will always have a plan that is free of charge." },
               { q: "When will clinic pricing be available?", a: "We're onboarding founding clinic partners now. If you're a dental practice, join the waitlist and we'll reach out with details before public launch." },
-              { q: 'What does "founding partner" mean?', a: "Founding clinic partners get locked-in pricing, early access to new features, and direct input on the product roadmap. There are limited spots available." },
-              { q: "Is patient data secure?", a: "Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data is stored on EU servers. We never sell patient data." },
+              { q: 'What does "founding partner" mean?', a: "A founding partner is a clinic that joins us in the early stage before launch, gets discounted locked-in pricing, and has access to new features, and direct input on the product roadmap. There are 50 limited spots available." },
+              { q: "Is patient data secure?", a: "Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data is stored on EU servers." },
             ].map((item, i) => (
               <div key={item.q} className="reveal" style={{ padding: "24px 0", borderBottom: i < 3 ? "1px solid #234966" : "none", transitionDelay: `${i * 0.06}s` }}>
                 <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 24, fontWeight: 700, color: "#F5F9EA", marginBottom: 10 }}>{item.q}</h3>

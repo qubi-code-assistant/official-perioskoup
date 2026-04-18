@@ -16,7 +16,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 const FEATURES: {
   icon: string;
   title: string;
-  tag: string;
+  tag: string | string[];
   badge?: string;
   bullets: string[];
   desc: string;
@@ -25,13 +25,12 @@ const FEATURES: {
   {
     icon: "🤖",
     title: "PerioBOT — Your Dental AI",
-    tag: "Patients",
+    tag: "Patient",
     badge: "Beta",
     bullets: [
-      "Chat trained on your own dental records",
-      "Voice message support with transcription",
-      "Contextual answers based on your treatment history",
+      "Chat answers based on your own dental records",
       "Available 24/7 between appointments",
+      "Gives insights and answers to your oral health concerns",
     ],
     desc: "Ask questions about your oral health and get personalized answers grounded in your clinical data.",
     // screenshot: "/images/screenshots/periobot.png",
@@ -39,12 +38,11 @@ const FEATURES: {
   {
     icon: "📋",
     title: "Treatment Plans",
-    tag: "Dentists",
+    tag: "Dentist",
     bullets: [
       "Create and review treatment plans per patient",
       "Track plan status (pending, approved, completed)",
       "Patient-facing plan summaries with explanations",
-      "Link plans to specific appointments",
     ],
     desc: "Structured treatment planning that keeps both dentist and patient aligned on next steps.",
     // screenshot: "/images/screenshots/treatment-plans.png",
@@ -52,12 +50,11 @@ const FEATURES: {
   {
     icon: "📂",
     title: "Document Management",
-    tag: "Both",
+    tag: ["Patient", "Dentist"],
     bullets: [
+      "Dentists attach files to patient profiles",
       "Upload X-rays, photos, and clinical documents",
       "Patients access their records anytime",
-      "Dentists attach files to patient profiles",
-      "Compressed uploads for fast mobile transfer",
     ],
     desc: "All dental documents in one secure place — accessible to both patient and provider.",
     // screenshot: "/images/screenshots/documents.png",
@@ -65,12 +62,11 @@ const FEATURES: {
   {
     icon: "📱",
     title: "Instant QR Pairing",
-    tag: "Both",
+    tag: ["Patient", "Dentist"],
     bullets: [
       "Scan a QR code to link patient and dentist",
-      "No manual data entry or invitation codes",
+      "Easy to share with your patients or dentist",
       "Secure handshake with JWT verification",
-      "Works in-clinic in seconds",
     ],
     desc: "Connect patient to dentist with a single scan — no forms, no friction.",
     // screenshot: "/images/screenshots/qr-pairing.png",
@@ -78,11 +74,10 @@ const FEATURES: {
   {
     icon: "🪥",
     title: "Daily Habit Tracker",
-    tag: "Patients",
+    tag: "Patient",
     bullets: [
       "Track brushing, flossing, mouthwash, and more",
       "Build streaks with daily check-ins",
-      "Personalized habit goals set by your dentist",
       "Visual progress charts over time",
     ],
     desc: "Small daily habits, big dental health gains. Track your routine and watch your streaks grow.",
@@ -180,9 +175,8 @@ function PhoneMockup({ icon, title, screenshot }: { icon: string; title: string;
 }
 
 const TAG_COLORS: Record<string, { color: string; bg: string; border: string }> = {
-  Patients: { color: "#93A793", bg: "rgba(147,167,147,0.08)", border: "rgba(147,167,147,0.2)" },
-  Dentists: { color: "#C0E57A", bg: "rgba(192,229,122,0.08)", border: "rgba(192,229,122,0.2)" },
-  Both: { color: "#C0E57A", bg: "rgba(192,229,122,0.08)", border: "rgba(192,229,122,0.2)" },
+  Patient: { color: "#93A793", bg: "rgba(147,167,147,0.08)", border: "rgba(147,167,147,0.2)" },
+  Dentist: { color: "#C0E57A", bg: "rgba(192,229,122,0.08)", border: "rgba(192,229,122,0.2)" },
 };
 
 export default function Features() {
@@ -296,7 +290,7 @@ export default function Features() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {FEATURES.map((f, i) => {
-              const tagStyle = TAG_COLORS[f.tag] || TAG_COLORS.Patients;
+              const tags = Array.isArray(f.tag) ? f.tag : [f.tag];
               return (
                 <div
                   key={f.title}
@@ -309,9 +303,14 @@ export default function Features() {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
-                    <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: tagStyle.color, background: tagStyle.bg, border: `1px solid ${tagStyle.border}`, padding: "4px 10px", borderRadius: "100px" }}>
-                      {f.tag}
-                    </span>
+                    {tags.map((tag) => {
+                      const ts = TAG_COLORS[tag] || TAG_COLORS.Patient;
+                      return (
+                        <span key={tag} style={{ fontFamily: "Gabarito, sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: ts.color, background: ts.bg, border: `1px solid ${ts.border}`, padding: "4px 10px", borderRadius: "100px" }}>
+                          {tag}
+                        </span>
+                      );
+                    })}
                     {f.badge && (
                       <span style={{ fontFamily: "Gabarito, sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#0A171E", background: "#C0E57A", padding: "3px 8px", borderRadius: "100px" }}>
                         {f.badge}

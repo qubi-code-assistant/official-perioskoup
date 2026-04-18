@@ -243,7 +243,7 @@ export default function Home() {
                 </footer>
               </blockquote>
               <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#8C9C8C", lineHeight: 1.65, marginBottom: 24 }}>
-                Selected from 20 submissions across 17 national societies, Perioskoup was recognised by an international expert jury including Professors James Deschner, David Herrera, and Andreas Stavropoulos.
+                Selected from 20 submissions across 17 national societies, Perioskoup was recognised by an international expert jury including renowned professors.
               </p>
               <div style={{ display: "flex", gap: 24, alignItems: "center", marginBottom: 24, paddingTop: 16, borderTop: "1px solid #234966" }}>
                 {["EFP", "Sponsored by Haleon", "EuroPerio11"].map((t) => (
@@ -285,7 +285,7 @@ export default function Home() {
               { span: 2, title: "AI-Powered Guidance", desc: "Perioskoup's AI analyses your dental history and daily habits to deliver personalised recommendations - not generic advice. It learns what works for you and adapts over time.", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
               { span: 1, title: "Habit Tracking", desc: "Daily streaks, reminders, and progress visualisation that make good dental habits stick.", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
               { span: 1, title: "For Clinicians", desc: "Dentists and periodontists get a dashboard to track patient engagement and send targeted guidance between appointments.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
-              { span: 2, title: "Privacy First", desc: "Your dental data stays yours. Perioskoup is built with GDPR protection at its core - no selling of health data, ever. Encrypted end-to-end, stored in the EU.", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
+              { span: 2, title: "Privacy First", desc: "Your dental data stays yours. Perioskoup is built with GDPR protection at its core. Encrypted end-to-end, stored in the EU.", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
             ].map((f, i) => (
               <div key={f.title} className={`card reveal ${f.span === 2 ? "md:col-span-2" : ""}`} style={{ transitionDelay: `${i * 0.08}s`, background: "rgba(29,52,73,0.75)", backdropFilter: "blur(12px)" }}>
                 <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(192,229,122,0.1)", border: "1px solid rgba(192,229,122,0.25)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
@@ -329,13 +329,13 @@ export default function Home() {
               What is an AI dental companion?
             </h2>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-              An AI dental companion translates clinical recommendations into personalised daily habits. It bridges the gap between what your dentist recommends and what you actually do at home.
+              An AI dental companion is a personalised assistant designed to support patients outside the clinic. It uses real treatment plans, clinical recommendations, and uploaded documents to understand each patient's situation and provide guidance that matches their specific needs.
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 18, color: "rgba(245,249,234,0.8)", lineHeight: 1.7, maxWidth: 640, margin: "0 auto 16px" }}>
               Not a chatbot. Not a practice management system. Not a fitness tracker for teeth.
             </p>
             <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 17, color: "#8C9C8C", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
-              An AI dental companion translates clinical recommendations into personalised daily habits - with smart reminders, progress tracking, and a connection to your care team. Perioskoup is the first.
+              Perioskoup is the first AI dental companion built to support each patient based on their real dental journey. It bridges the gap between what your dentist recommends and what you actually do at home.
             </p>
           </div>
         </div>
@@ -435,15 +435,21 @@ export default function Home() {
           <div className="reveal" style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
             <div style={{ width: 48, height: 3, background: "#C0E57A", margin: "0 auto 32px", borderRadius: 2 }} />
             <blockquote style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(32px, 4vw, 52px)", color: "#F5F9EA", lineHeight: 1.1, marginBottom: 24 }}>
-              "The app I always wished I could prescribe to my patients."
+              "The app I always wished I could recommend to my patients."
             </blockquote>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 20 }}>
               <img src={ASSETS.anca} alt="Dr. Anca Laura Constantin" loading="lazy" decoding="async" width={44} height={44} style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", objectPosition: "top" }} />
               <div style={{ textAlign: "left" }}>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, fontWeight: 600, color: "#F5F9EA" }}>Dr. Anca Laura Constantin</p>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C" }}>Periodontist & CEO, Perioskoup</p>
               </div>
             </div>
+            <a href="https://www.efp.org/publications-hub/an-ai-based-app-promises-to-strengthen-the-patient-clinician-relationship/" target="_blank" rel="noopener noreferrer" className="btn-text" style={{ justifyContent: "center" }}>
+              Read Dr. Anca's article about Perioskoup on EFP
+              <span className="btn-text-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+            </a>
           </div>
         </div>
       </section>

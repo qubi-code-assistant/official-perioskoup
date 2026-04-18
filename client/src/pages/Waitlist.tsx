@@ -20,6 +20,8 @@ export default function Waitlist() {
   const { GEOCapsule } = usePageMeta("/waitlist");
   const [role, setRole] = useState<"patient" | "dentist">("dentist");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Pre-populate role from ?role= URL param (e.g. links from /for-dentists CTAs)
@@ -44,13 +46,37 @@ export default function Waitlist() {
     return errs;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const errs = validate(e.currentTarget);
+    const form = e.currentTarget;
+    const errs = validate(form);
     setErrors(errs);
-    if (Object.keys(errs).length === 0) {
+    setSubmitError(null);
+    if (Object.keys(errs).length > 0) return;
+
+    const payload = {
+      user_type: role,
+      first_name: (form.elements.namedItem("waitlist-first-name") as HTMLInputElement).value.trim(),
+      last_name: (form.elements.namedItem("waitlist-last-name") as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem("waitlist-email") as HTMLInputElement).value.trim(),
+      clinic_name: role === "dentist" ? (form.elements.namedItem("waitlist-clinic") as HTMLInputElement)?.value.trim() || null : null,
+      location: role === "dentist" ? (form.elements.namedItem("waitlist-location") as HTMLInputElement)?.value.trim() || null : null,
+    };
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/waitlist/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Server error");
       capture("waitlist_signup_completed", { source: "waitlist_page" });
       setSubmitted(true);
+    } catch {
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -165,9 +191,12 @@ export default function Waitlist() {
                     <input id="waitlist-location" type="text" autoComplete="address-level2" placeholder="City, Country (helps us plan our EU rollout)" className="p-input" />
                   </>
                 )}
-                <button type="submit" className="btn-primary" style={{ justifyContent: "center", marginTop: 8 }}>
-                  Join the Waitlist
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                {submitError && (
+                  <p role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 14, color: "#F87171", textAlign: "center" }}>{submitError}</p>
+                )}
+                <button type="submit" className="btn-primary" style={{ justifyContent: "center", marginTop: 8, opacity: loading ? 0.6 : 1 }} disabled={loading}>
+                  {loading ? "Joining..." : "Join the Waitlist"}
+                  {!loading && <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                 </button>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
                   {[
