@@ -794,29 +794,6 @@ export default function ForDentists() {
           </div>
 
           <div
-            className="reveal"
-            style={{
-              maxWidth: 800,
-              margin: "0 auto 40px",
-              transitionDelay: "0.16s",
-            }}
-          >
-            <AppScreenshot
-              src="/images/app-dashboard.webp"
-              alt="Perioskoup practice dashboard showing patient care plans, appointment preparation briefs, and multi-patient overview"
-              className="rounded-2xl"
-              width={800}
-              height={450}
-              style={{
-                width: "100%",
-                height: "auto",
-                border: "1px solid rgba(192,229,122,0.1)",
-                borderRadius: 16,
-              }}
-            />
-          </div>
-
-          <div
             style={{
               display: "flex",
               flexDirection: "column",

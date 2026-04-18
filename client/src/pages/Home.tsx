@@ -59,7 +59,7 @@ export default function Home() {
     "areaServed": { "@type": "Place", "name": "Europe" },
     "award": "EFP Digital Innovation Award 2025 — 3rd Prize",
     "sameAs": [
-      "https://www.linkedin.com/company/perioskoup",
+      "https://www.linkedin.com/company/perioskoup-ai",
       "https://www.instagram.com/perioskoup",
     ],
   };

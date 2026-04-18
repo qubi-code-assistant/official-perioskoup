@@ -102,14 +102,27 @@ export default function Waitlist() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(15000),
       });
-      if (!res.ok) throw new Error("Server error");
+      if (!res.ok) {
+        if (res.status === 409) {
+          setSubmitError("This email is already on the waitlist. We'll be in touch soon.");
+          return;
+        }
+        throw new Error("Server error");
+      }
       markSubmitted();
       capture("waitlist_signup_completed", { source: "waitlist_page", role });
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      setSubmitError("Something went wrong. Please try again.");
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "TimeoutError") {
+        setSubmitError("Request timed out. Please check your connection and try again.");
+      } else if (err instanceof TypeError) {
+        setSubmitError("Unable to reach the server. Please check your connection.");
+      } else {
+        setSubmitError("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

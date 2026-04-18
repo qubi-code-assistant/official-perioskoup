@@ -85,16 +85,21 @@ export default function Contact() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(15000),
       });
       if (!res.ok) throw new Error("Server error");
       markSubmitted();
       capture("contact_message_sent", { role: payload.user_type });
       setSent(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      setSubmitError(
-        "Something went wrong. Please try again or email us directly."
-      );
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "TimeoutError") {
+        setSubmitError("Request timed out. Please check your connection and try again.");
+      } else if (err instanceof TypeError) {
+        setSubmitError("Unable to reach the server. Please check your connection.");
+      } else {
+        setSubmitError("Something went wrong. Please try again or email us at support@perioskoup.com.");
+      }
     } finally {
       setLoading(false);
     }
@@ -164,7 +169,7 @@ export default function Contact() {
       },
     ],
     sameAs: [
-      "https://www.linkedin.com/company/perioskoup",
+      "https://www.linkedin.com/company/perioskoup-ai",
       "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/",
     ],
   };

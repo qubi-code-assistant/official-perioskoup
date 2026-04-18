@@ -60,23 +60,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/contact" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/contact" />
   </url>
-  <url>
-    <loc>https://perioskoup.com/privacy</loc>
-    <lastmod>2026-03-29</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/privacy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/privacy" />
-  </url>
-  <url>
-    <loc>https://perioskoup.com/terms</loc>
-    <lastmod>2026-03-29</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/terms" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/terms" />
-  </url>
-
-  <!-- /waitlist intentionally excluded — noindex page -->
+  <!-- /waitlist, /privacy, /terms intentionally excluded — noindex pages -->
   <!-- Blog post URLs will be added here when articles are published -->
 </urlset>

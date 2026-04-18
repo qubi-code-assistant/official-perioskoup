@@ -73,7 +73,7 @@ export default function About() {
     ],
     "award": "EFP Digital Innovation Award 2025, 3rd Prize",
     "sameAs": [
-      "https://www.linkedin.com/company/perioskoup/",
+      "https://www.linkedin.com/company/perioskoup-ai",
       "https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/"
     ]
   };
