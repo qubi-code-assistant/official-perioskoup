@@ -340,7 +340,7 @@ export default function About() {
             Want to be part of the story?
           </h2>
           <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 16, color: "#93A793", lineHeight: 1.7, maxWidth: 600, margin: "8px auto 0", textAlign: "center" }}>
-            Perioskoup is onboarding founding clinics and early patients Join the waitlist for priority access. Join the waitlist for priority access.
+            Perioskoup is onboarding founding clinics and early patients. Join the waitlist for priority access.
           </p>
           <p className="body-lg reveal" style={{ maxWidth: 400, margin: "0 auto 32px", transitionDelay: "0.08s" }}>
             Join the founding waitlist or reach out to the team directly.

@@ -44,7 +44,11 @@ export default function Waitlist() {
     const email = (
       form.elements.namedItem("waitlist-email") as HTMLInputElement
     )?.value.trim();
+    const lastName = (
+      form.elements.namedItem("waitlist-last-name") as HTMLInputElement
+    )?.value.trim();
     if (!firstName) errs["waitlist-first-name"] = "First name is required.";
+    if (!lastName) errs["waitlist-last-name"] = "Last name is required.";
     if (!email) errs["waitlist-email"] = "Email address is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       errs["waitlist-email"] = "Please enter a valid email address.";
@@ -103,6 +107,7 @@ export default function Waitlist() {
       markSubmitted();
       capture("waitlist_signup_completed", { source: "waitlist_page", role });
       setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setSubmitError("Something went wrong. Please try again.");
     } finally {
@@ -136,6 +141,14 @@ export default function Waitlist() {
         acceptedAnswer: {
           "@type": "Answer",
           text: "Founding waitlist members receive priority access before the public launch.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: 'What does "Beta" mean?',
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Perioskoup will launch in beta — a fully functional version of the app available to founding members before our public launch. During beta, patients get free unlimited access and clinics lock in founding partner pricing. You may encounter occasional updates as we refine features based on your feedback.",
         },
       },
     ],
@@ -423,7 +436,14 @@ export default function Waitlist() {
                       className="p-input"
                       required
                       aria-required="true"
+                      aria-invalid={!!errors["waitlist-last-name"]}
+                      aria-describedby={errors["waitlist-last-name"] ? "waitlist-last-name-error" : undefined}
                     />
+                    {errors["waitlist-last-name"] && (
+                      <span id="waitlist-last-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>
+                        {errors["waitlist-last-name"]}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <label htmlFor="waitlist-email" className="sr-only">

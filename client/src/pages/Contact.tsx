@@ -39,12 +39,17 @@ export default function Contact() {
     const message = (
       form.elements.namedItem("contact-message") as HTMLTextAreaElement
     )?.value.trim();
+    const lastName = (
+      form.elements.namedItem("contact-last-name") as HTMLInputElement
+    )?.value.trim();
     if (!firstName) errs["contact-first-name"] = "First name is required.";
+    if (!lastName) errs["contact-last-name"] = "Last name is required.";
     if (!email) errs["contact-email"] = "Email address is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       errs["contact-email"] = "Please enter a valid email address.";
     if (!role) errs["contact-role"] = "Please select your role.";
     if (!message) errs["contact-message"] = "Message is required.";
+    else if (message.length < 10) errs["contact-message"] = "Message must be at least 10 characters.";
     return errs;
   }
 
@@ -68,8 +73,7 @@ export default function Contact() {
       email: (
         form.elements.namedItem("contact-email") as HTMLInputElement
       ).value.trim(),
-      user_type:
-        role === "dentist" || role === "clinic" ? "dentist" : "patient",
+      user_type: role,
       message: (
         form.elements.namedItem("contact-message") as HTMLTextAreaElement
       ).value.trim(),
@@ -86,6 +90,7 @@ export default function Contact() {
       markSubmitted();
       capture("contact_message_sent", { role: payload.user_type });
       setSent(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setSubmitError(
         "Something went wrong. Please try again or email us directly."
@@ -469,7 +474,7 @@ export default function Contact() {
                       <input
                         id="contact-first-name"
                         type="text"
-                        placeholder="Anca"
+                        placeholder="John"
                         autoComplete="given-name"
                         className="p-input"
                         required
@@ -516,12 +521,19 @@ export default function Contact() {
                       <input
                         id="contact-last-name"
                         type="text"
-                        placeholder="Constantin"
+                        placeholder="Doe"
                         autoComplete="family-name"
                         className="p-input"
                         required
                         aria-required="true"
+                        aria-invalid={!!errors["contact-last-name"]}
+                        aria-describedby={errors["contact-last-name"] ? "contact-last-name-error" : undefined}
                       />
+                      {errors["contact-last-name"] && (
+                        <span id="contact-last-name-error" role="alert" style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#F87171", marginTop: 4, display: "block" }}>
+                          {errors["contact-last-name"]}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div>

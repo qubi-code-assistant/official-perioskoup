@@ -78,53 +78,5 @@
   </url>
 
   <!-- /waitlist intentionally excluded — noindex page -->
-
-  <url>
-    <loc>https://perioskoup.com/blog/what-is-periodontal-disease</loc>
-    <lastmod>2025-11-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/what-is-periodontal-disease" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/what-is-periodontal-disease" />
-  </url>
-  <url>
-    <loc>https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring" />
-  </url>
-  <url>
-    <loc>https://perioskoup.com/blog/3-minute-routine-save-teeth</loc>
-    <lastmod>2026-01-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/3-minute-routine-save-teeth" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/3-minute-routine-save-teeth" />
-  </url>
-  <url>
-    <loc>https://perioskoup.com/blog/efp-digital-innovation-award-2025</loc>
-    <lastmod>2025-05-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/efp-digital-innovation-award-2025" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/efp-digital-innovation-award-2025" />
-  </url>
-  <url>
-    <loc>https://perioskoup.com/blog/why-patients-forget-instructions</loc>
-    <lastmod>2025-10-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/why-patients-forget-instructions" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/why-patients-forget-instructions" />
-  </url>
-  <url>
-    <loc>https://perioskoup.com/blog/building-the-bridge-perioskoup-story</loc>
-    <lastmod>2025-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://perioskoup.com/blog/building-the-bridge-perioskoup-story" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://perioskoup.com/blog/building-the-bridge-perioskoup-story" />
-  </url>
+  <!-- Blog post URLs will be added here when articles are published -->
 </urlset>

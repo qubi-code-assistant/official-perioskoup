@@ -52,6 +52,7 @@ export default function Pricing() {
       { "@type": "Question", "name": "How much does Perioskoup cost?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup is currently free for patients during the beta period. Clinic pricing will be announced closer to the public launch. Founding members who join the waitlist receive founding pricing and priority access." } },
       { "@type": "Question", "name": "Is there a free trial for dental practices?", "acceptedAnswer": { "@type": "Answer", "text": "Founding clinics that join during the beta period receive complimentary access. Contact the team through the waitlist for details on the founding clinic programme." } },
       { "@type": "Question", "name": "What is included in the Patient plan?", "acceptedAnswer": { "@type": "Answer", "text": "The Patient plan includes plain-language oral health education, personalised care plans, daily habit reminders, progress tracking, and access to the educational content library." } },
+      { "@type": "Question", "name": "What does Beta mean?", "acceptedAnswer": { "@type": "Answer", "text": "Perioskoup will launch in beta — a fully functional version of the app available to founding members before our public launch. During beta, patients get free unlimited access and clinics lock in founding partner pricing. You may encounter occasional updates as we refine features based on your feedback." } },
     ]
   };
 
@@ -186,8 +187,9 @@ export default function Pricing() {
               { q: "When will clinic pricing be available?", a: "We're onboarding founding clinic partners now. If you're a dental practice, join the waitlist and we'll reach out with details before public launch." },
               { q: 'What does "founding partner" mean?', a: "A founding partner is a clinic that joins us in the early stage before launch, gets discounted locked-in pricing, and has access to new features, and direct input on the product roadmap. There are 50 limited spots available." },
               { q: "Is patient data secure?", a: "Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data is stored on EU servers." },
-            ].map((item, i) => (
-              <div key={item.q} className="reveal" style={{ padding: "24px 0", borderBottom: i < 3 ? "1px solid #234966" : "none", transitionDelay: `${i * 0.06}s` }}>
+              { q: 'What does "Beta" mean?', a: "Perioskoup will launch in beta — a fully functional version of the app available to founding members before our public launch. During beta, patients get free unlimited access and clinics lock in founding partner pricing. You may encounter occasional updates as we refine features based on your feedback." },
+            ].map((item, i, arr) => (
+              <div key={item.q} className="reveal" style={{ padding: "24px 0", borderBottom: i < arr.length - 1 ? "1px solid #234966" : "none", transitionDelay: `${i * 0.06}s` }}>
                 <h3 style={{ fontFamily: "Dongle, sans-serif", fontSize: 24, fontWeight: 700, color: "#F5F9EA", marginBottom: 10 }}>{item.q}</h3>
                 <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 15, lineHeight: 1.7, color: "#8C9C8C" }}>{item.a}</p>
               </div>
