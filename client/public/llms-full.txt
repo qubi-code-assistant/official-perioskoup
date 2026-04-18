@@ -251,8 +251,8 @@ Be a founding clinic. Founding clinics get lifetime discounted pricing, direct i
 
 ## About (/about)
 
-Title: About Perioskoup — Dental AI Built in Bucharest
-Description: Perioskoup was founded by Dr. Anca Laura Constantin, a periodontist in Bucharest. Winner of the EFP Digital Innovation Award 2025. Meet the team building the AI dental companion.
+Title: About Perioskoup — Dental AI Built in Romania
+Description: Perioskoup was founded by Dr. Anca Laura Constantin, a periodontist based in Bucharest. Winner of the EFP Digital Innovation Award 2025. Meet the team building the AI dental companion.
 
 # Born in a dental chair. Built for every patient.
 
@@ -332,25 +332,9 @@ A: Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data i
 
 ---
 
-## Blog Articles
+## Blog
 
-- "What Is Periodontal Disease? A Patient's Complete Guide" — Dr. Anca Laura Constantin, Nov 2025
-  https://perioskoup.com/blog/what-is-periodontal-disease
-
-- "Perioskoup Wins EFP Digital Innovation Award 2025" — Eduard Ciugulea, May 2025
-  https://perioskoup.com/blog/efp-digital-innovation-award-2025
-
-- "How AI Is Changing Dental Monitoring — And Why It Matters" — Eduard Ciugulea, Dec 2025
-  https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring
-
-- "The 3-Minute Daily Routine That Could Save Your Teeth" — Dr. Anca Laura Constantin, Jan 2026
-  https://perioskoup.com/blog/3-minute-routine-save-teeth
-
-- "Why Patients Forget Dental Instructions (And What to Do About It)" — Dr. Anca Laura Constantin, Oct 2025
-  https://perioskoup.com/blog/why-patients-forget-instructions
-
-- "Building the Bridge: The Perioskoup Story" — Dr. Anca Laura Constantin, Sep 2025
-  https://perioskoup.com/blog/building-the-bridge-perioskoup-story
+Articles coming soon. Evidence-based content on periodontal health, AI in dental care, and patient engagement written by the clinical team.
 
 ---
 
@@ -358,10 +342,9 @@ A: Yes. Perioskoup is GDPR-compliant, uses end-to-end encryption, and all data i
 
 Per the Feature Truth Table:
 
-- **Live:** Login/Signup, Clinician dashboard, Patient list management, Treatment plan builder, Appointment scheduling, Document uploads, Anamnesis management
-- **Beta:** AI Clinical Companion (Periobot chatbot), Smart Reminders, Daily habit tracking, Streak tracking, Onboarding flow
+- **Live:** Login/Signup, Clinician dashboard, Patient list management, Treatment plan builder, Appointment scheduling, Document uploads, Anamnesis management, Instant QR Pairing
+- **Beta:** PerioBOT (AI dental chatbot), Daily habit tracking, Streak tracking, Onboarding flow
 - **Coming Soon:** Education Library, Appointment Prep summaries, Progress analytics
-- **Not Started:** Health Trends page, Points/Rewards, Connect via QR code
 
 ---
 
@@ -369,14 +352,14 @@ Per the Feature Truth Table:
 
 - Product: AI dental companion app (iOS, Android)
 - Award: EFP Digital Innovation Award 2025 — 3rd Prize (EuroPerio11, Vienna)
-- Founding: Bucharest, Romania — Romanian SRL, June 2025
+- Headquarters: Buzău, Romania — Romanian SRL, incorporated June 2025
+- Dr. Anca Laura Constantin is based in Bucharest, Romania
 - Founded: 2025
-- Status: Private beta — public launch coming soon
+- Status: Launching in beta — accepting waitlist registrations
 - Waitlist: 30+ founding clinics
-- Patient pricing: Free
-- Clinic pricing: EUR 39-199/month (launching soon)
-- Contact: hello@perioskoup.com
-- Clinic partnerships: clinic@perioskoup.com
+- Patient pricing: Free during beta
+- Clinic plan: 50 limited founding seats with locked-in pricing
+- Contact: support@perioskoup.com
 
 ---
 
@@ -422,7 +405,7 @@ Q: Is Perioskoup a medical device?
 A: No. Perioskoup is a wellness and habit-coaching application. It does not provide diagnoses, prescriptions, or clinical treatment recommendations. All care programmes are created by a qualified dental professional.
 
 Q: Who founded Perioskoup?
-A: Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist & CEO), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The company is a Romanian SRL headquartered in Bucharest.
+A: Perioskoup was founded in 2025 by Dr. Anca Laura Constantin (Periodontist & CEO, based in Bucharest), Eduard Ciugulea (CGO), and Petrica Nancu (CTO & Head of AI). The company is a Romanian SRL headquartered in Buzău, Romania.
 
 Q: What award did Perioskoup win?
 A: Perioskoup won the EFP Digital Innovation Award 2025 (3rd Prize) at EuroPerio11 in Vienna, selected from 20 submissions across 17 national periodontal societies by an expert jury.

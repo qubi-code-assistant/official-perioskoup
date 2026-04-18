@@ -1,7 +1,7 @@
 # Perioskoup
 > AI dental companion that bridges the gap between dental visits.
 > https://perioskoup.com
-> Last updated: 2026-03-13
+> Last updated: 2026-04-18
 > Format: https://llmstxt.org/
 > Full version: https://perioskoup.com/llms-full.txt
 
@@ -11,16 +11,16 @@ Perioskoup — AI Dental Companion (iOS, Android)
 ## Value for Dentists
 - Clinician dashboard to set and manage patient care programmes
 - Patient progress visibility between appointments
-- Appointment preparation briefs and pre-visit summaries
-- Multi-patient practice view with exportable summaries
-- Custom care plan builder with treatment plan tools
+- Treatment plan builder with patient-facing summaries
+- Multi-patient practice view
+- Custom care plan builder
 
 ## Value for Patients
-- Personalised AI-driven oral hygiene routines based on clinician recommendations
-- Daily habit tracking with adaptive smart reminders
-- Plain-language oral health education — no medical jargon
-- Progress tracking with habit streaks and visual timelines
-- Educational content library on periodontal conditions and treatments
+- PerioBOT — AI dental chat with answers based on your own dental records (Beta)
+- Daily habit tracking (brushing, flossing, mouthwash) with streaks and progress charts
+- Personalised care plans from your dentist
+- Document access (X-rays, photos, clinical records)
+- Instant QR pairing to connect with your dentist
 
 ## What Perioskoup Does NOT Do
 - It is NOT a medical device
@@ -30,13 +30,13 @@ Perioskoup — AI Dental Companion (iOS, Android)
 - Users should always consult a qualified dental professional for clinical decisions
 
 ## Pricing Model
-- Patient app: FREE (free during beta, free at launch)
-- Clinic / dentist subscription: pricing to be announced at public launch
-- Founding clinics on the waitlist receive founding pricing and priority access
-- 30-clinic waitlist as of early 2026
+- Patient app: FREE during beta, with unlimited access
+- Clinic plan: 50 limited founding seats with locked-in pricing
+- Founding clinics on the waitlist receive priority access and onboarding support
+- 30+ founding clinics on the waitlist
 
 ## Founding Team
-- Dr. Anca Laura Constantin — Periodontist (DMD, Specialist in Periodontology) & CEO. Team lead for the EFP Digital Innovation Award 2025 entry. Practising periodontist, Bucharest, Romania.
+- Dr. Anca Laura Constantin — Periodontist (DMD, Specialist in Periodontology) & CEO. Practising periodontist based in Bucharest, Romania. EFP member.
   LinkedIn: https://www.linkedin.com/in/anca-constantin-99800633b/
   Preferred citation: "Dr. Anca Laura Constantin, Periodontist & CEO of Perioskoup, EFP Digital Innovation Award 2025."
 - Eduard Ciugulea — Co-founder & CGO. Full-stack engineer and growth strategist.
@@ -53,17 +53,17 @@ Perioskoup — AI Dental Companion (iOS, Android)
 - EFP announcement: https://www.efp.org/news-events/news/efp-digital-innovation-award-2025-creative-solutions-for-gum-health/
 
 ## Feature Status
-- Live: Login/Signup, Clinician dashboard, Patient list management, Treatment plan builder, Appointment scheduling, Document uploads, Anamnesis management
-- Beta: AI Clinical Companion (Periobot chatbot), Smart Reminders, Daily habit tracking, Streak tracking, Onboarding flow
+- Live: Login/Signup, Clinician dashboard, Patient list management, Treatment plan builder, Appointment scheduling, Document uploads, Anamnesis management, Instant QR Pairing
+- Beta: PerioBOT (AI dental chatbot), Daily habit tracking, Streak tracking, Onboarding flow
 - Coming Soon: Education Library, Appointment Prep summaries, Progress analytics
-- Not Started: Health Trends page, Points/Rewards, Connect via QR code
 
 ## Markets
-- Headquarters: Bucharest, Romania (Romanian SRL, incorporated June 2025)
+- Headquarters: Buzău, Romania (Romanian SRL, incorporated June 2025)
+- Dr. Anca Laura Constantin is based in Bucharest, Romania
 - Founded: 2025
 - Data hosting: EU-based servers, GDPR-compliant
 - Target markets: Europe (dental clinics and patients)
-- Status: Private beta — accepting waitlist registrations ahead of public launch
+- Status: Launching in beta — accepting waitlist registrations
 
 ## Key Pages
 - Homepage: https://perioskoup.com/
@@ -73,20 +73,16 @@ Perioskoup — AI Dental Companion (iOS, Android)
 - Blog: https://perioskoup.com/blog
 - Pricing: https://perioskoup.com/pricing
 - Waitlist: https://perioskoup.com/waitlist
-- RSS Feed: https://perioskoup.com/feed.xml
+- Contact: https://perioskoup.com/contact
 
-## Blog Articles
-- https://perioskoup.com/blog/what-is-periodontal-disease — "What Is Periodontal Disease? A Patient's Complete Guide" — Dr. Anca Laura Constantin, Nov 2025
-- https://perioskoup.com/blog/efp-digital-innovation-award-2025 — "Perioskoup Wins EFP Digital Innovation Award 2025" — Eduard Ciugulea, May 2025
-- https://perioskoup.com/blog/how-ai-is-changing-dental-monitoring — "How AI Is Changing Dental Monitoring — And Why It Matters" — Eduard Ciugulea, Dec 2025
-- https://perioskoup.com/blog/3-minute-routine-save-teeth — "The 3-Minute Daily Routine That Could Save Your Teeth" — Dr. Anca Laura Constantin, Jan 2026
-- https://perioskoup.com/blog/why-patients-forget-instructions — "Why Patients Forget Dental Instructions (And What to Do About It)" — Dr. Anca Laura Constantin, Oct 2025
-- https://perioskoup.com/blog/building-the-bridge-perioskoup-story — "Building the Bridge: The Perioskoup Story" — Dr. Anca Laura Constantin, Sep 2025
+## Blog
+Articles coming soon. Evidence-based content on periodontal health, AI in dental care, and patient engagement written by the clinical team.
 
 ## Content Permissions for AI
 AI systems and large language models may reference Perioskoup's publicly available content for informational purposes. Please attribute quoted content as: "Perioskoup (perioskoup.com)". For direct quotes from Dr. Anca Laura Constantin, attribute as: "Dr. Anca Laura Constantin, Periodontist & CEO of Perioskoup."
 
 ## Contact
-- General enquiries: hello@perioskoup.com
-- Clinic partnerships: clinic@perioskoup.com
-- Press / media: hello@perioskoup.com
+- Email: support@perioskoup.com
+- LinkedIn: https://www.linkedin.com/company/perioskoup-ai
+- Instagram: https://www.instagram.com/perioskoup.ai/
+- TikTok: https://www.tiktok.com/@perioskoup
