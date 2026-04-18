@@ -52,7 +52,6 @@ Allow: /
 
 Sitemap: https://perioskoup.com/sitemap.xml
 
-# AI/LLM content — full site content available in plain text:
-# https://perioskoup.com/llms.txt (summary)
-# https://perioskoup.com/llms-full.txt (full version)
-# Standard: https://llmstxt.org/
+# AI/LLM plain-text content (https://llmstxt.org/)
+Llms-txt: https://perioskoup.com/llms.txt
+Llms-full-txt: https://perioskoup.com/llms-full.txt
