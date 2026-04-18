@@ -12,6 +12,8 @@ import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { capture } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const FEATURES: {
   icon: string;
@@ -182,6 +184,7 @@ const TAG_COLORS: Record<string, { color: string; bg: string; border: string }> 
 export default function Features() {
   useReveal();
   const { GEOCapsule } = usePageMeta("/features");
+  const scrollRef = useScrollDepth("features");
 
   const featuresFaqJsonLd = {
     "@context": "https://schema.org",
@@ -229,7 +232,7 @@ export default function Features() {
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Perioskoup Features | AI Habit Tracking &amp; Dental Care Plans</title>
         <meta name="description" content="Explore Perioskoup's AI dental companion features: habit tracking, smart reminders, clinician dashboards, and GDPR-compliant data protection." />
@@ -268,7 +271,7 @@ export default function Features() {
             From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent.
           </p>
           <div className="reveal" style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap", transitionDelay: "0.3s" }}>
-            <Link href="/waitlist" className="btn-primary" style={{ fontSize: "16px", padding: "14px 32px" }}>
+            <Link href="/waitlist" className="btn-primary" style={{ fontSize: "16px", padding: "14px 32px" }} onClick={() => capture("page_cta_clicked", { cta_text: "Join the Waitlist", page: "features", position: "hero" })}>
               Join the Waitlist →
             </Link>
             <Link href="/for-dentists" className="btn-ghost" style={{ fontSize: "16px", padding: "14px 32px" }}>
@@ -347,7 +350,7 @@ export default function Features() {
             Join the founding waitlist and be among the first to experience Perioskoup.
           </p>
           <div className="reveal" style={{ transitionDelay: "0.2s" }}>
-            <Link href="/waitlist" className="btn-primary" style={{ fontSize: "16px", padding: "16px 36px" }}>
+            <Link href="/waitlist" className="btn-primary" style={{ fontSize: "16px", padding: "16px 36px" }} onClick={() => capture("page_cta_clicked", { cta_text: "Join the Waitlist", page: "features", position: "bottom" })}>
               Join the Waitlist →
             </Link>
           </div>

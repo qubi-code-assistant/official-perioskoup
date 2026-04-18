@@ -6,13 +6,15 @@
  * SEO: Article JSON-LD, BreadcrumbList, per-page meta, og:image
  */
 
-import type { ReactElement } from "react";
+import { type ReactElement, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
+import { capture } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const OG_IMAGE = "https://perioskoup.com/images/og-image.jpg";
 const ANCA_IMG = "/images/anca-headshot.jpg";
@@ -770,8 +772,19 @@ export default function BlogPost() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug || "";
   const article = ARTICLES[slug];
+  const scrollRef = useScrollDepth("blog_post");
 
-  // Meta tags handled by react-helmet-async Helmet component below
+  useEffect(() => {
+    if (article) {
+      capture("blog_post_viewed", {
+        slug,
+        title: article.title,
+        author: article.author,
+        category: article.category,
+        read_time: article.readTime,
+      });
+    }
+  }, [slug]);
 
   if (!article) {
     return (
@@ -844,7 +857,7 @@ export default function BlogPost() {
   } : null;
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>{article.metaTitle}</title>
         <meta name="description" content={article.metaDescription} />

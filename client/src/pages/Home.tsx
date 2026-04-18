@@ -16,6 +16,7 @@ import PhoneMockup from "@/components/PhoneMockup";
 import { useReveal } from "@/hooks/useReveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { capture } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 // Local Asset URLs
 const ASSETS = {
@@ -36,6 +37,7 @@ export default function Home() {
   useReveal(0.12);
   const [, navigate] = useLocation();
   const { GEOCapsule } = usePageMeta("/");
+  const scrollRef = useScrollDepth("home");
 
   const homeOrgJsonLd = {
     "@context": "https://schema.org",
@@ -75,7 +77,7 @@ export default function Home() {
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Perioskoup | AI Dental Companion App | Between-Visit Dental Care</title>
         <meta name="description" content="Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. EFP Digital Innovation Award 2025 — 3rd Prize." />

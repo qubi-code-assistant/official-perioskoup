@@ -12,6 +12,8 @@ import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { capture } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
@@ -21,6 +23,7 @@ const AWARD_IMG = "/images/efp-award.webp";
 export default function About() {
   useReveal();
   const { GEOCapsule } = usePageMeta("/about");
+  const scrollRef = useScrollDepth("about");
 
   const personJsonLd = {
     "@context": "https://schema.org",
@@ -123,7 +126,7 @@ export default function About() {
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>About Perioskoup | Dental AI Built in Bucharest</title>
         <meta name="description" content="Meet the team behind Perioskoup: a periodontist, engineer, and AI specialist building the dental companion they always wished existed." />
@@ -165,7 +168,7 @@ export default function About() {
             Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest - and decided to build the solution herself.
           </p>
           <div className="reveal" style={{ marginTop: 32, transitionDelay: "0.24s", display: "flex", justifyContent: "center" }}>
-            <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "12px 28px" }}>
+            <Link href="/waitlist" className="btn-primary" style={{ fontSize: 15, padding: "12px 28px" }} onClick={() => capture("page_cta_clicked", { cta_text: "Join the Waitlist", page: "about", position: "hero" })}>
               Join the Waitlist
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
@@ -343,7 +346,7 @@ export default function About() {
             Join the founding waitlist or reach out to the team directly.
           </p>
           <div className="reveal" style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", transitionDelay: "0.16s" }}>
-            <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 36px" }}>
+            <Link href="/waitlist" className="btn-primary" style={{ fontSize: 16, padding: "16px 36px" }} onClick={() => capture("page_cta_clicked", { cta_text: "Join the Waitlist", page: "about", position: "bottom" })}>
               Join the Waitlist
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>

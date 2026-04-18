@@ -12,6 +12,8 @@ import HeroGlow from "@/components/HeroGlow";
 import Breadcrumb from "@/components/Breadcrumb";
 import { useReveal } from "@/hooks/useReveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { capture } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const PLANS = [
   {
@@ -41,6 +43,7 @@ const PLANS = [
 export default function Pricing() {
   useReveal();
   const { GEOCapsule } = usePageMeta("/pricing");
+  const scrollRef = useScrollDepth("pricing");
 
   const pricingFaqJsonLd = {
     "@context": "https://schema.org",
@@ -66,7 +69,7 @@ export default function Pricing() {
   };
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Perioskoup Pricing | Free for Patients, Plans for Dental Clinics</title>
         <meta name="description" content="Perioskoup is free for patients during beta. Dental clinic plans launching soon. Join the founding waitlist for priority access and founding pricing." />
@@ -157,7 +160,7 @@ export default function Pricing() {
                 {plan.note && (
                   <p style={{ fontFamily: "Gabarito, sans-serif", fontSize: 12, color: "#8C9C8C", fontStyle: "italic", marginBottom: 20 }}>{plan.note}</p>
                 )}
-                <Link href={plan.href} className={plan.highlighted ? "btn-primary" : "btn-ghost"} style={{ width: "100%", justifyContent: "center", display: "flex" }}>
+                <Link href={plan.href} className={plan.highlighted ? "btn-primary" : "btn-ghost"} style={{ width: "100%", justifyContent: "center", display: "flex" }} onClick={() => capture("page_cta_clicked", { cta_text: plan.cta, page: "pricing", position: plan.name.toLowerCase() })}>
                   {plan.cta}
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </Link>

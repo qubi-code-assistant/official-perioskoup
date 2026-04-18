@@ -13,6 +13,8 @@ import ParallaxHeroBg from "@/components/ParallaxHeroBg";
 import HeroGlow from "@/components/HeroGlow";
 import { useReveal } from "@/hooks/useReveal";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { capture } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const ANCA_IMG = "/images/anca-headshot.jpg";
 const EDI_IMG = "/images/eduard-headshot.jpg";
@@ -92,6 +94,7 @@ const REGULAR = POSTS.filter((p) => !p.featured);
 export default function Blog() {
   useReveal();
   const { GEOCapsule } = usePageMeta("/blog");
+  const scrollRef = useScrollDepth("blog");
   // A10: aria-live feedback for newsletter subscription (WCAG 4.1.3 Status Messages)
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -108,7 +111,7 @@ export default function Blog() {
   }
 
   return (
-    <div style={{ background: "#0A171E", minHeight: "100svh" }}>
+    <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
         <title>Dental Health &amp; AI Blog | Periodontal Care Insights | Perioskoup</title>
         <meta name="description" content="Evidence-based articles on periodontal health, dental AI, and patient care from Dr. Anca Constantin (Periodontist, EFP Digital Innovation Award 2025 — 3rd Prize) and the Perioskoup team." />
@@ -202,7 +205,7 @@ export default function Blog() {
           <h2 className="display-sm reveal" style={{ marginBottom: "32px" }}>Featured Articles</h2>
           <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
             {FEATURED.map((post, i) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
+              <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }} onClick={() => capture("blog_article_clicked", { slug: post.slug, title: post.title, position: "featured" })}>
                 <div
                   className="blog-card-hover"
                   style={{
@@ -266,7 +269,7 @@ export default function Blog() {
           <h2 className="display-sm reveal" style={{ marginBottom: "48px" }}>All Articles</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
             {REGULAR.map((post, i) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
+              <Link key={post.slug} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }} onClick={() => capture("blog_article_clicked", { slug: post.slug, title: post.title, position: "all_articles" })}>
                 <div
                   className="reveal blog-row-hover flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
                   style={{

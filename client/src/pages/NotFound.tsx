@@ -5,11 +5,16 @@
  */
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ParallaxHeroBg from "@/components/ParallaxHeroBg";
+import { capture } from "@/lib/analytics";
 
 export default function NotFound() {
+  useEffect(() => {
+    capture("not_found_page_viewed", { attempted_path: window.location.pathname });
+  }, []);
   return (
     <div style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>

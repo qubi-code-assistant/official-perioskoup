@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { getCookieConsent, setCookieConsent } from "@/lib/cookies";
-import { initAnalytics } from "@/lib/analytics";
+import { initAnalytics, capture } from "@/lib/analytics";
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
@@ -15,6 +15,7 @@ export default function CookieBanner() {
   function handleAccept() {
     setCookieConsent("accepted");
     initAnalytics();
+    capture("cookie_consent_accepted");
     setVisible(false);
   }
 

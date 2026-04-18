@@ -6,18 +6,19 @@
    A05: Focus trap for mobile drawer (WCAG 2.1.2 / 2.4.3)
    A06: aria-current="page" on active links (WCAG 4.1.2)
    ============================================================= */
-import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'wouter';
-import { Menu, X } from 'lucide-react';
-import { LogoFull } from './Logo';
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
+import { Menu, X } from "lucide-react";
+import { LogoFull } from "./Logo";
+import { capture } from "@/lib/analytics";
 
 const NAV_LINKS = [
-  { href: '/features', label: 'Features' },
-  { href: '/for-dentists', label: 'For Dentists' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
+  { href: "/features", label: "Features" },
+  { href: "/for-dentists", label: "For Dentists" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -29,20 +30,22 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [location]);
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
 
   // Lock background scroll while drawer is open.
   // Set overflow:hidden on <html> (not body) to avoid creating a
   // containing block that breaks the drawer's position:fixed sizing.
   useEffect(() => {
     if (menuOpen) {
-      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.overflow = "hidden";
       return () => {
-        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflow = "";
       };
     }
   }, [menuOpen]);
@@ -51,19 +54,21 @@ export default function Navbar() {
   useEffect(() => {
     if (!menuOpen || !drawerRef.current) return;
 
-    const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const FOCUSABLE =
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
     // Move focus to first focusable element when drawer opens
-    const firstFocusable = drawerRef.current.querySelector<HTMLElement>(FOCUSABLE);
+    const firstFocusable =
+      drawerRef.current.querySelector<HTMLElement>(FOCUSABLE);
     firstFocusable?.focus();
 
     const trap = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setMenuOpen(false);
         hamburgerRef.current?.focus();
         return;
       }
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
       const focusables = Array.from(
         drawerRef.current!.querySelectorAll<HTMLElement>(FOCUSABLE)
       );
@@ -79,38 +84,41 @@ export default function Navbar() {
       }
     };
 
-    document.addEventListener('keydown', trap);
-    return () => document.removeEventListener('keydown', trap);
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
   }, [menuOpen]);
 
   return (
     <>
       <nav
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           zIndex: 50,
-          transition: 'background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
-          background: scrolled ? 'rgba(10,23,30,0.92)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(24px) saturate(1.8)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(1.8)' : 'none',
-          borderBottom: scrolled ? '1px solid #234966' : '1px solid transparent',
+          transition:
+            "background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease",
+          background: scrolled ? "rgba(10,23,30,0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px) saturate(1.8)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(24px) saturate(1.8)" : "none",
+          borderBottom: scrolled
+            ? "1px solid #234966"
+            : "1px solid transparent",
         }}
       >
         <div
           className="container"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: '64px',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "64px",
           }}
         >
           {/* Logo */}
           <Link href="/" aria-label="Perioskoup home">
-            <div style={{ textDecoration: 'none', cursor: 'pointer' }}>
+            <div style={{ textDecoration: "none", cursor: "pointer" }}>
               <LogoFull height={28} color="#C0E57A" />
             </div>
           </Link>
@@ -122,9 +130,11 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                aria-current={location === href ? 'page' : undefined}
+                aria-current={location === href ? "page" : undefined}
               >
-                <span className={`nav-link-item${location === href ? ' active' : ''}`}>
+                <span
+                  className={`nav-link-item${location === href ? " active" : ""}`}
+                >
                   {label}
                 </span>
               </Link>
@@ -132,9 +142,18 @@ export default function Navbar() {
           </div>
 
           {/* CTA + mobile toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Link href="/waitlist" aria-label="Join the waitlist">
-              <span className="btn-primary hidden md:inline-flex" style={{ fontSize: '13px', padding: '9px 20px' }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <Link
+              href="/waitlist"
+              aria-label="Join the waitlist"
+              onClick={() =>
+                capture("nav_waitlist_cta_clicked", { variant: "desktop" })
+              }
+            >
+              <span
+                className="btn-primary hidden md:inline-flex"
+                style={{ fontSize: "13px", padding: "9px 20px" }}
+              >
                 Join Waitlist
               </span>
             </Link>
@@ -142,15 +161,15 @@ export default function Navbar() {
               ref={hamburgerRef}
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
-                background: 'rgba(255,255,255,0.07)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '8px',
-                color: '#FFFFFF',
-                width: '44px',
-                height: '44px',
+                background: "rgba(255,255,255,0.07)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "8px",
+                color: "#FFFFFF",
+                width: "44px",
+                height: "44px",
               }}
               className="flex md:hidden items-center justify-center"
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               type="button"
@@ -160,8 +179,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-
-
 
       {/* Mobile drawer -- full-screen overlay with staggered link reveals */}
       {/* A05: ref={drawerRef} enables the focus trap implemented in useEffect above */}
@@ -174,27 +191,27 @@ export default function Navbar() {
           aria-label="Navigation menu"
           className="mobile-drawer"
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
-            height: '100dvh',
+            height: "100dvh",
             zIndex: 55,
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(10,23,30,0.98)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            display: "flex",
+            flexDirection: "column",
+            background: "rgba(10,23,30,0.98)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
           }}
         >
           {/* Drawer header with close button — fixed at top */}
           <div
             className="container"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              height: '64px',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              height: "64px",
               flexShrink: 0,
             }}
           >
@@ -202,15 +219,15 @@ export default function Navbar() {
             <button
               onClick={() => setMenuOpen(false)}
               style={{
-                background: 'rgba(255,255,255,0.07)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '8px',
-                color: '#FFFFFF',
-                width: '44px',
-                height: '44px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                background: "rgba(255,255,255,0.07)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "8px",
+                color: "#FFFFFF",
+                width: "44px",
+                height: "44px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               aria-label="Close menu"
               type="button"
@@ -223,29 +240,38 @@ export default function Navbar() {
           <div
             style={{
               flex: 1,
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              WebkitOverflowScrolling: 'touch',
+              overflowY: "auto",
+              overflowX: "hidden",
+              WebkitOverflowScrolling: "touch",
             }}
           >
-            <div className="container" style={{ paddingTop: '24px', paddingBottom: '48px', display: 'flex', flexDirection: 'column', gap: '0' }}>
+            <div
+              className="container"
+              style={{
+                paddingTop: "24px",
+                paddingBottom: "48px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0",
+              }}
+            >
               {NAV_LINKS.map(({ href, label }, i) => (
                 <Link
                   key={href}
                   href={href}
-                  aria-current={location === href ? 'page' : undefined}
+                  aria-current={location === href ? "page" : undefined}
                 >
                   <div
                     className="mobile-drawer-link"
                     style={{
-                      fontFamily: 'Dongle, sans-serif',
+                      fontFamily: "Dongle, sans-serif",
                       fontWeight: 700,
-                      fontSize: 'clamp(36px, 10vw, 48px)',
-                      color: location === href ? '#C0E57A' : '#F5F9EA',
-                      letterSpacing: '-0.04em',
-                      padding: '16px 0',
-                      borderBottom: '1px solid rgba(255,255,255,0.06)',
-                      textDecoration: 'none',
+                      fontSize: "clamp(36px, 10vw, 48px)",
+                      color: location === href ? "#C0E57A" : "#F5F9EA",
+                      letterSpacing: "-0.04em",
+                      padding: "16px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      textDecoration: "none",
                       animationDelay: `${0.05 + i * 0.06}s`,
                     }}
                   >
@@ -256,12 +282,26 @@ export default function Navbar() {
               <div
                 className="mobile-drawer-link"
                 style={{
-                  marginTop: '32px',
+                  marginTop: "32px",
                   animationDelay: `${0.05 + NAV_LINKS.length * 0.06}s`,
                 }}
               >
-                <Link href="/waitlist" aria-label="Join the waitlist">
-                  <span className="btn-primary" style={{ width: '100%', justifyContent: 'center', display: 'flex', padding: '16px 24px' }}>
+                <Link
+                  href="/waitlist"
+                  aria-label="Join the waitlist"
+                  onClick={() =>
+                    capture("nav_waitlist_cta_clicked", { variant: "mobile" })
+                  }
+                >
+                  <span
+                    className="btn-primary"
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      display: "flex",
+                      padding: "16px 24px",
+                    }}
+                  >
                     Join the Waitlist
                   </span>
                 </Link>

@@ -19,7 +19,7 @@ let loadPromise: Promise<PostHog | null> | null = null;
 function loadPostHog(): Promise<PostHog | null> {
   if (!key) return Promise.resolve(null);
   if (!loadPromise) {
-    loadPromise = import("posthog-js").then((m) => {
+    loadPromise = import("posthog-js").then(m => {
       ph = m.default;
       return ph;
     });
@@ -32,12 +32,12 @@ export function initAnalytics(): void {
   if (!key) return;
 
   const init = () => {
-    loadPostHog().then((posthog) => {
+    loadPostHog().then(posthog => {
       if (!posthog) return;
       posthog.init(key, {
-        api_host: host || "https://us.i.posthog.com",
+        api_host: host || "https://eu.i.posthog.com",
         autocapture: false,
-        capture_pageview: true,
+        capture_pageview: false,
         persistence: "localStorage+cookie",
       });
     });
@@ -54,25 +54,25 @@ export function initAnalytics(): void {
 /** Capture a named event. No-op if PostHog was never initialised. */
 export function capture(
   event: string,
-  properties?: Record<string, unknown>,
+  properties?: Record<string, unknown>
 ): void {
   if (!key) return;
-  loadPostHog().then((posthog) => posthog?.capture(event, properties));
+  loadPostHog().then(posthog => posthog?.capture(event, properties));
 }
 
 /** Track a page view. Call from route-change hooks. */
 export function capturePageView(path: string): void {
   if (!key) return;
-  loadPostHog().then((posthog) =>
-    posthog?.capture("$pageview", { $current_url: path }),
+  loadPostHog().then(posthog =>
+    posthog?.capture("$pageview", { $current_url: path })
   );
 }
 
 /** Identify a user (e.g. after waitlist signup). */
 export function identify(
   distinctId: string,
-  properties?: Record<string, unknown>,
+  properties?: Record<string, unknown>
 ): void {
   if (!key) return;
-  loadPostHog().then((posthog) => posthog?.identify(distinctId, properties));
+  loadPostHog().then(posthog => posthog?.identify(distinctId, properties));
 }

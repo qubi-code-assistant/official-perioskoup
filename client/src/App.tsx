@@ -5,6 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import CookieBanner from "./components/CookieBanner";
 import Home from "./pages/Home";
+import { capturePageView } from "./lib/analytics";
 
 // Route-level code splitting -- every non-Home page is lazy loaded
 const Features = React.lazy(() => import("./pages/Features"));
@@ -19,11 +20,12 @@ const Privacy = React.lazy(() => import("./pages/Privacy"));
 const Terms = React.lazy(() => import("./pages/Terms"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
-// Scroll to top on every route change
+// Scroll to top on every route change and track SPA pageviews
 function ScrollToTop() {
   const [location] = useLocation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+    capturePageView(location);
   }, [location]);
   return null;
 }
@@ -69,7 +71,12 @@ function RouteAnnouncer() {
   }, [location]);
 
   return (
-    <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+    <div
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      className="sr-only"
+    >
       {announcement}
     </div>
   );
@@ -81,23 +88,23 @@ function Router() {
       <ScrollToTop />
       <RouteAnnouncer />
       <Suspense fallback={<div className="min-h-screen bg-[#0A171E]" />}>
-      <PageWrapper>
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/features" component={Features} />
-          <Route path="/for-dentists" component={ForDentists} />
-          <Route path="/pricing" component={Pricing} />
-          <Route path="/about" component={About} />
-          <Route path="/blog" component={Blog} />
-          <Route path="/blog/:slug" component={BlogPost} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/waitlist" component={Waitlist} />
-          <Route path="/privacy" component={Privacy} />
-          <Route path="/terms" component={Terms} />
-          <Route path="/404" component={NotFound} />
-          <Route component={NotFound} />
-        </Switch>
-      </PageWrapper>
+        <PageWrapper>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/features" component={Features} />
+            <Route path="/for-dentists" component={ForDentists} />
+            <Route path="/pricing" component={Pricing} />
+            <Route path="/about" component={About} />
+            <Route path="/blog" component={Blog} />
+            <Route path="/blog/:slug" component={BlogPost} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/waitlist" component={Waitlist} />
+            <Route path="/privacy" component={Privacy} />
+            <Route path="/terms" component={Terms} />
+            <Route path="/404" component={NotFound} />
+            <Route component={NotFound} />
+          </Switch>
+        </PageWrapper>
       </Suspense>
     </>
   );
@@ -108,7 +115,9 @@ export default function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         {/* Skip to main content -- visually hidden, appears on keyboard focus (WCAG 2.4.1) */}
-        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Router />
         <CookieBanner />
       </ThemeProvider>

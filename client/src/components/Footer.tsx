@@ -5,6 +5,7 @@
  */
 import { Link } from 'wouter';
 import { LogoFull } from './Logo';
+import { capture } from '@/lib/analytics';
 
 const FOOTER_LINKS = {
   Product: [
@@ -94,7 +95,7 @@ export default function Footer() {
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {links.map(({ label, href }) => (
-                  <Link key={href} href={href}>
+                  <Link key={href} href={href} onClick={() => capture("footer_link_clicked", { label, href, category })}>
                     <span className="footer-link">
                       {label}
                     </span>
