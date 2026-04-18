@@ -499,7 +499,7 @@ export default function ForDentists() {
                 label: "of instructions forgotten within 48h",
                 icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
                 source: "Kessels 2003, J R Soc Med",
-                href: "https://doi.org/10.1258/jrsm.96.5.219",
+                href: "https://journals.sagepub.com/doi/10.1177/014107680309600504",
               },
               {
                 value: "87%",

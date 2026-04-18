@@ -119,9 +119,17 @@ export default function Footer() {
           <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#8C9C8C' }}>
             &copy; {new Date().getFullYear()} Perioskoup. All rights reserved.
           </p>
-          <p style={{ fontFamily: 'Gabarito, sans-serif', fontSize: '13px', color: '#8C9C8C' }}>
-            Made in Europe
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <a href="https://www.linkedin.com/company/perioskoup-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer-link" style={{ display: 'flex' }} onClick={() => capture("external_link_clicked", { url: "linkedin", label: "LinkedIn", page: "footer" })}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" stroke="#8C9C8C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+              <a href="https://www.instagram.com/perioskoup.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer-link" style={{ display: 'flex' }} onClick={() => capture("external_link_clicked", { url: "instagram", label: "Instagram", page: "footer" })}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#8C9C8C" strokeWidth="1.5"/><circle cx="12" cy="12" r="5" stroke="#8C9C8C" strokeWidth="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#8C9C8C"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@perioskoup" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="footer-link" style={{ display: 'flex' }} onClick={() => capture("external_link_clicked", { url: "tiktok", label: "TikTok", page: "footer" })}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" stroke="#8C9C8C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+          </div>
         </div>
       </div>
     </footer>

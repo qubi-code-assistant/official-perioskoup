@@ -236,7 +236,7 @@ export default function About() {
               <div className="bg-[#1D3449] border border-[#234966] rounded-2xl p-6 lg:p-10">
                 {[
                   { value: "62%", label: "of adults have periodontitis worldwide", source: "Bernabe et al. 2020, JCP", href: "https://doi.org/10.1111/jcpe.13217" },
-                  { value: "40–80%", label: "of care instructions forgotten within 48h", source: "Kessels 2003, J R Soc Med", href: "https://doi.org/10.1258/jrsm.96.5.219" },
+                  { value: "40–80%", label: "of care instructions forgotten within 48h", source: "Kessels 2003, J R Soc Med", href: "https://journals.sagepub.com/doi/10.1177/014107680309600504" },
                   { value: "87%", label: "of mHealth studies show improved outcomes", source: "Toniazzo et al. 2019, JCP", href: "https://doi.org/10.1111/jcpe.13064" },
                 ].map((stat, i) => (
                   <div key={stat.label} style={{ display: "flex", alignItems: "center", gap: 20, padding: "16px 0", borderBottom: i < 2 ? "1px solid #234966" : "none" }}>
