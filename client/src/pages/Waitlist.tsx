@@ -19,7 +19,7 @@ import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 export default function Waitlist() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/waitlist");
+  const { GEOCapsule, meta } = usePageMeta("/waitlist");
   const { onFieldFocus, markSubmitted } = useFormTracking("waitlist", "waitlist");
   const scrollRef = useScrollDepth("waitlist");
   const [role, setRole] = useState<"patient" | "dentist">("dentist");
@@ -194,14 +194,14 @@ export default function Waitlist() {
         />
         <meta
           property="og:image"
-          content="https://perioskoup.com/images/og-image.jpg"
+          content={meta?.ogImage}
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://perioskoup.com/images/og-image.jpg"
+          content={meta?.ogImage}
         />
         <link
           rel="alternate"

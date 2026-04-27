@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/*
+Crawl-delay: 1
 
 User-agent: GPTBot
 Allow: /
@@ -51,7 +52,3 @@ User-agent: Gemini-AI
 Allow: /
 
 Sitemap: https://perioskoup.com/sitemap.xml
-
-# AI/LLM plain-text content (https://llmstxt.org/)
-Llms-txt: https://perioskoup.com/llms.txt
-Llms-full-txt: https://perioskoup.com/llms-full.txt

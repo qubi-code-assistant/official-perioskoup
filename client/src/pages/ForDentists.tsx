@@ -54,7 +54,7 @@ const FEATURES = [
 
 export default function ForDentists() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/for-dentists");
+  const { GEOCapsule, meta } = usePageMeta("/for-dentists");
   const scrollRef = useScrollDepth("for_dentists");
 
   const dentistsFaqJsonLd = {
@@ -204,14 +204,14 @@ export default function ForDentists() {
         />
         <meta
           property="og:image"
-          content="https://perioskoup.com/images/og-image.jpg"
+          content={meta?.ogImage}
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://perioskoup.com/images/og-image.jpg"
+          content={meta?.ogImage}
         />
         <link
           rel="alternate"
@@ -399,6 +399,7 @@ export default function ForDentists() {
 
       {/* ── 2. PROBLEM-FIRST ────────────────────────────────────────────────── */}
       <section
+        id="the-problem"
         style={{ background: "#0A171E", padding: "clamp(48px, 6vw, 80px) 0" }}
       >
         <div className="container" style={{ maxWidth: 800 }}>
@@ -489,6 +490,7 @@ export default function ForDentists() {
 
       {/* ── 3. STATS ────────────────────────────────────────────────────────── */}
       <section
+        id="stats"
         style={{ background: "#050C10", padding: "clamp(40px, 5vw, 64px) 0" }}
       >
         <div className="container">
@@ -767,7 +769,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 5. CLINICAL TOOLS ───────────────────────────────────────────────── */}
-      <section style={{ padding: "clamp(64px, 8vw, 120px) 0" }}>
+      <section id="clinical-tools" style={{ padding: "clamp(64px, 8vw, 120px) 0" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <span
@@ -970,6 +972,7 @@ export default function ForDentists() {
 
       {/* ── 6. HOW IT FITS YOUR WORKFLOW ────────────────────────────────────── */}
       <section
+        id="workflow"
         style={{ background: "#050C10", padding: "clamp(56px, 7vw, 100px) 0" }}
       >
         <div className="container">
@@ -1074,7 +1077,7 @@ export default function ForDentists() {
       </section>
 
       {/* ── 7. COMPETITIVE POSITIONING ──────────────────────────────────────── */}
-      <section style={{ padding: "clamp(56px, 7vw, 100px) 0" }}>
+      <section id="why-perioskoup" style={{ padding: "clamp(56px, 7vw, 100px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <h2
             className="reveal"

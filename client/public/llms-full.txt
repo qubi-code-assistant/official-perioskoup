@@ -1,6 +1,6 @@
 # Perioskoup — Full Content for AI Systems
 # https://perioskoup.com/llms-full.txt
-# Last updated: 2026-03-13
+# Last updated: 2026-04-27
 # Format: https://llmstxt.org/
 #
 # This file provides complete page content for AI crawlers and LLMs

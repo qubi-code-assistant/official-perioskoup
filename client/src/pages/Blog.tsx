@@ -19,7 +19,7 @@ const POSTS: never[] = [];
 
 export default function Blog() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/blog");
+  const { GEOCapsule, meta } = usePageMeta("/blog");
   const scrollRef = useScrollDepth("blog");
 
   return (
@@ -32,11 +32,11 @@ export default function Blog() {
         <meta property="og:description" content="Evidence-based articles on periodontal health, dental AI, and patient care. Coming soon." />
         <meta property="og:url" content="https://perioskoup.com/blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image" content={meta?.ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:image" content={meta?.ogImage} />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/blog" />
         <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/blog" />
       </Helmet>

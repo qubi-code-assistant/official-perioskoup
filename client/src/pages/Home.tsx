@@ -36,7 +36,7 @@ const ASSETS = {
 export default function Home() {
   useReveal(0.12);
   const [, navigate] = useLocation();
-  const { GEOCapsule } = usePageMeta("/");
+  const { GEOCapsule, meta } = usePageMeta("/");
   const scrollRef = useScrollDepth("home");
 
   const homeOrgJsonLd = {
@@ -76,6 +76,41 @@ export default function Home() {
     ]
   };
 
+  const homeHowToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Use Perioskoup: From Chair to Chat",
+    "description": "Perioskoup connects your dental appointment to your daily routine in three steps: your dentist sets a personalised plan, AI translates it into habits, and you build consistency between visits.",
+    "totalTime": "PT5M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Visit Your Dentist", "text": "Your dentist examines and creates a personalised care plan — then uploads it to Perioskoup." },
+      { "@type": "HowToStep", "position": 2, "name": "Get Your Plan", "text": "AI translates clinical recommendations into daily habits with smart reminders and tracking." },
+      { "@type": "HowToStep", "position": 3, "name": "Build Daily Habits", "text": "Follow your plan at home with AI support, progress tracking, and a connection to your care team." },
+    ]
+  };
+
+  const medicalTermsJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "name": "Periodontal Health Terminology",
+    "hasDefinedTerm": [
+      { "@type": "DefinedTerm", "name": "Periodontal Disease", "description": "A chronic bacterial infection that destroys the tissues supporting the teeth, including the gums, periodontal ligament, and alveolar bone. Also known as gum disease.", "sameAs": "https://en.wikipedia.org/wiki/Periodontal_disease" },
+      { "@type": "DefinedTerm", "name": "Periodontitis", "description": "The advanced stage of periodontal disease characterised by irreversible bone loss around the teeth. Affects approximately 50% of adults worldwide.", "sameAs": "https://en.wikipedia.org/wiki/Periodontitis" },
+      { "@type": "DefinedTerm", "name": "Gingivitis", "description": "The earliest stage of gum disease, characterised by reversible inflammation of the gums caused by bacterial plaque accumulation. Treatable with improved oral hygiene.", "sameAs": "https://en.wikipedia.org/wiki/Gingivitis" },
+    ]
+  };
+
+  const homeSpeakableJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Perioskoup — AI Dental Companion App",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["#hero-headline", "#hero-subhead"]
+    },
+    "url": "https://perioskoup.com/"
+  };
+
   return (
     <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
@@ -88,16 +123,19 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup | AI Dental Companion App | Between-Visit Dental Care" />
         <meta name="twitter:description" content="Bridge the gap between dental appointments with AI habit tracking, smart reminders, and a clinician dashboard. EFP Digital Innovation Award 2025 — 3rd Prize." />
-        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image" content={meta?.ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:image" content={meta?.ogImage} />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/" />
         <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/" />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeOrgJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeHowToJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalTermsJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSpeakableJsonLd) }} />
       {GEOCapsule}
       <div className="noise-overlay" />
       <Navbar />
@@ -128,13 +166,13 @@ export default function Home() {
               </div>
 
               {/* Headline */}
-              <h1 className="reveal visible" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(52px, 7vw, 96px)", color: "#F5F9EA", lineHeight: 1.0, marginBottom: 32, transitionDelay: "0.1s" }}>
+              <h1 id="hero-headline" className="reveal visible" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(52px, 7vw, 96px)", color: "#F5F9EA", lineHeight: 1.0, marginBottom: 32, transitionDelay: "0.1s" }}>
                 Between visits,<br />
                 <span style={{ color: "#C0E57A" }}>we take over.</span>
               </h1>
 
               {/* Product subhead */}
-              <p className="reveal body-lg" style={{ maxWidth: 520, marginBottom: 32, transitionDelay: "0.15s", color: "rgba(245,249,234,0.8)" }}>
+              <p id="hero-subhead" className="reveal body-lg" style={{ maxWidth: 520, marginBottom: 32, transitionDelay: "0.15s", color: "rgba(245,249,234,0.8)" }}>
                 Perioskoup is an AI dental companion app — personalised guidance, habit tracking, and a connection to your care team between appointments.
               </p>
 
@@ -264,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section style={{ position: "relative", background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0", overflow: "hidden" }}>
+      <section id="features" style={{ position: "relative", background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0", overflow: "hidden" }}>
         <div className="animated-bg-wrapper">
           <div className="animated-bg-img drift-x" style={{ backgroundImage: `url(${ASSETS.featuresBg})`, opacity: 0.35 }} />
           <div className="bg-overlay" style={{ background: "linear-gradient(to bottom, #050C10 0%, transparent 20%, transparent 80%, #050C10 100%)" }} />
@@ -324,7 +362,7 @@ export default function Home() {
       </div>
 
       {/* WHAT IS AN AI DENTAL COMPANION */}
-      <section style={{ background: "#0A171E", padding: "clamp(56px, 7vw, 100px) 0" }}>
+      <section id="ai-companion" style={{ background: "#0A171E", padding: "clamp(56px, 7vw, 100px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="reveal" style={{ textAlign: "center" }}>
             <h2 style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 64px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 24 }}>
@@ -344,7 +382,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ position: "relative", padding: "clamp(64px, 8vw, 120px) 0", overflow: "hidden", background: "#0A171E" }}>
+      <section id="how-it-works" style={{ position: "relative", padding: "clamp(64px, 8vw, 120px) 0", overflow: "hidden", background: "#0A171E" }}>
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div className="text-center reveal" style={{ marginBottom: 80 }}>
             <span className="label-tag" style={{ marginBottom: 20, display: "inline-flex" }}>Seamless Integration</span>
@@ -457,7 +495,7 @@ export default function Home() {
       </section>
 
       {/* KNOWLEDGE HUB TEASER -- internal link to Blog */}
-      <section style={{ background: "#0A171E", padding: "clamp(48px, 6vw, 80px) 0", borderTop: "1px solid #234966" }}>
+      <section id="knowledge-hub" style={{ background: "#0A171E", padding: "clamp(48px, 6vw, 80px) 0", borderTop: "1px solid #234966" }}>
         <div className="container" style={{ textAlign: "center" }}>
           <div className="reveal">
             <span className="label-tag" style={{ marginBottom: 20, display: "inline-flex" }}>Knowledge Hub</span>

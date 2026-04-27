@@ -25,19 +25,18 @@ export interface PageMetaConfig {
 }
 
 const BASE_URL = "https://perioskoup.com";
-const DEFAULT_OG_IMAGE = `${BASE_URL}/images/og-image.jpg`;
+export const DEFAULT_OG_IMAGE = `${BASE_URL}/images/og-image.jpg`;
 
 /* ─── Route meta registry ─── */
-// TODO: Set ogImage per-page when unique images are available.
-// Each route entry can include `ogImage: "/images/og-<page>.jpg"` to override the default.
-// For blog posts, og:image is set dynamically in BlogPost.tsx using the article slug
-// (e.g. https://perioskoup.com/images/og-blog-${slug}.jpg) with fallback to DEFAULT_OG_IMAGE.
+// To use a unique og:image per page, replace DEFAULT_OG_IMAGE below with a page-specific URL.
+// Blog posts set og:image dynamically in BlogPost.tsx using the article slug.
 const ROUTE_META: Record<string, PageMetaConfig> = {
   "/": {
     title: "Perioskoup | AI Dental Companion App | Between-Visit Dental Care",
     description:
       "Perioskoup bridges the gap between dental visits with AI-powered guidance, habit tracking, and real-time support. EFP Digital Innovation Award 2025 — 3rd Prize.",
     canonical: `${BASE_URL}/`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Perioskoup | AI Dental Companion App | Between-Visit Dental Care",
     ogDescription:
       "AI-powered dental companion app. Bridges the gap between dental visits with personalized daily habits for patients. EFP Digital Innovation Award 2025 — 3rd Prize.",
@@ -53,6 +52,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Explore Perioskoup's AI dental companion features: habit tracking, smart reminders, clinician dashboards, and GDPR-compliant data protection.",
     canonical: `${BASE_URL}/features`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "AI Dental App Features | Habit Tracking & Care Plans | Perioskoup",
     ogDescription:
       "AI-powered habit tracking, smart reminders, clinician dashboard, and GDPR-compliant data protection for dental patients and practices.",
@@ -68,6 +68,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Perioskoup gives dental practices a clinician dashboard, personalised care plans, and care plan visibility to extend care and reduce no-shows.",
     canonical: `${BASE_URL}/for-dentists`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Dental Patient Engagement App for Clinicians | Perioskoup",
     ogDescription:
       "Clinician dashboard, personalised care plans, and care plan visibility for dental practices. Extend care beyond the appointment.",
@@ -83,6 +84,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Meet the Perioskoup team: Dr. Anca Laura Constantin (CEO, periodontist), Eduard Ciugulea (Co-founder & CGO), and Petrica Nancu (CTO). EFP Digital Innovation Award 2025 — 3rd Prize. Founded in Buzău, Romania.",
     canonical: `${BASE_URL}/about`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "About Perioskoup | Team, Mission & EFP Award Story",
     ogDescription:
       "Founded by a periodontist and a technologist. 3rd Prize winner at the EFP Digital Innovation Award 2025 at EuroPerio11 in Vienna.",
@@ -98,6 +100,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Perioskoup pricing: free Patient plan during beta, Clinic plan coming soon. Join the waitlist for founding pricing.",
     canonical: `${BASE_URL}/pricing`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Pricing & Plans | Perioskoup Dental Companion App",
     ogDescription:
       "Free for patients during beta. Clinic plan coming soon. Join the waitlist for founding pricing and priority access.",
@@ -113,6 +116,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Insights on periodontal health, AI in dentistry, and patient engagement from the Perioskoup team. Written by clinicians and technologists.",
     canonical: `${BASE_URL}/blog`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Perioskoup Blog | Dental Health, AI & Patient Engagement",
     ogDescription:
       "Insights on periodontal health, AI in dentistry, and patient engagement from the Perioskoup team.",
@@ -128,6 +132,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Get in touch with the Perioskoup team at support@perioskoup.com. We respond within 24 hours.",
     canonical: `${BASE_URL}/contact`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Contact Perioskoup | Dental App Enquiries & Partnerships",
     ogDescription:
       "Reach the Perioskoup team for general enquiries, clinic partnerships, or press requests. Based in Buzău, Romania.",
@@ -143,6 +148,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Get priority access to the AI dental companion app launching soon. 30+ founding clinics already on the list.",
     canonical: `${BASE_URL}/waitlist`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Join the Perioskoup Waitlist | Early Access",
     ogDescription:
       "Get priority access to the AI dental companion app. 30+ founding clinics already on the list.",
@@ -158,6 +164,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law.",
     canonical: `${BASE_URL}/privacy`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Privacy Policy | Perioskoup",
     ogDescription:
       "How Perioskoup collects, stores, and protects your health data in line with GDPR and EU data protection law.",
@@ -173,6 +180,7 @@ const ROUTE_META: Record<string, PageMetaConfig> = {
     description:
       "Terms governing the use of the Perioskoup dental companion application, including wellness disclaimer and data responsibilities.",
     canonical: `${BASE_URL}/terms`,
+    ogImage: DEFAULT_OG_IMAGE,
     ogTitle: "Terms of Service | Perioskoup",
     ogDescription:
       "Terms governing the use of the Perioskoup dental companion application.",

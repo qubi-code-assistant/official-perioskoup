@@ -18,7 +18,7 @@ import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 export default function Contact() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/contact");
+  const { GEOCapsule, meta } = usePageMeta("/contact");
   const { onFieldFocus, markSubmitted } = useFormTracking("contact", "contact");
   const scrollRef = useScrollDepth("contact");
   const [sent, setSent] = useState(false);
@@ -114,7 +114,7 @@ export default function Contact() {
         name: "How do I contact Perioskoup?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "You can reach Perioskoup via email at hello@perioskoup.com for general enquiries or clinic@perioskoup.com for dental practice partnerships. You can also use the contact form on this page. We respond within 24 hours.",
+          text: "You can reach Perioskoup via email at hello@perioskoup.com for general enquiries or support@perioskoup.com for clinic partnerships and support. You can also use the contact form on this page. We respond within 24 hours.",
         },
       },
       {
@@ -200,14 +200,14 @@ export default function Contact() {
         />
         <meta
           property="og:image"
-          content="https://perioskoup.com/images/og-image.jpg"
+          content={meta?.ogImage}
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://perioskoup.com/images/og-image.jpg"
+          content={meta?.ogImage}
         />
         <link
           rel="alternate"
@@ -293,7 +293,7 @@ export default function Contact() {
       </section>
 
       {/* Content */}
-      <section style={{ background: "#050C10", padding: "80px 0" }}>
+      <section id="contact-form" style={{ background: "#050C10", padding: "80px 0" }}>
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-[60px] items-start">
             {/* Left: info */}

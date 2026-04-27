@@ -1,7 +1,7 @@
 # Perioskoup
 > AI dental companion that bridges the gap between dental visits.
 > https://perioskoup.com
-> Last updated: 2026-04-18
+> Last updated: 2026-04-27
 > Format: https://llmstxt.org/
 > Full version: https://perioskoup.com/llms-full.txt
 

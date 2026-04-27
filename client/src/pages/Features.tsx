@@ -183,7 +183,7 @@ const TAG_COLORS: Record<string, { color: string; bg: string; border: string }> 
 
 export default function Features() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/features");
+  const { GEOCapsule, meta } = usePageMeta("/features");
   const scrollRef = useScrollDepth("features");
 
   const featuresFaqJsonLd = {
@@ -231,6 +231,17 @@ export default function Features() {
     "award": "3rd Prize, EFP Digital Innovation Award 2025, EuroPerio11 Vienna"
   };
 
+  const featuresSpeakableJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Perioskoup Features",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["#features-headline", "#features-subhead"]
+    },
+    "url": "https://perioskoup.com/features"
+  };
+
   return (
     <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
@@ -243,16 +254,17 @@ export default function Features() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="AI Dental App Features | Habit Tracking & Care Plans | Perioskoup" />
         <meta name="twitter:description" content="Personalised habit tracking, smart reminders, clinician dashboard, and GDPR-compliant data protection. All in one AI dental companion." />
-        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image" content={meta?.ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:image" content={meta?.ogImage} />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/features" />
         <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/features" />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresFaqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresAppJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuresSpeakableJsonLd) }} />
       {GEOCapsule}
       <Navbar />
 
@@ -263,11 +275,11 @@ export default function Features() {
         <div className="container section-content" style={{ textAlign: "center", position: "relative", zIndex: 2 }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features" }]} />
           <span className="label-tag reveal" style={{ marginBottom: "24px", display: "inline-flex" }}>Features</span>
-          <h1 className="display-lg reveal" style={{ marginTop: "16px", marginBottom: "24px", transitionDelay: "0.1s", lineHeight: 1.05 }}>
+          <h1 id="features-headline" className="display-lg reveal" style={{ marginTop: "16px", marginBottom: "24px", transitionDelay: "0.1s", lineHeight: 1.05 }}>
             AI dental companion features —{" "}
             <span className="text-gradient">everything between your visits.</span>
           </h1>
-          <p className="body-lg reveal" style={{ maxWidth: "520px", margin: "0 auto 40px", transitionDelay: "0.2s" }}>
+          <p id="features-subhead" className="body-lg reveal" style={{ maxWidth: "520px", margin: "0 auto 40px", transitionDelay: "0.2s" }}>
             From the moment a patient leaves the chair to their next appointment, Perioskoup keeps them engaged, informed, and consistent.
           </p>
           <div className="reveal" style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap", transitionDelay: "0.3s" }}>
@@ -282,7 +294,7 @@ export default function Features() {
       </section>
 
       {/* Feature cards */}
-      <section className="section" style={{ background: "#050C10", paddingTop: "80px", paddingBottom: "80px" }}>
+      <section id="feature-list" className="section" style={{ background: "#050C10", paddingTop: "80px", paddingBottom: "80px" }}>
         <div className="container">
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 12, textAlign: "center" }}>
             What's inside <span style={{ color: "#C0E57A" }}>Perioskoup</span>

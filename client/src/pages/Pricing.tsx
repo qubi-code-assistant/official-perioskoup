@@ -42,7 +42,7 @@ const PLANS = [
 
 export default function Pricing() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/pricing");
+  const { GEOCapsule, meta } = usePageMeta("/pricing");
   const scrollRef = useScrollDepth("pricing");
 
   const pricingFaqJsonLd = {
@@ -81,11 +81,11 @@ export default function Pricing() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="Perioskoup Pricing | Free for Patients, Plans for Clinics" />
         <meta name="twitter:description" content="Perioskoup is free for patients during beta. Dental clinic plans launching soon. Join 30+ founding clinics on the waitlist for locked-in pricing." />
-        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image" content={meta?.ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:image" content={meta?.ogImage} />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/pricing" />
         <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/pricing" />
       </Helmet>
@@ -122,7 +122,7 @@ export default function Pricing() {
       </section>
 
       {/* Beta notice + Plans */}
-      <section style={{ background: "#050C10", padding: "80px 0" }}>
+      <section id="plans" style={{ background: "#050C10", padding: "80px 0" }}>
         <div className="container">
           {/* Beta notice */}
           <div className="reveal-scale" style={{ background: "rgba(192,229,122,0.06)", border: "1px solid rgba(192,229,122,0.2)", borderRadius: 16, padding: "20px 28px", display: "flex", alignItems: "center", gap: 16, maxWidth: 700, margin: "0 auto 48px" }}>
@@ -172,7 +172,7 @@ export default function Pricing() {
       </section>
 
       {/* FAQ */}
-      <section style={{ padding: "120px 0" }}>
+      <section id="faq" style={{ padding: "120px 0" }}>
         <div className="container" style={{}}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>FAQ</span>

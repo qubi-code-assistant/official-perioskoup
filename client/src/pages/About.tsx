@@ -22,7 +22,7 @@ const AWARD_IMG = "/images/efp-award.webp";
 
 export default function About() {
   useReveal();
-  const { GEOCapsule } = usePageMeta("/about");
+  const { GEOCapsule, meta } = usePageMeta("/about");
   const scrollRef = useScrollDepth("about");
 
   const personJsonLd = {
@@ -125,6 +125,41 @@ export default function About() {
     ]
   };
 
+  const efpEventJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "EFP Digital Innovation Award 2025",
+    "description": "The European Federation of Periodontology's Digital Innovation Award, recognising innovations in digital periodontal care at EuroPerio11.",
+    "startDate": "2025-05-14",
+    "endDate": "2025-05-17",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Messe Wien Exhibition & Congress Center",
+      "address": { "@type": "PostalAddress", "addressLocality": "Vienna", "addressCountry": "AT" }
+    },
+    "organizer": { "@type": "Organization", "name": "European Federation of Periodontology", "url": "https://www.efp.org" },
+    "superEvent": { "@type": "Event", "name": "EuroPerio11" },
+    "subEvent": {
+      "@type": "Event",
+      "name": "Perioskoup — 3rd Prize Winner",
+      "description": "Perioskoup won 3rd Prize at the EFP Digital Innovation Award 2025, selected from 20 submissions across 17 national periodontal societies.",
+      "performer": { "@type": "Person", "@id": "https://perioskoup.com/#anca-constantin", "name": "Dr. Anca Laura Constantin" }
+    }
+  };
+
+  const aboutSpeakableJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "About Perioskoup",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["#about-headline", "#about-subhead", "#mission-text"]
+    },
+    "url": "https://perioskoup.com/about"
+  };
+
   return (
     <div ref={scrollRef} style={{ background: "#0A171E", minHeight: "100svh" }}>
       <Helmet>
@@ -137,16 +172,18 @@ export default function About() {
         <meta property="og:type" content="website" />
         <meta name="twitter:title" content="About Perioskoup | Dental AI Built in Romania" />
         <meta name="twitter:description" content="A periodontist, an engineer, and an AI specialist walk into a dental chair... and build the companion they always wished existed. EFP Digital Innovation Award 2025 — 3rd Prize." />
-        <meta property="og:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta property="og:image" content={meta?.ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://perioskoup.com/images/og-image.jpg" />
+        <meta name="twitter:image" content={meta?.ogImage} />
         <link rel="alternate" hrefLang="en" href="https://perioskoup.com/about" />
         <link rel="alternate" hrefLang="x-default" href="https://perioskoup.com/about" />
         <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(aboutOrgJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(aboutFaqJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(efpEventJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(aboutSpeakableJsonLd)}</script>
       </Helmet>
 
       {GEOCapsule}
@@ -160,11 +197,11 @@ export default function About() {
           <div style={{ textAlign: "center" }}>
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
           <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>Our Story</span>
-          <h1 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(56px, 7vw, 88px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 28, marginTop: 16, transitionDelay: "0.08s" }}>
+          <h1 id="about-headline" className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(56px, 7vw, 88px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 28, marginTop: 16, transitionDelay: "0.08s" }}>
             Born in a dental chair.<br />
             <span style={{ color: "#C0E57A" }}>Built for every patient.</span>
           </h1>
-          <p className="body-lg reveal" style={{ fontSize: 19, maxWidth: 600, margin: "0 auto", transitionDelay: "0.16s" }}>
+          <p id="about-subhead" className="body-lg reveal" style={{ fontSize: 19, maxWidth: 600, margin: "0 auto", transitionDelay: "0.16s" }}>
             Perioskoup started with a simple observation: patients leave the dentist's office understanding very little about their condition. Dr. Anca Constantin saw this every day in her periodontal clinic in Bucharest - and decided to build the solution herself.
           </p>
           <div className="reveal" style={{ marginTop: 32, transitionDelay: "0.24s", display: "flex", justifyContent: "center" }}>
@@ -178,7 +215,7 @@ export default function About() {
       </section>
 
       {/* EFP Award */}
-      <section style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
+      <section id="efp-award" style={{ background: "#050C10", padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <span className="label-tag reveal" style={{ marginBottom: 32, display: "inline-flex" }}>Recognition</span>
           <div className="reveal-scale grid grid-cols-1 md:grid-cols-2 rounded-3xl overflow-hidden border border-[#234966]" style={{ maxWidth: 900, width: "100%" }}>
@@ -216,7 +253,7 @@ export default function About() {
       </section>
 
       {/* Mission */}
-      <section style={{ padding: "clamp(64px, 8vw, 120px) 0" }}>
+      <section id="mission" style={{ padding: "clamp(64px, 8vw, 120px) 0" }}>
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div>
@@ -225,7 +262,7 @@ export default function About() {
                 Close the gap<br />
                 <span style={{ color: "#C0E57A" }}>between visits.</span>
               </h2>
-              <p className="body-lg reveal" style={{ marginBottom: 20, transitionDelay: "0.16s" }}>
+              <p id="mission-text" className="body-lg reveal" style={{ marginBottom: 20, transitionDelay: "0.16s" }}>
                 Periodontal disease affects 1 in 2 adults worldwide, yet most patients don't understand their condition, forget their care instructions within 48 hours, and don't return for follow-up appointments.
               </p>
               <p className="body-lg reveal" style={{ transitionDelay: "0.24s" }}>
@@ -274,7 +311,7 @@ export default function About() {
       </section>
 
       {/* Why Now */}
-      <section style={{ padding: "clamp(48px, 6vw, 80px) 0" }}>
+      <section id="why-now" style={{ padding: "clamp(48px, 6vw, 80px) 0" }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="reveal" style={{ fontFamily: "Dongle, sans-serif", fontSize: "clamp(40px, 4.5vw, 56px)", color: "#F5F9EA", lineHeight: 0.95, marginBottom: 20 }}>
             Why now?
@@ -294,7 +331,7 @@ export default function About() {
       </section>
 
       {/* Team */}
-      <section style={{ background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0" }}>
+      <section id="team" style={{ background: "#050C10", padding: "clamp(64px, 8vw, 120px) 0" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <span className="label-tag reveal" style={{ marginBottom: 20, display: "inline-flex" }}>The Team</span>
